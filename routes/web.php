@@ -10,7 +10,9 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/login', [AuthController::class, 'index']);
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'post_login'])->name('post_login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix("/dashboard")->group(function () {
     Route::prefix("/master-data")->group(function () {

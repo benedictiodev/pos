@@ -9,6 +9,7 @@ class CashIn extends Model
 {
     use HasFactory;
 
+    protected $table = 'cash_in';
     protected $fillable = [
         'company_id',
         'fund',
