@@ -10,7 +10,7 @@ class AuthController extends Controller
 {
     function index() {
          if (Auth::check()) {
-            return redirect()->route('dashboard');
+            return redirect()->route('/dashboard');
         } else {
             return view('auth.login');
         }
@@ -24,7 +24,7 @@ class AuthController extends Controller
  
         if (Auth::attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended('/');
+            return redirect()->intended('/dashboard');
         }
     }
 

@@ -6,7 +6,7 @@
     <div class="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-2xl shadow-2xl dark:bg-gray-800">
       <div
         class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10 dark:text-white">
-        <img src="{{ asset("images/logo_benedictiodev.png")}}" class="mr-4 h-24" alt="FlowBite Logo">
+        <img src="{{ asset("images/logo_benedictiodev.png")}}" class="mr-4 h-24" alt="Benedictio Logo">
         <div>
           <div>Benedictio Dev</div>
           <div class="text-sm">Point Of Sales Application</div>
