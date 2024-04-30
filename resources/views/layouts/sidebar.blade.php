@@ -15,7 +15,7 @@
           </li>
           <li>
             <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/master-data*') ? 'bg-gray-100' : '' }}"
               aria-controls="dropdown-layouts" data-collapse-toggle="dropdown-layouts">
               <x-fas-database class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Master Data</span>
@@ -24,13 +24,13 @@
             <ul id="dropdown-layouts" class="hidden py-2 space-y-2">
               <li>
                 <a href="/dashboard/master-data/category-products"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 bg-gray-100">Category
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/master-data/category-products*') ? 'bg-gray-100' : '' }}">Category
                   Products</a>
               </li>
               <li>
                 {{-- <a href="/dashboard/master-data/products" --}}
                 <a href="/dashboard/master-data/products"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Products</a>
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/master-data/products*') ? 'bg-gray-100' : '' }}">Products</a>
               </li>
             </ul>
           </li>
