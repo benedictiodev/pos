@@ -14,7 +14,7 @@
   <!-- Styles -->
 </head>
 
-<body>
+<body class="bg-gray-200">
   @include('layouts.header')
   <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
     @include('layouts.sidebar')
