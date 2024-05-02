@@ -9,21 +9,21 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    function index()
+    public function index()
     {
-        $data = Product::with('category_products')->paginate(5);
-        return view('dashboard.master_data.products.index', [
+        $data = Product::with('category_product')->paginate(5);
+        return view('dashboard.master-data.product.index', [
             'data' => $data
         ]);
     }
 
-    function create()
+    public function create()
     {
         $lists = CategoryProduct::all();
-        return view('dashboard.master_data.products.create', ["lists" => $lists]);
+        return view('dashboard.master-data.product.create', ["lists" => $lists]);
     }
 
-    function store(Request $request)
+    public function store(Request $request)
     {
         $validate = $request->validate([
             'name' => 'required',
@@ -34,7 +34,7 @@ class ProductController extends Controller
         ]);
 
         if ($request->file('image')) {
-            $validate['image'] = $request->file('image')->storeAs('images/master-data/products', time() . '.' . $request->image->extension());
+            $validate['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
         }
 
         $validate["is_available"] = $request->is_available ? $request->is_available : 0;
@@ -49,20 +49,20 @@ class ProductController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.master-data.products')->with('success', "Successfully to create  products");
+            return redirect()->route('dashboard.master-data.product')->with('success', "Successfully to create  product");
         } else {
-            return redirect()->route('dashboard.master-data.products')->with('failed', "Failed to create  products");
+            return redirect()->route('dashboard.master-data.product')->with('failed', "Failed to create  product");
         }
     }
 
-    function show($id)
+    public function edit($id)
     {
         $data = Product::findOrFail($id);
         $lists = CategoryProduct::all();
-        return view('dashboard.master_data.products.edit', ["data" => $data, "lists" => $lists]);
+        return view('dashboard.master-data.product.edit', ["data" => $data, "lists" => $lists]);
     }
 
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $validate =  $request->validate([
             'name' => 'required',
@@ -77,7 +77,7 @@ class ProductController extends Controller
             if ($request->old_image) {
                 Storage::delete($request->old_image);
             }
-            $validate['image'] = $request->file('image')->storeAs('images/master-data/products', time() . '.' . $request->image->extension());
+            $validate['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
         }
 
         $validate['is_available'] = $request["is_available"] ? 1 : 0;
@@ -85,21 +85,21 @@ class ProductController extends Controller
         $update = $data->update($validate);
 
         if ($update) {
-            return redirect()->route('dashboard.master-data.products')->with('success', "Successfully to update  products");
+            return redirect()->route('dashboard.master-data.product')->with('success', "Successfully to update  product");
         } else {
-            return redirect()->route('dashboard.master-data.products')->with('failed', "Failed to update  products");
+            return redirect()->route('dashboard.master-data.product')->with('failed', "Failed to update  product");
         }
     }
 
-    function destroy($id)
+    public function destroy($id)
     {
         $product = Product::find($id);
         Storage::delete($product->image);
         $delete =  Product::destroy($id);
         if ($delete) {
-            return redirect()->route('dashboard.master-data.products')->with('success', "Successfully to delete  products");
+            return redirect()->route('dashboard.master-data.product')->with('success', "Successfully to delete  product");
         } else {
-            return redirect()->route('dashboard.master-data.products')->with('failed', "Failed to delete  products");
+            return redirect()->route('dashboard.master-data.product')->with('failed', "Failed to delete  product");
         }
     }
 }

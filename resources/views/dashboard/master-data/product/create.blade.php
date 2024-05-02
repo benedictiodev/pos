@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('main')
-  <div>
+  <div class="">
     <div class="mb-4">
       <nav class="mb-5 flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
@@ -27,27 +27,25 @@
           </li>
         </ol>
       </nav>
-      <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Update Product</h1>
-      <a href="{{ route('dashboard.master-data.products') }}" type="button"
+      <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Create Product</h1>
+      <a href="{{ route('dashboard.master-data.product') }}" type="button"
         class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-400 dark:focus:ring-slate-800">
         Back
       </a>
     </div>
 
     <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-4">
-      <div>
-        <form action="{{ route('dashboard.master-data.products.update', ['id' => $data->id]) }}" method="POST"
-          enctype="multipart/form-data">
+      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
+      <div class="mb-4">
+        <form action="{{ route('dashboard.master-data.product.post') }}" method="POST" enctype="multipart/form-data">
           @csrf
-          @method('PUT')
           <div class="space-y-6">
             <div>
               <label for="name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Name
                 Product</label>
               <input type="text" name="name" id="name"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                placeholder="Name Product" required value="{{ old('name', $data->name) }}">
+                placeholder="Name Product" required>
             </div>
 
             <div>
@@ -55,7 +53,7 @@
                 Product</label>
               <input type="number" name="price" id="price"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                placeholder="Price Product" required value="{{ old('price', $data->price) }}">
+                placeholder="Price Product" required>
             </div>
 
             <div>
@@ -66,9 +64,7 @@
                 required>
                 <option disabled value="">Select Category Product</option>
                 @foreach ($lists as $item)
-                  <option value="{{ $item->id }}"
-                    {{ old('category_id', $item->category_id) == $item->id ? 'selected' : '' }}>{{ $item->name }}
-                  </option>
+                  <option value="{{ $item->id }}">{{ $item->name }}</option>
                 @endforeach
               </select>
             </div>
@@ -78,32 +74,28 @@
                 class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Description</label>
               <textarea id="description" rows="4" name="description"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                placeholder="Enter event description here" required>{{ old('description', $data->description) }}</textarea>
+                placeholder="Enter event description here" required></textarea>
             </div>
 
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white" for="create-image">Upload
                 file</label>
-              <input type="text" value="{{ $data->image }}" name="old_image" hidden>
-              <img id="preview-image" src="{{ asset('storage/' . $data->image) }}" alt="{{ asset($data->image) }}"
-                class="h-64 mb-2 block">
+              <img id="preview-image">
               <input
                 class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none dark:border-gray-600 dark:bg-gray-700 dark:text-gray-400 dark:placeholder-gray-400"
-                id="create-image" type="file" accept="image/*" onchange="onChange()" name="image">
+                id="create-image" type="file" accept="image/*" onchange="onChange()" name="image" required>
             </div>
 
             <div class="flex items-center">
               <input id="is_available" aria-describedby="checkbox-1" type="checkbox" name="is_available" value="1"
-                {{ $data->is_available == 1 ? 'checked' : '' }}
                 class="focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600">
               <label for="is_available" class="sr-only">checkbox</label>
-              <p class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Is Available
-              </p>
+              <p class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Is Available</p>
             </div>
 
             <button type="submit"
               class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Update
+              Add
             </button>
           </div>
         </form>
@@ -120,6 +112,9 @@
       console.log(image.files);
       const blob = URL.createObjectURL(image.files[0]);
       previewImage.src = blob;
+      previewImage.classList.add("h-64")
+      previewImage.classList.add("mb-2")
+      previewImage.style.display = "block"
     }
   </script>
 @endpush

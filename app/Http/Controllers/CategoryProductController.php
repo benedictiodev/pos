@@ -7,18 +7,18 @@ use Illuminate\Http\Request;
 
 class CategoryProductController extends Controller
 {
-    function index()
+    public function index()
     {
         $data = CategoryProduct::paginate(5);
-        return view('dashboard.master_data.category_products.index', ['data' => $data]);
+        return view('dashboard.master-data.category-product.index', ['data' => $data]);
     }
 
-    function create()
+    public function create()
     {
-        return view("dashboard.master_data.category_products.create");
+        return view("dashboard.master-data.category-product.create");
     }
 
-    function store(Request $request)
+    public function store(Request $request)
     {
         $request->validate([
             'name' => 'required|unique:category_products'
@@ -30,22 +30,22 @@ class CategoryProductController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.master-data.category-products')->with('success', "Successfully to create category products");
+            return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to create category product");
         } else {
-            return redirect()->route('dashboard.master-data.category-products')->with('failed', "Failed to create category products");
+            return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to create category product");
         }
     }
 
-    function show($id)
+    public function edit($id)
     {
         $data = CategoryProduct::findOrFail($id);
-        return view("dashboard.master_data.category_products.edit", ["data" => $data]);
+        return view("dashboard.master-data.category-product.edit", ["data" => $data]);
     }
 
-    function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|unique:category_products'
+            'name' => 'required'
         ]);
 
         $data = CategoryProduct::findOrFail($id);
@@ -56,19 +56,19 @@ class CategoryProductController extends Controller
         ]);
 
         if ($update) {
-            return redirect()->route('dashboard.master-data.category-products')->with('success', "Successfully to update category products");
+            return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to update category product");
         } else {
-            return redirect()->route('dashboard.master-data.category-products')->with('failed', "Failed to update category products");
+            return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to update category product");
         }
     }
 
-    function destroy($id)
+    public function destroy($id)
     {
         $delete =  CategoryProduct::destroy($id);
         if ($delete) {
-            return redirect()->route('dashboard.master-data.category-products')->with('success', "Successfully to delete category products");
+            return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to delete category product");
         } else {
-            return redirect()->route('dashboard.master-data.category-products')->with('failed', "Failed to delete category products");
+            return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to delete category product");
         }
     }
 }

@@ -12,7 +12,7 @@ class Product extends Model
     protected $guarded = ['id'];
 
 
-    function category_products()
+    function category_product()
     {
         return $this->belongsTo(CategoryProduct::class);
     }

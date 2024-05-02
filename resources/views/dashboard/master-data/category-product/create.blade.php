@@ -28,7 +28,7 @@
         </ol>
       </nav>
       <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Create Product</h1>
-      <a href="{{ route('dashboard.master-data.category-products') }}" type="button"
+      <a href="{{ route('dashboard.master-data.category-product') }}" type="button"
         class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-400 dark:focus:ring-slate-800">
         Back
       </a>
@@ -37,7 +37,7 @@
     <div
       class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
       <div class="mb-4">
-        <form action="{{ route('dashboard.master-data.category-products.post') }}" method="POST">
+        <form action="{{ route('dashboard.master-data.category-product.post') }}" method="POST">
           @csrf
           <div class="space-y-4">
             <div>
