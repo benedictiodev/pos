@@ -20,7 +20,7 @@
     @include('layouts.sidebar')
 
     <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
-      <main class="calc(100vh-70px) bg-slate-50 px-4 pt-6">@yield('main')</main>
+      <main class="h-[calc(100vh-72px)] bg-slate-50 px-4 pt-6">@yield('main')</main>
       {{-- @include('layouts.footer') --}}
     </div>
   </div>
