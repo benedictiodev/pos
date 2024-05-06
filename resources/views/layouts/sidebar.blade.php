@@ -15,22 +15,43 @@
           </li>
           <li>
             <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700"
-              aria-controls="dropdown-layouts" data-collapse-toggle="dropdown-layouts">
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/master-data*') ? 'bg-gray-100' : '' }}"
+              aria-controls="dropdown-master-data" data-collapse-toggle="dropdown-master-data">
               <x-fas-database class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Master Data</span>
               <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
             </button>
-            <ul id="dropdown-layouts" class="hidden py-2 space-y-2">
+            <ul id="dropdown-master-data" class="hidden py-2 space-y-2">
               <li>
-                <a href="/dashboard/master-data/category-products"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 bg-gray-100">Category
+                <a href="/dashboard/master-data/category-product"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/master-data/category-product*') ? 'bg-gray-100' : '' }}">Category
                   Products</a>
               </li>
               <li>
-                {{-- <a href="/dashboard/master-data/products" --}}
-                <a href="/dashboard/master-data/products"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700">Products</a>
+                {{-- <a href="/dashboard/master-data/product" --}}
+                <a href="/dashboard/master-data/product"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/master-data/product*') ? 'bg-gray-100' : '' }}">Products</a>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <button type="button"
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/finance*') ? 'bg-gray-100' : '' }}"
+              aria-controls="dropdown-finance" data-collapse-toggle="dropdown-finance">
+              <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Finance</span>
+              <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+            </button>
+            <ul id="dropdown-finance" class="hidden py-2 space-y-2">
+              <li>
+                <a href="/dashboard/finance/cash-in"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/finance/cash-in*') ? 'bg-gray-100' : '' }}">Cash
+                  In</a>
+              </li>
+              <li>
+                <a href="/dashboard/finance/cash-out"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ request()->is('dashboard/finance/cash-out*') ? 'bg-gray-100' : '' }}">Cash
+                  Out</a>
               </li>
             </ul>
           </li>
