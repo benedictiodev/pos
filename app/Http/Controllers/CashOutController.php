@@ -43,9 +43,9 @@ class CashOutController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.finance.cash-out')->with('success', "Successfully to create cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to create cash out");
         } else {
-            return redirect()->route('dashboard.finance.cash-out')->with('failed', "Failed to create cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to create cash out");
         }
     }
 
@@ -79,9 +79,9 @@ class CashOutController extends Controller
         ]);
 
         if ($update) {
-            return redirect()->route('dashboard.finance.cash-out')->with('success', "Successfully to update cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to update cash out");
         } else {
-            return redirect()->route('dashboard.finance.cash-out')->with('failed', "Failed to update cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to update cash out");
         }
     }
 
@@ -92,9 +92,9 @@ class CashOutController extends Controller
     {
         $delete =  CashOut::destroy($id);
         if ($delete) {
-            return redirect()->route('dashboard.finance.cash-out')->with('success', "Successfully to delete cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to delete cash out");
         } else {
-            return redirect()->route('dashboard.finance.cash-out')->with('failed', "Failed to delete cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to delete cash out");
         }
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\CashInController;
 use App\Http\Controllers\CashOutController;
 use App\Http\Controllers\CategoryProductController;
@@ -54,5 +55,6 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::put('/{id}', [CashOutController::class, 'update'])->name('dashboard.finance.cash-out.update');
             Route::delete('/{id}', [CashOutController::class, 'destroy'])->name('dashboard.finance.cash-out.delete');
         });
+        Route::get("/cash-flow-daily", [CashFlowController::class, 'list_daily'])->name('dashboard.finance.cash-flow-daily');
     });
 });

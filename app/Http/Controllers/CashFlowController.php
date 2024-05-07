@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\CashIn;
+use App\Models\CashOut;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CashFlowController extends Controller
 {
@@ -62,9 +64,28 @@ class CashFlowController extends Controller
         }
 
         $cash_in = CashIn::where('datetime', 'like', $periode . '%')
+            ->select('*', DB::raw('"cash-in" AS type'))
             ->where('company_id', '=', $company_id)->orderBy('datetime')->get();
-        $cash_out = CashIn::where('datetime', 'like', $periode . '%')
+        $cash_out = CashOut::where('datetime', 'like', $periode . '%')
+            ->select('*', DB::raw('"cash-out" AS type'))
             ->where('company_id', '=', $company_id)->orderBy('datetime')->get();
+
+        $result = $cash_in->push(...$cash_out);
+
+        $sortedResult = $result->sortBy(['datetime']);
+        $processedData = collect($sortedResult);
+
+        $perPage = 5; // Replace 15 with the desired number of items per page
+        $page = request()->get('page', 1); // Get the current page number from the request, default to 1
+        $paginatedData = new \Illuminate\Pagination\LengthAwarePaginator(
+            $processedData->slice(($page - 1) * $perPage, $perPage),
+            $processedData->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('dashboard.finance.cash-flow.daily', ['data' => $paginatedData]);
     }
 
     public function add_data(Request $request) {}

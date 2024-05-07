@@ -43,9 +43,9 @@ class CashInController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.finance.cash-in')->with('success', "Successfully to create cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to create cash in");
         } else {
-            return redirect()->route('dashboard.finance.cash-in')->with('failed', "Failed to create cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to create cash in");
         }
     }
 
@@ -79,9 +79,9 @@ class CashInController extends Controller
         ]);
 
         if ($update) {
-            return redirect()->route('dashboard.finance.cash-in')->with('success', "Successfully to update cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to update cash in");
         } else {
-            return redirect()->route('dashboard.finance.cash-in')->with('failed', "Failed to update cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to update cash in");
         }
     }
 
@@ -92,9 +92,9 @@ class CashInController extends Controller
     {
         $delete =  CashIn::destroy($id);
         if ($delete) {
-            return redirect()->route('dashboard.finance.cash-in')->with('success', "Successfully to delete cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to delete cash in");
         } else {
-            return redirect()->route('dashboard.finance.cash-in')->with('failed', "Failed to delete cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to delete cash in");
         }
     }
 }
