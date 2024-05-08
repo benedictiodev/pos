@@ -56,5 +56,6 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::delete('/{id}', [CashOutController::class, 'destroy'])->name('dashboard.finance.cash-out.delete');
         });
         Route::get("/cash-flow-daily", [CashFlowController::class, 'list_daily'])->name('dashboard.finance.cash-flow-daily');
+        Route::get("/cash-flow-monthly", [CashFlowController::class, 'list_monthly'])->name('dashboard.finance.cash-flow-monthly');
     });
 });
