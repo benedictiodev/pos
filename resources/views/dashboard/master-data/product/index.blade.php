@@ -84,27 +84,27 @@
                       </div>
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Name
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Price
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Description
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Image
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Is Available
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Actions
                     </th>
                   </tr>
@@ -120,22 +120,22 @@
                         </div>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">{{ $item->name }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->name }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">{{ $item->price }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->price }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">{{ $item->description }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->description }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4">
                         <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="h-32" />
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">
                           {{ $item->is_available == 1 ? 'YES' : 'NO' }}
                         </p>
                       </td>

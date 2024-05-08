@@ -86,11 +86,11 @@
                       </div>
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Category Name
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Actions
                     </th>
                   </tr>
@@ -107,7 +107,7 @@
                         </div>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">{{ $item->name }}</p>
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->name }}</p>
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">

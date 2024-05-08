@@ -90,23 +90,23 @@
                       </div>
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Datetime
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Debit
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Kredit
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Remark
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Actions
                     </th>
                   </tr>
@@ -122,22 +122,22 @@
                         </div>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">
                           {{ $item->datetime }}
                         </p>
                       </td>
                       <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">
                           {{ $item->type == "cash-out" ? format_rupiah($item->fund) : '-' }}
                         </p>
                       </td>
                       <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">
                           {{ $item->type == "cash-in" ? format_rupiah($item->fund) : '-' }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-base font-semibold text-gray-900 dark:text-white">{{ $item->remark }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->remark }}
                         </p>
                       </td>
 
@@ -164,16 +164,19 @@
                 </tbody>
                 <tfoot class="bg-gray-100 dark:bg-gray-700">
                   <tr>
-                    <th scope="col" colspan="2"
-                      class="p-4 text-center text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                    <th scope="col"
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Grand Total
                     </th>
                     <th scope="col"
-                      class="p-4 text-right text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       {{ format_rupiah($total_cash_out) }}
                     </th>
                     <th scope="col"
-                      class="p-4 text-right text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       {{ format_rupiah($total_cash_in) }}
                     </th>
                     <th scope="col" colspan="2"
