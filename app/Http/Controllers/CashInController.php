@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CashIn;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class CashInController extends Controller
@@ -42,10 +43,12 @@ class CashInController extends Controller
             'datetime' => $validate['datetime'],
         ]);
 
+        $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m-d')];
+
         if ($store) {
-            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to create cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to create cash in");
         } else {
-            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to create cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to create cash in");
         }
     }
 
@@ -78,23 +81,30 @@ class CashInController extends Controller
             'datetime' => $validate['datetime'],
         ]);
 
+        $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m-d')];
+
         if ($update) {
-            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to update cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to update cash in");
         } else {
-            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to update cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to update cash in");
         }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(string $id, Request $request)
     {
+        $query_data = array();
+        if ($request->periode) {
+            $query_data = ['periode' => $request->periode];
+        }
+
         $delete =  CashIn::destroy($id);
         if ($delete) {
-            return redirect()->route('dashboard.finance.cash-flow-daily')->with('success', "Successfully to delete cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to delete cash in");
         } else {
-            return redirect()->route('dashboard.finance.cash-flow-daily')->with('failed', "Failed to delete cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to delete cash in");
         }
     }
 }

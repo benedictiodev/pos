@@ -45,12 +45,12 @@
       class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-4">
       <div class="block items-center justify-between dark:divide-gray-700 sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
-          <form class="sm:pr-3" action="#" method="GET">
-            <label for="products-search" class="sr-only">Search</label>
+          <form class="sm:pr-3" action="#" method="GET" id="form-search">
+            <label for="cashflow-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
-              <input type="text" name="email" id="products-search"
+              <input type="date" name="periode" id="cashflow-search"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for daily cash flow">
+                placeholder="Search for daily cash flow" value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}" onchange="change_search()">
             </div>
           </form>
           <div class="flex w-full items-center sm:justify-end">
@@ -90,23 +90,23 @@
                       </div>
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Datetime
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Debit
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Kredit
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Remark
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Actions
                     </th>
                   </tr>
@@ -126,14 +126,14 @@
                           {{ $item->datetime }}
                         </p>
                       </td>
-                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-base font-semibold text-gray-900 dark:text-white">
-                          {{ $item->type == "cash-out" ? $item->fund : '-' }}
+                          {{ $item->type == "cash-out" ? format_rupiah($item->fund) : '-' }}
                         </p>
                       </td>
-                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-base font-semibold text-gray-900 dark:text-white">
-                          {{ $item->type == "cash-in" ? $item->fund : '-' }}
+                          {{ $item->type == "cash-in" ? format_rupiah($item->fund) : '-' }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -141,7 +141,7 @@
                         </p>
                       </td>
 
-                      <td class="space-x-2 whitespace-nowrap p-4">
+                      <td class="text-center space-x-2 whitespace-nowrap p-4">
                         <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}" type="button"
                           id="updateProductButton" data-drawer-target="drawer-update-product-default"
                           data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
@@ -154,7 +154,7 @@
                           data-drawer-show="drawer-delete-cash-in-default" aria-controls="drawer-delete-cash-in-default"
                           data-drawer-placement="right"
                           class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
-                          data-id="{{ $item->id }}">
+                          data-id="{{ $item->id }}" data-type="{{ $item->type }}">
                           <x-fas-trash-alt class="mr-2 h-4 w-4" />
                           Delete
                         </button>
@@ -162,6 +162,25 @@
                     </tr>
                   @endforeach
                 </tbody>
+                <tfoot class="bg-gray-100 dark:bg-gray-700">
+                  <tr>
+                    <th scope="col" colspan="2"
+                      class="p-4 text-center text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                      Grand Total
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                      {{ format_rupiah($total_cash_out) }}
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                      {{ format_rupiah($total_cash_in) }}
+                    </th>
+                    <th scope="col" colspan="2"
+                      class="p-4 text-center text-base font-medium uppercase text-gray-500 dark:text-gray-400">
+                    </th>
+                  </tr>
+                </tfoot>
               </table>
             </div>
           </div>
@@ -191,8 +210,10 @@
         @csrf
         @method('DELETE')
         <input type="text" id="delete-id" value="" hidden>
+        <input type="text" id="delete-type" value="" hidden>
+        <input type="text" id="delete-periode" value="{{ Request::get('periode') }}" hidden>
         <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
-        <h3 class="mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
+        <h3 class="mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this Cash?</h3>
         <button type="button" data-type="button-delete"
           class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
           Yes, I'm sure
@@ -209,18 +230,28 @@
 
 @push('script')
   <script type="text/javascript">
+    function change_search() {
+      let value = document.querySelector("#cashflow-search").value;
+      document.querySelector("#form-search").action = `/dashboard/finance/cash-flow-daily/`;
+      document.querySelector("#form-search").submit();
+    }
+
     window.onload = () => {
       document.addEventListener('click', async (event) => {
         // DELETE DATA
         if (event.target.getAttribute('data-drawer-target') == "drawer-delete-cash-in-default") {
           const id = event.target.getAttribute("data-id");
+          const type = event.target.getAttribute("data-type");
           document.querySelector("#delete-id").value = id;
+          document.querySelector("#delete-type").value = type;
         }
         if (event.target.getAttribute('data-type') == "button-delete") {
           const id = document.querySelector("#delete-id").value;
+          const type = document.querySelector("#delete-type").value;
+          const periode = document.querySelector("#delete-periode").value;
           document.querySelector("#form-delete").method = "POST";
           document.querySelector("#form-delete").action =
-            `/dashboard/finance/cash-in/${id}`;
+            `/dashboard/finance/${type}/${id}${periode !== '' ? `?periode=${periode}`: ''}`;
           document.querySelector("#form-delete").submit();
         }
       })

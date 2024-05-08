@@ -70,6 +70,15 @@ class CashFlowController extends Controller
             ->select('*', DB::raw('"cash-out" AS type'))
             ->where('company_id', '=', $company_id)->orderBy('datetime')->get();
 
+        $total_cash_in = 0;
+        foreach($cash_in AS $item) {
+            $total_cash_in += (int)$item->fund;
+        }
+        $total_cash_out = 0;
+        foreach($cash_out AS $item) {
+            $total_cash_out += (int)$item->fund;
+        }
+
         $result = $cash_in->push(...$cash_out);
 
         $sortedResult = $result->sortBy(['datetime']);
@@ -85,7 +94,11 @@ class CashFlowController extends Controller
             ['path' => request()->url(), 'query' => request()->query()]
         );
 
-        return view('dashboard.finance.cash-flow.daily', ['data' => $paginatedData]);
+        return view('dashboard.finance.cash-flow.daily', [
+            'data' => $paginatedData, 
+            'total_cash_in' => $total_cash_in, 
+            'total_cash_out' => $total_cash_out
+        ]);
     }
 
     public function add_data(Request $request) {}

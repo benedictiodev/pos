@@ -84,27 +84,27 @@
                       </div>
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Name
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Price
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Description
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Image
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Is Available
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-center text-xs font-medium uppercase text-gray-500 dark:text-gray-400">
                       Actions
                     </th>
                   </tr>
@@ -140,7 +140,7 @@
                         </p>
                       </td>
 
-                      <td class="space-x-2 whitespace-nowrap p-4">
+                      <td class="text-center space-x-2 whitespace-nowrap p-4">
                         <a href="{{ route('dashboard.master-data.product.edit', ['id' => $item->id]) }}" type="button"
                           id="updateProductButton" data-drawer-target="drawer-update-product-default"
                           data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
