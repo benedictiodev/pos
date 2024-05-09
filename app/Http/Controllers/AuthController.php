@@ -62,4 +62,8 @@ class AuthController extends Controller
             return redirect()->route('dashboard.profile')->with('failed', "Failed to update profile");
         }
     }
+
+    public function change_password() {
+        return view('dashboard.profile.password');
+    }
 }

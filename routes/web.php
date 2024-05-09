@@ -62,4 +62,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/", [AuthController::class, 'profile'])->name('dashboard.profile');
         Route::post("/", [AuthController::class, 'post_profile'])->name('dashboard.profile.post');
     });
+    Route::prefix("/change_password")->group(function () {
+        Route::get("/", [AuthController::class, 'change_password'])->name('dashboard.change_password');
+        // Route::post("/", [AuthController::class, 'post_change_password'])->name('dashboard.change_password.post');
+    });
 });
