@@ -58,4 +58,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/cash-flow-daily", [CashFlowController::class, 'list_daily'])->name('dashboard.finance.cash-flow-daily');
         Route::get("/cash-flow-monthly", [CashFlowController::class, 'list_monthly'])->name('dashboard.finance.cash-flow-monthly');
     });
+    Route::prefix("/profile")->group(function () {
+        Route::get("/", [AuthController::class, 'profile'])->name('dashboard.profile');
+        Route::post("/", [AuthController::class, 'post_profile'])->name('dashboard.profile.post');
+    });
 });
