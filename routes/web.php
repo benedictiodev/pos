@@ -5,6 +5,7 @@ use App\Http\Controllers\CashFlowController;
 use App\Http\Controllers\CashInController;
 use App\Http\Controllers\CashOutController;
 use App\Http\Controllers\CategoryProductController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix("/dashboard")->middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Master Data
     Route::prefix("/master-data")->group(function () {
         Route::prefix("/product")->group(function () {
             Route::get('/', [ProductController::class, 'index'])->name('dashboard.master-data.product');
@@ -38,6 +41,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::delete('/{id}', [CategoryProductController::class, 'destroy'])->name('dashboard.master-data.category-product.delete');
         });
     });
+
+    // Finance
     Route::prefix("/finance")->group(function () {
         Route::prefix("/cash-in")->group(function () {
             Route::get('/', [CashInController::class, 'index'])->name('dashboard.finance.cash-in');
@@ -58,6 +63,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/cash-flow-daily", [CashFlowController::class, 'list_daily'])->name('dashboard.finance.cash-flow-daily');
         Route::get("/cash-flow-monthly", [CashFlowController::class, 'list_monthly'])->name('dashboard.finance.cash-flow-monthly');
     });
+
+    // Profile
     Route::prefix("/profile")->group(function () {
         Route::get("/", [AuthController::class, 'profile'])->name('dashboard.profile');
         Route::post("/", [AuthController::class, 'post_profile'])->name('dashboard.profile.post');
@@ -65,5 +72,12 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
     Route::prefix("/change_password")->group(function () {
         Route::get("/", [AuthController::class, 'change_password'])->name('dashboard.change_password');
         // Route::post("/", [AuthController::class, 'post_change_password'])->name('dashboard.change_password.post');
+    });
+    // Company
+    Route::prefix("/company")->group(function () {
+        Route::prefix("/profile")->group(function () {
+            Route::get('/', [CompanyController::class, 'index'])->name('dashboard.company.profile');
+            Route::put('/{id}', [CompanyController::class, 'update'])->name('dashboard.company.profile.update');
+        });
     });
 });
