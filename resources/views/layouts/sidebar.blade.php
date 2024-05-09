@@ -8,57 +8,86 @@
         <ul class="pb-2 space-y-2">
           <li>
             <a href="{{ route('dashboard') }}"
-              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == "dashboard"  ? 'bg-gray-100' : '' }}">
+              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == 'dashboard' ? 'bg-gray-100' : '' }}">
               <x-fas-home class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
               <span class="ml-3" sidebar-toggle-item>Dashboard</span>
             </a>
           </li>
+
+          {{-- FINANCE --}}
           <li>
             <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), "dashboard.finance.") ? 'bg-gray-100' : '' }}"
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'bg-gray-100' : '' }}"
               aria-controls="dropdown-finance" data-collapse-toggle="dropdown-finance">
               <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Finance</span>
               <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
             </button>
-            <ul id="dropdown-finance" class="{{ str_contains(Request::route()->getName(), "dashboard.finance.")  ? '' : 'hidden' }} py-2 space-y-2">
+            <ul id="dropdown-finance"
+              class="{{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? '' : 'hidden' }} py-2 space-y-2">
               <li>
                 <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == "dashboard.finance.cash-flow-daily" ? 'bg-gray-100' : '' }}">
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-daily' ? 'bg-gray-100' : '' }}">
                   Daily Cash Flow
                 </a>
               </li>
               <li>
                 <a href="{{ route('dashboard.finance.cash-flow-monthly') }}"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == "dashboard.finance.cash-flow-monthly" ? 'bg-gray-100' : '' }}">
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-monthly' ? 'bg-gray-100' : '' }}">
                   Monthly Cash Flow
                 </a>
               </li>
             </ul>
           </li>
+          {{-- END FINANCE --}}
+
+          {{-- COMPANY --}}
           <li>
             <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), "dashboard.master-data.") ? 'bg-gray-100' : '' }}"
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.company.') ? 'bg-gray-100' : '' }}"
+              aria-controls="dropdown-company" data-collapse-toggle="dropdown-company">
+              <x-fas-building class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Company</span>
+              <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+            </button>
+            <ul id="dropdown-company"
+              class="{{ str_contains(Request::route()->getName(), 'dashboard.company.') ? '' : 'hidden' }} py-2 space-y-2">
+              <li>
+                <a href="{{ route('dashboard.company.profile') }}"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.company.profile') ? 'bg-gray-100' : '' }}">
+                  Profile
+                </a>
+              </li>
+            </ul>
+          </li>
+          {{-- END COMPANY --}}
+
+          {{-- MASTER DATA --}}
+          <li>
+            <button type="button"
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.') ? 'bg-gray-100' : '' }}"
               aria-controls="dropdown-master-data" data-collapse-toggle="dropdown-master-data">
               <x-fas-database class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Master Data</span>
               <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
             </button>
-            <ul id="dropdown-master-data" class="{{ str_contains(Request::route()->getName(), "dashboard.master-data.")  ? '' : 'hidden' }} py-2 space-y-2">
+            <ul id="dropdown-master-data"
+              class="{{ str_contains(Request::route()->getName(), 'dashboard.master-data.') ? '' : 'hidden' }} py-2 space-y-2">
               <li>
                 <a href="{{ route('dashboard.master-data.category-product') }}"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), "dashboard.master-data.category-product") ? 'bg-gray-100' : '' }}">
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.category-product') ? 'bg-gray-100' : '' }}">
                   Category Products
                 </a>
               </li>
               <li>
                 <a href="{{ route('dashboard.master-data.product') }}"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), "dashboard.master-data.product") ? 'bg-gray-100' : '' }}">
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.product') ? 'bg-gray-100' : '' }}">
                   Products
                 </a>
               </li>
             </ul>
           </li>
+          {{-- END MASTER DATA --}}
         </ul>
       </div>
     </div>
