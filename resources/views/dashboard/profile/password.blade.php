@@ -36,7 +36,7 @@
     <div
       class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800">
       <div class="mb-4">
-        <form action="{{ route('dashboard.profile.post') }}" method="POST" id="form_edit_profile">
+        <form action="{{ route('dashboard.change_password.post') }}" method="POST" id="form_edit_profile">
           @csrf
           <div class="space-y-6">
             <div>
@@ -68,38 +68,3 @@
     </div>
   </div>
 @endsection
-
-@push('script')
-  <script type="text/javascript">
-    function edit_form() {
-      const elements =  document.querySelectorAll('#form_edit_profile input, #form_edit_profile textarea');
-      elements.forEach(element => {
-        element.readOnly = false;
-        element.classList.remove("bg-gray-200");
-        element.classList.add("bg-gray-50");
-      });
-      document.querySelector('#frame_button_before_edit').hidden = true;
-      document.querySelector('#frame_button_after_edit').hidden = false;
-    }
-    function cancel_form() {
-      const name = "{{ Auth::user()->name }}";
-      const email = "{{ Auth::user()->email }}";
-      const phone_number = "{{ Auth::user()->phone_number }}";
-      const address = "{{ Auth::user()->address }}";
-
-      document.querySelector('#name').value = name;
-      document.querySelector('#email').value = email;
-      document.querySelector('#phone_number').value = phone_number;
-      document.querySelector('#address').value = address;
-
-      const elements =  document.querySelectorAll('#form_edit_profile input, #form_edit_profile textarea');
-      elements.forEach(element => {
-        element.readOnly = true;
-        element.classList.add("bg-gray-200");
-        element.classList.remove("bg-gray-50");
-      });
-      document.querySelector('#frame_button_before_edit').hidden = false;
-      document.querySelector('#frame_button_after_edit').hidden = true;
-    } 
-  </script>
-@endpush

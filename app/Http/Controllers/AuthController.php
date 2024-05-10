@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
@@ -65,5 +66,33 @@ class AuthController extends Controller
 
     public function change_password() {
         return view('dashboard.profile.password');
+    }
+
+    public function post_change_password(Request $request) {
+        $validate = $request->validate([
+            'old_password' => 'required',
+            'new_password' => 'required',
+            'confirm_password' => 'required',
+        ]);
+
+        if ($validate['new_password'] != $validate['confirm_password']) {
+            return redirect()->route('dashboard.change_password')->with('failed', "New password and Confirm password are different");
+        }
+
+        $data = User::findOrFail(Auth::user()->id);
+
+        if (!Hash::check($validate['old_password'], $data->password)) {
+            return redirect()->route('dashboard.change_password')->with('failed', "Old password are difference");
+        }
+
+        $update = $data->update([
+            'password' => Hash::make($validate['new_password']),
+        ]);
+
+        if ($update) {
+            return redirect()->route('dashboard.change_password')->with('success', "Successfully to change password");
+        } else {
+            return redirect()->route('dashboard.change_password')->with('failed', "Failed to change password");
+        }
     }
 }
