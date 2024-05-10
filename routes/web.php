@@ -7,6 +7,7 @@ use App\Http\Controllers\CashOutController;
 use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FundsController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,14 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::put('/{id}', [CategoryProductController::class, 'update'])->name('dashboard.master-data.category-product.update');
             Route::delete('/{id}', [CategoryProductController::class, 'destroy'])->name('dashboard.master-data.category-product.delete');
         });
+        Route::prefix("/funds")->group(function() {
+            Route::get('/', [FundsController::class, 'index'])->name('dashboard.master-data.funds');
+            Route::get('/create', [FundsController::class, 'create'])->name('dashboard.master-data.funds.create');
+            Route::post('/', [FundsController::class, 'store'])->name('dashboard.master-data.funds.post');
+            Route::get('/{id}/edit', [FundsController::class, 'edit'])->name('dashboard.master-data.funds.edit');
+            Route::put('/{id}', [FundsController::class, 'update'])->name('dashboard.master-data.funds.update');
+            Route::delete('/{id}', [FundsController::class, 'destroy'])->name('dashboard.master-data.funds.delete');
+        });
     });
 
     // Finance
@@ -62,6 +71,9 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         });
         Route::get("/cash-flow-daily", [CashFlowController::class, 'list_daily'])->name('dashboard.finance.cash-flow-daily');
         Route::get("/cash-flow-monthly", [CashFlowController::class, 'list_monthly'])->name('dashboard.finance.cash-flow-monthly');
+        Route::prefix("/funds")->group(function () {
+            Route::get('/', [FundsController::class, 'funds_finance'])->name('dashboard.finance.funds');
+        });
     });
 
     // Profile
