@@ -14,6 +14,7 @@ class Fund extends Model
     protected $table = 'fund';
     protected $fillable = [
         'company_id',
+        'type',
         'fund',
         'datetime',
     ];
