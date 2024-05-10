@@ -72,8 +72,8 @@ class FundsController extends Controller
             return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund, funds more than 0");
         }
 
-        $delete =  Fund::destroy($id);
-        if ($delete) {
+        $delete =  Fund::findOrFail($id);
+        if ($delete->trashed()) {
             return redirect()->route('dashboard.master-data.funds')->with('success', "Successfully to delete fund");
         } else {
             return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund");
