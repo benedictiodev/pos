@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Fund;
+use App\Models\HistoryFund;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class FundsController extends Controller
 {
     public function index() {
-        $data = Fund::paginate(5);
+        $data = Fund::where('company_id', Auth::user()->company_id)->paginate(5);
         return view('dashboard.master-data.funds.index', ['data' => $data]);
     }
 
@@ -78,5 +79,11 @@ class FundsController extends Controller
         } else {
             return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund");
         }
+    }
+
+    public function funds_finance() {
+        $data = Fund::where('company_id', Auth::user()->company_id)->get();
+        $data_history = HistoryFund::where('company_id', Auth::user()->company_id)->orderBy('datetime', 'desc')->paginate(5);
+        return view('dashboard.finance.funds.index', ['data' => $data, 'data_history' => $data_history]);
     }
 }

@@ -26,6 +26,12 @@
             <ul id="dropdown-finance"
               class="{{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? '' : 'hidden' }} py-2 space-y-2">
               <li>
+                <a href="{{ route('dashboard.finance.funds') }}"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == 'dashboard.finance.funds' ? 'bg-gray-100' : '' }}">
+                  Funds
+                </a>
+              </li>
+              <li>
                 <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
                   class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-daily' ? 'bg-gray-100' : '' }}">
                   Daily Cash Flow
