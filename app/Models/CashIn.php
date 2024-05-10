@@ -17,5 +17,6 @@ class CashIn extends Model
         'fund',
         'remark',
         'datetime',
+        'type'
     ];
 }

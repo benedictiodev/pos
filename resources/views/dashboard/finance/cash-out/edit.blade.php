@@ -21,12 +21,12 @@
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
               <span class="ml-1 text-gray-400 dark:text-gray-500 md:ml-2" aria-current="page">
-                Cash In</span>
+                Cash Out</span>
             </div>
           </li>
         </ol>
       </nav>
-      <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Create Cash In</h1>
+      <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Update Cash Out</h1>
       <a href="{{ route('dashboard.finance.cash-flow-daily') }}" type="button"
         class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-400 dark:focus:ring-slate-800">
         Back
@@ -46,6 +46,24 @@
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                 placeholder="Nominal" required value="{{ old('nominal', $data->fund) }}">
             </div>
+
+            <div>
+              <label for="type" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Type</label>
+              <select id="type" name="type"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required>
+                <option disabled value="" selected>~ Select Type ~</option>
+                @foreach ($funds as $item)
+                  <option value="{{ $item->type }}" @if (old('type', $data->type) == $item->type) selected @endif>
+                    {{ $item->type }}</option>
+                @endforeach
+
+              </select>
+              @error('type')
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</p>
+              @enderror
+            </div>
+
 
             <div>
               <label for="remark" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Remark</label>

@@ -17,5 +17,6 @@ class CashOut extends Model
         'fund',
         'remark',
         'datetime',
+        'type',
     ];
 }
