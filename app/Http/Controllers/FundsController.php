@@ -42,7 +42,11 @@ class FundsController extends Controller
     public function edit($id)
     {
         $data = Fund::findOrFail($id);
-        return view("dashboard.master-data.funds.edit", ["data" => $data]);
+        if ($data && $data->company_id == Auth::user()->company_id) {
+            return view("dashboard.master-data.funds.edit", ["data" => $data]);
+        } else {
+            return view('dashboard.master-data.funds')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+        }
     }
 
     public function update(Request $request, $id)
@@ -52,32 +56,38 @@ class FundsController extends Controller
         ]);
 
         $data = Fund::findOrFail($id);
-
-        $update = $data->update([
-            'type' => $request->type,
-            'company_id' => Auth::user()->company_id
-        ]);
-
-        if ($update) {
-            return redirect()->route('dashboard.master-data.funds')->with('success', "Successfully to update fund");
+        if ($data && $data->company_id == Auth::user()->company_id) {
+            $update = $data->update([
+                'type' => $request->type,
+                'company_id' => Auth::user()->company_id
+            ]);
+    
+            if ($update) {
+                return redirect()->route('dashboard.master-data.funds')->with('success', "Successfully to update fund");
+            } else {
+                return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to update fund");
+            }
         } else {
-            return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to update fund");
+            return view('dashboard.master-data.funds')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 
     public function destroy($id)
     {
         $data = Fund::findOrFail($id);
-
-        if ($data->fund > 0) {
-            return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund, funds more than 0");
-        }
-
-        $delete =  Fund::findOrFail($id);
-        if ($delete->trashed()) {
-            return redirect()->route('dashboard.master-data.funds')->with('success', "Successfully to delete fund");
+        if ($data && $data->company_id == Auth::user()->company_id) { 
+            if ($data->fund > 0) {
+                return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund, funds more than 0");
+            }
+    
+            $delete =  Fund::findOrFail($id);
+            if ($delete->trashed()) {
+                return redirect()->route('dashboard.master-data.funds')->with('success', "Successfully to delete fund");
+            } else {
+                return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund");
+            }
         } else {
-            return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund");
+            return view('dashboard.master-data.funds')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 
