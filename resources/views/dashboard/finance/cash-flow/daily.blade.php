@@ -103,6 +103,10 @@
                     </th>
                     <th scope="col"
                       class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      Type Fund
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Remark
                     </th>
                     <th scope="col"
@@ -134,6 +138,10 @@
                       <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
                           {{ $item->type == "cash-in" ? format_rupiah($item->fund) : '-' }}
+                        </p>
+                      </td>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->type_fund }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -179,7 +187,7 @@
                       class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       {{ format_rupiah($total_cash_in) }}
                     </th>
-                    <th scope="col" colspan="2"
+                    <th scope="col" colspan="3"
                       class="p-4 text-center text-base font-medium uppercase text-gray-500 dark:text-gray-400">
                     </th>
                   </tr>

@@ -5,13 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\CategoryProduct;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
     public function index()
     {
-        $data = Product::with('category_product')->paginate(5);
+        $data = Product::where('company_id', Auth::user()->company_id)->with('category_product')->paginate(5);
         return view('dashboard.master-data.product.index', [
             'data' => $data
         ]);

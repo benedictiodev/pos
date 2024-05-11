@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\CategoryProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CategoryProductController extends Controller
 {
     public function index()
     {
-        $data = CategoryProduct::paginate(5);
+        $data = CategoryProduct::where('company_id', Auth::user()->company_id)->paginate(5);
         return view('dashboard.master-data.category-product.index', ['data' => $data]);
     }
 

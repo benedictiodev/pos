@@ -86,10 +86,10 @@ class CashFlowController extends Controller
         }
 
         $cash_in = CashIn::where('datetime', 'like', $periode . '%')
-            ->select('*', DB::raw('"cash-in" AS type'))
+            ->select('*', 'type AS type_fund', DB::raw('"cash-in" AS type'))
             ->where('company_id', '=', $company_id)->orderBy('datetime')->get();
         $cash_out = CashOut::where('datetime', 'like', $periode . '%')
-            ->select('*', DB::raw('"cash-out" AS type'))
+            ->select('*', 'type AS type_fund', DB::raw('"cash-out" AS type'))
             ->where('company_id', '=', $company_id)->orderBy('datetime')->get();
 
         $total_cash_in = 0;
@@ -122,6 +122,4 @@ class CashFlowController extends Controller
             'total_cash_out' => $total_cash_out
         ]);
     }
-
-    public function add_data(Request $request) {}
 }

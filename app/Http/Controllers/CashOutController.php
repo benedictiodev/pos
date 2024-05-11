@@ -7,6 +7,8 @@ use App\Models\Fund;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class CashOutController extends Controller
 {
@@ -15,7 +17,7 @@ class CashOutController extends Controller
      */
     public function index()
     {
-        $data = CashOut::paginate(5);
+        $data = CashOut::where('company_id', Auth::user()->company_id)->paginate(5);
         return view('dashboard.finance.cash-out.index', ['data' => $data]);
     }
 
@@ -33,24 +35,27 @@ class CashOutController extends Controller
      */
     public function store(Request $request)
     {
-        $validate = $request->validate([
-            'fund' => 'required',
-            'remark' => 'required',
-            'datetime' => 'required',
-            'type' => 'required',
-        ]);
+        $query_data = array();
+        try {
+            DB::beginTransaction();
 
-        $store = CashOut::create([
-            'company_id' => Auth::user()->company_id,
-            'fund' => $validate['fund'],
-            'remark' => $validate['remark'],
-            'datetime' => $validate['datetime'],
-            'type' => $validate['type'],
-        ]);
-
-        $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m-d')];
-
-        if ($store) {
+            $validate = $request->validate([
+                'fund' => 'required',
+                'remark' => 'required',
+                'datetime' => 'required',
+                'type' => 'required',
+            ]);
+    
+            $store = CashOut::create([
+                'company_id' => Auth::user()->company_id,
+                'fund' => $validate['fund'],
+                'remark' => $validate['remark'],
+                'datetime' => $validate['datetime'],
+                'type' => $validate['type'],
+            ]);
+    
+            $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m-d')];
+    
             $fund = Fund::where(
                 "company_id",
                 Auth::user()->company_id
@@ -63,8 +68,9 @@ class CashOutController extends Controller
                 "fund" => $fund->fund - $validate["fund"]
             ]);
 
+            DB::commit();
             return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to create cash out");
-        } else {
+        } catch (Throwable $error) {
             return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to create cash out");
         }
     }
@@ -77,7 +83,7 @@ class CashOutController extends Controller
         $data = CashOut::findOrFail($id);
         $funds = Fund::where('company_id', Auth::user()->company_id)->get();
 
-        if ($data->company_id == Auth::user()->company_id) {
+        if ($data && $data->company_id == Auth::user()->company_id) {
             return view('dashboard.finance.cash-out.edit', [
                 "data" => $data,
                 "funds" => $funds,
@@ -92,31 +98,32 @@ class CashOutController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $validate = $request->validate([
-            'fund' => 'required',
-            'remark' => 'required',
-            'datetime' => 'required',
-            'type' => 'required',
-        ]);
-
-        $data = CashOut::findOrFail($id);
-        $type = $data->type;
-        $amount = $data->fund;
-
-        if ($data->company_id == Auth::user()->company_id) {
-
-            $update = $data->update([
-                'company_id' => Auth::user()->company_id,
-                'fund' => $validate['fund'],
-                'remark' => $validate['remark'],
-                'datetime' => $validate['datetime'],
-                'type' => $validate['type'],
-
+        $query_data = array();
+        try {
+            DB::beginTransaction();
+            $validate = $request->validate([
+                'fund' => 'required',
+                'remark' => 'required',
+                'datetime' => 'required',
+                'type' => 'required',
             ]);
-
-            $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m-d')];
-
-            if ($update) {
+    
+            $data = CashOut::findOrFail($id);
+            $type = $data->type;
+            $amount = $data->fund;
+    
+            if ($data && $data->company_id == Auth::user()->company_id) {
+                $update = $data->update([
+                    'company_id' => Auth::user()->company_id,
+                    'fund' => $validate['fund'],
+                    'remark' => $validate['remark'],
+                    'datetime' => $validate['datetime'],
+                    'type' => $validate['type'],
+    
+                ]);
+    
+                $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m-d')];
+    
                 if ($type == $validate["type"]) {
                     $fund = Fund::where(
                         "company_id",
@@ -139,21 +146,23 @@ class CashOutController extends Controller
                         Auth::user()->company_id
                     )->where('type', $validate['type'])->first();
 
-                    $fundOld->where('type', $type)->update([
+                    $fundOld->update([
                         "fund" => $fundOld->fund + $amount
                     ]);
 
-                    $fund->where('type', $validate['type'])->update([
+                    $fund->update([
                         "fund" => $fund->fund - $validate["fund"]
                     ]);
                 }
-
+                DB::commit();
                 return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to update cash out");
             } else {
-                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to update cash out");
+                DB::rollBack();
+                return abort(404);
             }
-        } else {
-            return abort(404);
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to update cash out");
         }
     }
 
@@ -163,20 +172,32 @@ class CashOutController extends Controller
     public function destroy(string $id, Request $request)
     {
         $query_data = array();
-        if ($request->periode) {
-            $query_data = ['periode' => $request->periode];
-        }
+        try {
+            DB::beginTransaction();
+            if ($request->periode) {
+                $query_data = ['periode' => $request->periode];
+            }
+    
+            $data = CashOut::findOrFail($id);
+            if ($data && $data->company_id == Auth::user()->company_id) {
+                $fund = Fund::where(
+                    "company_id",
+                    Auth::user()->company_id
+                )->where('type', $data->type)->first();
+                $fund->update([
+                    'fund' => $fund->fund + $data->fund,
+                ]);
+                $delete =  CashOut::destroy($id);
 
-        $data = CashOut::findOrFail($id);
-        if ($data->company_id == Auth::user()->company_id) {
-            $delete =  CashOut::destroy($id);
-            if ($delete) {
+                DB::commit();
                 return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to delete cash out");
             } else {
-                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to delete cash out");
+                DB::rollBack();
+                return abort(404);
             }
-        } else {
-            return abort(404);
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to delete cash out");
         }
     }
 }
