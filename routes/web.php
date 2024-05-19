@@ -73,6 +73,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/cash-flow-monthly", [CashFlowController::class, 'list_monthly'])->name('dashboard.finance.cash-flow-monthly');
         Route::prefix("/funds")->group(function () {
             Route::get('/', [FundsController::class, 'funds_finance'])->name('dashboard.finance.funds');
+            Route::get('/create', [FundsController::class, 'funds_finance_create'])->name('dashboard.finance.funds.create');
+            Route::post('/', [FundsController::class, 'funds_finance_post'])->name('dashboard.finance.funds.post');
         });
     });
 

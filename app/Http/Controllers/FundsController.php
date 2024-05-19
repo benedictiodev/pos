@@ -6,6 +6,8 @@ use App\Models\Fund;
 use App\Models\HistoryFund;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class FundsController extends Controller
 {
@@ -93,7 +95,60 @@ class FundsController extends Controller
 
     public function funds_finance() {
         $data = Fund::where('company_id', Auth::user()->company_id)->get();
+        $total_fund = 0;
+        foreach($data AS $item) {
+            $total_fund += (int)$item->fund;
+        }
         $data_history = HistoryFund::where('company_id', Auth::user()->company_id)->orderBy('datetime', 'desc')->paginate(5);
-        return view('dashboard.finance.funds.index', ['data' => $data, 'data_history' => $data_history]);
+        return view('dashboard.finance.funds.index', ['data' => $data, 'data_history' => $data_history, 'total_fund' => $total_fund]);
+    }
+
+    public function funds_finance_create() {
+        $funds = Fund::where('company_id', Auth::user()->company_id)->get();
+        return view("dashboard.finance.funds.create", ['funds' => $funds]);
+    }
+
+    public function funds_finance_post(Request $request) {
+        try {
+            DB::beginTransaction();
+            $validate = $request->validate([
+                'amount' => 'required',
+                'from_type' => 'required',
+                'to_type' => 'required',
+                'datetime' => 'required',
+            ]);
+
+            $fund_form = Fund::where(
+                "company_id",
+                Auth::user()->company_id
+            )->where('type', $validate['from_type'])->first();
+
+            $fund_form->update([
+                "fund" => $fund_form->fund - $validate['amount']
+            ]);
+
+            $fund_to = Fund::where(
+                "company_id",
+                Auth::user()->company_id
+            )->where('type', $validate['to_type'])->first();
+
+            $fund_to->update([
+                "fund" => $fund_to->fund + $validate['amount']
+            ]);
+
+            HistoryFund::create([
+                'company_id' => Auth::user()->company_id,
+                'from_type' => $validate['from_type'],
+                'to_type' => $validate['to_type'],
+                'amount' => $validate['amount'],
+                'datetime' => $validate['datetime'],
+            ]);
+
+            DB::commit();
+            return redirect()->route('dashboard.finance.funds')->with('success', "Successfully to create diversion of fund allocation");
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.finance.funds.create')->with('failed', "Failed to create diversion of fund allocation");
+        }
     }
 }
