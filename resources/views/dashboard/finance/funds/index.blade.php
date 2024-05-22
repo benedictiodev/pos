@@ -75,7 +75,7 @@
         </div>
         <a id="createProductButton"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          type="button" href="{{ route('dashboard.finance.funds.create') }}">
+          href="{{ route('dashboard.finance.funds.create') }}">
           Add new diversion of fund allocation
         </a>
       </div>
