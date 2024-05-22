@@ -9,6 +9,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RemarksCashFlowController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -48,6 +49,14 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::get('/{id}/edit', [FundsController::class, 'edit'])->name('dashboard.master-data.funds.edit');
             Route::put('/{id}', [FundsController::class, 'update'])->name('dashboard.master-data.funds.update');
             Route::delete('/{id}', [FundsController::class, 'destroy'])->name('dashboard.master-data.funds.delete');
+        });
+        Route::prefix("/remarks-cash-flow")->group(function () {
+            Route::get('/', [RemarksCashFlowController::class, 'index'])->name('dashboard.master-data.remarks-cash-flow');
+            Route::get('/create', [RemarksCashFlowController::class, 'create'])->name('dashboard.master-data.remarks-cash-flow.create');
+            Route::post('/', [RemarksCashFlowController::class, 'store'])->name('dashboard.master-data.remarks-cash-flow.post');
+            Route::get('/{id}/edit', [RemarksCashFlowController::class, 'edit'])->name('dashboard.master-data.remarks-cash-flow.edit');
+            Route::put('/{id}', [RemarksCashFlowController::class, 'update'])->name('dashboard.master-data.remarks-cash-flow.update');
+            Route::delete('/{id}', [RemarksCashFlowController::class, 'destroy'])->name('dashboard.master-data.remarks-cash-flow.delete');
         });
     });
 

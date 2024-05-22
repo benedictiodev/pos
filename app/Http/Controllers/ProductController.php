@@ -12,7 +12,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $data = Product::where('company_id', Auth::user()->company_id)->with('category_product')->paginate(5);
+        $data = Product::with(['category_product' => function ($query) {
+            $query->where('company_id', Auth::user()->company_id);
+        }])->paginate(5);
         return view('dashboard.master-data.product.index', [
             'data' => $data
         ]);
