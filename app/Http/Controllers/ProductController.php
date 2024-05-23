@@ -12,9 +12,14 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $data = Product::with(['category_product' => function ($query) {
-            $query->where('company_id', Auth::user()->company_id);
-        }])->paginate(5);
+        // $data = Product::with(['category_product' => function ($query) {
+        //     $query->where('company_id', Auth::user()->company_id);
+        // }])->paginate(5);
+        $data = Product::select('products.*')
+        ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+        ->where('company_id', Auth::user()->company_id)
+        ->paginate(5);
+
         return view('dashboard.master-data.product.index', [
             'data' => $data
         ]);
@@ -60,12 +65,18 @@ class ProductController extends Controller
 
     public function edit($id)
     {
-        $data = Product::findOrFail($id);
+        // $data = Product::findOrFail($id);
+        $data = Product::select('products.*', 'company_id')
+        ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+        ->where('company_id', Auth::user()->company_id)
+        ->where('products.id', $id)
+        ->first();
+
         if ($data && $data->company_id == Auth::user()->company_id) { 
             $lists = CategoryProduct::where('company_id', Auth::user()->company_id)->get();
             return view('dashboard.master-data.product.edit', ["data" => $data, "lists" => $lists]);
         } else {
-            return view('dashboard.master-data.product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.master-data.product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 
@@ -78,7 +89,13 @@ class ProductController extends Controller
             'description' => 'required',
         ]);
 
-        $data = Product::findOrFail($id);
+        // $data = Product::findOrFail($id);
+        $data = Product::select('products.*', 'company_id')
+        ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+        ->where('company_id', Auth::user()->company_id)
+        ->where('products.id', $id)
+        ->first();
+
         if ($data && $data->company_id == Auth::user()->company_id) { 
             if ($request->file('image')) {
                 if ($request->old_image) {
@@ -97,13 +114,19 @@ class ProductController extends Controller
                 return redirect()->route('dashboard.master-data.product')->with('failed', "Failed to update  product");
             }
         } else {
-            return view('dashboard.master-data.product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.master-data.product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 
     public function destroy($id)
     {
-        $product = Product::find($id);
+        // $product = Product::find($id);
+        $product = Product::select('products.*', 'company_id')
+        ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+        ->where('company_id', Auth::user()->company_id)
+        ->where('products.id', $id)
+        ->first();
+
         if ($product && $product->company_id == Auth::user()->company_id) { 
             Storage::delete($product->image);
             $delete =  Product::destroy($id);
@@ -113,7 +136,7 @@ class ProductController extends Controller
                 return redirect()->route('dashboard.master-data.product')->with('failed', "Failed to delete  product");
             }
         } else {
-            return view('dashboard.master-data.product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.master-data.product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 }

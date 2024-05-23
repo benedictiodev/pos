@@ -44,7 +44,7 @@ class RemarksCashFlowController extends Controller
         if ($data && $data->company_id == Auth::user()->company_id) {
             return view("dashboard.master-data.remarks-cash-flow.edit", ["data" => $data]);
         } else {
-            return view("dashboard.master-data.remarks-cash-flow")->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route("dashboard.master-data.remarks-cash-flow")->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 
@@ -68,7 +68,7 @@ class RemarksCashFlowController extends Controller
                 return redirect()->route('dashboard.master-data.remarks-cash-flow')->with('failed', "Failed to update remarks");
             }
         } else {
-            return view('dashboard.master-data.remarks-cash-flow')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.master-data.remarks-cash-flow')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 
@@ -82,7 +82,7 @@ class RemarksCashFlowController extends Controller
                 return redirect()->route('dashboard.master-data.remarks-cash-flow')->with('failed', "Failed to delete remarks");
             }
         } else {
-            return view('dashboard.master-data.remarks-cash-flow')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.master-data.remarks-cash-flow')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 }
