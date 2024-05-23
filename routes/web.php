@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemarksCashFlowController;
 use Illuminate\Support\Facades\Route;
@@ -85,6 +86,12 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::get('/create', [FundsController::class, 'funds_finance_create'])->name('dashboard.finance.funds.create');
             Route::post('/', [FundsController::class, 'funds_finance_post'])->name('dashboard.finance.funds.post');
         });
+    });
+
+    // Order
+    Route::prefix("/order")->group(function () {
+        Route::get("/", [OrderController::class, 'order_active'])->name('dashboard.order.order_active');
+        Route::get("/new-order", [OrderController::class, 'add_new_order'])->name('dashboard.order.order_active.add_new_order');
     });
 
     // Profile
