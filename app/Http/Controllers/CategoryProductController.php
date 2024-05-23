@@ -22,12 +22,13 @@ class CategoryProductController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required|unique:category_products'
+            // 'name' => 'required|unique:category_products'
+            'name' => 'required'
         ]);
 
         $store = CategoryProduct::create([
             'name' => $request->name,
-            'company_id' => 1
+            'company_id' => Auth::user()->company_id
         ]);
 
         if ($store) {
@@ -40,7 +41,11 @@ class CategoryProductController extends Controller
     public function edit($id)
     {
         $data = CategoryProduct::findOrFail($id);
-        return view("dashboard.master-data.category-product.edit", ["data" => $data]);
+        if ($data && $data->company_id == Auth::user()->company_id) {
+            return view("dashboard.master-data.category-product.edit", ["data" => $data]);
+        } else {
+            return view('dashboard.master-data.category-product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+        }
     }
 
     public function update(Request $request, $id)
@@ -50,26 +55,34 @@ class CategoryProductController extends Controller
         ]);
 
         $data = CategoryProduct::findOrFail($id);
-
-        $update = $data->update([
-            'name' => $request->name,
-            'company_id' => 1
-        ]);
-
-        if ($update) {
-            return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to update category product");
+        if ($data && $data->company_id == Auth::user()->company_id) {
+            $update = $data->update([
+                'name' => $request->name,
+                'company_id' => 1
+            ]);
+    
+            if ($update) {
+                return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to update category product");
+            } else {
+                return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to update category product");
+            }
         } else {
-            return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to update category product");
+            return view('dashboard.master-data.category-product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 
     public function destroy($id)
     {
-        $delete =  CategoryProduct::destroy($id);
-        if ($delete) {
-            return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to delete category product");
+        $data =  CategoryProduct::findOrFail($id);
+        if ($data && $data->company_id == Auth::user()->company_id) { 
+            $delete =  CategoryProduct::destroy($id);
+            if ($delete) {
+                return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to delete category product");
+            } else {
+                return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to delete category product");
+            }
         } else {
-            return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to delete category product");
+            return view('dashboard.master-data.category-product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 }

@@ -66,7 +66,7 @@
         </div>
         <a id="createProductButton"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          href="{{ route('dashboard.master-data.product.create') }}">
+          href="{{ route('dashboard.master-data.remarks-cash-flow.create') }}">
           Add new remarks
         </a>
       </div>
@@ -110,7 +110,7 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.master-data.product.edit', ['id' => $item->id]) }}" type="button"
+                        <a href="{{ route('dashboard.master-data.remarks-cash-flow.edit', ['id' => $item->id]) }}"
                           id="updateProductButton" data-drawer-target="drawer-update-product-default"
                           data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
                           data-drawer-placement="right"
@@ -161,7 +161,7 @@
         @method('DELETE')
         <input type="text" id="delete-id" value="" hidden>
         <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
-        <h3 class="mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this product?</h3>
+        <h3 class="mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this remarks?</h3>
         <button type="button" data-type="button-delete"
           class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
           Yes, I'm sure
@@ -189,7 +189,7 @@
           const id = document.querySelector("#delete-id").value;
           document.querySelector("#form-delete").method = "POST";
           document.querySelector("#form-delete").action =
-            `/dashboard/master-data/products/${id}`;
+            `/dashboard/master-data/remarks-cash-flow/${id}`;
           document.querySelector("#form-delete").submit();
         }
       })
