@@ -124,7 +124,7 @@
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->price }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ format_rupiah($item->price) }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">

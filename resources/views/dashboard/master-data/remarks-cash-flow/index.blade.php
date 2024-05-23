@@ -90,6 +90,10 @@
                     </th>
                     <th scope="col"
                       class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      Type
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Actions
                     </th>
                   </tr>
@@ -106,6 +110,10 @@
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->name }}
+                        </p>
+                      </td>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ strtoupper(str_replace('_', ' ', $item->type)) }}
                         </p>
                       </td>
 
