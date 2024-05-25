@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
 {
@@ -11,6 +13,35 @@ class OrderController extends Controller
     }
 
     public function add_new_order() {
-        return view('dashboard.order.new_order');
+        $data = Product::select('products.*', 'category_products.name AS category_name')
+        ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+        ->where('company_id', Auth::user()->company_id)
+        ->orderBy('category_id')
+        ->orderBy('products.id')
+        ->get();
+
+        $result_data = array();
+        foreach($data as $item) {
+            $find = false;
+            foreach($result_data as $key => $search_item) {
+                if ($search_item->category_name == $item->category_name) {
+                    $find = $key;
+                    break;
+                }
+            }
+
+            if ($find === false) {
+                array_push($result_data, (object) [
+                    'category_name' => $item->category_name,
+                    'products' => array($item),
+                ]);
+            } else {
+                array_push($result_data[$find]->products, $item);
+            }
+        }
+
+        return view('dashboard.order.new_order', [
+            'list_menu' => $result_data
+        ]);
     }
 }

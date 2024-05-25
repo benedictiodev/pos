@@ -52,24 +52,88 @@
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
-            <div class="mb-4">
-        <form action="{{ route('dashboard.master-data.remarks-cash-flow.post') }}" method="POST">
-          @csrf
-          <div class="space-y-6">
-            <div>
-              <label for="customer_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Customer Name</label>
-              <input type="text" name="customer_name" id="customer_name"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                placeholder="Customer Name" required>
+            <div class="flex">
+              <div class="w-2/5 border mr-3 rounded-xl max-h-[450px]">
+                <div class="h-5/6 overflow-auto">
+                  <div class="mx-2 px-2 py-3 flex border-b font-semibold">
+                    <div class="w-3/6">Menu</div>
+                    <div class="w-1/6 text-center">Qty</div>
+                    <div class="w-2/6 text-right">Price</div>
+                  </div>
+                  <div class="mx-2 px-2 py-2 flex border-b text-sm">
+                    <div class="w-3/6">
+                      <div>1. Nasi</div>
+                      <div class="text-xs font-thin">catatan : -</div>
+                    </div>
+                    <div class="w-1/6 text-center">10</div>
+                    <div class="w-2/6 text-right">Rp. 100.000</div>
+                  </div>
+                  <div class="mx-2 px-2 py-2 flex border-b text-sm">
+                    <div class="w-3/6">
+                      <div>2. Ayam</div>
+                      <div class="text-xs font-thin">catatan : Paha 5, Dada 3</div>
+                    </div>
+                    <div class="w-1/6 text-center">8</div>
+                    <div class="w-2/6 text-right">Rp. 40.000</div>
+                  </div>
+                  <div class="mx-2 px-2 py-2 flex border-b text-sm">
+                    <div class="w-3/6">
+                      <div>3. Baso</div>
+                      <div class="text-xs font-thin">catatan : -</div>
+                    </div>
+                    <div class="w-1/6 text-center">3</div>
+                    <div class="w-2/6 text-right">Rp. 36.000</div>
+                  </div>
+                  <div class="mx-2 px-2 py-2 flex border-b text-sm">
+                    <div class="w-3/6">
+                      <div>4. Kerupuk</div>
+                      <div class="text-xs font-thin">catatan : kerupuk putih</div>
+                    </div>
+                    <div class="w-1/6 text-center">4</div>
+                    <div class="w-2/6 text-right">Rp. 4.000</div>
+                  </div>
+                </div>
+                <div class="h-1/6 bg-[#E5E7EB] rounded-b-lg flex flex-col justify-center items-center px-4">
+                  <div class="flex justify-between w-full font-semibold text-sm mb-2">
+                    <div>Total Price</div>
+                    <div>Rp. 180.000</div>
+                  </div>
+                  <button
+                  class="mx-4 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-xs font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                  >Order Now</button>
+                </div>
+              </div>
+              <div class="w-3/5 border ml-3 rounded-xl max-h-[450px] overflow-auto">
+                <div class="p-2 text-center text-lg font-semibold bg-[#E5E7EB] rounded-t-lg border-b-2 border-white">List Menu</div>
+                <div>
+                  @foreach ($list_menu as $category)  
+                    <div>
+                      <div class="bg-[#E5E7EB] py-1 px-2">Category : {{ $category->category_name }}</div>
+                      <div class="grid grid-cols-4 gap-2 px-1 py-2">
+                        @foreach ($category->products as $item) 
+                          <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
+                            <div class="border p-2 rounded-md flex items-center justify-center h-32 max-h-32">
+                              <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}">
+                            </div>
+                            <div class="mt-2 ">
+                              <div class="font-medium">{{ $item->name }}</div>
+                              <div class="font-thin text-sm">{{ $item->description }}</div>
+                            </div>
+                            <div class="absolute w-full bottom-[8px] pr-4">
+                              <div class="text-right mt-2 text-sm font-bold">{{ format_rupiah($item->price) }}</div>
+                              <button
+                                class="mt-2 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                Add to cart
+                              </button>
+                            </div>
+                          </div>
+                        @endforeach
+                      </div>
+                    </div>
+                  @endforeach
+                </div>
+              </div>
             </div>
-
-            <button type="submit"
-              class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Add
-            </button>
-          </div>
-        </form>
-      </div>
           </div>
         </div>
       </div>
