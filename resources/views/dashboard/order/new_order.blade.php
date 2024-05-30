@@ -187,6 +187,7 @@
           </div>
           <!-- Modal body -->
           <div class="p-4 md:p-5 space-y-4">
+            <input type="text" id="order-sequence" value="" hidden>
             <input type="text" id="order-product_id" value="" hidden>
             <input type="text" id="order-product_price" value="" hidden>
             <div class="mb-3">
@@ -376,6 +377,8 @@
             <div class="w-2/6 text-right">${format_rupiah(price_item)}</div>
             <div id="container-update-order-${item.sequence}" class="hidden rounded-lg absolute justify-center items-center top-0 bottom-0 left-0 right-0 bg-gray-200/60">
               <button
+                data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
+                onclick="update_order_from_chart(${item.sequence})"
                 class="mr-2 inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-xs text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 <x-fas-edit class="mr-2 h-4 w-4" />
                 Update
@@ -407,7 +410,30 @@
       draw_order_item();
     }
 
+    const update_order_from_chart = (sequence_id) => {
+      let item = data_order.find(data => data.sequence == sequence_id);
+      $('#modal-add-to-cart').removeClass('hidden');
+      $('#modal-add-to-cart').addClass('flex');
+      $('body').addClass('overflow-hidden');
+      console.log($('div.bg-gray-900\\/50').length);
+      // if ($('div.bg-gray-900/50').length == 0) {
+      //   $('body').append('<div modal-backdrop class="bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40"></div>');
+      // }
+      $('#modal-add-to-cart').removeAttr('aria-hidden');
+      $('#modal-add-to-cart').attr('aria-modal', true);
+      $('#modal-add-to-cart').attr('role', 'dialog');
+      
+      
+      $('#order-sequence').val(item.sequence);
+      $('#order-product_id').val(item.product_id);
+      $('#order-product_price').val(item.product_price);
+      $('#order-product_name').val(item.product_name);
+      $('#order-qty').val(item.qty);
+      $('#order-remarks').val(item.remarks);
+    }
+
     const add_new_order = (id, name, price) => {
+      $('#order-sequence').val();
       $('#order-product_id').val(id);
       $('#order-product_price').val(price);
       $('#order-product_name').val(name);
@@ -416,17 +442,25 @@
     }
 
     const set_order_to_cart = () => {
+      let data_sequence = $('#order-sequence').val();
       let product_id = $('#order-product_id').val();
       let product_price = $('#order-product_price').val();
       let product_name = $('#order-product_name').val();
       let qty = $('#order-qty').val();
       let remarks = $('#order-remarks').val();
 
-      data_order.push({
-        product_id, product_price, product_name, qty, remarks, sequence
-      });
-
-      sequence += 1;
+      if (data_sequence) {
+        let index = data_order.findIndex(item => item.sequence == data_sequence);
+        data_order[index] = {
+          product_id, product_price, product_name, qty, remarks, data_sequence
+        }
+      } else {
+        data_order.push({
+          product_id, product_price, product_name, qty, remarks, sequence
+        });
+  
+        sequence += 1;
+      }
       draw_order_item();
     }
 
