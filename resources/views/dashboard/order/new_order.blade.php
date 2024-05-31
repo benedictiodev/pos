@@ -73,6 +73,10 @@
                   class="mx-4 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-xs font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                     Order Now
                   </button>
+                  <button
+                    id="button-trigger-modal"
+                    data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
+                    class="hidden"></button>
                 </div>
               </div>
               <div class="w-3/5 border ml-3 rounded-xl max-h-[450px] overflow-auto">
@@ -176,7 +180,7 @@
           <!-- Modal header -->
           <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
             <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-              Add To Cart
+              <span id="modal-add-to-cart-title">Add</span> To Cart
             </h3>
             <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modal-add-to-cart">
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
@@ -210,7 +214,7 @@
                 placeholder="Enter event remarks here"></textarea>
             </div>
             <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-              Are you sure you want to add this order?
+              Are you sure you want to <span id="modal-add-to-cart-text">add</span> this order?
             </p>
           </div>
           <!-- Modal footer -->
@@ -290,11 +294,23 @@
                     @endforeach
                   </select>
                 </div>
+                <div class="mb-3">
+                  <label for="confirm_order-total_payment" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Total Payment</label>
+                  <input type="number" min="0" name="confirm_order-total_payment" id="confirm_order-total_payment"
+                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                    placeholder="Total Payment" readonly>
+                </div>
                 <div class="">
                   <label for="confirm_order-payment" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Payment</label>
                   <input type="number" min="0" name="confirm_order-payment" id="confirm_order-payment"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                     placeholder="Payment">
+                </div>
+                <div class="">
+                  <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Change</label>
+                  <input type="number" min="0" name="confirm_order-change" id="confirm_order-change"
+                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                    placeholder="Change">
                 </div>
               </div>
             </form>
@@ -312,50 +328,7 @@
 
 @push('script')
   <script type="text/javascript">
-    let data_order = [{
-      product_id: "1",
-      product_name: "nasi",
-      product_price: "10000",
-      qty: "1",
-      remarks: "",
-      sequence: 0}, {
-      product_id: "1",
-      product_name: "nasi",
-      product_price: "10000",
-      qty: "2",
-      remarks: "",
-      sequence: 1}, {
-      product_id: "1",
-      product_name: "nasi",
-      product_price: "10000",
-      qty: "3",
-      remarks: "",
-      sequence: 2}, {
-      product_id: "1",
-      product_name: "nasi",
-      product_price: "10000",
-      qty: "4",
-      remarks: "",
-      sequence: 3}, {
-      product_id: "1",
-      product_name: "nasi",
-      product_price: "10000",
-      qty: "5",
-      remarks: "",
-      sequence: 4}, {
-      product_id: "1",
-      product_name: "nasi",
-      product_price: "10000",
-      qty: "6",
-      remarks: "",
-      sequence: 5}, {
-      product_id: "1",
-      product_name: "nasi",
-      product_price: "10000",
-      qty: "7",
-      remarks: "",
-      sequence: 6}
-    ], sequence = 7;
+    let data_order = [], sequence = 0;
 
     $(document).ready(function() {
       draw_order_item();
@@ -377,7 +350,7 @@
             <div class="w-2/6 text-right">${format_rupiah(price_item)}</div>
             <div id="container-update-order-${item.sequence}" class="hidden rounded-lg absolute justify-center items-center top-0 bottom-0 left-0 right-0 bg-gray-200/60">
               <button
-                data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
+                
                 onclick="update_order_from_chart(${item.sequence})"
                 class="mr-2 inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-xs text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                 <x-fas-edit class="mr-2 h-4 w-4" />
@@ -392,8 +365,12 @@
             </div>
           </div>
         `);
+        // data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
       })
 
+      $('#confirm_order-total_payment').val(total_price_order);
+      $('#confirm_order-payment').val(0);
+      $('#confirm_order-change').val(0);
       $('#order-total-price').html(format_rupiah(total_price_order));
     }
 
@@ -411,18 +388,11 @@
     }
 
     const update_order_from_chart = (sequence_id) => {
+      $('#modal-add-to-cart-title').html('Update');
+      $('#modal-add-to-cart-text').html('update');
+
       let item = data_order.find(data => data.sequence == sequence_id);
-      $('#modal-add-to-cart').removeClass('hidden');
-      $('#modal-add-to-cart').addClass('flex');
-      $('body').addClass('overflow-hidden');
-      console.log($('div.bg-gray-900\\/50').length);
-      // if ($('div.bg-gray-900/50').length == 0) {
-      //   $('body').append('<div modal-backdrop class="bg-gray-900/50 dark:bg-gray-900/80 fixed inset-0 z-40"></div>');
-      // }
-      $('#modal-add-to-cart').removeAttr('aria-hidden');
-      $('#modal-add-to-cart').attr('aria-modal', true);
-      $('#modal-add-to-cart').attr('role', 'dialog');
-      
+      $('#button-trigger-modal').trigger("click");
       
       $('#order-sequence').val(item.sequence);
       $('#order-product_id').val(item.product_id);
@@ -433,7 +403,10 @@
     }
 
     const add_new_order = (id, name, price) => {
-      $('#order-sequence').val();
+      $('#modal-add-to-cart-title').html('Add');
+      $('#modal-add-to-cart-text').html('add');
+
+      $('#order-sequence').val('');
       $('#order-product_id').val(id);
       $('#order-product_price').val(price);
       $('#order-product_name').val(name);
@@ -449,10 +422,10 @@
       let qty = $('#order-qty').val();
       let remarks = $('#order-remarks').val();
 
-      if (data_sequence) {
+      if (data_sequence !== '') {
         let index = data_order.findIndex(item => item.sequence == data_sequence);
         data_order[index] = {
-          product_id, product_price, product_name, qty, remarks, data_sequence
+          product_id, product_price, product_name, qty, remarks, sequence: data_sequence
         }
       } else {
         data_order.push({
