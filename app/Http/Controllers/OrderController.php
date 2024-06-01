@@ -48,4 +48,8 @@ class OrderController extends Controller
             'list_fund' => $data_fund,
         ]);
     }
+
+    public function post_new_order(Request $request) {
+        
+    }
 }

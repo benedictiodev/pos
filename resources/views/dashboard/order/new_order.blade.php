@@ -304,13 +304,13 @@
                   <label for="confirm_order-payment" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Payment</label>
                   <input type="number" min="0" name="confirm_order-payment" id="confirm_order-payment"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                    placeholder="Payment">
+                    placeholder="Payment" onkeyup="count_change_payment()">
                 </div>
                 <div class="">
                   <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Change</label>
                   <input type="number" min="0" name="confirm_order-change" id="confirm_order-change"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                    placeholder="Change">
+                    placeholder="Change" readonly>
                 </div>
               </div>
             </form>
@@ -456,5 +456,11 @@
         $('#payment_form').attr('hidden', true);
       }
     });
+
+    const count_change_payment = () => {
+      let total_payment = $('#confirm_order-total_payment').val();
+      let payment = $('#confirm_order-payment').val();
+      $('#confirm_order-change').val(Number(payment) - Number(total_payment));
+    };
   </script>
 @endpush
