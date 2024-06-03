@@ -92,6 +92,7 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
     Route::prefix("/order")->group(function () {
         Route::get("/", [OrderController::class, 'order_active'])->name('dashboard.order.order_active');
         Route::get("/new-order", [OrderController::class, 'add_new_order'])->name('dashboard.order.order_active.add_new_order');
+        Route::post("/post_new_order", [OrderController::class, 'post_new_order'])->name('dashboard.order.order_active.post_new_order');
     });
 
     // Profile

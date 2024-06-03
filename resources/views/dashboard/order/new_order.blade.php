@@ -98,9 +98,6 @@
                             <div class="absolute w-full bottom-[8px] pr-4">
                               <div class="text-right mt-2 text-sm font-bold">{{ format_rupiah($item->price) }}</div>
                               <button
-                                {{-- data-drawer-target="drawer-order"
-                                data-drawer-show="drawer-order" aria-controls="drawer-order"
-                                data-drawer-placement="right" --}}
                                 data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
                                 onclick="add_new_order({{ $item->id }}, '{{ $item->name }}', {{ $item->price }})"
                                 class="mt-2 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
@@ -120,57 +117,40 @@
       </div>
     </div>
 
-    {{-- <div id="drawer-order"
+    <button
+      id="trigger-drawer-confirm_order"
+      data-drawer-target="drawer-confirm_order"
+      data-drawer-show="drawer-confirm_order" aria-controls="drawer-confirm_order"
+      data-drawer-placement="right"
+      class="hidden">
+    </button>
+    <div id="drawer-confirm_order"
       class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800"
       tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
       <h5 id="drawer-label"
-        class="inline-flex items-center text-sm font-semibold uppercase text-gray-500 dark:text-gray-400">Add To Cart
+        class="inline-flex items-center text-sm font-semibold uppercase text-gray-500 dark:text-gray-400">Confirm Order
       </h5>
-      <button type="button" data-drawer-dismiss="drawer-order"
-        aria-controls="drawer-order"
+      <button type="button" data-drawer-dismiss="drawer-confirm_order"
+        aria-controls="drawer-confirm_order"
         class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">
         <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
         <span class="sr-only">Close menu</span>
       </button>
-      <form id="form-order">
-        <input type="text" id="order-product_id" value="" hidden>
-        <input type="text" id="order-product_price" value="" hidden>
-        <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-gray-400" />
-        <h3 class="mb-3 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to add this order?</h3>
-        <div class="mb-6">
-          <div class="mb-3">
-            <label for="order-product_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
-            <input type="text" name="order-product_name" id="order-product_name"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-              placeholder="Product Name" readonly>
-          </div>
-          <div class="mb-3">
-            <label for="order-qty" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Qty</label>
-            <input type="number" min="1" name="order-qty" id="order-qty"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-              placeholder="Qty" value="1" required>
-          </div>
-          <div>
-            <label for="order-remarks"
-              class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Remarks</label>
-            <textarea id="order-remarks" rows="4" name="order-remarks"
-              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-              placeholder="Enter event remarks here"></textarea>
-          </div>
-        </div>
-        <button type="button" data-type="button-order"
-          class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
-          data-drawer-hide="drawer-order"
-          onclick="set_order_to_cart()">
-          Yes, I'm sure
-        </button>
-        <button type="button"
-          class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
-          data-drawer-hide="drawer-order">
-          No, cancel
-        </button>
-      </form>
-    </div> --}}
+
+      <x-fas-circle-exclamation id="icon_fas-circle-exclamation" class="mb-4 mt-8 h-10 w-10 text-gray-400" />
+      <h3 id="header-drawer" class="mb-3 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to confirm this order?</h3>
+      <button id="button-drawer-confirm" type="button" data-type="button-confirm_order"
+        class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
+        data-drawer-hide="drawer-confirm_order"
+        onclick="()">
+        Yes, I'm sure
+      </button>
+      <button id="button-drawer-close" type="button"
+        class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+        data-drawer-hide="drawer-confirm_order">
+        No, cancel
+      </button>
+    </div>
 
     <!-- modal add to cart -->
     <div id="modal-add-to-cart" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
@@ -251,7 +231,8 @@
                 Somethink is wrong, please Add Product To Cart
               </div>
             </div>
-            <form id="form-confirm_order" hidden>
+            <form id="form-confirm_order" action="{{ route('dashboard.order.order_active.post_new_order') }}" hidden>
+              <input type="text" name="confirm_order-order" id="confirm_order-order" hidden>
               <div class="mb-3">
                 <label for="confirm_order-customer_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Customer Name</label>
                 <input type="text" name="confirm_order-customer_name" id="confirm_order-customer_name"
@@ -269,14 +250,14 @@
                 <label for="confirm_order-order_type" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Order Type</label>
                 <select id="confirm_order-order_type" name="confirm_order-order_type"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                  >
+                  required>
                   <option disabled value="">Select Order Type</option>
                   <option value="dine_in">Dine In</option>
                   <option value="take_away">Take Away</option>
                 </select>
               </div>
               <div class="flex items-center mb-3">
-                <input id="confirm_order-pay_now" type="checkbox" value="" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <input id="confirm_order-pay_now" type="checkbox" value="check" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="confirm_order-pay_now" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pay Now</label>
               </div>
               <div id="payment_form" class="border pl-4 pr-2 py-4 rounded-lg relative" hidden>
@@ -317,8 +298,8 @@
           </div>
           <!-- Modal footer -->
           <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-            <button id="button-confirm_order" hidden data-modal-hide="modal-order" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirm Order</button>
-            <button data-modal-hide="modal-order" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Close</button>
+            <button onclick="submit_order()" id="button-confirm_order" hidden type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirm Order</button>
+            <button id="button-close_order" data-modal-hide="modal-order" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Close</button>
           </div>
         </div>
       </div>
@@ -328,7 +309,11 @@
 
 @push('script')
   <script type="text/javascript">
-    let data_order = [], sequence = 0;
+    let data_order = [{
+      product_id: 1, product_price: 10000, product_name: 'nasi', qty: 2, remarks: '', sequence: 0
+    }, {
+      product_id: 2, product_price: 5000, product_name: 'ayam', qty: 4, remarks: 'Dada 2, Paha 2', sequence: 1
+    }], sequence = 2;
 
     $(document).ready(function() {
       draw_order_item();
@@ -365,7 +350,6 @@
             </div>
           </div>
         `);
-        // data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
       })
 
       $('#confirm_order-total_payment').val(total_price_order);
@@ -461,6 +445,46 @@
       let total_payment = $('#confirm_order-total_payment').val();
       let payment = $('#confirm_order-payment').val();
       $('#confirm_order-change').val(Number(payment) - Number(total_payment));
+    };
+
+    const submit_order = () => {
+      let customer_name = $('#confirm_order-customer_name').val();
+      let pay_now = $('#confirm_order-pay_now').is(":checked");
+      let condition_success = true, message = '';
+      if (customer_name && customer_name != '') {
+        if (pay_now) {
+          let total_payment = $('#confirm_order-total_payment').val();
+          let payment = $('#confirm_order-payment').val();
+          if (total_payment > payment) {
+            message = 'Opps error payment field!';
+            condition_success = false;
+          }
+        }
+      } else {
+        message = 'Opps custommer name is required!';
+        condition_success = false;
+      }
+
+      if (condition_success) {
+        $('#header-drawer').html('Are you sure you want to confirm this order?');
+        $('#header-drawer').removeClass('text-red-500');
+        $('#header-drawer').addClass('text-gray-500');
+        $('#icon_fas-circle-exclamation').removeClass('text-red-500');
+        $('#icon_fas-circle-exclamation').addClass('text-gray-500');
+        $('#button-drawer-confirm').removeClass('hidden');
+        $('button-drawer-close').html('No, cancel');
+      } else {
+        $('#header-drawer').html(message);
+        $('#header-drawer').addClass('text-red-500');
+        $('#header-drawer').removeClass('text-gray-500');
+        $('#icon_fas-circle-exclamation').addClass('text-red-500');
+        $('#icon_fas-circle-exclamation').removeClass('text-gray-500');
+        $('#button-drawer-confirm').addClass('hidden');
+        $('button-drawer-close').html('Close');
+      }
+
+      $('#button-close_order').trigger('click');
+      $('#trigger-drawer-confirm_order').trigger('click');
     };
   </script>
 @endpush

@@ -6,6 +6,8 @@ use App\Models\Fund;
 use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+use Throwable;
 
 class OrderController extends Controller
 {
@@ -50,6 +52,13 @@ class OrderController extends Controller
     }
 
     public function post_new_order(Request $request) {
-        
+        try {
+            DB::beginTransaction();
+            dd($request);
+            DB::commit();
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.order.order_active.add_new_order')->with('failed', "Failed to add order");
+        }
     }
 }

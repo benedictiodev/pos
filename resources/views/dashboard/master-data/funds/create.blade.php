@@ -50,11 +50,11 @@
               @enderror
             </div>
 
-            <div>
+            <div class="hidden">
               <label for="fund" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Initial Fund</label>
               <input type="number" name="fund" id="fund"
                 class="block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                placeholder="Initial Fund" required="">
+                placeholder="Initial Fund" value="0">
               @error('fund')
                 <p class="text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</p>
               @enderror
