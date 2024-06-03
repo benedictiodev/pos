@@ -12,11 +12,5 @@ class CashIn extends Model
     use SoftDeletes;
 
     protected $table = 'cash_in';
-    protected $fillable = [
-        'company_id',
-        'fund',
-        'remark',
-        'datetime',
-        'type'
-    ];
+    protected $guarded = ['id'];
 }

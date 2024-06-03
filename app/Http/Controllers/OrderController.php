@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CashIn;
 use App\Models\Fund;
+use App\Models\Order;
+use App\Models\OrderItems;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -54,7 +58,54 @@ class OrderController extends Controller
     public function post_new_order(Request $request) {
         try {
             DB::beginTransaction();
-            dd($request);
+            $total_payment = (int) $request['confirm_order-total_payment'];
+            $payment = (int) $request['confirm_order-payment'];
+            $change = (int) $request['confirm_order-change'];
+            $order = json_decode($request['confirm_order-order']);
+
+            $insert_order = Order::insertGetId([
+                'company_id' => Auth::user()->company_id,
+                'id_order' => Carbon::now()->toDateString(),
+                'customer_name' => $request['confirm_order-customer_name'],
+                'cashier_name' => Auth::user()->name,
+                'datetime' => Carbon::now()->toDateString(),
+                'total_payment' => $total_payment,
+                'payment' => $payment,
+                'change' => $change,
+                'payment_method' => $request['confirm_order-payment_method'],
+                'order_type' => $request['confirm_order-order_type'],
+                'status' => $payment >= $total_payment ? 'done' : 'waiting payment',
+                'remarks' => $request['confirm_order-remarks'],
+            ]);
+
+            foreach ($order AS $item) {
+                OrderItems::create([
+                    'order_id' => $insert_order,
+                    'product_id' => $item->product_id,
+                    'price' => $item->product_price,
+                    'quantity' => $item->qty,
+                    'amount' => $item->product_price * $item->qty,
+                    'remarks' => $item->remarks,
+                ]);
+            }
+
+            if ($payment >= $total_payment) {
+                CashIn::create([
+                    'company_id' => Auth::user()->company_id,
+                    'fund' => $total_payment,
+                    'remark' => '',
+                    'datetime' => Carbon::now()->toDateString(),
+                    'type' => $request['confirm_order-payment_method'],
+                    'order_id' => $insert_order,
+                    'remarks_from_master' => '',
+                ]);
+
+                $fund = Fund::where("company_id", Auth::user()->company_id)
+                    ->where("type", $request["confirm_order-payment_method"])->first();
+                $fund->update(["fund" => $fund->fund + $total_payment]);
+
+                
+            }
             DB::commit();
         } catch (Throwable $error) {
             DB::rollBack();

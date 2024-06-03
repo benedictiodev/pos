@@ -10,11 +10,5 @@ class HistoryFund extends Model
     use HasFactory;
 
     protected $table = 'history_fund';
-    protected $fillable = [
-        'company_id',
-        'from_type',
-        'to_type',
-        'amount',
-        'datetime',
-    ];
+    protected $guarded = ['id'];
 }

@@ -12,10 +12,5 @@ class Fund extends Model
     use SoftDeletes;
 
     protected $table = 'fund';
-    protected $fillable = [
-        'company_id',
-        'type',
-        'fund',
-        'datetime',
-    ];
+    protected $guarded = ['id'];
 }

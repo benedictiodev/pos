@@ -139,10 +139,10 @@
 
       <x-fas-circle-exclamation id="icon_fas-circle-exclamation" class="mb-4 mt-8 h-10 w-10 text-gray-400" />
       <h3 id="header-drawer" class="mb-3 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to confirm this order?</h3>
-      <button id="button-drawer-confirm" type="button" data-type="button-confirm_order"
+      <button id="button-drawer-confirm" type="submit" data-type="button-confirm_order"
         class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
         data-drawer-hide="drawer-confirm_order"
-        onclick="()">
+        form="form-confirm_order">
         Yes, I'm sure
       </button>
       <button id="button-drawer-close" type="button"
@@ -231,7 +231,8 @@
                 Somethink is wrong, please Add Product To Cart
               </div>
             </div>
-            <form id="form-confirm_order" action="{{ route('dashboard.order.order_active.post_new_order') }}" hidden>
+            <form id="form-confirm_order" action="{{ route('dashboard.order.order_active.post_new_order') }}" method="POST" hidden>
+              @csrf
               <input type="text" name="confirm_order-order" id="confirm_order-order" hidden>
               <div class="mb-3">
                 <label for="confirm_order-customer_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Customer Name</label>
@@ -257,7 +258,7 @@
                 </select>
               </div>
               <div class="flex items-center mb-3">
-                <input id="confirm_order-pay_now" type="checkbox" value="check" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                <input name="confirm_order-pay_now" id="confirm_order-pay_now" type="checkbox" value="check" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                 <label for="confirm_order-pay_now" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pay Now</label>
               </div>
               <div id="payment_form" class="border pl-4 pr-2 py-4 rounded-lg relative" hidden>
@@ -453,8 +454,8 @@
       let condition_success = true, message = '';
       if (customer_name && customer_name != '') {
         if (pay_now) {
-          let total_payment = $('#confirm_order-total_payment').val();
-          let payment = $('#confirm_order-payment').val();
+          let total_payment = Number($('#confirm_order-total_payment').val());
+          let payment = Number($('#confirm_order-payment').val());
           if (total_payment > payment) {
             message = 'Opps error payment field!';
             condition_success = false;
@@ -466,6 +467,7 @@
       }
 
       if (condition_success) {
+        $('#confirm_order-order').val(JSON.stringify(data_order));
         $('#header-drawer').html('Are you sure you want to confirm this order?');
         $('#header-drawer').removeClass('text-red-500');
         $('#header-drawer').addClass('text-gray-500');
