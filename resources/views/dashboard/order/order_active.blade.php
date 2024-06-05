@@ -74,7 +74,7 @@
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow">
-              {{-- <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600">
+              <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600">
                 <thead class="bg-gray-100 dark:bg-gray-700">
                   <tr>
                     <th scope="col" class="p-4">
@@ -86,11 +86,23 @@
                     </th>
                     <th scope="col"
                       class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                      Name
+                      Order ID
                     </th>
                     <th scope="col"
                       class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                      Type
+                      Date Time
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      Customer Name
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      Remarks
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      Order Type
                     </th>
                     <th scope="col"
                       class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
@@ -109,16 +121,28 @@
                         </div>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->name }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->id_order }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ strtoupper(str_replace('_', ' ', $item->type)) }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->datetime }}
+                        </p>
+                      </td>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->customer_name }}
+                        </p>
+                      </td>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->remarks }}
+                        </p>
+                      </td>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->order_type }}
                         </p>
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.master-data.remarks-cash-flow.edit', ['id' => $item->id]) }}"
+                        <a href="#"
                           id="updateProductButton" data-drawer-target="drawer-update-product-default"
                           data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
                           data-drawer-placement="right"
@@ -139,16 +163,16 @@
                     </tr>
                   @endforeach
                 </tbody>
-              </table> --}}
+              </table>
             </div>
           </div>
         </div>
       </div>
 
-      {{-- <div
+      <div
         class="sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex sm:justify-between">
         {{ $data->links('vendor.pagination.tailwind') }}
-      </div> --}}
+      </div>
     </div>
   </div>
 @endsection
