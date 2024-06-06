@@ -150,22 +150,30 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}"
-                          id="updateProductButton" data-drawer-target="drawer-update-product-default"
-                          data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
-                          data-drawer-placement="right"
-                          class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                          <x-fas-edit class="mr-2 h-4 w-4" />
-                          Update
-                        </a>
-                        <button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-cash-in-default"
-                          data-drawer-show="drawer-delete-cash-in-default" aria-controls="drawer-delete-cash-in-default"
-                          data-drawer-placement="right"
-                          class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
-                          data-id="{{ $item->id }}" data-type="{{ $item->type }}">
-                          <x-fas-trash-alt class="mr-2 h-4 w-4" />
-                          Delete
-                        </button>
+                        @if ($item->type == 'cash-in' && $item->order_id)
+                          <a href="#"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <x-fas-file class="mr-2 h-4 w-4" />
+                            View Order
+                          </a>
+                        @else
+                          <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}"
+                            id="updateProductButton" data-drawer-target="drawer-update-product-default"
+                            data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
+                            data-drawer-placement="right"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <x-fas-edit class="mr-2 h-4 w-4" />
+                            Update
+                          </a>
+                          <button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-cash-in-default"
+                            data-drawer-show="drawer-delete-cash-in-default" aria-controls="drawer-delete-cash-in-default"
+                            data-drawer-placement="right"
+                            class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
+                            data-id="{{ $item->id }}" data-type="{{ $item->type }}">
+                            <x-fas-trash-alt class="mr-2 h-4 w-4" />
+                            Delete
+                          </button>
+                        @endif
                       </td>
                     </tr>
                   @endforeach

@@ -90,6 +90,14 @@
                       Kredit
                     </th>
                     <th scope="col"
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      Amount
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      Total Amount
+                    </th>
+                    <th scope="col"
                       class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Actions
                     </th>
@@ -107,22 +115,32 @@
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
-                          {{ $item['date'] }}
+                          {{ $item->datetime }}
                         </p>
                       </td>
                       <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
-                          {{ format_rupiah($item['cash_out']) }}
+                          {{ format_rupiah($item->debit) }}
                         </p>
                       </td>
                       <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
-                          {{ format_rupiah($item['cash_in']) }}
+                          {{ format_rupiah($item->kredit) }}
+                        </p>
+                      </td>
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">
+                          {{ format_rupiah($item->amount) }}
+                        </p>
+                      </td>
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">
+                          {{ format_rupiah($item->total_amount) }}
                         </p>
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.finance.cash-flow-daily', ['periode' => $item['date']]) }}"
+                        <a href="{{ route('dashboard.finance.cash-flow-daily', ['periode' => $item->datetime]) }}"
                           class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                           <x-fas-info class="mr-2 h-4 w-4" />
                           Detail
@@ -148,6 +166,14 @@
                       class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       {{ format_rupiah($total_cash_in) }}
                     </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      {{ format_rupiah($total_amount) }}
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      {{ format_rupiah($grand_total_amount) }}
+                    </th>
                     <th scope="col" colspan="2"
                       class="p-4 text-center text-base font-medium uppercase text-gray-500 dark:text-gray-400">
                     </th>
@@ -159,10 +185,10 @@
         </div>
       </div>
 
-      <div
+      {{-- <div
         class="sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:flex sm:justify-between">
         {{ $data->links('vendor.pagination.tailwind') }}
-      </div>
+      </div> --}}
     </div>
   </div>
 @endsection

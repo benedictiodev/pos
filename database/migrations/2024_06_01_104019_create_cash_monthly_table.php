@@ -18,7 +18,7 @@ return new class extends Migration
             $table->bigInteger('kredit')->default(0);
             $table->bigInteger('amount')->default(0);
             $table->bigInteger('total_amount')->default(0);
-            $table->datetime('datetime');
+            $table->date('datetime');
             $table->timestamps();
 
             $table->index('company_id');

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CashIn;
+use App\Models\CashMonthly;
 use App\Models\CashOut;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -11,7 +12,36 @@ use Illuminate\Support\Facades\DB;
 
 class CashFlowController extends Controller
 {
-    public function list_monthly(Request $request) {
+    public function list_monthly (Request $request) {
+        $periode = Carbon::now()->format('Y-m');
+        if ($request->periode) {
+            $periode = $request->periode;
+        }
+        $data = CashMonthly::where('company_id', Auth::user()->company_id)
+            ->where('datetime', 'like', $periode . '%')->orderBy('datetime')->get();
+
+        $total_cash_in = 0;
+        $total_cash_out = 0;
+        $total_amount = 0;
+        $grand_total_amount = 0;
+
+        foreach($data AS $item) {
+            $total_cash_in += $item->kredit;
+            $total_cash_out += $item->debit;
+            $total_amount += $item->amount;
+            $grand_total_amount += $item->total_amount;
+        } 
+
+        return view('dashboard.finance.cash-flow.monthly', [
+            'data' => $data, 
+            'total_cash_in' => $total_cash_in, 
+            'total_cash_out' => $total_cash_out,
+            'total_amount' => $total_amount,
+            'grand_total_amount' => $grand_total_amount,
+        ]);
+    }
+
+    public function list_monthly_old(Request $request) {
         $company_id = Auth::user()->company_id;
         $periode = Carbon::now()->format('Y-m');
         if ($request->periode) {
