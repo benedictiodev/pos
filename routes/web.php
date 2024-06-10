@@ -86,6 +86,9 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::get('/create', [FundsController::class, 'funds_finance_create'])->name('dashboard.finance.funds.create');
             Route::post('/', [FundsController::class, 'funds_finance_post'])->name('dashboard.finance.funds.post');
         });
+        Route::prefix("/equite")->group(function() {
+            Route::post("/add", [CashFlowController::class, 'add_equite'])->name('dashboard.finance.equite.post');
+        });
     });
 
     // Order
