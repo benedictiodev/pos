@@ -67,39 +67,50 @@
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow">
-              <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600 mb-5">
+              <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600 mb-10 border-b">
                 <thead class="bg-gray-100 dark:bg-gray-700">
                   <tr>
                     <th scope="col"
-                      class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                      Equite For This Month :
+                      colspan="4"
+                      class="p-4 text-Center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      Detail Finance
                     </th>
-                    <th scope="col"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                      @if  ($type_closing_cycle == 'found')
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
+                  @if  ($type_closing_cycle == 'found')
+                    <tr>
+                      <td scope="col"
+                        class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                        Equite For This Month :
+                      </td>
+                      <td scope="col"
+                        class="p-4 text-right text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
                         {{ format_rupiah($closing_cycle->equity) }}
-                      @elseif ($type_closing_cycle == 'clear' || $type_closing_cycle == 'add_equite')
+                      </td>
+                      <td scope="col"
+                        class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                        Target For This Month :
+                      </td>
+                      <td scope="col"
+                        class="p-4 text-right text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                        {{ format_rupiah($closing_cycle->target) }}
+                      </td>
+                    </tr>
+                  @elseif ($type_closing_cycle == 'clear' || $type_closing_cycle == 'add_equite')
+                    <tr>
+                      <td scope="col"
+                      colspan="4"
+                        class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                         <button
                           data-modal-target="modal-add-equite" data-modal-toggle="modal-add-equite"
                           class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                          Add Equite
+                          Add Equite For This Month
                         </button>
-                      @endif
-                    </th>
-                  </tr>
-                  @if  ($type_closing_cycle == 'found')
-                    <tr>
-                      <th scope="col"
-                        class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                        Target For This Month :
-                      </th>
-                      <th scope="col"
-                        class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                        {{ format_rupiah($closing_cycle->target) }}
-                      </th>
+                      </td>
                     </tr>
                   @endif
-                </thead>
+                </tbody>
               </table>
 
               <table class="min-w-full table-fixed divide-y divide-gray-200 dark:divide-gray-600">
