@@ -164,7 +164,7 @@ class CashFlowController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to add equite");
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('success', "Success to add equite");
         } catch (Throwable $error) {
             DB::rollBack();
             return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to add equite");

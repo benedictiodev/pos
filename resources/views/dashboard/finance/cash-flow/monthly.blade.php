@@ -41,6 +41,7 @@
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
+
     <div
       class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-4">
       <div class="block items-center justify-between dark:divide-gray-700 sm:flex md:divide-x md:divide-gray-100 mb-4">
@@ -71,9 +72,9 @@
                 <thead class="bg-gray-100 dark:bg-gray-700">
                   <tr>
                     <th scope="col"
-                      colspan="4"
+                      colspan="6"
                       class="p-4 text-Center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                      Detail Finance
+                      Detail Finance For This Month
                     </th>
                   </tr>
                 </thead>
@@ -81,27 +82,75 @@
                   @if  ($type_closing_cycle == 'found')
                     <tr>
                       <td scope="col"
-                        class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                        Equite For This Month :
+                        class="p-4 text-left text-base font-normal uppercase text-black dark:text-gray-400">
+                        Equite :
                       </td>
                       <td scope="col"
-                        class="p-4 text-right text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                        class="p-4 text-right text-base font-semibold uppercase text-black dark:text-gray-400">
                         {{ format_rupiah($closing_cycle->equity) }}
                       </td>
                       <td scope="col"
-                        class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
-                        Target For This Month :
+                        class="p-4 text-left text-base font-normal uppercase text-black dark:text-gray-400">
+                        Target :
                       </td>
                       <td scope="col"
-                        class="p-4 text-right text-base font-semibold uppercase text-gray-500 dark:text-gray-400">
+                        class="p-4 text-right text-base font-semibold uppercase text-black dark:text-gray-400">
                         {{ format_rupiah($closing_cycle->target) }}
                       </td>
+                      <td scope="col"
+                        class="p-4 text-left text-base font-normal uppercase text-black dark:text-gray-400">
+                        Target (%) :
+                      </td>
+                      <td scope="col"
+                        class="p-4 text-right text-base font-semibold uppercase text-black dark:text-gray-400">
+                        {{ $closing_cycle->is_done == 1 ? $closing_cycle->profit / $closing_cycle->target * 100 : '-' }}
+                      </td>
                     </tr>
+                    @if ($closing_cycle->is_done == 0)
+                      <tr>
+                        <td scope="col"
+                          colspan="6"
+                          class="p-4 text-center text-base font-semibold uppercase text-black dark:text-gray-400">
+                            <button
+                              data-modal-target="modal-closing-cycle" data-modal-toggle="modal-closing-cycle"
+                              class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                              Closing Cycle For This Month
+                            </button>
+                        </td>
+                      </tr>
+                    @else
+                      <tr>
+                        <td scope="col"
+                          class="p-4 text-left text-base font-normal uppercase text-black dark:text-gray-400">
+                          Income :
+                        </td>
+                        <td scope="col"
+                          class="p-4 text-right text-base font-semibold uppercase text-black dark:text-gray-400">
+                          {{ format_rupiah($closing_cycle->income) }}
+                        </td>
+                        <td scope="col"
+                          class="p-4 text-left text-base font-normal uppercase text-black dark:text-gray-400">
+                          Expenditure :
+                        </td>
+                        <td scope="col"
+                          class="p-4 text-right text-base font-semibold uppercase text-black dark:text-gray-400">
+                          {{ format_rupiah($closing_cycle->expenditure) }}
+                        </td>
+                        <td scope="col"
+                          class="p-4 text-left text-base font-normal uppercase text-black dark:text-gray-400">
+                          Profit :
+                        </td>
+                        <td scope="col"
+                          class="p-4 text-right text-base font-semibold uppercase text-black dark:text-gray-400">
+                          {{ format_rupiah($closing_cycle->profit) }}
+                        </td>
+                      </tr>
+                    @endif
                   @elseif ($type_closing_cycle == 'clear' || $type_closing_cycle == 'add_equite')
                     <tr>
                       <td scope="col"
-                      colspan="4"
-                        class="p-4 text-center text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      colspan="6"
+                        class="p-4 text-center text-base font-normal uppercase text-black dark:text-gray-400">
                         <button
                           data-modal-target="modal-add-equite" data-modal-toggle="modal-add-equite"
                           class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
@@ -258,6 +307,7 @@
                 <div class="bg-white px-4 text-sm font-semibold">Equite Of Fund</div>
               </div>
               @foreach ($fund as $item_fund)  
+              <label for="equite" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Equite - {{ $item_fund->type }}</label>
                 <input type="number" name="equite[{{ $item_fund->type }}]"
                   onkeyup="equite_change()"
                   class="option-equite mb-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
@@ -285,6 +335,53 @@
         <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
           <button type="submit" form="form-add_equite" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Yes, I'm suret</button>
           <button data-modal-hide="modal-add-equite" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No, Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="modal-closing-cycle" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <!-- Modal content -->
+      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+            Closing Cycle
+          </h3>
+          <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modal-closing-cycle">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="p-4 md:p-5 space-y-4">
+          <form action="{{ route('dashboard.finance.equite.post') }}" method="POST" id="form-closing_cycle">
+            @csrf
+            <input type="text" name="periode" value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m') }}" hidden>
+            <div class="mb-3">
+              <label for="income" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Income</label>
+              <input type="number" name="income" id="income"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                placeholder="Income" value="{{ $total_cash_in }}" readonly>
+            </div>
+            <div class="mb-3">
+              <label for="expenditure" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">expenditure</label>
+              <input type="number" name="expenditure" id="expenditure"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                placeholder="Expenditure" value="{{ $total_cash_out }}" readonly>
+            </div>
+          </form>
+          <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+            Are you sure you want to closing cycle?
+          </p>
+        </div>
+        <!-- Modal footer -->
+        <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
+          <button type="submit" form="form-add_equite" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Yes, I'm suret</button>
+          <button data-modal-hide="modal-closing-cycle" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No, Cancel</button>
         </div>
       </div>
     </div>
