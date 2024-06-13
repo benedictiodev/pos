@@ -88,6 +88,7 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         });
         Route::prefix("/equite")->group(function() {
             Route::post("/add", [CashFlowController::class, 'add_equite'])->name('dashboard.finance.equite.post');
+            Route::post("/closing", [CashFlowController::class, 'add_closing_cycle'])->name('dashboard.finance.equite.closing');
         });
     });
 

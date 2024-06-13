@@ -170,4 +170,74 @@ class CashFlowController extends Controller
             return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to add equite");
         }
     }
+
+    public function add_closing_cycle(Request $request) {
+        try {
+            DB::beginTransaction();
+            $query_data = ['periode' => $request->periode];
+
+            ClosingCycle::where('company_id', Auth::user()->company_id)
+                ->where('periode', $request->periode)
+                ->update([
+                    'income' => $request->income,
+                    'expenditure' => $request->expenditure,
+                    'profit' => $request->profit,
+                    'is_done' => 1,
+                ]);
+
+            if ($request->set_equity) {
+                ClosingCycle::create([
+                    'company_id' => Auth::user()->company_id,
+                    'periode' => $request->next_periode,
+                    'equity' => $request->next_equite_total,
+                    'target' => $request->next_target,
+                ]);
+
+                foreach($request->next_equite AS $key => $item) {
+                    $equite = $item ? (int) $item : 0;
+
+                    $cash_in = CashIn::where('company_id', Auth::user()->company)
+                        ->where('type', $key)
+                        ->where('datetime', 'like', $request->next_periode . '%')->get();
+                    
+                    if ($cash_in) {
+                        foreach($cash_in AS $item_in) {
+                            $equite += (int) $item_in->fund;
+                        }
+                    }
+
+                    $cash_out = CashOut::where('company_id', Auth::user()->company)
+                        ->where('type', $key)
+                        ->where('datetime', 'like', $request->next_periode . '%')->get();
+                    
+                    if ($cash_out) {
+                        foreach($cash_out AS $item_out) {
+                            $equite -= (int) $item_out->fund;
+                        }
+                    }
+
+                    Fund::where('company_id', Auth::user()->company_id)
+                        ->where('type', $key)
+                        ->update(['fund' => $equite]);
+                }
+
+                $monthly = CashMonthly::where('company_id', Auth::user()->company_id)
+                    ->where('datetime', 'like', $request->next_periode . '%')
+                    ->orderBy('datetime')->get();
+                
+                $amount = $request->next_equite_total ? (int) $request->next_equite_total : 0;
+                foreach($monthly AS $item_monthly) {
+                    $amount += (int) $item_monthly->amount;
+                    CashMonthly::where('id', $item_monthly->id)
+                        ->update(['total_amount' => $amount]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('success', "Success to closing cycle");
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to closing cycle");
+        }
+    }
 }
