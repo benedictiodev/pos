@@ -107,17 +107,25 @@
                       </td>
                     </tr>
                     @if ($closing_cycle->is_done == 0)
-                      <tr>
-                        <td scope="col"
-                          colspan="6"
-                          class="p-4 text-center text-base font-semibold uppercase text-black dark:text-gray-400">
-                            <button
-                              data-modal-target="modal-closing-cycle" data-modal-toggle="modal-closing-cycle"
-                              class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                              Closing Cycle For This Month
-                            </button>
-                        </td>
-                      </tr>
+                      @if (
+                        (Request::get('periode') && (
+                          (Request::get('periode') == Date::now()->format('Y-m') && Date::now()->format('d') == Date::now()->endOfMonth()->format('d')) ||
+                          (Request::get('periode') < Date::now()->format('Y-m'))
+                        )) ||
+                        (!Request::get('periode') && Date::now()->format('d') == Date::now()->endOfMonth()->format('d'))
+                      )
+                        <tr>
+                          <td scope="col"
+                            colspan="6"
+                            class="p-4 text-center text-base font-semibold uppercase text-black dark:text-gray-400">
+                              <button
+                                data-modal-target="modal-closing-cycle" data-modal-toggle="modal-closing-cycle"
+                                class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                Closing Cycle For This Month
+                              </button>
+                          </td>
+                        </tr>
+                      @endif
                     @else
                       <tr>
                         <td scope="col"

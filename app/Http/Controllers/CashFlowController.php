@@ -7,6 +7,9 @@ use App\Models\CashMonthly;
 use App\Models\CashOut;
 use App\Models\ClosingCycle;
 use App\Models\Fund;
+use App\Models\Order;
+use App\Models\OrderItems;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -239,5 +242,61 @@ class CashFlowController extends Controller
             DB::rollBack();
             return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to closing cycle");
         }
+    }
+
+    public function delete_order($id) {
+        try {
+            DB::beginTransaction();
+            $data =  Order::findOrFail($id);
+            if ($data && $data->company_id == Auth::user()->company_id) { 
+                OrderItems::where('order_id', $id)->delete();
+                Order::where('id', $id)->delete();
+
+                DB::commit();
+                return redirect()->route('dashboard.order.order_active')->with('success', "Successfully to delete order");
+            } else {
+                DB::rollBack();
+                return redirect()->route('dashboard.order.order_active')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            }
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.order.order_active')->with('failed', 'Failed to delete order');
+        }
+    }
+
+    public function edit_order($id) {
+        $data_menu = Product::select('products.*', 'category_products.name AS category_name')
+        ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+        ->where('company_id', Auth::user()->company_id)
+        ->orderBy('category_id')
+        ->orderBy('products.id')
+        ->get();
+
+        $result_data_menu = array();
+        foreach($data_menu as $item) {
+            $find = false;
+            foreach($result_data_menu as $key => $search_item) {
+                if ($search_item->category_name == $item->category_name) {
+                    $find = $key;
+                    break;
+                }
+            }
+
+            if ($find === false) {
+                array_push($result_data_menu, (object) [
+                    'category_name' => $item->category_name,
+                    'products' => array($item),
+                ]);
+            } else {
+                array_push($result_data_menu[$find]->products, $item);
+            }
+        }
+
+        $data_fund = Fund::where('company_id', Auth::user()->company_id)->get();
+
+        return view('dashboard.order.update_order', [
+            'list_menu' => $result_data_menu,
+            'list_fund' => $data_fund,
+        ]);
     }
 }

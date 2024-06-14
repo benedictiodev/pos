@@ -97,6 +97,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/", [OrderController::class, 'order_active'])->name('dashboard.order.order_active');
         Route::get("/new-order", [OrderController::class, 'add_new_order'])->name('dashboard.order.order_active.add_new_order');
         Route::post("/post_new_order", [OrderController::class, 'post_new_order'])->name('dashboard.order.order_active.post_new_order');
+        Route::delete("/{id}", [CashFlowController::class, 'delete_order'])->name('dashboard.order.delete_order');
+        Route::get("/update/{id}", [CashFlowController::class, 'edit_order'])->name('dashboard.order.edit_order');
     });
 
     // Profile

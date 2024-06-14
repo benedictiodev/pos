@@ -19,7 +19,7 @@ class OrderController extends Controller
 {
     public function order_active() {
         $data = Order::where("company_id", Auth::user()->company_id)
-            ->whereNot('status', '!=', 'done')->paginate(10);
+            ->where('status', '!=', 'done')->paginate(10);
 
         return view('dashboard.order.order_active', ['data' => $data]);
     }
