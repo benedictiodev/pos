@@ -265,38 +265,47 @@ class CashFlowController extends Controller
     }
 
     public function edit_order($id) {
-        $data_menu = Product::select('products.*', 'category_products.name AS category_name')
-        ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
-        ->where('company_id', Auth::user()->company_id)
-        ->orderBy('category_id')
-        ->orderBy('products.id')
-        ->get();
-
-        $result_data_menu = array();
-        foreach($data_menu as $item) {
-            $find = false;
-            foreach($result_data_menu as $key => $search_item) {
-                if ($search_item->category_name == $item->category_name) {
-                    $find = $key;
-                    break;
+        $order = Order::where('id', $id)->first();
+        if ($order && $order->company_id == Auth::user()->company_id) { 
+            $data_menu = Product::select('products.*', 'category_products.name AS category_name')
+                ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+                ->where('company_id', Auth::user()->company_id)
+                ->orderBy('category_id')
+                ->orderBy('products.id')
+                ->get();
+    
+            $result_data_menu = array();
+            foreach($data_menu as $item) {
+                $find = false;
+                foreach($result_data_menu as $key => $search_item) {
+                    if ($search_item->category_name == $item->category_name) {
+                        $find = $key;
+                        break;
+                    }
+                }
+    
+                if ($find === false) {
+                    array_push($result_data_menu, (object) [
+                        'category_name' => $item->category_name,
+                        'products' => array($item),
+                    ]);
+                } else {
+                    array_push($result_data_menu[$find]->products, $item);
                 }
             }
+    
+            $data_fund = Fund::where('company_id', Auth::user()->company_id)->get();
 
-            if ($find === false) {
-                array_push($result_data_menu, (object) [
-                    'category_name' => $item->category_name,
-                    'products' => array($item),
-                ]);
-            } else {
-                array_push($result_data_menu[$find]->products, $item);
-            }
+            $order_item = OrderItems::where('order_id', $id)->first();
+
+            return view('dashboard.order.update_order', [
+                'list_menu' => $result_data_menu,
+                'list_fund' => $data_fund,
+                'order_item' => $order_item,
+                'order' => $order
+            ]);
+        } else {
+            return redirect()->route('dashboard.order.order_active')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
-
-        $data_fund = Fund::where('company_id', Auth::user()->company_id)->get();
-
-        return view('dashboard.order.update_order', [
-            'list_menu' => $result_data_menu,
-            'list_fund' => $data_fund,
-        ]);
     }
 }
