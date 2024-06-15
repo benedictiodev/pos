@@ -88,6 +88,7 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         });
         Route::prefix("/equite")->group(function () {
             Route::post("/add", [CashFlowController::class, 'add_equite'])->name('dashboard.finance.equite.post');
+            Route::post("/closing", [CashFlowController::class, 'add_closing_cycle'])->name('dashboard.finance.equite.closing');
         });
     });
 
@@ -98,6 +99,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::post("/post_new_order", [OrderController::class, 'post_new_order'])->name('dashboard.order.order_active.post_new_order');
         Route::get("/history", [OrderController::class, 'order_history'])->name('dashboard.order.order_history');
         Route::get("/{id}/detail", [OrderController::class, 'order_detail'])->name('dashboard.order.order_detail');
+        Route::delete("/{id}", [CashFlowController::class, 'delete_order'])->name('dashboard.order.delete_order');
+        Route::get("/update/{id}", [CashFlowController::class, 'edit_order'])->name('dashboard.order.edit_order');
     });
 
     // Profile

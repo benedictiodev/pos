@@ -142,7 +142,7 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="#"
+                        <a href="{{ route('dashboard.order.edit_order', ['id' => $item->id]) }}"
                           id="updateProductButton" data-drawer-target="drawer-update-product-default"
                           data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
                           data-drawer-placement="right"
@@ -151,8 +151,8 @@
                           Update
                         </a>
                         <button type="button" id="deleteProductButton"
-                          data-drawer-target="drawer-delete-product-default"
-                          data-drawer-show="drawer-delete-product-default" aria-controls="drawer-delete-product-default"
+                          data-drawer-target="drawer-delete-order"
+                          data-drawer-show="drawer-delete-order" aria-controls="drawer-delete-order"
                           data-drawer-placement="right"
                           class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
                           data-id="{{ $item->id }}">
@@ -175,4 +175,56 @@
       </div>
     </div>
   </div>
+
+  <div id="drawer-delete-order"
+    class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800"
+    tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
+    <h5 id="drawer-label"
+      class="inline-flex items-center text-sm font-semibold uppercase text-gray-500 dark:text-gray-400">Delete item
+    </h5>
+    <button type="button" data-drawer-dismiss="drawer-delete-order"
+      aria-controls="drawer-delete-order"
+      class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">
+      <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
+      <span class="sr-only">Close menu</span>
+    </button>
+    <form id="form-delete">
+      @csrf
+      @method('DELETE')
+      <input type="text" id="delete-id" value="" hidden>
+      <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
+      <h3 class="mb-6 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to delete this order?</h3>
+      <button type="button" data-type="button-delete"
+        class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+        Yes, I'm sure
+      </button>
+      <button type="button"
+        class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+        data-drawer-hide="drawer-delete-order">
+        No, cancel
+      </button>
+    </form>
+  </div>
 @endsection
+
+@push('script')
+  <script type="text/javascript">
+    window.onload = () => {
+      document.addEventListener('click', async (event) => {
+        // DELETE DATA
+        if (event.target.getAttribute('data-drawer-target') == "drawer-delete-order") {
+          const id = event.target.getAttribute("data-id");
+          document.querySelector("#delete-id").value = id;
+          console.log(id);
+        }
+        if (event.target.getAttribute('data-type') == "button-delete") {
+          const id = document.querySelector("#delete-id").value;
+          document.querySelector("#form-delete").method = "POST";
+          document.querySelector("#form-delete").action =
+            `/dashboard/order/${id}`;
+          document.querySelector("#form-delete").submit();
+        }
+      })
+    }
+  </script>
+@endpush

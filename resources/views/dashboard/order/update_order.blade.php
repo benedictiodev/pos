@@ -23,12 +23,12 @@
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 dark:text-gray-500 md:ml-2" aria-current="page">Add New Order</span>
+                <span class="ml-1 text-gray-400 dark:text-gray-500 md:ml-2" aria-current="page">Update Order</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Add New Order</h1>
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Update Order</h1>
         <a href="{{ route('dashboard.order.order_active') }}"
             class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-400 dark:focus:ring-slate-800">
             Back
@@ -67,12 +67,12 @@
                     <div>Total Price</div>
                     <div id="order-total-price"></div>
                   </div>
-                  <button
+                  {{-- <button
                   data-modal-target="modal-order" data-modal-toggle="modal-order"
                   onclick="open_modal_confirm_order()"
                   class="mx-4 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-xs font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
                     Order Now
-                  </button>
+                  </button> --}}
                   <button
                     id="button-trigger-modal"
                     data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"

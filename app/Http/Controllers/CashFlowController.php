@@ -7,6 +7,9 @@ use App\Models\CashMonthly;
 use App\Models\CashOut;
 use App\Models\ClosingCycle;
 use App\Models\Fund;
+use App\Models\Order;
+use App\Models\OrderItems;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -168,6 +171,141 @@ class CashFlowController extends Controller
         } catch (Throwable $error) {
             DB::rollBack();
             return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to add equite");
+        }
+    }
+
+    public function add_closing_cycle(Request $request) {
+        try {
+            DB::beginTransaction();
+            $query_data = ['periode' => $request->periode];
+
+            ClosingCycle::where('company_id', Auth::user()->company_id)
+                ->where('periode', $request->periode)
+                ->update([
+                    'income' => $request->income,
+                    'expenditure' => $request->expenditure,
+                    'profit' => $request->profit,
+                    'is_done' => 1,
+                ]);
+
+            if ($request->set_equity) {
+                ClosingCycle::create([
+                    'company_id' => Auth::user()->company_id,
+                    'periode' => $request->next_periode,
+                    'equity' => $request->next_equite_total,
+                    'target' => $request->next_target,
+                ]);
+
+                foreach($request->next_equite AS $key => $item) {
+                    $equite = $item ? (int) $item : 0;
+
+                    $cash_in = CashIn::where('company_id', Auth::user()->company)
+                        ->where('type', $key)
+                        ->where('datetime', 'like', $request->next_periode . '%')->get();
+                    
+                    if ($cash_in) {
+                        foreach($cash_in AS $item_in) {
+                            $equite += (int) $item_in->fund;
+                        }
+                    }
+
+                    $cash_out = CashOut::where('company_id', Auth::user()->company)
+                        ->where('type', $key)
+                        ->where('datetime', 'like', $request->next_periode . '%')->get();
+                    
+                    if ($cash_out) {
+                        foreach($cash_out AS $item_out) {
+                            $equite -= (int) $item_out->fund;
+                        }
+                    }
+
+                    Fund::where('company_id', Auth::user()->company_id)
+                        ->where('type', $key)
+                        ->update(['fund' => $equite]);
+                }
+
+                $monthly = CashMonthly::where('company_id', Auth::user()->company_id)
+                    ->where('datetime', 'like', $request->next_periode . '%')
+                    ->orderBy('datetime')->get();
+                
+                $amount = $request->next_equite_total ? (int) $request->next_equite_total : 0;
+                foreach($monthly AS $item_monthly) {
+                    $amount += (int) $item_monthly->amount;
+                    CashMonthly::where('id', $item_monthly->id)
+                        ->update(['total_amount' => $amount]);
+                }
+            }
+
+            DB::commit();
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('success', "Success to closing cycle");
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to closing cycle");
+        }
+    }
+
+    public function delete_order($id) {
+        try {
+            DB::beginTransaction();
+            $data =  Order::findOrFail($id);
+            if ($data && $data->company_id == Auth::user()->company_id) { 
+                OrderItems::where('order_id', $id)->delete();
+                Order::where('id', $id)->delete();
+
+                DB::commit();
+                return redirect()->route('dashboard.order.order_active')->with('success', "Successfully to delete order");
+            } else {
+                DB::rollBack();
+                return redirect()->route('dashboard.order.order_active')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            }
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.order.order_active')->with('failed', 'Failed to delete order');
+        }
+    }
+
+    public function edit_order($id) {
+        $order = Order::where('id', $id)->first();
+        if ($order && $order->company_id == Auth::user()->company_id) { 
+            $data_menu = Product::select('products.*', 'category_products.name AS category_name')
+                ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+                ->where('company_id', Auth::user()->company_id)
+                ->orderBy('category_id')
+                ->orderBy('products.id')
+                ->get();
+    
+            $result_data_menu = array();
+            foreach($data_menu as $item) {
+                $find = false;
+                foreach($result_data_menu as $key => $search_item) {
+                    if ($search_item->category_name == $item->category_name) {
+                        $find = $key;
+                        break;
+                    }
+                }
+    
+                if ($find === false) {
+                    array_push($result_data_menu, (object) [
+                        'category_name' => $item->category_name,
+                        'products' => array($item),
+                    ]);
+                } else {
+                    array_push($result_data_menu[$find]->products, $item);
+                }
+            }
+    
+            $data_fund = Fund::where('company_id', Auth::user()->company_id)->get();
+
+            $order_item = OrderItems::where('order_id', $id)->first();
+
+            return view('dashboard.order.update_order', [
+                'list_menu' => $result_data_menu,
+                'list_fund' => $data_fund,
+                'order_item' => $order_item,
+                'order' => $order
+            ]);
+        } else {
+            return redirect()->route('dashboard.order.order_active')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
         }
     }
 }
