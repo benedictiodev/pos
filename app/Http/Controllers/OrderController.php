@@ -17,25 +17,27 @@ use Throwable;
 
 class OrderController extends Controller
 {
-    public function order_active() {
+    public function order_active()
+    {
         $data = Order::where("company_id", Auth::user()->company_id)
             ->whereNot('status', '!=', 'done')->paginate(10);
 
         return view('dashboard.order.order_active', ['data' => $data]);
     }
 
-    public function add_new_order() {
+    public function add_new_order()
+    {
         $data_menu = Product::select('products.*', 'category_products.name AS category_name')
-        ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
-        ->where('company_id', Auth::user()->company_id)
-        ->orderBy('category_id')
-        ->orderBy('products.id')
-        ->get();
+            ->leftJoin('category_products', 'category_products.id', '=', 'products.category_id')
+            ->where('company_id', Auth::user()->company_id)
+            ->orderBy('category_id')
+            ->orderBy('products.id')
+            ->get();
 
         $result_data_menu = array();
-        foreach($data_menu as $item) {
+        foreach ($data_menu as $item) {
             $find = false;
-            foreach($result_data_menu as $key => $search_item) {
+            foreach ($result_data_menu as $key => $search_item) {
                 if ($search_item->category_name == $item->category_name) {
                     $find = $key;
                     break;
@@ -60,7 +62,8 @@ class OrderController extends Controller
         ]);
     }
 
-    public function post_new_order(Request $request) {
+    public function post_new_order(Request $request)
+    {
         try {
             DB::beginTransaction();
             $total_payment = (int) $request['confirm_order-total_payment'];
@@ -83,7 +86,7 @@ class OrderController extends Controller
                 'remarks' => $request['confirm_order-remarks'],
             ]);
 
-            foreach ($order AS $item) {
+            foreach ($order as $item) {
                 OrderItems::create([
                     'order_id' => $insert_order,
                     'product_id' => $item->product_id,
@@ -114,7 +117,7 @@ class OrderController extends Controller
                         ->where("type", $request["confirm_order-payment_method"])->first();
                     $fund->update(["fund" => $fund->fund + $total_payment]);
                 }
-                
+
                 $cash_monthly = CashMonthly::where("company_id", Auth::user()->company_id)
                     ->where("datetime", Carbon::now()->toDateString())->first();
 
@@ -140,6 +143,40 @@ class OrderController extends Controller
         } catch (Throwable $error) {
             DB::rollBack();
             return redirect()->route('dashboard.order.order_active.add_new_order')->with('failed', "Failed to add order");
+        }
+    }
+
+    public function order_history(Request $request)
+    {
+        $periode = Carbon::now()->format('Y-m-d');
+
+        if ($request->periode) {
+            $periode = $request->periode;
+        }
+
+        $data = Order::where('datetime', 'like', $periode . '%')->where("company_id", Auth::user()->company_id)->where("status", "done")->orderBy('datetime');
+
+        $total = 0;
+        foreach ($data->get() as $item) {
+            $total += (int)$item->total_payment;
+        }
+
+        return view('dashboard.order.order_history', [
+            'data' => $data->paginate(10),
+            'total' => $total,
+        ]);
+    }
+
+    public function order_detail($id)
+    {
+        $data = Order::with('items')->where("company_id", Auth::user()->company_id)->where('id', $id)->first();
+        if ($data) {
+
+            return view('dashboard.order.order_detail', [
+                'data' => $data
+            ]);
+        } else {
+            return abort(404);
         }
     }
 }

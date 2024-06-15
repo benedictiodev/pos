@@ -43,7 +43,7 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::put('/{id}', [CategoryProductController::class, 'update'])->name('dashboard.master-data.category-product.update');
             Route::delete('/{id}', [CategoryProductController::class, 'destroy'])->name('dashboard.master-data.category-product.delete');
         });
-        Route::prefix("/funds")->group(function() {
+        Route::prefix("/funds")->group(function () {
             Route::get('/', [FundsController::class, 'index'])->name('dashboard.master-data.funds');
             Route::get('/create', [FundsController::class, 'create'])->name('dashboard.master-data.funds.create');
             Route::post('/', [FundsController::class, 'store'])->name('dashboard.master-data.funds.post');
@@ -86,7 +86,7 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::get('/create', [FundsController::class, 'funds_finance_create'])->name('dashboard.finance.funds.create');
             Route::post('/', [FundsController::class, 'funds_finance_post'])->name('dashboard.finance.funds.post');
         });
-        Route::prefix("/equite")->group(function() {
+        Route::prefix("/equite")->group(function () {
             Route::post("/add", [CashFlowController::class, 'add_equite'])->name('dashboard.finance.equite.post');
         });
     });
@@ -96,6 +96,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/", [OrderController::class, 'order_active'])->name('dashboard.order.order_active');
         Route::get("/new-order", [OrderController::class, 'add_new_order'])->name('dashboard.order.order_active.add_new_order');
         Route::post("/post_new_order", [OrderController::class, 'post_new_order'])->name('dashboard.order.order_active.post_new_order');
+        Route::get("/history", [OrderController::class, 'order_history'])->name('dashboard.order.order_history');
+        Route::get("/{id}/detail", [OrderController::class, 'order_detail'])->name('dashboard.order.order_detail');
     });
 
     // Profile
