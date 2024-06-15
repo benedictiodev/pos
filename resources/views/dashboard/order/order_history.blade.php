@@ -89,11 +89,11 @@
                       Datetime
                     </th>
                     <th scope="col"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Cashier
                     </th>
                     <th scope="col"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Payment Method
                     </th>
                     <th scope="col"
@@ -101,7 +101,7 @@
                       Order Type
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-base font-bold uppercase text-gray-500 dark:text-gray-400">
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500 dark:text-gray-400">
                       Total
                     </th>
                     <th scope="col"
@@ -130,17 +130,17 @@
                           {{ $item->datetime }}
                         </p>
                       </td>
-                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                      <td class="text-left whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
                           {{ $item->cashier_name }}
                         </p>
                       </td>
-                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                      <td class="text-left whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
                           {{ $item->payment_method }}
                         </p>
                       </td>
-                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                      <td class="text-left whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
                           {{ $item->order_type == 'dine_in' ? 'Dine In' : 'Take Away' }}
                         </p>
