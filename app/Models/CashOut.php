@@ -12,11 +12,5 @@ class CashOut extends Model
     use SoftDeletes;
 
     protected $table = 'cash_out';
-    protected $fillable = [
-        'company_id',
-        'fund',
-        'remark',
-        'datetime',
-        'type',
-    ];
+    protected $guarded = ['id'];
 }

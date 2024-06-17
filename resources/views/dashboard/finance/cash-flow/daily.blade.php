@@ -50,7 +50,9 @@
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
               <input type="date" name="periode" id="cashflow-search"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for daily cash flow" value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}" onchange="change_search()">
+                placeholder="Search for daily cash flow"
+                value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}"
+                onchange="change_search()">
             </div>
           </form>
           <div class="flex w-full items-center sm:justify-end">
@@ -62,18 +64,20 @@
             </div>
           </div>
         </div>
-        <div>
-          <a id="createProductButton"
-            class="mr-2 rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            type="button" href="{{ route('dashboard.finance.cash-in.create') }}">
-            Add new cash in
-          </a>
-          <a id="createProductButton"
-            class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            type="button" href="{{ route('dashboard.finance.cash-out.create') }}">
-            Add new cash out
-          </a>
-        </div>
+        @if (request()->get('periode') == Carbon\Carbon::now()->format('Y-m-d') or !request()->get('periode'))
+          <div>
+            <a id="createProductButton"
+              class="mr-2 rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              href="{{ route('dashboard.finance.cash-in.create') }}">
+              Add new cash in
+            </a>
+            <a id="createProductButton"
+              class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+              href="{{ route('dashboard.finance.cash-out.create') }}">
+              Add new cash out
+            </a>
+          </div>
+        @endif
       </div>
       <div class="flex flex-col">
         <div class="overflow-x-auto">
@@ -132,12 +136,12 @@
                       </td>
                       <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
-                          {{ $item->type == "cash-out" ? format_rupiah($item->fund) : '-' }}
+                          {{ $item->type == 'cash-out' ? format_rupiah($item->fund) : '-' }}
                         </p>
                       </td>
                       <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
-                          {{ $item->type == "cash-in" ? format_rupiah($item->fund) : '-' }}
+                          {{ $item->type == 'cash-in' ? format_rupiah($item->fund) : '-' }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -145,27 +149,36 @@
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->remark }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->remarks_from_master }}
                         </p>
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}" type="button"
-                          id="updateProductButton" data-drawer-target="drawer-update-product-default"
-                          data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
-                          data-drawer-placement="right"
-                          class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                          <x-fas-edit class="mr-2 h-4 w-4" />
-                          Update
-                        </a>
-                        <button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-cash-in-default"
-                          data-drawer-show="drawer-delete-cash-in-default" aria-controls="drawer-delete-cash-in-default"
-                          data-drawer-placement="right"
-                          class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
-                          data-id="{{ $item->id }}" data-type="{{ $item->type }}">
-                          <x-fas-trash-alt class="mr-2 h-4 w-4" />
-                          Delete
-                        </button>
+                        @if ($item->type == 'cash-in' && $item->order_id)
+                          <a href="#"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <x-fas-file class="mr-2 h-4 w-4" />
+                            View Order
+                          </a>
+                        @else
+                          <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}"
+                            id="updateProductButton" data-drawer-target="drawer-update-product-default"
+                            data-drawer-show="drawer-update-product-default"
+                            aria-controls="drawer-update-product-default" data-drawer-placement="right"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <x-fas-edit class="mr-2 h-4 w-4" />
+                            Update
+                          </a>
+                          <button type="button" id="deleteProductButton"
+                            data-drawer-target="drawer-delete-cash-in-default"
+                            data-drawer-show="drawer-delete-cash-in-default"
+                            aria-controls="drawer-delete-cash-in-default" data-drawer-placement="right"
+                            class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
+                            data-id="{{ $item->id }}" data-type="{{ $item->type }}">
+                            <x-fas-trash-alt class="mr-2 h-4 w-4" />
+                            Delete
+                          </button>
+                        @endif
                       </td>
                     </tr>
                   @endforeach

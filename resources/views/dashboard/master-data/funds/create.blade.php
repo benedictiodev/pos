@@ -27,7 +27,7 @@
         </ol>
       </nav>
       <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Create Fund</h1>
-      <a href="{{ route('dashboard.master-data.funds') }}" type="button"
+      <a href="{{ route('dashboard.master-data.funds') }}"
         class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-400 dark:focus:ring-slate-800">
         Back
       </a>
@@ -50,11 +50,11 @@
               @enderror
             </div>
 
-            <div>
+            <div class="hidden">
               <label for="fund" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Initial Fund</label>
               <input type="number" name="fund" id="fund"
                 class="block w-full rounded-md border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                placeholder="Initial Fund" required="">
+                placeholder="Initial Fund" value="0">
               @error('fund')
                 <p class="text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</p>
               @enderror

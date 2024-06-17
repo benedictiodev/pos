@@ -44,18 +44,41 @@
     @endif
 
     <div class="flex mx-[-0.25rem]">
+      <div class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-2 w-1/4 mx-1">
+          <div class="flex items-center text-sm">
+            <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> Total Funds :
+          </div>
+          <div class="font-bold text-sm"> {{ format_rupiah($total_fund) }}</div>
+        </div>
       @foreach ($data as $item)
         <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-2 w-1/4 mx-1">
-          <div class="flex">
+          <div class="flex items-center text-sm">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> {{ $item->type }} :
           </div>
-          <div class="font-bold"> {{ format_rupiah($item->fund) }}</div>
+          <div class="font-bold text-sm"> {{ format_rupiah($item->fund) }}</div>
         </div>
       @endforeach
     </div>
 
     <div
       class="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-4">
+      <div class="block items-center justify-between dark:divide-gray-700 sm:flex md:divide-x md:divide-gray-100 mb-4">
+        <div class="mb-4 flex items-center sm:mb-0">
+          <form class="sm:pr-3" action="#" method="GET">
+            <label for="products-search" class="sr-only">Search</label>
+            <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
+              <input type="text" name="email" id="products-search"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500 sm:text-sm"
+                placeholder="Search for diversion of fund allocation">
+            </div>
+          </form>
+        </div>
+        <a id="createProductButton"
+          class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          href="{{ route('dashboard.finance.funds.create') }}">
+          Add new diversion of fund allocation
+        </a>
+      </div>
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
@@ -99,9 +122,9 @@
                           {{ $item->to_type }}
                         </p>
                       </td>
-                      <td class="text-reight whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
-                          {{ $item->type == "cash-out" ? format_rupiah($item->amount) : '-' }}
+                          {{ format_rupiah($item->amount) }}
                         </p>
                       </td>
                     </tr>

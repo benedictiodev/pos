@@ -4,13 +4,15 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class CashIn extends Model
+class OrderItems extends Model
 {
     use HasFactory;
-    use SoftDeletes;
-
-    protected $table = 'cash_in';
+    protected $table = 'order_items';
     protected $guarded = ['id'];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

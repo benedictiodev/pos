@@ -65,7 +65,7 @@
         </div>
         <a id="createProductButton"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          type="button" href="{{ route('dashboard.master-data.product.create') }}">
+          href="{{ route('dashboard.master-data.product.create') }}">
           Add new product
         </a>
       </div>
@@ -124,7 +124,7 @@
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ $item->price }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ format_rupiah($item->price) }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
@@ -141,7 +141,7 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.master-data.product.edit', ['id' => $item->id]) }}" type="button"
+                        <a href="{{ route('dashboard.master-data.product.edit', ['id' => $item->id]) }}"
                           id="updateProductButton" data-drawer-target="drawer-update-product-default"
                           data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
                           data-drawer-placement="right"

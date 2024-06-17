@@ -8,7 +8,9 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\RemarksCashFlowController;
 use Illuminate\Support\Facades\Route;
 
 
@@ -41,13 +43,21 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
             Route::put('/{id}', [CategoryProductController::class, 'update'])->name('dashboard.master-data.category-product.update');
             Route::delete('/{id}', [CategoryProductController::class, 'destroy'])->name('dashboard.master-data.category-product.delete');
         });
-        Route::prefix("/funds")->group(function() {
+        Route::prefix("/funds")->group(function () {
             Route::get('/', [FundsController::class, 'index'])->name('dashboard.master-data.funds');
             Route::get('/create', [FundsController::class, 'create'])->name('dashboard.master-data.funds.create');
             Route::post('/', [FundsController::class, 'store'])->name('dashboard.master-data.funds.post');
             Route::get('/{id}/edit', [FundsController::class, 'edit'])->name('dashboard.master-data.funds.edit');
             Route::put('/{id}', [FundsController::class, 'update'])->name('dashboard.master-data.funds.update');
             Route::delete('/{id}', [FundsController::class, 'destroy'])->name('dashboard.master-data.funds.delete');
+        });
+        Route::prefix("/remarks-cash-flow")->group(function () {
+            Route::get('/', [RemarksCashFlowController::class, 'index'])->name('dashboard.master-data.remarks-cash-flow');
+            Route::get('/create', [RemarksCashFlowController::class, 'create'])->name('dashboard.master-data.remarks-cash-flow.create');
+            Route::post('/', [RemarksCashFlowController::class, 'store'])->name('dashboard.master-data.remarks-cash-flow.post');
+            Route::get('/{id}/edit', [RemarksCashFlowController::class, 'edit'])->name('dashboard.master-data.remarks-cash-flow.edit');
+            Route::put('/{id}', [RemarksCashFlowController::class, 'update'])->name('dashboard.master-data.remarks-cash-flow.update');
+            Route::delete('/{id}', [RemarksCashFlowController::class, 'destroy'])->name('dashboard.master-data.remarks-cash-flow.delete');
         });
     });
 
@@ -73,7 +83,24 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/cash-flow-monthly", [CashFlowController::class, 'list_monthly'])->name('dashboard.finance.cash-flow-monthly');
         Route::prefix("/funds")->group(function () {
             Route::get('/', [FundsController::class, 'funds_finance'])->name('dashboard.finance.funds');
+            Route::get('/create', [FundsController::class, 'funds_finance_create'])->name('dashboard.finance.funds.create');
+            Route::post('/', [FundsController::class, 'funds_finance_post'])->name('dashboard.finance.funds.post');
         });
+        Route::prefix("/equite")->group(function () {
+            Route::post("/add", [CashFlowController::class, 'add_equite'])->name('dashboard.finance.equite.post');
+            Route::post("/closing", [CashFlowController::class, 'add_closing_cycle'])->name('dashboard.finance.equite.closing');
+        });
+    });
+
+    // Order
+    Route::prefix("/order")->group(function () {
+        Route::get("/", [OrderController::class, 'order_active'])->name('dashboard.order.order_active');
+        Route::get("/new-order", [OrderController::class, 'add_new_order'])->name('dashboard.order.order_active.add_new_order');
+        Route::post("/post_new_order", [OrderController::class, 'post_new_order'])->name('dashboard.order.order_active.post_new_order');
+        Route::get("/history", [OrderController::class, 'order_history'])->name('dashboard.order.order_history');
+        Route::get("/{id}/detail", [OrderController::class, 'order_detail'])->name('dashboard.order.order_detail');
+        Route::delete("/{id}", [CashFlowController::class, 'delete_order'])->name('dashboard.order.delete_order');
+        Route::get("/update/{id}", [CashFlowController::class, 'edit_order'])->name('dashboard.order.edit_order');
     });
 
     // Profile

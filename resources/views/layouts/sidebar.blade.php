@@ -27,7 +27,7 @@
               class="{{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? '' : 'hidden' }} py-2 space-y-2">
               <li>
                 <a href="{{ route('dashboard.finance.funds') }}"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ Request::route()->getName() == 'dashboard.finance.funds' ? 'bg-gray-100' : '' }}">
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.finance.funds') ? 'bg-gray-100' : '' }}">
                   Funds
                 </a>
               </li>
@@ -46,6 +46,34 @@
             </ul>
           </li>
           {{-- END FINANCE --}}
+
+          {{-- ORDER --}}
+          <li>
+            <button type="button"
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.order.') ? 'bg-gray-100' : '' }}"
+              aria-controls="dropdown-order" data-collapse-toggle="dropdown-order">
+              <x-fas-shopping-basket
+                class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Order</span>
+              <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+            </button>
+            <ul id="dropdown-order"
+              class="{{ str_contains(Request::route()->getName(), 'dashboard.order.') ? '' : 'hidden' }} py-2 space-y-2">
+              <li>
+                <a href="{{ route('dashboard.order.order_active') }}"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_active') ? 'bg-gray-100' : '' }}">
+                  Order Active
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('dashboard.order.order_history') }}"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_history') ? 'bg-gray-100' : '' }}">
+                  Order History
+                </a>
+              </li>
+            </ul>
+          </li>
+          {{-- END ORDER --}}
 
           {{-- COMPANY --}}
           <li>
@@ -95,6 +123,12 @@
                 <a href="{{ route('dashboard.master-data.funds') }}"
                   class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.funds') ? 'bg-gray-100' : '' }}">
                   Funds
+                </a>
+              </li>
+              <li>
+                <a href="{{ route('dashboard.master-data.remarks-cash-flow') }}"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 dark:text-gray-200 dark:hover:bg-gray-700 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.remarks-cash-flow') ? 'bg-gray-100' : '' }}">
+                  Remarks Cash Flow
                 </a>
               </li>
             </ul>

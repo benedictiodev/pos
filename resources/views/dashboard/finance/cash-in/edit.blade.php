@@ -27,7 +27,7 @@
         </ol>
       </nav>
       <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Update Cash In</h1>
-      <a href="{{ route('dashboard.finance.cash-flow-daily') }}" type="button"
+      <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
         class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-400 dark:focus:ring-slate-800">
         Back
       </a>
@@ -65,17 +65,48 @@
             </div>
 
             <div>
-              <label for="remark" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Remark</label>
+              <label for="remarks_from_master"
+                class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Remark</label>
+              <select id="remarks_from_master" name="remarks_from_master"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required onchange="extendRemark()">
+                <option disabled value="" selected>~ Select Remark ~</option>
+                @foreach ($remarks as $item)
+                  <option value="{{ $item->name }}" @if (old('remarks_from_master', $data->remarks_from_master) == $item->name) selected @endif>
+                    {{ $item->name }}</option>
+                @endforeach
+              </select>
+              @error('remarks_from_master')
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</p>
+              @enderror
+            </div>
+
+            <div id="optional_remark" class="space-y-2">
+              <div class="flex items-center">
+                <input id="is_same" aria-describedby="checkbox-1" type="checkbox" name="is_same" value="1"
+                  onchange="optionalRemark()"
+                  class="focus:ring-3 h-4 w-4 border-gray-300 bg-gray-50 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-700 dark:ring-offset-gray-800 dark:focus:ring-primary-600">
+                <label for="is_same" class="sr-only">checkbox</label>
+                <p class="ml-2 text-sm font-medium text-gray-900 dark:text-white">Same the remark</p>
+              </div>
               <textarea id="remark" rows="4" name="remark"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                placeholder="Enter event remark here" required>{{ old('nominal', $data->remark) }}</textarea>
+                placeholder="Describe your remark">{{ old('remark', $data->remark) }}</textarea>
+              @error('remark')
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</p>
+              @enderror
             </div>
 
             <div>
               <label for="datetime" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Date</label>
               <input type="datetime-local" name="datetime" id="datetime"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
-                placeholder="Date" required value="{{ old('datetime', $data->datetime) }}">
+                class="block w-fit rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                placeholder="Date" value="{{ old('datetime', $data->datetime) }}" required
+                min="{{ Carbon\Carbon::now()->hour(00)->minute(00)->second(00)->format('Y-m-d\TH:i') }}"
+                max="{{ Carbon\Carbon::now()->hour(23)->minute(59)->second(59)->format('Y-m-d\TH:i') }}">
+              @error('datetime')
+                <p class="mt-2 text-sm text-red-600 dark:text-red-500"><span class="font-medium">{{ $message }}</p>
+              @enderror
             </div>
 
             <button type="submit"
@@ -88,3 +119,26 @@
     </div>
   </div>
 @endsection
+
+@push('script')
+  <script>
+    if ($('#remarks_from_master').val() == $('#remark').val()) {
+      $('#is_same').prop('checked', true);
+    }
+
+    const extendRemark = () => {
+      if ($('#remarks_from_master').val() != null) {
+        $('#optional_remark').removeClass('hidden');
+        $('#remark').attr('required', true);
+      }
+    }
+
+    const optionalRemark = () => {
+      if ($('#is_same').is(':checked')) {
+        $('#remark').val($('#remarks_from_master').val());
+      } else {
+        $('#remark').val("");
+      }
+    }
+  </script>
+@endpush
