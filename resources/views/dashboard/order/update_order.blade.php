@@ -8,14 +8,14 @@
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
               <a href="#"
-                class="inline-flex items-center text-gray-700 hover:text-primary-600 dark:text-gray-300 dark:hover:text-white">
+                class="inline-flex items-center text-gray-700 hover:text-primary-600">
                 Dashboard
               </a>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 dark:text-gray-300 md:ml-2" aria-current="page">
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">
                   Order
                 </span>
               </div>
@@ -23,32 +23,32 @@
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 dark:text-gray-500 md:ml-2" aria-current="page">Update Order</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Update Order</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl mb-4">Update Order</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Update Order</h1>
         <a href="{{ route('dashboard.order.order_active') }}"
-            class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300 dark:bg-slate-600 dark:hover:bg-slate-400 dark:focus:ring-slate-800">
+            class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
             Back
         </a>
       </div>
     </div>
 
     @if (session('success'))
-      <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800 dark:bg-gray-800 dark:text-green-400"
+      <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800"
         role="alert">
         <span class="font-medium">{{ session('success') }}</span>
       </div>
     @endif
     @if (session('failed'))
-      <div class="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-800 dark:bg-gray-800 dark:text-red-400" role="alert">
+      <div class="mb-4 rounded-lg bg-red-50 p-4 text-sm text-red-800" role="alert">
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
     <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-4">
+      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
@@ -70,7 +70,7 @@
                   {{-- <button
                   data-modal-target="modal-order" data-modal-toggle="modal-order"
                   onclick="open_modal_confirm_order()"
-                  class="mx-4 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-xs font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                  class="mx-4 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-xs font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
                     Order Now
                   </button> --}}
                   <button
@@ -100,7 +100,7 @@
                               <button
                                 data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
                                 onclick="add_new_order({{ $item->id }}, '{{ $item->name }}', {{ $item->price }})"
-                                class="mt-2 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                                class="mt-2 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
                                 Add to cart
                               </button>
                             </div>
@@ -125,28 +125,28 @@
       class="hidden">
     </button>
     <div id="drawer-confirm_order"
-      class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform dark:bg-gray-800"
+      class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
       tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
       <h5 id="drawer-label"
-        class="inline-flex items-center text-sm font-semibold uppercase text-gray-500 dark:text-gray-400">Confirm Order
+        class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Confirm Order
       </h5>
       <button type="button" data-drawer-dismiss="drawer-confirm_order"
         aria-controls="drawer-confirm_order"
-        class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">
+        class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900">
         <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
         <span class="sr-only">Close menu</span>
       </button>
 
       <x-fas-circle-exclamation id="icon_fas-circle-exclamation" class="mb-4 mt-8 h-10 w-10 text-gray-400" />
-      <h3 id="header-drawer" class="mb-3 text-lg text-gray-500 dark:text-gray-400">Are you sure you want to confirm this order?</h3>
+      <h3 id="header-drawer" class="mb-3 text-lg text-gray-500">Are you sure you want to confirm this order?</h3>
       <button id="button-drawer-confirm" type="submit" data-type="button-confirm_order"
-        class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
+        class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300"
         data-drawer-hide="drawer-confirm_order"
         form="form-confirm_order">
         Yes, I'm sure
       </button>
       <button id="button-drawer-close" type="button"
-        class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700"
+        class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
         data-drawer-hide="drawer-confirm_order">
         No, cancel
       </button>
@@ -156,13 +156,13 @@
     <div id="modal-add-to-cart" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-white rounded-lg shadow">
           <!-- Modal header -->
-          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">
               <span id="modal-add-to-cart-title">Add</span> To Cart
             </h3>
-            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modal-add-to-cart">
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="modal-add-to-cart">
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
               </svg>
@@ -175,32 +175,32 @@
             <input type="text" id="order-product_id" value="" hidden>
             <input type="text" id="order-product_price" value="" hidden>
             <div class="mb-3">
-              <label for="order-product_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Product Name</label>
+              <label for="order-product_name" class="mb-2 block text-sm font-medium text-gray-900">Product Name</label>
               <input type="text" name="order-product_name" id="order-product_name"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Product Name" readonly>
             </div>
             <div class="mb-3">
-              <label for="order-qty" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Qty</label>
+              <label for="order-qty" class="mb-2 block text-sm font-medium text-gray-900">Qty</label>
               <input type="number" min="1" name="order-qty" id="order-qty"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Qty" value="1" required>
             </div>
             <div>
               <label for="order-remarks"
-                class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Remarks</label>
+                class="mb-2 block text-sm font-medium text-gray-900">Remarks</label>
               <textarea id="order-remarks" rows="4" name="order-remarks"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                 placeholder="Enter event remarks here"></textarea>
             </div>
-            <p class="text-base leading-relaxed text-gray-500 dark:text-gray-400">
+            <p class="text-base leading-relaxed text-gray-500">
               Are you sure you want to <span id="modal-add-to-cart-text">add</span> this order?
             </p>
           </div>
           <!-- Modal footer -->
-          <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-            <button onclick="set_order_to_cart()" data-modal-hide="modal-add-to-cart" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Yes, I'm suret</button>
-            <button data-modal-hide="modal-add-to-cart" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">No, Cancel</button>
+          <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+            <button onclick="set_order_to_cart()" data-modal-hide="modal-add-to-cart" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Yes, I'm suret</button>
+            <button data-modal-hide="modal-add-to-cart" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">No, Cancel</button>
           </div>
         </div>
       </div>
@@ -210,13 +210,13 @@
     <div id="modal-order" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
       <div class="relative p-4 w-full max-w-2xl max-h-full">
         <!-- Modal content -->
-        <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
+        <div class="relative bg-white rounded-lg shadow">
           <!-- Modal header -->
-          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">
               Confirm Order
             </h3>
-            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="modal-order">
+            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center" data-modal-hide="modal-order">
               <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
               </svg>
@@ -235,22 +235,22 @@
               @csrf
               <input type="text" name="confirm_order-order" id="confirm_order-order" hidden>
               <div class="mb-3">
-                <label for="confirm_order-customer_name" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Customer Name</label>
+                <label for="confirm_order-customer_name" class="mb-2 block text-sm font-medium text-gray-900">Customer Name</label>
                 <input type="text" name="confirm_order-customer_name" id="confirm_order-customer_name"
-                  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Customer Name" required>
               </div>
               <div class="mb-3">
                 <label for="confirm_order-remarks"
-                  class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Remarks</label>
+                  class="mb-2 block text-sm font-medium text-gray-900">Remarks</label>
                 <textarea id="confirm_order-remarks" rows="2" name="confirm_order-remarks"
-                  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                   placeholder="Enter event remarks here"></textarea>
               </div>
               <div class="mb-3">
-                <label for="confirm_order-order_type" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Order Type</label>
+                <label for="confirm_order-order_type" class="mb-2 block text-sm font-medium text-gray-900">Order Type</label>
                 <select id="confirm_order-order_type" name="confirm_order-order_type"
-                  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                   required>
                   <option disabled value="">Select Order Type</option>
                   <option value="dine_in">Dine In</option>
@@ -258,17 +258,17 @@
                 </select>
               </div>
               <div class="flex items-center mb-3">
-                <input name="confirm_order-pay_now" id="confirm_order-pay_now" type="checkbox" value="check" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                <label for="confirm_order-pay_now" class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">Pay Now</label>
+                <input name="confirm_order-pay_now" id="confirm_order-pay_now" type="checkbox" value="check" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 focus:ring-2">
+                <label for="confirm_order-pay_now" class="ms-2 text-sm font-medium text-gray-900">Pay Now</label>
               </div>
               <div id="payment_form" class="border pl-4 pr-2 py-4 rounded-lg relative" hidden>
                 <div class="absolute top-[-11px] left-0 right-0 flex justify-center">
                   <div class="bg-white px-4 text-sm font-semibold">Payment Form</div>
                 </div>
                 <div class="mb-3">
-                  <label for="confirm_order-payment_method" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Type Payment</label>
+                  <label for="confirm_order-payment_method" class="mb-2 block text-sm font-medium text-gray-900">Type Payment</label>
                   <select id="confirm_order-payment_method" name="confirm_order-payment_method"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                     >
                     <option disabled value="">Select Type Payment</option>
                     @foreach ($list_fund as $item_fund)  
@@ -277,30 +277,30 @@
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label for="confirm_order-total_payment" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Total Payment</label>
+                  <label for="confirm_order-total_payment" class="mb-2 block text-sm font-medium text-gray-900">Total Payment</label>
                   <input type="number" min="0" name="confirm_order-total_payment" id="confirm_order-total_payment"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Total Payment" readonly>
                 </div>
                 <div class="mb-3">
-                  <label for="confirm_order-payment" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Payment</label>
+                  <label for="confirm_order-payment" class="mb-2 block text-sm font-medium text-gray-900">Payment</label>
                   <input type="number" min="0" name="confirm_order-payment" id="confirm_order-payment"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Payment" onkeyup="count_change_payment()">
                 </div>
                 <div class="">
-                  <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Change</label>
+                  <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900">Change</label>
                   <input type="number" min="0" name="confirm_order-change" id="confirm_order-change"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
+                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Change" readonly>
                 </div>
               </div>
             </form>
           </div>
           <!-- Modal footer -->
-          <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b dark:border-gray-600">
-            <button onclick="submit_order()" id="button-confirm_order" hidden type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Confirm Order</button>
-            <button id="button-close_order" data-modal-hide="modal-order" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700">Close</button>
+          <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+            <button onclick="submit_order()" id="button-confirm_order" hidden type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Confirm Order</button>
+            <button id="button-close_order" data-modal-hide="modal-order" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Close</button>
           </div>
         </div>
       </div>
@@ -334,13 +334,13 @@
               <button
                 
                 onclick="update_order_from_chart(${item.sequence})"
-                class="mr-2 inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-xs text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                class="mr-2 inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-xs text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                 <x-fas-edit class="mr-2 h-4 w-4" />
                 Update
               </button>
               <button type="button"
                 onclick="delete_order_from_chart(${item.sequence})"
-                class="ml-2 inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-xs text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900">
+                class="ml-2 inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-xs text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300">
                 <x-fas-trash-alt class="mr-2 h-4 w-4" />
                 Delete
               </button>
