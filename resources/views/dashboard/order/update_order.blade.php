@@ -310,9 +310,25 @@
 
 @push('script')
   <script type="text/javascript">
-    let data_order = [], sequence = 0;
+    let data_order = [], sequence = 0, data_order_add = [], data_order_update = [], data_order_delete = [];
 
     $(document).ready(function() {
+      let data = {!! json_encode($order_item) !!};
+
+      data.forEach(item => {
+        data_order.push({
+          id: item.id,
+          product_id: item.product_id,
+          product_price: item.price, 
+          product_name: item.name, 
+          qty: item.quantity, 
+          remarks: item.remarks, 
+          sequence
+        })
+
+        sequence += 1;
+      });
+
       draw_order_item();
     });
 
@@ -406,12 +422,20 @@
       if (data_sequence !== '') {
         let index = data_order.findIndex(item => item.sequence == data_sequence);
         data_order[index] = {
-          product_id, product_price, product_name, qty, remarks, sequence: data_sequence
+          id: data_order[index].id, product_id, product_price, product_name, qty, remarks, sequence: data_sequence
+        }
+        if (data_order[index].id) {
+
+        } else {
+          
         }
       } else {
         data_order.push({
-          product_id, product_price, product_name, qty, remarks, sequence
+          id: null, product_id, product_price, product_name, qty, remarks, sequence
         });
+        data_order_add.push({
+          product_id, product_price, product_name, qty, remarks, sequence
+        })
   
         sequence += 1;
       }

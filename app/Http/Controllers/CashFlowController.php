@@ -296,7 +296,10 @@ class CashFlowController extends Controller
     
             $data_fund = Fund::where('company_id', Auth::user()->company_id)->get();
 
-            $order_item = OrderItems::where('order_id', $id)->first();
+            $order_item = OrderItems::where('order_id', $id)
+                ->select('order_items.*', 'products.name')
+                ->leftJoin('products', 'products.id', '=', 'order_items.product_id')
+                ->get();
 
             return view('dashboard.order.update_order', [
                 'list_menu' => $result_data_menu,
