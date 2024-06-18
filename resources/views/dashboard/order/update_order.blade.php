@@ -67,12 +67,12 @@
                     <div>Total Price</div>
                     <div id="order-total-price"></div>
                   </div>
-                  {{-- <button
+                  <button
                   data-modal-target="modal-order" data-modal-toggle="modal-order"
                   onclick="open_modal_confirm_order()"
                   class="mx-4 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-xs font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
                     Order Now
-                  </button> --}}
+                  </button>
                   <button
                     id="button-trigger-modal"
                     data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
@@ -231,21 +231,24 @@
                 Somethink is wrong, please Add Product To Cart
               </div>
             </div>
-            <form id="form-confirm_order" action="{{ route('dashboard.order.order_active.post_new_order') }}" method="POST" hidden>
+            <form id="form-confirm_order" action="{{ route('dashboard.order.update_order', ['id' => $order->id]) }}" method="POST" hidden>
               @csrf
-              <input type="text" name="confirm_order-order" id="confirm_order-order" hidden>
+              @method('PUT')
+              <input type="text" name="confirm_order-order_add" id="confirm_order-order_add" hidden>
+              <input type="text" name="confirm_order-order_update" id="confirm_order-order_update" hidden>
+              <input type="text" name="confirm_order-order_delete" id="confirm_order-order_delete" hidden>
               <div class="mb-3">
                 <label for="confirm_order-customer_name" class="mb-2 block text-sm font-medium text-gray-900">Customer Name</label>
                 <input type="text" name="confirm_order-customer_name" id="confirm_order-customer_name"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                  placeholder="Customer Name" required>
+                  placeholder="Customer Name" value="{{ $order->customer_name }}" required>
               </div>
               <div class="mb-3">
                 <label for="confirm_order-remarks"
                   class="mb-2 block text-sm font-medium text-gray-900">Remarks</label>
                 <textarea id="confirm_order-remarks" rows="2" name="confirm_order-remarks"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                  placeholder="Enter event remarks here"></textarea>
+                  placeholder="Enter event remarks here">{{ $order->remarks }}</textarea>
               </div>
               <div class="mb-3">
                 <label for="confirm_order-order_type" class="mb-2 block text-sm font-medium text-gray-900">Order Type</label>
@@ -253,8 +256,8 @@
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                   required>
                   <option disabled value="">Select Order Type</option>
-                  <option value="dine_in">Dine In</option>
-                  <option value="take_away">Take Away</option>
+                  <option value="dine_in" {{ $order->order_type == 'dine_in' ? 'selected' : '' }}>Dine In</option>
+                  <option value="take_away" {{ $order->order_type == 'take_away' ? 'selected' : '' }}>Take Away</option>
                 </select>
               </div>
               <div class="flex items-center mb-3">
@@ -333,6 +336,7 @@
     });
 
     const draw_order_item = () => {
+      console.log(data_order, data_order_add, data_order_update, data_order_delete)
       $('#body-order-item').html("");
       let total_price_order = 0;
       data_order.forEach((item, index) => {
@@ -348,7 +352,6 @@
             <div class="w-2/6 text-right">${format_rupiah(price_item)}</div>
             <div id="container-update-order-${item.sequence}" class="hidden rounded-lg absolute justify-center items-center top-0 bottom-0 left-0 right-0 bg-gray-200/60">
               <button
-                
                 onclick="update_order_from_chart(${item.sequence})"
                 class="mr-2 inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-xs text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                 <x-fas-edit class="mr-2 h-4 w-4" />
@@ -380,7 +383,14 @@
     }
 
     const delete_order_from_chart = (sequence_id) => {
+      console.log(sequence_id)
+      let index = data_order.findIndex(item => item.sequence == sequence_id);
+      if (data_order[index].id) {
+        data_order_delete.push(data_order[index].id);
+      }
       data_order = data_order.filter(item => item.sequence != sequence_id);
+      data_order_add = data_order_add.filter(item => item.sequence != sequence_id);
+      data_order_update = data_order_update.filter(item => item.sequence != sequence_id);
       draw_order_item();
     }
 
@@ -425,9 +435,21 @@
           id: data_order[index].id, product_id, product_price, product_name, qty, remarks, sequence: data_sequence
         }
         if (data_order[index].id) {
-
+          let index_update = data_order_update.findIndex(item => item.sequence == data_sequence);
+          if (index_update >= 0) {
+            data_order_update[index_update] = {
+              id: data_order_add[index_update].id, product_id, product_price, product_name, qty, remarks, sequence: data_sequence
+            }
+          } else {
+            data_order_update.push({
+              id: data_order[index].id, product_id, product_price, product_name, qty, remarks, sequence: data_sequence
+            })
+          }
         } else {
-          
+          let index_add = data_order_add.findIndex(item => item.sequence == data_sequence);
+          data_order_add[index_add] = {
+            id: data_order_add[index_add].id, product_id, product_price, product_name, qty, remarks, sequence: data_sequence
+          }
         }
       } else {
         data_order.push({
@@ -487,7 +509,9 @@
       }
 
       if (condition_success) {
-        $('#confirm_order-order').val(JSON.stringify(data_order));
+        $('#confirm_order-order_add').val(JSON.stringify(data_order_add));
+        $('#confirm_order-order_update').val(JSON.stringify(data_order_update));
+        $('#confirm_order-order_delete').val(JSON.stringify(data_order_delete));
         $('#header-drawer').html('Are you sure you want to confirm this order?');
         $('#header-drawer').removeClass('text-red-500');
         $('#header-drawer').addClass('text-gray-500');

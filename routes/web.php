@@ -99,8 +99,9 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::post("/post_new_order", [OrderController::class, 'post_new_order'])->name('dashboard.order.order_active.post_new_order');
         Route::get("/history", [OrderController::class, 'order_history'])->name('dashboard.order.order_history');
         Route::get("/{id}/detail", [OrderController::class, 'order_detail'])->name('dashboard.order.order_detail');
-        Route::delete("/{id}", [CashFlowController::class, 'delete_order'])->name('dashboard.order.delete_order');
-        Route::get("/update/{id}", [CashFlowController::class, 'edit_order'])->name('dashboard.order.edit_order');
+        Route::delete("/{id}", [OrderController::class, 'delete_order'])->name('dashboard.order.delete_order');
+        Route::get("/update/{id}", [OrderController::class, 'edit_order'])->name('dashboard.order.edit_order');
+        Route::put("/update/{id}", [OrderController::class, 'update_order'])->name('dashboard.order.update_order');
     });
 
     // Profile
