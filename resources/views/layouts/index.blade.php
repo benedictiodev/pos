@@ -14,8 +14,8 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.bunny.net" />
   <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
-  <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
   <script>
     tailwind.config = {
       theme: {
@@ -98,15 +98,16 @@
 
 <body class="bg-gray-200">
   @include('layouts.header')
-  <div class="flex pt-16 overflow-hidden bg-gray-50 dark:bg-gray-900">
+  <div class="flex pt-16 overflow-hidden bg-gray-50">
     @include('layouts.sidebar')
 
-    <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64 dark:bg-gray-900">
+    <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64">
       <main class="h-[calc(100vh-72px)] bg-slate-50 px-4 pt-6">@yield('main')</main>
       {{-- @include('layouts.footer') --}}
     </div>
   </div>
 
+  <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.js"></script>
   <script src="{{ asset('assets/js/jquery-3.7.1.min.js') }}"></script>
   <script src="{{ asset('assets/helpers/helpers.js') }}"></script>

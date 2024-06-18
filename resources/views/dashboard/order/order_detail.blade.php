@@ -34,7 +34,7 @@
         <table class="table-fixed divide-y divide-gray-200 w-full">
           <thead class="divide-y divide-gray-200">
             <tr class="bg-gray-100">
-              <td colspan="4" class="p-4 text-center text-base font-bold uppercase text-gray-500"> ID Order
+              <td colspan="4" class="p-4 text-center text-lg font-bold uppercase text-gray-500"> ID Order
                 {{ $data->id_order }}</td>
             </tr>
             <tr>
