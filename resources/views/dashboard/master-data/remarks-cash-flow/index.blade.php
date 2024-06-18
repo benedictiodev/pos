@@ -7,8 +7,7 @@
         <nav class="mb-5 flex" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
-              <a href="#"
-                class="inline-flex items-center text-gray-700 hover:text-primary-600">
+              <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
                 Dashboard
               </a>
             </li>
@@ -33,8 +32,7 @@
     </div>
 
     @if (session('success'))
-      <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800"
-        role="alert">
+      <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800" role="alert">
         <span class="font-medium">{{ session('success') }}</span>
       </div>
     @endif
@@ -43,8 +41,7 @@
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
-    <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
           <form class="sm:pr-3" action="#" method="GET">
@@ -84,22 +81,19 @@
                         <label for="checkbox-all" class="sr-only">checkbox</label>
                       </div>
                     </th>
-                    <th scope="col"
-                      class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
                       Name
                     </th>
-                    <th scope="col"
-                      class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
                       Type
                     </th>
-                    <th scope="col"
-                      class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
                       Actions
                     </th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                  @foreach ($data as $item)
+                  @forelse ($data as $item)
                     <tr class="hover:bg-gray-100">
                       <td class="w-4 p-4">
                         <div class="flex items-center">
@@ -126,8 +120,7 @@
                           <x-fas-edit class="mr-2 h-4 w-4" />
                           Update
                         </a>
-                        <button type="button" id="deleteProductButton"
-                          data-drawer-target="drawer-delete-product-default"
+                        <button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-product-default"
                           data-drawer-show="drawer-delete-product-default" aria-controls="drawer-delete-product-default"
                           data-drawer-placement="right"
                           class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300"
@@ -137,7 +130,11 @@
                         </button>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr>
+                      <td class="text-center text-base font-light p-4" colspan="4">Empty Data</td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>
@@ -155,8 +152,7 @@
     <div id="drawer-delete-product-default"
       class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
       tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-      <h5 id="drawer-label"
-        class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Delete item
+      <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Delete item
       </h5>
       <button type="button" data-drawer-dismiss="drawer-delete-product-default"
         aria-controls="drawer-delete-product-default"

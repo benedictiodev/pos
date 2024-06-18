@@ -7,8 +7,7 @@
         <nav class="mb-5 flex" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
-              <a href="#"
-                class="inline-flex items-center text-gray-700 hover:text-primary-600">
+              <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
                 Dashboard
               </a>
             </li>
@@ -30,47 +29,38 @@
       </div>
     </div>
 
-    <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
-      <div class="mb-4 space-y-5">
-        <table class="table-fixed divide-y divide-gray-200">
-          <thead class="bg-gray-100">
-            <tr>
-              <th class="p-4 text-left text-base font-bold uppercase text-gray-500">ID Order</th>
-              <td class="p-4 text-sm font-normal text-gray-900">:</td>
-              <td class="p-4 text-sm font-normal text-gray-900">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+      <div class="mb-4 space-y-12">
+        <table class="table-fixed divide-y divide-gray-200 w-full">
+          <thead class="divide-y divide-gray-200">
+            <tr class="bg-gray-100">
+              <td colspan="4" class="p-4 text-center text-lg font-bold uppercase text-gray-500"> ID Order
                 {{ $data->id_order }}</td>
             </tr>
             <tr>
+              <th class="p-4 text-left text-base font-bold uppercase text-gray-500">Cashier</th>
+              <td class="p-4 text-sm font-normal text-gray-900">
+                {{ $data->cashier_name }}</td>
+
               <th class="p-4 text-left text-base font-bold uppercase text-gray-500">Date</th>
-              <td class="p-4 text-sm font-normal text-gray-900">:</td>
               <td class="p-4 text-sm font-normal text-gray-900">
                 {{ $data->datetime }}</td>
             </tr>
             <tr>
-              <th class="p-4 text-left text-base font-bold uppercase text-gray-500">Cashier</th>
-              <td class="p-4 text-sm font-normal text-gray-900">:</td>
-              <td class="p-4 text-sm font-normal text-gray-900">
-                {{ $data->cashier_name }}</td>
-            </tr>
-            <tr>
               <th class="p-4 text-left text-base font-bold uppercase text-gray-500">Customer</th>
-              <td class="p-4 text-sm font-normal text-gray-900">:</td>
               <td class="p-4 text-sm font-normal text-gray-900">
                 {{ $data->customer_name }}</td>
-            </tr>
-            <tr>
+
               <th class="p-4 text-left text-base font-bold uppercase text-gray-500">Order Type</th>
-              <td class="p-4 text-sm font-normal text-gray-900">:</td>
               <td class="p-4 text-sm font-normal text-gray-900">
                 {{ $data->order_type == 'dine_in' ? 'DINE IN' : 'TAKE AWAY' }}</td>
             </tr>
             <tr>
               <th class="p-4 text-left text-base font-bold uppercase text-gray-500">Remark</th>
-              <td class="p-4 text-sm font-normal text-gray-900">:</td>
-              <td class="p-4 text-sm font-normal text-gray-900">
+              <td class="p-4 text-sm font-normal text-gray-900" colspan="3">
                 {{ $data->remarks }}</td>
             </tr>
+            <tr></tr>
           </thead>
         </table>
 
@@ -79,6 +69,9 @@
             <tr>
               <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
                 Product
+              </th>
+              <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                Remark
               </th>
               <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
                 Quantity
@@ -101,6 +94,11 @@
                 </td>
                 <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                   <p class="text-sm font-normal text-gray-900">
+                    {{ $item->remarks }}
+                  </p>
+                </td>
+                <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                  <p class="text-sm font-normal text-gray-900">
                     {{ $item->quantity }}
                   </p>
                 </td>
@@ -117,29 +115,29 @@
               </tr>
             @empty
               <tr>
-                <td class="text-center" colspan="7">Empty</td>
+                <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
               </tr>
             @endforelse
           </tbody>
           <tfoot class="bg-gray-100">
             <tr>
-              <td class="text-start p-4 text-base font-bold uppercase text-gray-500">
+              <td class="text-start p-2 text-base font-bold uppercase text-gray-500">
                 {{ count($data->items) }} items</td>
-              <td colspan="2" class="text-end p-4 text-base font-bold uppercase text-gray-500">Total
+              <td colspan="3" class="text-end p-2 text-base font-bold uppercase text-gray-500">Total
               </td>
-              <td class="text-end p-4 text-base font-bold uppercase text-gray-500">
+              <td class="text-end p-2 text-base font-bold uppercase text-gray-500">
                 {{ format_rupiah($data->total_payment) }}</td>
             </tr>
             <tr>
-              <td colspan="3" class="text-end p-4 text-base font-bold uppercase text-gray-500">
+              <td colspan="4" class="text-end p-2 text-base font-bold uppercase text-gray-500">
                 {{ $data->payment_method }}</td>
-              <td class="text-end p-4 text-base font-bold uppercase text-gray-500">
+              <td class="text-end p-2 text-base font-bold uppercase text-gray-500">
                 {{ format_rupiah($data->payment) }}</td>
             </tr>
             <tr>
-              <td colspan="3" class="text-end p-4 text-base font-bold uppercase text-gray-500">
+              <td colspan="4" class="text-end p-2 text-base font-bold uppercase text-gray-500">
                 Change</td>
-              <td class="text-end p-4 text-base font-bold uppercase text-gray-500">
+              <td class="text-end p-2 text-base font-bold uppercase text-gray-500">
                 {{ format_rupiah($data->change) }}</td>
             </tr>
             </tr>

@@ -7,8 +7,7 @@
         <nav class="mb-5 flex" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
-              <a href="#"
-                class="inline-flex items-center text-gray-700 hover:text-primary-600">
+              <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
                 Dashboard
               </a>
             </li>
@@ -32,8 +31,7 @@
     </div>
 
     @if (session('success'))
-      <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800"
-        role="alert">
+      <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800" role="alert">
         <span class="font-medium">{{ session('success') }}</span>
       </div>
     @endif
@@ -44,24 +42,27 @@
     @endif
 
     <div class="flex mx-[-0.25rem]">
-      <div class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-2 w-1/4 mx-1">
-          <div class="flex items-center text-sm">
-            <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> Total Funds :
-          </div>
-          <div class="font-bold text-sm"> {{ format_rupiah($total_fund) }}</div>
+      <div
+        class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-2 w-1/4 mx-1">
+        <div class="flex items-center text-sm">
+          <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> Total
+          Funds :
         </div>
+        <div class="font-bold text-sm"> {{ format_rupiah($total_fund) }}</div>
+      </div>
       @foreach ($data as $item)
-        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-2 w-1/4 mx-1">
+        <div
+          class="flex justify-between items-center bg-white border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-2 w-1/4 mx-1">
           <div class="flex items-center text-sm">
-            <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> {{ $item->type }} :
+            <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" />
+            {{ $item->type }} :
           </div>
           <div class="font-bold text-sm"> {{ format_rupiah($item->fund) }}</div>
         </div>
       @endforeach
     </div>
 
-    <div
-      class="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+    <div class="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
           <form class="sm:pr-3" action="#" method="GET">
@@ -86,26 +87,22 @@
               <table class="min-w-full table-fixed divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                   <tr>
-                    <th scope="col"
-                      class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
                       Datetime
                     </th>
-                    <th scope="col"
-                      class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
                       From Fund
                     </th>
-                    <th scope="col"
-                      class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
                       To Fund
                     </th>
-                    <th scope="col"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
                       Amount
                     </th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                  @foreach ($data_history as $item)
+                  @forelse ($data_history as $item)
                     <tr class="hover:bg-gray-100">
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">
@@ -128,7 +125,11 @@
                         </p>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr>
+                      <td class="text-center text-base font-light p-4" colspan="4">Empty Data</td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>
