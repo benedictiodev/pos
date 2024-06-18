@@ -111,7 +111,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-                  @foreach ($data as $item)
+                  @forelse ($data as $item)
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                       <td class="w-4 p-4">
                         <div class="flex items-center">
@@ -161,7 +161,11 @@
                         </button>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr>
+                      <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>

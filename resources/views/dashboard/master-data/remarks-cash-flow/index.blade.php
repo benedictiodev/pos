@@ -99,7 +99,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-                  @foreach ($data as $item)
+                  @forelse ($data as $item)
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                       <td class="w-4 p-4">
                         <div class="flex items-center">
@@ -113,7 +113,8 @@
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
-                        <p class="text-sm font-normal text-gray-900 dark:text-white">{{ strtoupper(str_replace('_', ' ', $item->type)) }}
+                        <p class="text-sm font-normal text-gray-900 dark:text-white">
+                          {{ strtoupper(str_replace('_', ' ', $item->type)) }}
                         </p>
                       </td>
 
@@ -126,8 +127,7 @@
                           <x-fas-edit class="mr-2 h-4 w-4" />
                           Update
                         </a>
-                        <button type="button" id="deleteProductButton"
-                          data-drawer-target="drawer-delete-product-default"
+                        <button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-product-default"
                           data-drawer-show="drawer-delete-product-default" aria-controls="drawer-delete-product-default"
                           data-drawer-placement="right"
                           class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
@@ -137,7 +137,11 @@
                         </button>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr>
+                      <td class="text-center text-base font-light p-4" colspan="4">Empty Data</td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>

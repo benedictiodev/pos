@@ -44,16 +44,20 @@
     @endif
 
     <div class="flex mx-[-0.25rem]">
-      <div class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-2 w-1/4 mx-1">
-          <div class="flex items-center text-sm">
-            <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> Total Funds :
-          </div>
-          <div class="font-bold text-sm"> {{ format_rupiah($total_fund) }}</div>
+      <div
+        class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-2 w-1/4 mx-1">
+        <div class="flex items-center text-sm">
+          <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> Total
+          Funds :
         </div>
+        <div class="font-bold text-sm"> {{ format_rupiah($total_fund) }}</div>
+      </div>
       @foreach ($data as $item)
-        <div class="flex justify-between items-center bg-white border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-2 w-1/4 mx-1">
+        <div
+          class="flex justify-between items-center bg-white border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 dark:border-gray-700 sm:p-6 dark:bg-gray-800 mb-2 w-1/4 mx-1">
           <div class="flex items-center text-sm">
-            <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> {{ $item->type }} :
+            <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" />
+            {{ $item->type }} :
           </div>
           <div class="font-bold text-sm"> {{ format_rupiah($item->fund) }}</div>
         </div>
@@ -105,7 +109,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-                  @foreach ($data_history as $item)
+                  @forelse ($data_history as $item)
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 dark:text-gray-400">
                         <p class="text-sm font-normal text-gray-900 dark:text-white">
@@ -128,7 +132,11 @@
                         </p>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr>
+                      <td class="text-center text-base font-light p-4" colspan="4">Empty Data</td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>

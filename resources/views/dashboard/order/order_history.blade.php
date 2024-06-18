@@ -152,7 +152,7 @@
 
                   @empty
                     <tr>
-                      <td class="text-center" colspan="7">Empty</td>
+                      <td class="text-center text-base font-light p-4" colspan="8">Empty Data</td>
                     </tr>
                   @endforelse
                 </tbody>

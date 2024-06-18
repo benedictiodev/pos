@@ -66,8 +66,7 @@
           </div>
         </div>
         <a id="createProductButton" href="{{ route('dashboard.master-data.funds.create') }}"
-          class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-          >
+          class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
           Add new funds
         </a>
       </div>
@@ -96,8 +95,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white dark:divide-gray-700 dark:bg-gray-800">
-
-                  @foreach ($data as $item)
+                  @forelse ($data as $item)
                     <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
                       <td class="w-4 p-4">
                         <div class="flex items-center">
@@ -117,10 +115,9 @@
                           Update
                         </a>
 
-                        <button type="button" id="deleteProductButton"
-                          data-drawer-target="drawer-delete-fund-default"
-                          data-drawer-show="drawer-delete-fund-default"
-                          aria-controls="drawer-delete-fund-default" data-drawer-placement="right"
+                        <button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-fund-default"
+                          data-drawer-show="drawer-delete-fund-default" aria-controls="drawer-delete-fund-default"
+                          data-drawer-placement="right"
                           class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300 dark:focus:ring-red-900"
                           data-id="{{ $item->id }}">
                           <x-fas-trash-alt class="mr-2 h-4 w-4" />
@@ -128,7 +125,11 @@
                         </button>
                       </td>
                     </tr>
-                  @endforeach
+                  @empty
+                    <tr>
+                      <td class="text-center text-base font-light p-4" colspan="3">Empty Data</td>
+                    </tr>
+                  @endforelse
                 </tbody>
               </table>
             </div>
@@ -150,8 +151,7 @@
     <h5 id="drawer-label"
       class="inline-flex items-center text-sm font-semibold uppercase text-gray-500 dark:text-gray-400">Delete item
     </h5>
-    <button type="button" data-drawer-dismiss="drawer-delete-fund-default"
-      aria-controls="drawer-delete-fund-default"
+    <button type="button" data-drawer-dismiss="drawer-delete-fund-default" aria-controls="drawer-delete-fund-default"
       class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900 dark:hover:bg-gray-600 dark:hover:text-white">
       <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
       <span class="sr-only">Close menu</span>
