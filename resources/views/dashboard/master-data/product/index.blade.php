@@ -123,7 +123,12 @@
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4">
-                        <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="h-32" />
+                        @if ($item->image)
+                          <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="h-32" />
+                        @else
+                          <p class="text-sm font-normal text-gray-900">No Image
+                          </p>
+                        @endif
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">
@@ -214,7 +219,7 @@
           const id = document.querySelector("#delete-id").value;
           document.querySelector("#form-delete").method = "POST";
           document.querySelector("#form-delete").action =
-            `/dashboard/master-data/products/${id}`;
+            `/dashboard/master-data/product/${id}`;
           document.querySelector("#form-delete").submit();
         }
       })

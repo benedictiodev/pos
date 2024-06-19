@@ -87,7 +87,11 @@
                         @foreach ($category->products as $item)
                           <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
                             <div class="border p-2 rounded-md flex items-center justify-center h-32 max-h-32">
-                              <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="h-full">
+                              @if ($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="h-full">  
+                              @else
+                                <div>No Image</div>
+                              @endif
                             </div>
                             <div class="mt-2 ">
                               <div class="font-medium">{{ $item->name }}</div>

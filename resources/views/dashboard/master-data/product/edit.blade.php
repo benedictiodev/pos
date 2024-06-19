@@ -85,8 +85,10 @@
               <label class="mb-2 block text-sm font-medium text-gray-900" for="create-image">Upload
                 file Photo Product</label>
               <input type="text" value="{{ $data->image }}" name="old_image" hidden>
-              <img id="preview-image" src="{{ asset('storage/' . $data->image) }}" alt="{{ asset($data->image) }}"
-                class="h-64 mb-2 block">
+              @if ($data->image)
+                <img id="preview-image" src="{{ asset('storage/' . $data->image) }}" alt="{{ asset($data->image) }}"
+                  class="h-64 mb-2 block">
+              @endif
               <input
                 class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
                 id="create-image" type="file" accept="image/*" onchange="onChange()" name="image">

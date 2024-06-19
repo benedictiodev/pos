@@ -104,9 +104,16 @@ class ProductController extends Controller
                 $request['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
             }
     
-            $request['is_available'] = $request["is_available"] ? 1 : 0;
+            $validate['is_available'] = $request["is_available"] ? 1 : 0;
     
-            $update = $data->update($request);
+            $update = $data->update([
+                'name' => $validate['name'],
+                'price' => $validate['price'],
+                'category_id' => $validate['category_id'],
+                'description' => $request['description'],
+                'image' => $request['image'],
+                'is_available' => $validate['is_available'],
+            ]);
     
             if ($update) {
                 return redirect()->route('dashboard.master-data.product')->with('success', "Successfully to update  product");
