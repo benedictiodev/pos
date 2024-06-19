@@ -153,7 +153,6 @@ class OrderController extends Controller
             }
         } catch (Throwable $error) {
             DB::rollBack();
-            dd($error);
             return redirect()->route('dashboard.order.order_active.add_new_order')->with('failed', "Failed to add order");
         }
     }
