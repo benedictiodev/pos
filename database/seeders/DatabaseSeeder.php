@@ -31,5 +31,9 @@ class DatabaseSeeder extends Seeder
             'company_id' => 1,
             'username' => 'dummyuser',
         ]);
+
+        $this->call([
+            CretaeUser::class,
+        ]);
     }
 }

@@ -101,6 +101,7 @@ class OrderController extends Controller
                     'quantity' => $item->qty,
                     'amount' => $item->product_price * $item->qty,
                     'remarks' => $item->remarks,
+                    'sequence' => $next_sequence,
                 ]);
             }
 

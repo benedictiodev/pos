@@ -52,9 +52,9 @@
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
-            <div class="flex">
-              <div class="w-2/5 border mr-3 rounded-xl max-h-[450px]">
-                <div class="h-5/6 overflow-auto">
+            <div class="lg:flex">
+              <div class="w-full lg:w-2/5 border lg:mr-3 rounded-xl max-h-[320px] lg:max-h-[450px]">
+                <div class="h-[255px] lg:h-5/6 overflow-auto">
                   <div class="mx-2 px-2 py-3 flex border-b font-semibold">
                     <div class="w-3/6">Menu</div>
                     <div class="w-1/6 text-center">Qty</div>
@@ -62,7 +62,7 @@
                   </div>
                   <div id="body-order-item"></div>
                 </div>
-                <div class="h-1/6 bg-[#E5E7EB] rounded-b-lg flex flex-col justify-center items-center px-4">
+                <div class="h-[65px] lg:h-1/6 bg-[#E5E7EB] rounded-b-lg flex flex-col justify-center items-center px-4">
                   <div class="flex justify-between w-full font-semibold text-sm mb-2">
                     <div>Total Price</div>
                     <div id="order-total-price"></div>
@@ -79,13 +79,13 @@
                     class="hidden"></button>
                 </div>
               </div>
-              <div class="w-3/5 border ml-3 rounded-xl max-h-[450px] overflow-auto">
+              <div class="w-full lg:w-3/5 border lg:ml-3 rounded-xl mt-4 lg:mt-0 lg:max-h-[450px] overflow-auto">
                 <div class="p-2 text-center text-lg font-semibold bg-[#E5E7EB] rounded-t-lg border-b-2 border-white">List Menu</div>
                 <div>
                   @foreach ($list_menu as $category)  
                     <div>
                       <div class="bg-[#E5E7EB] py-1 px-2">Category : {{ $category->category_name }}</div>
-                      <div class="grid grid-cols-4 gap-2 px-1 py-2">
+                      <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 px-1 py-2">
                         @foreach ($category->products as $item) 
                           <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
                             <div class="border p-2 rounded-md flex items-center justify-center h-32 max-h-32">
