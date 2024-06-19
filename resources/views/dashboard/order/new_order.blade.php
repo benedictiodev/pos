@@ -95,12 +95,27 @@
                             </div>
                             <div class="absolute w-full bottom-[8px] pr-4">
                               <div class="text-right mt-2 text-sm font-bold">{{ format_rupiah($item->price) }}</div>
-                              <button data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
-                                onclick="add_new_order({{ $item->id }}, '{{ $item->name }}', {{ $item->price }})"
-                                class="mt-2 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                                Add to cart
-                              </button>
+                              @if ($item->is_available)
+                                <button data-modal-target="modal-add-to-cart" data-modal-toggle="modal-add-to-cart"
+                                  onclick="add_new_order({{ $item->id }}, '{{ $item->name }}', {{ $item->price }})"
+                                  class="mt-2 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                                  Add to cart
+                                </button>
+                              @else 
+                                <button
+                                  class="mt-2 w-full justify-center rounded-lg bg-primary-500 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-200">
+                                  Not Available
+                                </button>
+                              @endif
                             </div>
+                            @if (!$item->is_available)
+                              <div class="rounded-lg absolute top-0 bottom-0 right-0 left-0 bg-gray-400/70 flex justify-center items-center">
+                                <div class="text-white font-bold text-center">
+                                  <div class="text-lg">Oppss!!</div>
+                                  <div class="text-sm">Not Available</div>
+                                </div>
+                              </div>
+                            @endif
                           </div>
                         @endforeach
                       </div>
