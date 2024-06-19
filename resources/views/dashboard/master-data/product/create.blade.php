@@ -74,16 +74,16 @@
                 class="mb-2 block text-sm font-medium text-gray-900">Description</label>
               <textarea id="description" rows="4" name="description"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                placeholder="Enter event description here" required></textarea>
+                placeholder="Enter event description here"></textarea>
             </div>
 
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-900" for="create-image">Upload
-                file</label>
+                file Photo Product</label>
               <img id="preview-image">
               <input
                 class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
-                id="create-image" type="file" accept="image/*" onchange="onChange()" name="image" required>
+                id="create-image" type="file" accept="image/*" onchange="onChange()" name="image">
             </div>
 
             <div class="flex items-center">

@@ -78,12 +78,12 @@
                 class="mb-2 block text-sm font-medium text-gray-900">Description</label>
               <textarea id="description" rows="4" name="description"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                placeholder="Enter event description here" required>{{ old('description', $data->description) }}</textarea>
+                placeholder="Enter event description here">{{ old('description', $data->description) }}</textarea>
             </div>
 
             <div>
               <label class="mb-2 block text-sm font-medium text-gray-900" for="create-image">Upload
-                file</label>
+                file Photo Product</label>
               <input type="text" value="{{ $data->image }}" name="old_image" hidden>
               <img id="preview-image" src="{{ asset('storage/' . $data->image) }}" alt="{{ asset($data->image) }}"
                 class="h-64 mb-2 block">

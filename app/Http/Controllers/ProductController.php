@@ -37,12 +37,12 @@ class ProductController extends Controller
             'name' => 'required',
             'price' => 'required',
             'category_id' => 'required',
-            'description' => 'required',
-            'image' => 'required|image|file|mimes:jpeg,png,jpg',
+            // 'description' => 'required',
+            // 'image' => 'required|image|file|mimes:jpeg,png,jpg',
         ]);
 
         if ($request->file('image')) {
-            $validate['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
+            $request['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
         }
 
         $validate["is_available"] = $request->is_available ? $request->is_available : 0;
@@ -51,8 +51,8 @@ class ProductController extends Controller
             'name' => $validate['name'],
             'price' => $validate['price'],
             'category_id' => $validate['category_id'],
-            'description' => $validate['description'],
-            'image' => $validate['image'],
+            'description' => $request['description'],
+            'image' => $request['image'],
             'is_available' => $validate['is_available'],
         ]);
 
@@ -86,7 +86,7 @@ class ProductController extends Controller
             'name' => 'required',
             'price' => 'required',
             'category_id' => 'required',
-            'description' => 'required',
+            // 'description' => 'required',
         ]);
 
         // $data = Product::findOrFail($id);
@@ -101,12 +101,12 @@ class ProductController extends Controller
                 if ($request->old_image) {
                     Storage::delete($request->old_image);
                 }
-                $validate['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
+                $request['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
             }
     
-            $validate['is_available'] = $request["is_available"] ? 1 : 0;
+            $request['is_available'] = $request["is_available"] ? 1 : 0;
     
-            $update = $data->update($validate);
+            $update = $data->update($request);
     
             if ($update) {
                 return redirect()->route('dashboard.master-data.product')->with('success', "Successfully to update  product");
