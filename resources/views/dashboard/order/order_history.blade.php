@@ -156,20 +156,22 @@
                     </tr>
                   @endforelse
                 </tbody>
-                <tfoot class="bg-gray-100">
-                  <tr>
-                    <th scope="col" colspan="2s"
-                      class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Grand Total
-                    </th>
-                    <th scope="col" colspan="5"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                      {{ format_rupiah($total) }}
-                    </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                    </th>
-                  </tr>
-                </tfoot>
+                @if (Auth::user()->id != 2)
+                  <tfoot class="bg-gray-100">
+                    <tr>
+                      <th scope="col" colspan="2s"
+                        class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                        Grand Total
+                      </th>
+                      <th scope="col" colspan="5"
+                        class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                        {{ format_rupiah($total) }}
+                      </th>
+                      <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      </th>
+                    </tr>
+                  </tfoot>
+                @endif
               </table>
             </div>
           </div>
