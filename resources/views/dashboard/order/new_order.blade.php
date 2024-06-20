@@ -383,7 +383,8 @@
 
     $(document).ready(function() {
       draw_order_item();
-      if ({{ count($list_fund) == 0 }}) {
+      let data_fund = {!! json_encode($list_fund) !!};
+      if (data_fund.length == 0) {
         $("#static-modal-button").trigger('click');
       }
     });
