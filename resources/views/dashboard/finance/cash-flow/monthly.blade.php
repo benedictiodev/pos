@@ -156,84 +156,84 @@
                     <th scope="col" class="p-4">
                       <div class="flex items-center">
                         <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" ">
-                            <label for="checkbox-all" class="sr-only">checkbox</label>
-                          </div>
-                        </th>
-                        <th scope="col"
-                          class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                          Date
-                        </th>
-                        <th scope="col"
-                          class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                          Debit
-                        </th>
-                        <th scope="col"
-                          class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                          Kredit
-                        </th>
-                        <th scope="col"
-                          class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                          Amount
-                        </th>
-                        <th scope="col"
-                          class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                          Total Amount
-                        </th>
-                        <th scope="col"
-                          class="p-4 text-center text-base font-bold uppercase text-gray-500">
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 bg-white">
-                        @forelse ($data as $item)
-                  <tr class="hover:bg-gray-100">
-                    <td class="w-4 p-4">
-                      <div class="flex items-center">
-                        <input id="checkbox-" aria-describedby="checkbox-1" type="checkbox" ">
-                              <label for="checkbox-" class="sr-only">checkbox</label>
-                            </div>
-                          </td>
-                          <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                            <p class="text-sm font-normal text-gray-900">
-                              {{ $item->datetime }}
-                            </p>
-                          </td>
-                          <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                            <p class="text-sm font-normal text-gray-900">
-                              {{ format_rupiah($item->debit) }}
-                            </p>
-                          </td>
-                          <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                            <p class="text-sm font-normal text-gray-900">
-                              {{ format_rupiah($item->kredit) }}
-                            </p>
-                          </td>
-                          <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                            <p class="text-sm font-normal text-gray-900">
-                              {{ format_rupiah($item->amount) }}
-                            </p>
-                          </td>
-                          <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                            <p class="text-sm font-normal text-gray-900">
-                              {{ format_rupiah($item->total_amount) }}
-                            </p>
-                          </td>
+                        <label for="checkbox-all" class="sr-only">checkbox</label>
+                      </div>
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                      Date
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      Debit
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      Kredit
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      Amount
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      Total Amount
+                    </th>
+                    <th scope="col"
+                      class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                      Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody class="divide-y divide-gray-200 bg-white">
+                  @forelse ($data as $item)
+                    <tr class="hover:bg-gray-100">
+                      <td class="w-4 p-4">
+                        <div class="flex items-center">
+                          <input id="checkbox-" aria-describedby="checkbox-1" type="checkbox" ">
+                          <label for="checkbox-" class="sr-only">checkbox</label>
+                        </div>
+                      </td>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                        <p class="text-sm font-normal text-gray-900">
+                          {{ $item->datetime }}
+                        </p>
+                      </td>
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                        <p class="text-sm font-normal text-gray-900">
+                          {{ format_rupiah($item->debit) }}
+                        </p>
+                      </td>
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                        <p class="text-sm font-normal text-gray-900">
+                          {{ format_rupiah($item->kredit) }}
+                        </p>
+                      </td>
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                        <p class="text-sm font-normal text-gray-900">
+                          {{ format_rupiah($item->amount) }}
+                        </p>
+                      </td>
+                      <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                        <p class="text-sm font-normal text-gray-900">
+                          {{ format_rupiah($item->total_amount) }}
+                        </p>
+                      </td>
 
-                          <td class="text-center space-x-2 whitespace-nowrap p-4">
-                            <a href="{{ route('dashboard.finance.cash-flow-daily', ['periode' => $item->datetime]) }}"
-                              class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                              <x-fas-info class="mr-2 h-4 w-4" />
-                              Detail
-                            </a>
-                          </td>
-                        </tr>
+                      <td class="text-center space-x-2 whitespace-nowrap p-4">
+                        <a href="{{ route('dashboard.finance.cash-flow-daily', ['periode' => $item->datetime]) }}"
+                          class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                          <x-fas-info class="mr-2 h-4 w-4" />
+                          Detail
+                        </a>
+                      </td>
+                    </tr>
                   @empty
-                        <tr>
-                          <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
-                        </tr>
-   @endforelse
-                        </tbody>
+                    <tr>
+                      <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
+                    </tr>
+                  @endforelse
+                </tbody>
                 <tfoot class="bg-gray-100">
                   <tr>
                     <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
@@ -299,20 +299,22 @@
               @foreach ($fund as $item_fund)
                 <label for="equite" class="mb-2 block text-sm font-medium text-gray-900">Equite -
                   {{ $item_fund->type }}</label>
-                <input type="number" name="equite[{{ $item_fund->type }}]" onkeyup="equite_change()"
+                <input type="text" name="equite[{{ $item_fund->type }}]" onkeyup="equite_change()"
                   class="option-equite mb-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Equite - {{ $item_fund->type }}">
               @endforeach
             </div>
             <div class="mb-3">
               <label for="equite" class="mb-2 block text-sm font-medium text-gray-900">Total Equite</label>
-              <input type="number" name="equite_total" id="equite"
+              <input type="text" name="equite_total" id="equite"
+                onkeyup="keyup_rupiah(this)"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Total Equite" value="0" readonly>
             </div>
             <div class="mb-3">
               <label for="target" class="mb-2 block text-sm font-medium text-gray-900">Target</label>
-              <input type="number" name="target" id="target"
+              <input type="text" name="target" id="target"
+                onkeyup="keyup_rupiah(this)"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Target" required>
             </div>
@@ -365,21 +367,21 @@
               <div class="flex">
                 <div class="w-1/3">
                   <label for="income" class="mb-2 block text-sm font-medium text-gray-900">Income</label>
-                  <input type="number" name="income" id="income"
+                  <input type="text" name="income" id="income" onkeyup="keyup_rupiah(this)"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Income" value="{{ $total_cash_in }}" readonly>
+                    placeholder="Income" value="{{ str_replace('Rp ', '', format_rupiah($total_cash_in)) }}" readonly>
                 </div>
                 <div class="w-1/3 mx-2">
                   <label for="expenditure" class="mb-2 block text-sm font-medium text-gray-900">Expenditure</label>
-                  <input type="number" name="expenditure" id="expenditure"
+                  <input type="text" name="expenditure" id="expenditure" onkeyup="keyup_rupiah(this)"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Expenditure" value="{{ $total_cash_out }}" readonly>
+                    placeholder="Expenditure" value="{{ str_replace('Rp ', '', format_rupiah($total_cash_out)) }}" readonly>
                 </div>
                 <div class="w-1/3">
                   <label for="amount" class="mb-2 block text-sm font-medium text-gray-900">Amount</label>
-                  <input type="number" name="amount" id="amount"
+                  <input type="text" name="amount" id="amount" onkeyup="keyup_rupiah(this)"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Amount" value="{{ $total_amount }}" readonly>
+                    placeholder="Amount" value="{{ str_replace('Rp ', '', format_rupiah($total_amount)) }}" readonly>
                 </div>
               </div>
             </div>
@@ -387,21 +389,21 @@
               <div class="flex">
                 <div class="w-1/3">
                   <label for="target" class="mb-2 block text-sm font-medium text-gray-900">Target</label>
-                  <input type="number" name="target" id="target"
+                  <input type="text" name="target" id="target" onkeyup="keyup_rupiah(this)"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Target" value="{{ $closing_cycle ? $closing_cycle->target : 0 }}" readonly>
+                    placeholder="Target" value="{{ $closing_cycle ? str_replace('Rp ', '', format_rupiah($closing_cycle->target)) : 0 }}" readonly>
                 </div>
                 <div class="w-1/3 mx-2">
                   <label for="equity" class="mb-2 block text-sm font-medium text-gray-900">Equity</label>
-                  <input type="number" name="equity" id="equity"
+                  <input type="text" name="equity" id="equity" onkeyup="keyup_rupiah(this)"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Equity" value="{{ $closing_cycle ? $closing_cycle->equity : 0 }}" readonly>
+                    placeholder="Equity" value="{{ $closing_cycle ? str_replace('Rp ', '', format_rupiah($closing_cycle->equity)) : 0 }}" readonly>
                 </div>
                 <div class="w-1/3">
                   <label for="profit" class="mb-2 block text-sm font-medium text-gray-900">Profit</label>
-                  <input type="number" name="profit" id="profit"
+                  <input type="text" name="profit" id="profit" onkeyup="keyup_rupiah(this)"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Profit" value="{{ $total_amount - ($closing_cycle ? $closing_cycle->equity : 0) }}"
+                    placeholder="Profit" value="{{ str_replace('Rp ', '', format_rupiah($total_amount - ($closing_cycle ? $closing_cycle->equity : 0))) }}"
                     readonly>
                 </div>
               </div>
@@ -422,20 +424,20 @@
                 @foreach ($fund as $item_fund)
                   <label for="next_equite" class="mb-2 block text-sm font-medium text-gray-900">Equite -
                     {{ $item_fund->type }}</label>
-                  <input type="number" name="next_equite[{{ $item_fund->type }}]" onkeyup="equite_change('next_')"
+                  <input type="text" name="next_equite[{{ $item_fund->type }}]" onkeyup="equite_change('next_')"
                     class="next_option-equite mb-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Equite - {{ $item_fund->type }}">
                 @endforeach
               </div>
               <div class="mb-3">
                 <label for="next_equite" class="mb-2 block text-sm font-medium text-gray-900">Total Equite</label>
-                <input type="number" name="next_equite_total" id="next_equite"
+                <input type="text" name="next_equite_total" id="next_equite" onkeyup="keyup_rupiah(this)"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Total Equite" value="0" readonly>
               </div>
               <div class="mb-3">
                 <label for="next_target" class="mb-2 block text-sm font-medium text-gray-900">Target</label>
-                <input type="number" name="next_target" id="next_target"
+                <input type="text" name="next_target" id="next_target" onkeyup="keyup_rupiah(this)"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Target">
               </div>
@@ -470,9 +472,10 @@
     const equite_change = (type = '') => {
       let equite = 0;
       $(`.${type}option-equite`).each(function() {
-        equite += Number(this.value ? this.value : 0);
+        equite += parseInt((this.value ? this.value : '0').replaceAll('.', ''));
+        this.value = update_to_format_rupiah(this.value);
       });
-      $(`#${type}equite`).val(equite);
+      $(`#${type}equite`).val(update_to_format_rupiah(equite));
     }
 
     $('#set_equity').on('click', function() {

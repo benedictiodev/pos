@@ -66,9 +66,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $total_payment = (int) $request['confirm_order-total_payment'];
-            $payment = (int) $request['confirm_order-payment'];
-            $change = (int) $request['confirm_order-change'];
+            $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
+            $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
+            $change = (int) str_replace('.', '', $request['confirm_order-change']);
             $order = json_decode($request['confirm_order-order']);
 
             $data_order = Order::where('company_id', Auth::user()->company_id)
@@ -263,9 +263,9 @@ class OrderController extends Controller
     public function update_order(Request $request, $id) {
         try {
             DB::beginTransaction();
-            $total_payment = (int) $request['confirm_order-total_payment'];
-            $payment = (int) $request['confirm_order-payment'];
-            $change = (int) $request['confirm_order-change'];
+            $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
+            $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
+            $change = (int) str_replace('.', '', $request['confirm_order-change']);
             $order_add = json_decode($request['confirm_order-order_add']);
             $order_update = json_decode($request['confirm_order-order_update']);
             $order_delete = json_decode($request['confirm_order-order_delete']);

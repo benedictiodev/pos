@@ -306,7 +306,7 @@
                 <div class="mb-3">
                   <label for="confirm_order-total_payment" class="mb-2 block text-sm font-medium text-gray-900">Total
                     Payment</label>
-                  <input type="number" min="0" name="confirm_order-total_payment"
+                  <input type="text" min="0" name="confirm_order-total_payment"
                     id="confirm_order-total_payment"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Total Payment" readonly>
@@ -314,13 +314,13 @@
                 <div class="mb-3">
                   <label for="confirm_order-payment"
                     class="mb-2 block text-sm font-medium text-gray-900">Payment</label>
-                  <input type="number" min="0" name="confirm_order-payment" id="confirm_order-payment"
+                  <input type="text" min="0" name="confirm_order-payment" id="confirm_order-payment"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Payment" onkeyup="count_change_payment()">
                 </div>
                 <div class="">
                   <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900">Change</label>
-                  <input type="number" min="0" name="confirm_order-change" id="confirm_order-change"
+                  <input type="text" min="0" name="confirm_order-change" id="confirm_order-change"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Change" readonly>
                 </div>
@@ -422,7 +422,7 @@
         `);
       })
 
-      $('#confirm_order-total_payment').val(total_price_order);
+      $('#confirm_order-total_payment').val(update_to_format_rupiah(total_price_order));
       $('#confirm_order-payment').val(0);
       $('#confirm_order-change').val(0);
       $('#order-total-price').html(format_rupiah(total_price_order));
@@ -522,9 +522,10 @@
     });
 
     const count_change_payment = () => {
-      let total_payment = $('#confirm_order-total_payment').val();
-      let payment = $('#confirm_order-payment').val();
-      $('#confirm_order-change').val(Number(payment) - Number(total_payment));
+      let total_payment = parseInt(($('#confirm_order-total_payment').val()).replaceAll('.', ''));
+      let payment = parseInt(($('#confirm_order-payment').val()).replaceAll('.', ''));
+      $('#confirm_order-change').val(update_to_format_rupiah(Number(payment) - Number(total_payment)));
+      $('#confirm_order-payment').val(update_to_format_rupiah(payment));
     };
 
     const submit_order = () => {

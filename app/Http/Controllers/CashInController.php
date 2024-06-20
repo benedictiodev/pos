@@ -51,6 +51,8 @@ class CashInController extends Controller
                 'type' => 'required',
             ]);
 
+            $validate['fund'] = (int) str_replace('.', '', $validate['fund']);
+
             $store = CashIn::create([
                 'company_id' => Auth::user()->company_id,
                 'fund' => $validate['fund'],
@@ -135,6 +137,8 @@ class CashInController extends Controller
                 'datetime' => 'required',
                 'type' => 'required',
             ]);
+
+            $validate['fund'] = (int) str_replace('.', '', $validate['fund']);
 
             $data = CashIn::findOrFail($id);
             $type = $data->type;

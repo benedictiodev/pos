@@ -122,6 +122,8 @@ class FundsController extends Controller
                 'datetime' => 'required',
             ]);
 
+            $validate['amount'] = (int) str_replace('.', '', $validate['amount']);
+
             $fund_form = Fund::where(
                 "company_id",
                 Auth::user()->company_id

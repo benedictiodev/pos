@@ -52,6 +52,8 @@ class CashOutController extends Controller
                 'type' => 'required',
             ]);
 
+            $validate['fund'] = (int) str_replace('.', '', $validate['fund']);
+
             $store = CashOut::create([
                 'company_id' => Auth::user()->company_id,
                 'fund' => $validate['fund'],
@@ -135,6 +137,8 @@ class CashOutController extends Controller
                 'datetime' => 'required',
                 'type' => 'required',
             ]);
+
+            $validate['fund'] = (int) str_replace('.', '', $validate['fund']);
 
             $data = CashOut::findOrFail($id);
             $type = $data->type;
