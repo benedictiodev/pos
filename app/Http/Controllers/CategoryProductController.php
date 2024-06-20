@@ -8,9 +8,9 @@ use Illuminate\Support\Facades\Auth;
 
 class CategoryProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $data = CategoryProduct::where('company_id', Auth::user()->company_id)->paginate(5);
+        $data = CategoryProduct::query()->where('company_id', '=', Auth::user()->company_id)->where("name", "like", "%$request->search%")->paginate(10);
         return view('dashboard.master-data.category-product.index', ['data' => $data]);
     }
 
@@ -60,7 +60,7 @@ class CategoryProductController extends Controller
                 'name' => $request->name,
                 'company_id' => 1
             ]);
-    
+
             if ($update) {
                 return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to update category product");
             } else {
@@ -74,7 +74,7 @@ class CategoryProductController extends Controller
     public function destroy($id)
     {
         $data =  CategoryProduct::findOrFail($id);
-        if ($data && $data->company_id == Auth::user()->company_id) { 
+        if ($data && $data->company_id == Auth::user()->company_id) {
             $delete =  CategoryProduct::destroy($id);
             if ($delete) {
                 return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to delete category product");

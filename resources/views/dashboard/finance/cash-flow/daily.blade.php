@@ -52,14 +52,14 @@
                 onchange="change_search()">
             </div>
           </form>
-          <div class="flex w-full items-center sm:justify-end">
+          {{-- <div class="flex w-full items-center sm:justify-end">
             <div class="flex space-x-1 pl-2">
               <a href="#"
                 class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                 <x-fas-trash-alt class="h-6 w-6" />
               </a>
             </div>
-          </div>
+          </div> --}}
         </div>
         @if (request()->get('periode') == Carbon\Carbon::now()->format('Y-m-d') or !request()->get('periode'))
           <div>

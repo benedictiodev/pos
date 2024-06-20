@@ -20,7 +20,7 @@ class CashInController extends Controller
      */
     public function index()
     {
-        $data = CashIn::where('company_id', Auth::user()->company_id)->paginate(5);
+        $data = CashIn::where('company_id', Auth::user()->company_id)->paginate(10);
         return view('dashboard.finance.cash-in.index', ['data' => $data]);
     }
 

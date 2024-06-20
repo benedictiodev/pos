@@ -16,7 +16,7 @@
   <link href="https://fonts.bunny.net/css?family=figtree:400,600&display=swap" rel="stylesheet" />
   <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
-  <script>
+  {{-- <script>
     tailwind.config = {
       theme: {
         extend: {
@@ -90,7 +90,7 @@
         },
       },
     }
-  </script>
+  </script> --}}
   {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
   <!-- Styles -->

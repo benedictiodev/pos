@@ -50,14 +50,14 @@
                 placeholder="Search for cash in">
             </div>
           </form>
-          <div class="flex w-full items-center sm:justify-end">
+          {{-- <div class="flex w-full items-center sm:justify-end">
             <div class="flex space-x-1 pl-2">
               <a href="#"
                 class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                 <x-fas-trash-alt class="h-6 w-6" />
               </a>
             </div>
-          </div>
+          </div> --}}
         </div>
         <a id="createProductButton"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"

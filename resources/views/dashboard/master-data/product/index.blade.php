@@ -48,17 +48,17 @@
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
               <input type="text" name="search" id="products-search"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for products" value="{{ $_GET['search'] }}">
+                placeholder="Search for products" @if (isset($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
             </div>
           </form>
-          <div class="flex w-full items-center sm:justify-end">
+          {{-- <div class="flex w-full items-center sm:justify-end">
             <div class="flex space-x-1 pl-2">
               <a href="#"
                 class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                 <x-fas-trash-alt class="h-6 w-6" />
               </a>
             </div>
-          </div>
+          </div> --}}
         </div>
         <a id="createProductButton"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
@@ -80,8 +80,11 @@
                         <label for="checkbox-all" class="sr-only">checkbox</label>
                       </div>
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-start text-base font-bold uppercase text-gray-500">
                       Name
+                    </th>
+                    <th scope="col" class="p-4 text-start text-base font-bold uppercase text-gray-500">
+                      Category
                     </th>
                     <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
                       Price
@@ -112,6 +115,10 @@
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">{{ $item->name }}
+                        </p>
+                      </td>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                        <p class="text-sm font-normal text-gray-900">{{ $item->category_product->name }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">

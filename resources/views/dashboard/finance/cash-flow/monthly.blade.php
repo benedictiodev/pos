@@ -53,14 +53,14 @@
                 onchange="change_search()">
             </div>
           </form>
-          <div class="flex w-full items-center sm:justify-end">
+          {{-- <div class="flex w-full items-center sm:justify-end">
             <div class="flex space-x-1 pl-2">
               <a href="#"
                 class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                 <x-fas-trash-alt class="h-6 w-6" />
               </a>
             </div>
-          </div>
+          </div> --}}
         </div>
       </div>
       <div class="flex flex-col">
@@ -156,82 +156,82 @@
                     <th scope="col" class="p-4">
                       <div class="flex items-center">
                         <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox" ">
-                          <label for="checkbox-all" class="sr-only">checkbox</label>
-                        </div>
-                      </th>
-                      <th scope="col"
-                        class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                        Date
-                      </th>
-                      <th scope="col"
-                        class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                        Debit
-                      </th>
-                      <th scope="col"
-                        class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                        Kredit
-                      </th>
-                      <th scope="col"
-                        class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                        Amount
-                      </th>
-                      <th scope="col"
-                        class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                        Total Amount
-                      </th>
-                      <th scope="col"
-                        class="p-4 text-center text-base font-bold uppercase text-gray-500">
-                        Actions
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody class="divide-y divide-gray-200 bg-white">
-                     @forelse ($data as $item)
+                            <label for="checkbox-all" class="sr-only">checkbox</label>
+                          </div>
+                        </th>
+                        <th scope="col"
+                          class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                          Date
+                        </th>
+                        <th scope="col"
+                          class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                          Debit
+                        </th>
+                        <th scope="col"
+                          class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                          Kredit
+                        </th>
+                        <th scope="col"
+                          class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                          Amount
+                        </th>
+                        <th scope="col"
+                          class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                          Total Amount
+                        </th>
+                        <th scope="col"
+                          class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                          Actions
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 bg-white">
+                        @forelse ($data as $item)
                   <tr class="hover:bg-gray-100">
                     <td class="w-4 p-4">
                       <div class="flex items-center">
                         <input id="checkbox-" aria-describedby="checkbox-1" type="checkbox" ">
-                            <label for="checkbox-" class="sr-only">checkbox</label>
-                          </div>
-                        </td>
-                        <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                          <p class="text-sm font-normal text-gray-900">
-                            {{ $item->datetime }}
-                          </p>
-                        </td>
-                        <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                          <p class="text-sm font-normal text-gray-900">
-                            {{ format_rupiah($item->debit) }}
-                          </p>
-                        </td>
-                        <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                          <p class="text-sm font-normal text-gray-900">
-                            {{ format_rupiah($item->kredit) }}
-                          </p>
-                        </td>
-                        <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                          <p class="text-sm font-normal text-gray-900">
-                            {{ format_rupiah($item->amount) }}
-                          </p>
-                        </td>
-                        <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                          <p class="text-sm font-normal text-gray-900">
-                            {{ format_rupiah($item->total_amount) }}
-                          </p>
-                        </td>
+                              <label for="checkbox-" class="sr-only">checkbox</label>
+                            </div>
+                          </td>
+                          <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                            <p class="text-sm font-normal text-gray-900">
+                              {{ $item->datetime }}
+                            </p>
+                          </td>
+                          <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                            <p class="text-sm font-normal text-gray-900">
+                              {{ format_rupiah($item->debit) }}
+                            </p>
+                          </td>
+                          <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                            <p class="text-sm font-normal text-gray-900">
+                              {{ format_rupiah($item->kredit) }}
+                            </p>
+                          </td>
+                          <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                            <p class="text-sm font-normal text-gray-900">
+                              {{ format_rupiah($item->amount) }}
+                            </p>
+                          </td>
+                          <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                            <p class="text-sm font-normal text-gray-900">
+                              {{ format_rupiah($item->total_amount) }}
+                            </p>
+                          </td>
 
-                        <td class="text-center space-x-2 whitespace-nowrap p-4">
-                          <a href="{{ route('dashboard.finance.cash-flow-daily', ['periode' => $item->datetime]) }}"
-                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                            <x-fas-info class="mr-2 h-4 w-4" />
-                            Detail
-                          </a>
-                        </td>
-                      </tr>
+                          <td class="text-center space-x-2 whitespace-nowrap p-4">
+                            <a href="{{ route('dashboard.finance.cash-flow-daily', ['periode' => $item->datetime]) }}"
+                              class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                              <x-fas-info class="mr-2 h-4 w-4" />
+                              Detail
+                            </a>
+                          </td>
+                        </tr>
                   @empty
-                      <tr>
-                        <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
-                      </tr>
+                        <tr>
+                          <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
+                        </tr>
    @endforelse
                         </tbody>
                 <tfoot class="bg-gray-100">

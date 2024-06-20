@@ -20,7 +20,7 @@ class CashOutController extends Controller
      */
     public function index()
     {
-        $data = CashOut::where('company_id', Auth::user()->company_id)->paginate(5);
+        $data = CashOut::where('company_id', Auth::user()->company_id)->paginate(10);
         return view('dashboard.finance.cash-out.index', ['data' => $data]);
     }
 

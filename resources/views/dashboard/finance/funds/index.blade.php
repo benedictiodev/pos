@@ -65,12 +65,13 @@
     <div class="mt-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
-          <form class="sm:pr-3" action="#" method="GET">
+          <form class="sm:pr-3" action="{{ route('dashboard.finance.funds') }}" method="GET">
             <label for="products-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
-              <input type="text" name="email" id="products-search"
+              <input type="text" name="search" id="products-search"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for diversion of fund allocation">
+                placeholder="Search for diversion of fund allocation"
+                @if (isset($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
             </div>
           </form>
         </div>

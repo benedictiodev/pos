@@ -8,19 +8,24 @@ use Illuminate\Support\Facades\Auth;
 
 class RemarksCashFlowController extends Controller
 {
-    public function index() {
-        $data = RemaskCashFlow::where('company_id', Auth::user()->company_id)
-        ->paginate(5);
+    public function index(Request $request)
+    {
+        $data = RemaskCashFlow::query()->where('company_id', '=', Auth::user()->company_id)
+            ->where(function ($query) use ($request) {
+                $query->where("name", 'like', "%$request->search%");
+            })->paginate(10);
         return view('dashboard.master-data.remarks-cash-flow.index', [
             'data' => $data
         ]);
     }
 
-    public function create() {
+    public function create()
+    {
         return view('dashboard.master-data.remarks-cash-flow.create');
     }
 
-    public function store(Request $request) {
+    public function store(Request $request)
+    {
         $request->validate([
             'name' => 'required',
             'type' => 'required',
@@ -39,7 +44,8 @@ class RemarksCashFlowController extends Controller
         }
     }
 
-    public function edit($id) {
+    public function edit($id)
+    {
         $data = RemaskCashFlow::findOrFail($id);
         if ($data && $data->company_id == Auth::user()->company_id) {
             return view("dashboard.master-data.remarks-cash-flow.edit", ["data" => $data]);
@@ -48,7 +54,8 @@ class RemarksCashFlowController extends Controller
         }
     }
 
-    public function update(Request $request, $id) {
+    public function update(Request $request, $id)
+    {
         $request->validate([
             'name' => 'required',
             'type' => 'required',
@@ -61,7 +68,7 @@ class RemarksCashFlowController extends Controller
                 'type' => $request->type,
                 'company_id' => 1
             ]);
-    
+
             if ($update) {
                 return redirect()->route('dashboard.master-data.remarks-cash-flow')->with('success', "Successfully to update remarks");
             } else {
@@ -72,9 +79,10 @@ class RemarksCashFlowController extends Controller
         }
     }
 
-    public function destroy($id) {
+    public function destroy($id)
+    {
         $data = RemaskCashFlow::findOrFail($id);
-        if ($data && $data->company_id == Auth::user()->company_id) { 
+        if ($data && $data->company_id == Auth::user()->company_id) {
             $delete =  RemaskCashFlow::destroy($id);
             if ($delete) {
                 return redirect()->route('dashboard.master-data.remarks-cash-flow')->with('success', "Successfully to delete remarks");

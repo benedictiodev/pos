@@ -12,14 +12,12 @@ class ProductController extends Controller
 {
     public function index(Request $request)
     {
-        // $data = Product::with(['category_product' => function ($query) {
-        //     $query->where('company_id', Auth::user()->company_id);
-        // }])->paginate(5);
         $data = Product::query()->select('products.*')
             ->leftJoin('category_products', 'category_products.id', '=', 'products.category_id')
             ->where('company_id', '=', Auth::user()->company_id)
-            ->where("products.name", "like", "%$request->search%")
-            ->paginate(5);
+            ->where(function ($query) use ($request) {
+                $query->where("products.name", "like", "%$request->search%")->orWhere("category_products.name", "like", "%$request->search%");
+            })->paginate(10);
 
         return view('dashboard.master-data.product.index', [
             'data' => $data
@@ -136,7 +134,11 @@ class ProductController extends Controller
             ->first();
 
         if ($product && $product->company_id == Auth::user()->company_id) {
-            Storage::delete($product->image);
+            if (isset($product->image)) {
+                if (Storage::exists($product->image)) {
+                    Storage::delete($product->image);
+                }
+            }
             $delete =  Product::destroy($id);
             if ($delete) {
                 return redirect()->route('dashboard.master-data.product')->with('success', "Successfully to delete  product");

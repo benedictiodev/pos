@@ -17,10 +17,11 @@ use Throwable;
 
 class OrderController extends Controller
 {
-    public function order_active()
+    public function order_active(Request $request)
     {
-        $data = Order::where("company_id", Auth::user()->company_id)
-            ->where('status', '!=', 'done')->paginate(10);
+        $data = Order::query()->where("company_id", '=', Auth::user()->company_id)->where(function ($query) use ($request) {
+            $query->where("customer_name", "like", "%$request->search%")->orWhere("id_order", "like", "%$request->search%");
+        })->where('status', '!=', 'done')->paginate(10);
 
         return view('dashboard.order.order_active', ['data' => $data]);
     }
@@ -76,7 +77,7 @@ class OrderController extends Controller
                 ->orderBy('sequence', 'DESC')
                 ->first();
             $next_sequence = $data_order ? $data_order->sequence + 1 : 1;
-            $id_order = Carbon::now()->format('Ymd') . str_pad($next_sequence, 4, '0', STR_PAD_LEFT); ;
+            $id_order = Carbon::now()->format('Ymd') . str_pad($next_sequence, 4, '0', STR_PAD_LEFT);;
 
             $insert_order = Order::insertGetId([
                 'company_id' => Auth::user()->company_id,
@@ -192,11 +193,12 @@ class OrderController extends Controller
         }
     }
 
-    public function delete_order($id) {
+    public function delete_order($id)
+    {
         try {
             DB::beginTransaction();
             $data =  Order::findOrFail($id);
-            if ($data && $data->company_id == Auth::user()->company_id) { 
+            if ($data && $data->company_id == Auth::user()->company_id) {
                 OrderItems::where('order_id', $id)->delete();
                 Order::where('id', $id)->delete();
 
@@ -212,26 +214,27 @@ class OrderController extends Controller
         }
     }
 
-    public function edit_order($id) {
+    public function edit_order($id)
+    {
         $order = Order::where('id', $id)->first();
-        if ($order && $order->company_id == Auth::user()->company_id) { 
+        if ($order && $order->company_id == Auth::user()->company_id) {
             $data_menu = Product::select('products.*', 'category_products.name AS category_name')
-                ->leftJoin('category_products', 'category_products.id', '=' , 'products.category_id')
+                ->leftJoin('category_products', 'category_products.id', '=', 'products.category_id')
                 ->where('company_id', Auth::user()->company_id)
                 ->orderBy('category_id')
                 ->orderBy('products.id')
                 ->get();
-    
+
             $result_data_menu = array();
-            foreach($data_menu as $item) {
+            foreach ($data_menu as $item) {
                 $find = false;
-                foreach($result_data_menu as $key => $search_item) {
+                foreach ($result_data_menu as $key => $search_item) {
                     if ($search_item->category_name == $item->category_name) {
                         $find = $key;
                         break;
                     }
                 }
-    
+
                 if ($find === false) {
                     array_push($result_data_menu, (object) [
                         'category_name' => $item->category_name,
@@ -241,7 +244,7 @@ class OrderController extends Controller
                     array_push($result_data_menu[$find]->products, $item);
                 }
             }
-    
+
             $data_fund = Fund::where('company_id', Auth::user()->company_id)->get();
 
             $order_item = OrderItems::where('order_id', $id)
@@ -260,7 +263,8 @@ class OrderController extends Controller
         }
     }
 
-    public function update_order(Request $request, $id) {
+    public function update_order(Request $request, $id)
+    {
         try {
             DB::beginTransaction();
             $total_payment = (int) $request['confirm_order-total_payment'];
@@ -271,17 +275,17 @@ class OrderController extends Controller
             $order_delete = json_decode($request['confirm_order-order_delete']);
 
             $update_order = Order::where('id', $id)
-            ->where('company_id', Auth::user()->company_id)
-            ->update([
-                'customer_name' => $request['confirm_order-customer_name'],
-                'total_payment' => $total_payment,
-                'payment' => $payment,
-                'change' => $change,
-                'payment_method' => $request['confirm_order-payment_method'],
-                'order_type' => $request['confirm_order-order_type'],
-                'status' => $payment >= $total_payment ? 'done' : 'waiting payment',
-                'remarks' => $request['confirm_order-remarks'],
-            ]);
+                ->where('company_id', Auth::user()->company_id)
+                ->update([
+                    'customer_name' => $request['confirm_order-customer_name'],
+                    'total_payment' => $total_payment,
+                    'payment' => $payment,
+                    'change' => $change,
+                    'payment_method' => $request['confirm_order-payment_method'],
+                    'order_type' => $request['confirm_order-order_type'],
+                    'status' => $payment >= $total_payment ? 'done' : 'waiting payment',
+                    'remarks' => $request['confirm_order-remarks'],
+                ]);
 
             foreach ($order_add as $item) {
                 OrderItems::create([
@@ -300,14 +304,14 @@ class OrderController extends Controller
 
             foreach ($order_update as $item) {
                 OrderItems::where('id', $item->id)
-                ->update([
-                    'order_id' => $id,
-                    'product_id' => $item->product_id,
-                    'price' => $item->product_price,
-                    'quantity' => $item->qty,
-                    'amount' => $item->product_price * $item->qty,
-                    'remarks' => $item->remarks,
-                ]);
+                    ->update([
+                        'order_id' => $id,
+                        'product_id' => $item->product_id,
+                        'price' => $item->product_price,
+                        'quantity' => $item->qty,
+                        'amount' => $item->product_price * $item->qty,
+                        'remarks' => $item->remarks,
+                    ]);
             }
 
             if ($payment >= $total_payment) {

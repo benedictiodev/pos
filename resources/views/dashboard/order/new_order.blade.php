@@ -7,8 +7,7 @@
         <nav class="mb-5 flex" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
-              <a href="#"
-                class="inline-flex items-center text-gray-700 hover:text-primary-600">
+              <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
                 Dashboard
               </a>
             </li>
@@ -37,8 +36,7 @@
     </div>
 
     @if (session('success'))
-      <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800"
-        role="alert">
+      <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800" role="alert">
         <span class="font-medium">{{ session('success') }}</span>
       </div>
     @endif
@@ -47,8 +45,7 @@
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
-    <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
@@ -88,7 +85,8 @@
                           <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
                             <div class="border p-2 rounded-md flex items-center justify-center h-32 max-h-32">
                               @if ($item->image)
-                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="h-full">  
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}"
+                                  class="h-full">
                               @else
                                 <div>No Image</div>
                               @endif
@@ -105,7 +103,7 @@
                                   class="mt-2 w-full justify-center rounded-lg bg-primary-700 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
                                   Add to cart
                                 </button>
-                              @else 
+                              @else
                                 <button
                                   class="mt-2 w-full justify-center rounded-lg bg-primary-500 py-1.5 text-center text-sm font-medium text-white hover:bg-primary-600 focus:outline-none focus:ring-4 focus:ring-primary-200">
                                   Not Available
@@ -113,7 +111,8 @@
                               @endif
                             </div>
                             @if (!$item->is_available)
-                              <div class="rounded-lg absolute top-0 bottom-0 right-0 left-0 bg-gray-400/70 flex justify-center items-center">
+                              <div
+                                class="rounded-lg absolute top-0 bottom-0 right-0 left-0 bg-gray-400/70 flex justify-center items-center">
                                 <div class="text-white font-bold text-center">
                                   <div class="text-lg">Oppss!!</div>
                                   <div class="text-sm">Not Available</div>
@@ -140,8 +139,7 @@
     <div id="drawer-confirm_order"
       class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
       tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-      <h5 id="drawer-label"
-        class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Confirm Order
+      <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Confirm Order
       </h5>
       <button type="button" data-drawer-dismiss="drawer-confirm_order" aria-controls="drawer-confirm_order"
         class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900">
@@ -192,8 +190,7 @@
             <input type="text" id="order-product_id" value="" hidden>
             <input type="text" id="order-product_price" value="" hidden>
             <div class="mb-3">
-              <label for="order-product_name"
-                class="mb-2 block text-sm font-medium text-gray-900">Product Name</label>
+              <label for="order-product_name" class="mb-2 block text-sm font-medium text-gray-900">Product Name</label>
               <input type="text" name="order-product_name" id="order-product_name"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Product Name" readonly>
@@ -205,8 +202,7 @@
                 placeholder="Qty" value="1" required>
             </div>
             <div>
-              <label for="order-remarks"
-                class="mb-2 block text-sm font-medium text-gray-900">Remarks</label>
+              <label for="order-remarks" class="mb-2 block text-sm font-medium text-gray-900">Remarks</label>
               <textarea id="order-remarks" rows="4" name="order-remarks"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                 placeholder="Enter event remarks here"></textarea>
@@ -263,22 +259,21 @@
               @csrf
               <input type="text" name="confirm_order-order" id="confirm_order-order" hidden>
               <div class="mb-3">
-                <label for="confirm_order-customer_name"
-                  class="mb-2 block text-sm font-medium text-gray-900">Customer Name</label>
+                <label for="confirm_order-customer_name" class="mb-2 block text-sm font-medium text-gray-900">Customer
+                  Name</label>
                 <input type="text" name="confirm_order-customer_name" id="confirm_order-customer_name"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Customer Name" required>
               </div>
               <div class="mb-3">
-                <label for="confirm_order-remarks"
-                  class="mb-2 block text-sm font-medium text-gray-900">Remarks</label>
+                <label for="confirm_order-remarks" class="mb-2 block text-sm font-medium text-gray-900">Remarks</label>
                 <textarea id="confirm_order-remarks" rows="2" name="confirm_order-remarks"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                   placeholder="Enter event remarks here"></textarea>
               </div>
               <div class="mb-3">
-                <label for="confirm_order-order_type"
-                  class="mb-2 block text-sm font-medium text-gray-900">Order Type</label>
+                <label for="confirm_order-order_type" class="mb-2 block text-sm font-medium text-gray-900">Order
+                  Type</label>
                 <select id="confirm_order-order_type" name="confirm_order-order_type"
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                   required>
@@ -298,8 +293,8 @@
                   <div class="bg-white px-4 text-sm font-semibold">Payment Form</div>
                 </div>
                 <div class="mb-3">
-                  <label for="confirm_order-payment_method"
-                    class="mb-2 block text-sm font-medium text-gray-900">Type Payment</label>
+                  <label for="confirm_order-payment_method" class="mb-2 block text-sm font-medium text-gray-900">Type
+                    Payment</label>
                   <select id="confirm_order-payment_method" name="confirm_order-payment_method"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500">
                     <option disabled value="">Select Type Payment</option>
@@ -309,8 +304,8 @@
                   </select>
                 </div>
                 <div class="mb-3">
-                  <label for="confirm_order-total_payment"
-                    class="mb-2 block text-sm font-medium text-gray-900">Total Payment</label>
+                  <label for="confirm_order-total_payment" class="mb-2 block text-sm font-medium text-gray-900">Total
+                    Payment</label>
                   <input type="number" min="0" name="confirm_order-total_payment"
                     id="confirm_order-total_payment"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
@@ -324,8 +319,7 @@
                     placeholder="Payment" onkeyup="count_change_payment()">
                 </div>
                 <div class="">
-                  <label for="confirm_order-change"
-                    class="mb-2 block text-sm font-medium text-gray-900">Change</label>
+                  <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900">Change</label>
                   <input type="number" min="0" name="confirm_order-change" id="confirm_order-change"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Change" readonly>
@@ -344,6 +338,41 @@
         </div>
       </div>
     </div>
+
+    <!-- Modal toggle -->
+    <button data-modal-target="static-modal" data-modal-toggle="static-modal" id="static-modal-button"
+      class=" text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+      type="button" hidden>
+      Toggle modal
+    </button>
+
+    <!-- Main modal -->
+    <div id="static-modal" data-modal-backdrop="static" tabindex="-1" aria-hidden="true"
+      class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+      <div class="relative p-4 w-full max-w-2xl max-h-full">
+        <!-- Modal content -->
+        <div class="relative bg-white rounded-lg shadow">
+          <!-- Modal header -->
+          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t">
+            <h3 class="text-xl font-semibold text-gray-900">
+              Information
+            </h3>
+          </div>
+          <!-- Modal body -->
+          <div class="p-4 md:p-5 space-y-4">
+            <p class="text-base leading-relaxed text-gray-500">
+              Opps. You must fill out the Master Data Fund first
+            </p>
+          </div>
+          <!-- Modal footer -->
+          <div class="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b">
+            <a data-modal-hide="static-modal" href="{{ route('dashboard.master-data.funds.create') }}"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Okay</a>
+          </div>
+        </div>
+      </div>
+    </div>
+
   </div>
 @endsection
 
@@ -354,6 +383,9 @@
 
     $(document).ready(function() {
       draw_order_item();
+      if ({{ count($list_fund) != 0 }}) {
+        $("#static-modal-button").trigger('click');
+      }
     });
 
     const draw_order_item = () => {
