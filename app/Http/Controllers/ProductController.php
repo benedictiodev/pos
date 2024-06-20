@@ -43,7 +43,7 @@ class ProductController extends Controller
         ]);
 
         if ($request->file('image')) {
-            $request['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
+            $validate['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
         }
 
         $validate["is_available"] = $request->is_available ? $request->is_available : 0;
@@ -53,7 +53,7 @@ class ProductController extends Controller
             'price' => $validate['price'],
             'category_id' => $validate['category_id'],
             'description' => $request['description'],
-            'image' => $request['image'],
+            'image' => $validate['image'],
             'is_available' => $validate['is_available'],
         ]);
 
@@ -102,7 +102,7 @@ class ProductController extends Controller
                 if ($request->old_image) {
                     Storage::delete($request->old_image);
                 }
-                $request['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
+                $validate['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
             }
 
             $validate['is_available'] = $request["is_available"] ? 1 : 0;
@@ -112,7 +112,7 @@ class ProductController extends Controller
                 'price' => $validate['price'],
                 'category_id' => $validate['category_id'],
                 'description' => $request['description'],
-                'image' => $request['image'],
+                'image' => $validate['image'],
                 'is_available' => $validate['is_available'],
             ]);
 
