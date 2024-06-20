@@ -383,7 +383,7 @@
 
     $(document).ready(function() {
       draw_order_item();
-      if ({{ count($list_fund) != 0 }}) {
+      if ({{ count($list_fund) == 0 }}) {
         $("#static-modal-button").trigger('click');
       }
     });
