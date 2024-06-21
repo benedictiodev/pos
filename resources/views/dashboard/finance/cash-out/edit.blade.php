@@ -6,8 +6,7 @@
       <nav class="mb-5 flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
           <li class="inline-flex items-center">
-            <a href="#"
-              class="inline-flex items-center text-gray-700 hover:text-primary-600">
+            <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
               Dashboard
             </a>
           </li>
@@ -33,8 +32,7 @@
       </a>
     </div>
 
-    <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
       <div class="mb-4">
         <form action="{{ route('dashboard.finance.cash-out.update', ['id' => $data->id]) }}" method="POST">
           @csrf
@@ -42,7 +40,7 @@
           <div class="space-y-6">
             <div>
               <label for="fund" class="mb-2 block text-sm font-medium text-gray-900">Nominal</label>
-              <input type="number" name="fund" id="fund"
+              <input type="number" name="fund" id="fund" min="0"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Nominal" required value="{{ old('nominal', $data->fund) }}">
             </div>
@@ -64,12 +62,11 @@
               @enderror
             </div>
             <div>
-              <label for="remarks_from_master"
-                class="mb-2 block text-sm font-medium text-gray-900">Remark</label>
+              <label for="remarks_from_master" class="mb-2 block text-sm font-medium text-gray-900">Remark</label>
               <select id="remarks_from_master" name="remarks_from_master"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                required onchange="extendRemark()">
-                <option disabled value="" selected>~ Select Remark ~</option>
+                {{-- required onchange="extendRemark()" --}}>
+                <option value="No Categories" @if (old('remarks_from_master', $data->remarks_from_master) == 'No Categories') selected @endif>No Categories</option>
                 @foreach ($remarks as $item)
                   <option value="{{ $item->name }}" @if (old('remarks_from_master', $data->remarks_from_master) == $item->name) selected @endif>
                     {{ $item->name }}</option>
@@ -80,7 +77,7 @@
               @enderror
             </div>
 
-            <div id="optional_remark" class="space-y-2">
+            {{-- <div id="optional_remark" class="space-y-2">
               <div class="flex items-center">
                 <input id="is_same" aria-describedby="checkbox-1" type="checkbox" name="is_same" value="1"
                   onchange="optionalRemark()"
@@ -94,7 +91,7 @@
               @error('remark')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
               @enderror
-            </div>
+            </div> --}}
 
             <div>
               <label for="datetime" class="mb-2 block text-sm font-medium text-gray-900">Date</label>
@@ -120,7 +117,7 @@
 @endsection
 
 @push('script')
-  <script>
+  {{-- <script>
     if ($('#remarks_from_master').val() == $('#remark').val()) {
       $('#is_same').prop('checked', true);
     }
@@ -139,5 +136,5 @@
         $('#remark').val("");
       }
     }
-  </script>
+  </script> --}}
 @endpush

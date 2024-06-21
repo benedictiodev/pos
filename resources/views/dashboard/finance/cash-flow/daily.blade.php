@@ -146,16 +146,14 @@
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
                         @if ($item->type == 'cash-in' && $item->order_id)
-                          <a href="{{ route('dashboard.order.order_detail', ['id' => $item->order_id])}}"
+                          <a href="{{ route('dashboard.order.order_detail', ['id' => $item->order_id]) }}"
                             class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                             <x-fas-file class="mr-2 h-4 w-4" />
                             View Order
                           </a>
                         @else
                           <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}"
-                            id="updateProductButton" data-drawer-target="drawer-update-product-default"
-                            data-drawer-show="drawer-update-product-default"
-                            aria-controls="drawer-update-product-default" data-drawer-placement="right"
+                            id="updateProductButton"
                             class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                             <x-fas-edit class="mr-2 h-4 w-4" />
                             Update

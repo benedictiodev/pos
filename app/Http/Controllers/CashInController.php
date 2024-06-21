@@ -45,8 +45,8 @@ class CashInController extends Controller
 
             $validate = $request->validate([
                 'fund' => 'required',
-                'remark' => 'required',
-                'remarks_from_master' => 'required',
+                // 'remark' => 'required',
+                // 'remarks_from_master' => 'required',
                 'datetime' => 'required',
                 'type' => 'required',
             ]);
@@ -54,8 +54,8 @@ class CashInController extends Controller
             $store = CashIn::create([
                 'company_id' => Auth::user()->company_id,
                 'fund' => $validate['fund'],
-                'remark' => $validate['remark'],
-                'remarks_from_master' => $validate["remarks_from_master"],
+                'remark' => $request['remark'] ?? null,
+                'remarks_from_master' => $request["remarks_from_master"] ?? null,
                 'datetime' => $validate['datetime'],
                 'type' => $validate['type'],
             ]);
@@ -130,8 +130,8 @@ class CashInController extends Controller
             DB::beginTransaction();
             $validate = $request->validate([
                 'fund' => 'required',
-                'remark' => 'required',
-                'remarks_from_master' => "required",
+                // 'remark' => 'required',
+                // 'remarks_from_master' => "required",
                 'datetime' => 'required',
                 'type' => 'required',
             ]);
@@ -144,8 +144,8 @@ class CashInController extends Controller
                 $update = $data->update([
                     'company_id' => Auth::user()->company_id,
                     'fund' => $validate['fund'],
-                    'remark' => $validate['remark'],
-                    'remarks_from_master' => $validate['remarks_from_master'],
+                    'remark' => $request['remark'] ?? null,
+                    'remarks_from_master' => $request['remarks_from_master'] ?? null,
                     'datetime' => $validate['datetime'],
                     'type' => $validate['type'],
                 ]);
