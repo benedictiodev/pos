@@ -9,6 +9,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemarksCashFlowController;
 use Illuminate\Support\Facades\Route;
@@ -113,11 +114,19 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/", [AuthController::class, 'change_password'])->name('dashboard.change_password');
         Route::post("/", [AuthController::class, 'post_change_password'])->name('dashboard.change_password.post');
     });
+
     // Company
     Route::prefix("/company")->group(function () {
         Route::prefix("/profile")->group(function () {
             Route::get('/', [CompanyController::class, 'index'])->name('dashboard.company.profile');
             Route::put('/{id}', [CompanyController::class, 'update'])->name('dashboard.company.profile.update');
         });
+    });
+
+    // Presence
+    Route::prefix("/presence")->group(function () {
+        Route::get("/", [PresenceController::class, 'index'])->name('dashboard.presence.index');
+        Route::post("/", [PresenceController::class, 'store'])->name('dashboard.presence.store');
+        Route::get("/presence_history", [PresenceController::class, 'history'])->name('dashboard.presence.presence_history');
     });
 });
