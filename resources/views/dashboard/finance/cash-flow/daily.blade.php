@@ -195,6 +195,29 @@
                       class="p-4 text-center text-base font-medium uppercase text-gray-500">
                     </th>
                   </tr>
+                  <tr class="border-t">
+                    <th scope="col" colspan="7" class="p-4 text-center text-sm font-bold uppercase text-gray-500">
+                      Detail Total Of Fund
+                    </th>
+                  </tr>
+                  @foreach ($result_fund as $item)
+                      <tr class="bg-white border-t">
+                        <th scope="col" class="p-4 text-center text-sm font-normal">
+                        </th>
+                        <th scope="col" class="p-4 text-left text-sm font-normal">
+                          {{ $item->name }}
+                        </th>
+                        <th scope="col" class="p-4 text-right text-sm font-normal">
+                          {{ format_rupiah($item->cash_out) }}
+                        </th>
+                        <th scope="col" class="p-4 text-right text-sm font-normal">
+                          {{ format_rupiah($item->cash_in) }}
+                        </th>
+                        <th scope="col" colspan="3"
+                          class="p-4 text-center text-sm font-normal">
+                        </th>
+                      </tr>
+                  @endforeach
                 </tfoot>
               </table>
             </div>

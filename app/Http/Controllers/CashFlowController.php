@@ -77,6 +77,16 @@ class CashFlowController extends Controller
             $periode = $request->periode;
         }
 
+        $fund = Fund::where('company_id', Auth::user()->company_id)->get();
+        $result_fund = array();
+        foreach($fund AS $item) {
+            array_push($result_fund, (object) array(
+                'name' => $item->type,
+                'cash_in' => 0,
+                'cash_out' => 0
+            ));
+        }
+
         $cash_in = CashIn::where('datetime', 'like', $periode . '%')
             ->select('*', 'type AS type_fund', DB::raw('"cash-in" AS type'))
             ->where('company_id', '=', $company_id)->orderBy('datetime')->get();
@@ -87,10 +97,24 @@ class CashFlowController extends Controller
         $total_cash_in = 0;
         foreach($cash_in AS $item) {
             $total_cash_in += (int)$item->fund;
+
+            foreach($result_fund as $key => $value) {
+                if ($value->name == $item->type_fund) {
+                    $result_fund[$key]->cash_in += (int)$item->fund;
+                    break;
+                }
+            }
         }
         $total_cash_out = 0;
         foreach($cash_out AS $item) {
             $total_cash_out += (int)$item->fund;
+
+            foreach($result_fund as $key => $value) {
+                if ($value->name == $item->type_fund) {
+                    $result_fund[$key]->cash_out += (int)$item->fund;
+                    break;
+                }
+            }
         }
 
         $result = $cash_in->push(...$cash_out);
@@ -111,7 +135,8 @@ class CashFlowController extends Controller
         return view('dashboard.finance.cash-flow.daily', [
             'data' => $paginatedData, 
             'total_cash_in' => $total_cash_in, 
-            'total_cash_out' => $total_cash_out
+            'total_cash_out' => $total_cash_out,
+            'result_fund' => $result_fund,
         ]);
     }
 
