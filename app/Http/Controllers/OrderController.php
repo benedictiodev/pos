@@ -105,7 +105,7 @@ class OrderController extends Controller
                 ]);
             }
 
-            if ($payment >= $total_payment) {
+            if ($request["confirm_order-pay_now"]) {
                 CashIn::create([
                     'company_id' => Auth::user()->company_id,
                     'fund' => $total_payment,
@@ -147,7 +147,7 @@ class OrderController extends Controller
                 }
             }
             DB::commit();
-            if ($payment >= $total_payment) {
+            if ($request["confirm_order-pay_now"]) {
                 return redirect()->route('dashboard.order.order_history');
             } else {
                 return redirect()->route('dashboard.order.order_active');
@@ -313,7 +313,7 @@ class OrderController extends Controller
                     ]);
             }
 
-            if ($payment >= $total_payment) {
+            if ($request["confirm_order-pay_now"]) {
                 CashIn::create([
                     'company_id' => Auth::user()->company_id,
                     'fund' => $total_payment,
@@ -355,7 +355,7 @@ class OrderController extends Controller
                 }
             }
             DB::commit();
-            if ($payment >= $total_payment) {
+            if ($request["confirm_order-pay_now"]) {
                 return redirect()->route('dashboard.order.order_history');
             } else {
                 return redirect()->route('dashboard.order.order_active');
