@@ -40,6 +40,8 @@ class ProductController extends Controller
             // 'image' => 'required|image|file|mimes:jpeg,png,jpg',
         ]);
 
+        $validate['price'] = (int) str_replace('.', '', $validate['price']);
+
         if ($request->file('image')) {
             $validate['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
         }
@@ -87,6 +89,8 @@ class ProductController extends Controller
             'category_id' => 'required',
             // 'description' => 'required',
         ]);
+
+        $validate['price'] = (int) str_replace('.', '', $validate['price']);
 
         // $data = Product::findOrFail($id);
         $data = Product::select('products.*', 'company_id')
