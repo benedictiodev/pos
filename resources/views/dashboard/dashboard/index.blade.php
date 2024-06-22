@@ -21,25 +21,25 @@
     <div>
       <div class="grid grid-cols-3 gap-4 mb-4">
         <div class="flex justify-center p-3 h-24 rounded-lg bg-green-200 shadow-md border">
-          <div class="flex flex-col justify-center items-center w-3/5">
+          <div class="flex flex-col justify-center items-center w-2/5">
             <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.6 16.733c.234.269.548.456.895.534a1.4 1.4 0 0 0 1.75-.762c.172-.615-.446-1.287-1.242-1.481-.796-.194-1.41-.861-1.241-1.481a1.4 1.4 0 0 1 1.75-.762c.343.077.654.26.888.524m-1.358 4.017v.617m0-5.939v.725M4 15v4m3-6v6M6 8.5 10.5 5 14 7.5 18 4m0 0h-3.5M18 4v3m2 8a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z"></path>
             </svg>
             <p class="text-base text-gray-500">Penjualan Hari Ini</p>
           </div>
-          <div class="flex justify-center items-center w-2/5">
-            <p class="text-4xl font-bold text-gray-500">11</p>
+          <div class="flex justify-end items-center w-3/5">
+            <p class="text-2xl font-bold text-gray-500">{{ $order_date_now ? format_rupiah($order_date_now) : 0 }}</p>
           </div>
         </div>
         <div class="flex justify-center p-3 h-24 rounded-lg bg-yellow-200 shadow-md border">
-          <div class="flex flex-col justify-center items-center w-3/5">
+          <div class="flex flex-col justify-center items-center w-2/5">
             <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.6 16.733c.234.269.548.456.895.534a1.4 1.4 0 0 0 1.75-.762c.172-.615-.446-1.287-1.242-1.481-.796-.194-1.41-.861-1.241-1.481a1.4 1.4 0 0 1 1.75-.762c.343.077.654.26.888.524m-1.358 4.017v.617m0-5.939v.725M4 15v4m3-6v6M6 8.5 10.5 5 14 7.5 18 4m0 0h-3.5M18 4v3m2 8a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z"></path>
             </svg>
             <p class="text-base text-gray-500">Penjualan Bulan Ini</p>
           </div>
-          <div class="flex justify-center items-center w-2/5">
-            <p class="text-4xl font-bold text-gray-500">11</p>
+          <div class="flex justify-end items-center w-3/5">
+            <p class="text-2xl font-bold text-gray-500">{{ $order_month_now ? format_rupiah($order_month_now) : 0 }}</p>
           </div>
         </div>
         <div class="flex justify-center p-3 h-24 rounded-lg bg-sky-200 shadow-md border">
@@ -50,7 +50,7 @@
             <p class="text-base text-gray-500">Product Terjual Bulan Ini</p>
           </div>
           <div class="flex justify-center items-center w-2/5">
-            <p class="text-4xl font-bold text-gray-500">11</p>
+            <p class="text-2xl font-bold text-gray-500">{{ $order_item ? $order_item : 0 }}</p>
           </div>
         </div>
       </div>
