@@ -19,7 +19,7 @@
 
   @if (Auth::user()->id == 1)
     <div>
-      <div class="grid grid-col-1 lg:grid-cols-4 gap-4 mb-4">
+      <div class="grid grid-col-1 lg:grid-cols-3 gap-4 mb-4">
         <div class="flex justify-between p-3 h-24 rounded-lg bg-green-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
@@ -54,6 +54,45 @@
           </div>
         </div>
       </div>
+      <div class="grid grid-col-1 gap-4 mb-4">
+        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-gray-50 shadow-md border">
+          <canvas id="chart_penjualan"></canvas>
+        </div>
+      </div>
     </div>
   @endif
 @endsection
+
+@push('script')
+  <script src="{{ asset('assets/plugins/chart_js/chart.js')}}"></script>
+  <script>
+    const ctx_peminjaman = document.getElementById('chart_penjualan');
+    new Chart(ctx_peminjaman, {
+      type: 'bar',
+      data: {
+        labels: {!! json_encode($result_chart_order_label) !!},
+        datasets: [{
+          label: 'Penjualan',
+          data: {!! json_encode($result_chart_order_value) !!},
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              stepSize: 50000
+            }
+          }
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: `Grafik Penjualan Periode {!! Carbon\Carbon::now()->format('Y-m') !!}`,
+          }
+        }
+      }
+    });
+  </script>
+@endpush
