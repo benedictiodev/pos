@@ -41,9 +41,9 @@
       </div>
     @endif
 
-    <div class="flex mx-[-0.25rem]">
+    <div class="grid grid-col-2 lg:grid-cols-4 gap-4 mx-[-0.25rem]">
       <div
-        class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-2 w-1/4 mx-1">
+        class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-1 lg:mb-2 mx-1">
         <div class="flex items-center text-sm">
           <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> Total
           Funds :
@@ -52,7 +52,7 @@
       </div>
       @foreach ($data as $item)
         <div
-          class="flex justify-between items-center bg-white border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-2 w-1/4 mx-1">
+          class="flex justify-between items-center bg-white border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-1 lg:mb-2 mx-1">
           <div class="flex items-center text-sm">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" />
             {{ $item->type }} :
