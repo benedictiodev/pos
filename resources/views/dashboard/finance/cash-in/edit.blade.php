@@ -63,10 +63,10 @@
             </div>
 
             <div>
-              <label for="remarks_from_master" class="mb-2 block text-sm font-medium text-gray-900">Remark</label>
+              <label for="remarks_from_master" class="mb-2 block text-sm font-medium text-gray-900">Category</label>
               <select id="remarks_from_master" name="remarks_from_master"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                {{-- onchange="extendRemark()" --}}>
+                onchange="extendRemark()">
                 <option value="No Categories" @if (old('remarks_from_master', $data->remarks_from_master) == 'No Categories') selected @endif>No Categories</option>
                 @foreach ($remarks as $item)
                   <option value="{{ $item->name }}" @if (old('remarks_from_master', $data->remarks_from_master) == $item->name) selected @endif>
@@ -78,13 +78,14 @@
               @enderror
             </div>
 
-            {{-- <div id="optional_remark" class="space-y-2">
+            <div id="optional_remark" class="space-y-2">
+              <label for="remark" class="mb-2 block text-sm font-medium text-gray-900">Remark (Optional)</label>
               <div class="flex items-center">
                 <input id="is_same" aria-describedby="checkbox-1" type="checkbox" name="is_same" value="1"
                   onchange="optionalRemark()"
                   class="focus:ring-3 h-4 w-4 border-gray-300 bg-gray-50 focus:ring-primary-300">
                 <label for="is_same" class="sr-only">checkbox</label>
-                <p class="ml-2 text-sm font-medium text-gray-900">Same the remark</p>
+                <p class="ml-2 text-sm font-medium text-gray-900">Same the category</p>
               </div>
               <textarea id="remark" rows="4" name="remark"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
@@ -92,7 +93,7 @@
               @error('remark')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
               @enderror
-            </div> --}}
+            </div>
 
             <div>
               <label for="datetime" class="mb-2 block text-sm font-medium text-gray-900">Date</label>
@@ -118,7 +119,7 @@
 @endsection
 
 @push('script')
-  {{-- <script>
+  <script>
     if (!$('#remarks_from_master').val()) {
       $('#optional_remark').addClass('hidden');
     } else {
@@ -128,10 +129,12 @@
     }
 
     const extendRemark = () => {
-      if ($('#remarks_from_master').val()) {
-        $('#optional_remark').removeClass('hidden');
-      } else {
+      if ($('#remarks_from_master').val() == 'No Categories') {
         $('#optional_remark').addClass('hidden');
+        $('#remark').val("");
+        $('#is_same').prop('checked', false);
+      } else {
+        $('#optional_remark').removeClass('hidden');
       }
     }
 
@@ -142,5 +145,5 @@
         $('#remark').val("");
       }
     }
-  </script> --}}
+  </script>
 @endpush
