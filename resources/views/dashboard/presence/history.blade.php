@@ -47,10 +47,10 @@
             id="form-search">
             <label for="presence-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
-              <input type="date" name="periode" id="presence-search"
+              <input type="month" name="periode" id="presence-search" max="{{ Date::now()->format('Y-m') }}"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 placeholder="Search for daily presence"
-                value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}"
+                value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m') }}"
                 onchange="change_search()">
             </div>
           </form>
@@ -82,15 +82,16 @@
                         <label for="checkbox-all" class="sr-only">checkbox</label>
                       </div>
                     </th> --}}
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col"
+                      class="p-4 text-left text-base font-bold uppercase text-gray-500 border border-black">
                       Name
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Email
-                    </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
-                      Presence
-                    </th>
+                    @foreach (Carbon\CarbonPeriod::create(Carbon\Carbon::create(isset($_GET['periode']) ? $_GET['periode'] : now())->startOfMonth(), Carbon\Carbon::create(isset($_GET['periode']) ? $_GET['periode'] : now())->endOfMonth()) as $item)
+                      <th scope="col"
+                        class="p-2 text-center text-base font-bold uppercase text-gray-500 border border-black">
+                        {{ Carbon\Carbon::create($item)->format('d') }}</th>
+                    @endforeach
+
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
@@ -103,33 +104,26 @@
                           <label for="checkbox-" class="sr-only">checkbox</label>
                         </div>
                       </td> --}}
-                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                        <p class="text-sm font-normal text-gray-900">{{ $item->user->name }}</p>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 border border-black">
+                        <p class="text-sm font-normal text-gray-900">{{ $item->name }}</p>
                       </td>
-                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                        <p class="text-sm font-normal text-gray-900">{{ $item->user->email }}</p>
-                      </td>
-
-                      <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <p class="text-sm font-normal text-gray-900">{{ $item->created_at }}</p>
-                        {{-- <a href="{{ route('dashboard.master-data.category-product.edit', ['id' => $item->id]) }}"
-                          class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                          <x-fas-edit class="mr-2 h-4 w-4" />
-                          Update
-                        </a>
-                          <button type="button" id="deleteProductButton" data-drawer-target="drawer-presence-default"
-                            data-drawer-show="drawer-presence-default" aria-controls="drawer-presence-default"
-                            data-drawer-placement="right"
-                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300"
-                            data-id="{{ $item->id }}">
-                            <x-fas-user-pen class="mr-2 h-4 w-4" />
-                            Presence
-                          </button> --}}
-                      </td>
+                      @foreach (Carbon\CarbonPeriod::create(Carbon\Carbon::create(isset($_GET['periode']) ? $_GET['periode'] : Date::now()->format('Y-m'))->startOfMonth(), Carbon\Carbon::create(isset($_GET['periode']) ? $_GET['periode'] : Date::now()->format('Y-m'))->endOfMonth()) as $day)
+                        <td class="text-center border border-black">
+                          @foreach ($item->presence as $presence)
+                            @if (Carbon\Carbon::create($day)->format('Y-m-d') == Carbon\Carbon::create($presence->created_at)->format('Y-m-d'))
+                              <span class="text-2xl">
+                                ✅
+                              </span>
+                            @endif
+                          @endforeach
+                        </td>
+                      @endforeach
                     </tr>
                   @empty
                     <tr>
-                      <td class="text-center text-base font-light p-4" colspan="3">Empty Data</td>
+                      <td class="text-center text-base font-light p-4"
+                        colspan="{{ Carbon\CarbonPeriod::create(Carbon\Carbon::create(isset($_GET['periode']) ? $_GET['periode'] : Date::now()->format('Y-m'))->startOfMonth(), Carbon\Carbon::create(isset($_GET['periode']) ? $_GET['periode'] : Date::now()->format('Y-m'))->endOfMonth())->count() }}">
+                        Empty Data</td>
                     </tr>
                   @endforelse
                 </tbody>
@@ -141,7 +135,7 @@
 
       <div
         class="sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between">
-        {{ $data->withQueryString()->links('vendor.pagination.tailwind') }}
+        {{-- {{ $data->withQueryString()->links('vendor.pagination.tailwind') }} --}}
       </div>
     </div>
   </div>
@@ -180,7 +174,6 @@
   <script type="text/javascript">
     function change_search() {
       let value = document.querySelector("#presence-search").value;
-      //   document.querySelector("#form-search").action = `/dashboard/presence/presence_history`;
       document.querySelector("#form-search").submit();
     }
 

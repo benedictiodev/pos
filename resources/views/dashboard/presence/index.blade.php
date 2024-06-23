@@ -43,12 +43,14 @@
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
-          <form class="sm:pr-3" action="{{ route('dashboard.presence.index') }}" method="GET">
+          <form class="sm:pr-3" action="{{ route('dashboard.presence.index') }}" method="GET" id="form-search">
             <label for="presence-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
-              <input type="text" name="search" id="presence-search"
+              <input type="date" name="periode" id="presence-search" max="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for user" @if (isset($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
+                placeholder="Search for daily presence"
+                value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}"
+                onchange="change_search()">
             </div>
           </form>
           {{-- <div class="flex w-full items-center sm:justify-end">
@@ -114,17 +116,18 @@
                           Update
                         </a> --}}
 
-                        @if (isset($item->presence[0]) and
-                                Carbon\Carbon::create($item->presence[0]->created_at)->format('Y-m-d') == Carbon\Carbon::now()->format('Y-m-d'))
+                        @if (isset($item->presence[0]))
                           <p class="text-sm font-normal text-gray-900">{{ $item->presence[0]->created_at }}</p>
+                        @else
+                          @if (Carbon\Carbon::create($_GET['periode'])->diffInDays(Carbon\Carbon::now()) > 1)
+                            <p class="text-sm font-normal text-gray-900">-</p>
+                          @endif
                         @endif
-
                         <button type="button" id="deleteProductButton" data-drawer-target="drawer-presence-default"
                           data-drawer-show="drawer-presence-default" aria-controls="drawer-presence-default"
                           data-drawer-placement="right"
                           class="items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300
-                          @if (isset($item->presence[0]) and
-                                  Carbon\Carbon::create($item->presence[0]->created_at)->format('Y-m-d') == Carbon\Carbon::now()->format('Y-m-d')) hidden @else inline-flex @endif
+                          @if (isset($item->presence[0]) or Carbon\Carbon::create($_GET['periode'])->diffInDays(Carbon\Carbon::now()) > 1) hidden @else inline-flex @endif
                           "
                           data-id="{{ $item->id }}">
                           <x-fas-user-pen class="mr-2 h-4 w-4" />
@@ -184,6 +187,11 @@
 
 @push('script')
   <script type="text/javascript">
+    function change_search() {
+      let value = document.querySelector("#presence-search").value;
+      document.querySelector("#form-search").submit();
+    }
+
     window.onload = () => {
       document.addEventListener('click', async (event) => {
         // PRESENCE

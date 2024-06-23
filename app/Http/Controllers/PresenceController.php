@@ -16,9 +16,12 @@ class PresenceController extends Controller
     public function index(Request $request)
     {
         $periode = Carbon::now()->format('Y-m-d');
+        if ($request->periode) {
+            $periode = $request->periode;
+        }
         $data = User::with(['presence' => function ($query) use ($periode) {
             $query->where('created_at', 'like', "%$periode%")->limit(1);
-        }])->where("company_id", Auth::user()->id)->where("name", 'like', "%$request->search%")->paginate(5);
+        }])->where("company_id", Auth::user()->id)->paginate(5);
         return view('dashboard.presence.index', [
             "data" => $data
         ]);
@@ -48,9 +51,9 @@ class PresenceController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.presence')->with('success', "Successfully to user presence.");
+            return redirect()->route('dashboard.presence.index')->with('success', "Successfully to user presence.");
         } else {
-            return redirect()->route('dashboard.presence')->with('failed', "Failed to user presence.");
+            return redirect()->route('dashboard.presence.index')->with('failed', "Failed to user presence.");
         }
     }
 
@@ -91,11 +94,13 @@ class PresenceController extends Controller
         // $data = User::with(['presence' => function ($query) {
         //     $query->orderBy('created_at', 'desc')->limit(1);
         // }])->where("company_id", Auth::user()->id)->where("name", 'like', "%$request->search%")->paginate(5);
-        $periode = Carbon::now()->format('Y-m-d');
+        $periode = Carbon::now()->format('Y-m');
         if ($request->periode) {
             $periode = $request->periode;
         }
-        $data = Presence::with(['user'])->where("company_id", Auth::user()->id)->where("created_at", "like", "%$periode%")->paginate(5);
+        $data = User::with(['presence' => function ($query) use ($periode) {
+            $query->where("created_at", "like", "%$periode%");
+        }])->where("company_id", Auth::user()->id)->get();
         return view('dashboard.presence.history', [
             "data" => $data
         ]);

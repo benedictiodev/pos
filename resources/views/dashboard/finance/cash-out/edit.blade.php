@@ -128,7 +128,7 @@
     }
 
     const extendRemark = () => {
-      if ($('#remarks_from_master').val() == "No Categories") {
+      if ($('#remarks_from_master').val() == 'No Categories') {
         $('#optional_remark').addClass('hidden');
         $('#remark').val("");
         $('#is_same').prop('checked', false);
