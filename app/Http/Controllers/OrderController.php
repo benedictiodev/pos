@@ -17,11 +17,10 @@ use Throwable;
 
 class OrderController extends Controller
 {
-    public function order_active(Request $request)
+    public function order_active()
     {
-        $data = Order::query()->where("company_id", '=', Auth::user()->company_id)->where(function ($query) use ($request) {
-            $query->where("customer_name", "like", "%$request->search%")->orWhere("id_order", "like", "%$request->search%");
-        })->where('status', '!=', 'done')->paginate(10);
+        $data = Order::where("company_id", Auth::user()->company_id)
+            ->where('status', '!=', 'done')->paginate(10);
 
         return view('dashboard.order.order_active', ['data' => $data]);
     }
@@ -67,9 +66,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $total_payment = (int) $request['confirm_order-total_payment'];
-            $payment = (int) $request['confirm_order-payment'];
-            $change = (int) $request['confirm_order-change'];
+            $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
+            $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
+            $change = (int) str_replace('.', '', $request['confirm_order-change']);
             $order = json_decode($request['confirm_order-order']);
 
             $data_order = Order::where('company_id', Auth::user()->company_id)
@@ -90,8 +89,9 @@ class OrderController extends Controller
                 'change' => $change,
                 'payment_method' => $request['confirm_order-payment_method'],
                 'order_type' => $request['confirm_order-order_type'],
-                'status' => $payment >= $total_payment ? 'done' : 'waiting payment',
+                'status' => $request["confirm_order-pay_now"] ? 'done' : 'waiting payment',
                 'remarks' => $request['confirm_order-remarks'],
+                'sequence' => $next_sequence,
             ]);
 
             foreach ($order as $item) {
@@ -102,11 +102,10 @@ class OrderController extends Controller
                     'quantity' => $item->qty,
                     'amount' => $item->product_price * $item->qty,
                     'remarks' => $item->remarks,
-                    'sequence' => $next_sequence,
                 ]);
             }
 
-            if ($payment >= $total_payment) {
+            if ($request["confirm_order-pay_now"]) {
                 CashIn::create([
                     'company_id' => Auth::user()->company_id,
                     'fund' => $total_payment,
@@ -148,7 +147,7 @@ class OrderController extends Controller
                 }
             }
             DB::commit();
-            if ($payment >= $total_payment) {
+            if ($request["confirm_order-pay_now"]) {
                 return redirect()->route('dashboard.order.order_history');
             } else {
                 return redirect()->route('dashboard.order.order_active');
@@ -267,9 +266,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
-            $total_payment = (int) $request['confirm_order-total_payment'];
-            $payment = (int) $request['confirm_order-payment'];
-            $change = (int) $request['confirm_order-change'];
+            $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
+            $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
+            $change = (int) str_replace('.', '', $request['confirm_order-change']);
             $order_add = json_decode($request['confirm_order-order_add']);
             $order_update = json_decode($request['confirm_order-order_update']);
             $order_delete = json_decode($request['confirm_order-order_delete']);
@@ -283,7 +282,7 @@ class OrderController extends Controller
                     'change' => $change,
                     'payment_method' => $request['confirm_order-payment_method'],
                     'order_type' => $request['confirm_order-order_type'],
-                    'status' => $payment >= $total_payment ? 'done' : 'waiting payment',
+                    'status' => $request["confirm_order-pay_now"]  ? 'done' : 'waiting payment',
                     'remarks' => $request['confirm_order-remarks'],
                 ]);
 
@@ -314,7 +313,7 @@ class OrderController extends Controller
                     ]);
             }
 
-            if ($payment >= $total_payment) {
+            if ($request["confirm_order-pay_now"]) {
                 CashIn::create([
                     'company_id' => Auth::user()->company_id,
                     'fund' => $total_payment,
@@ -356,7 +355,7 @@ class OrderController extends Controller
                 }
             }
             DB::commit();
-            if ($payment >= $total_payment) {
+            if ($request["confirm_order-pay_now"]) {
                 return redirect()->route('dashboard.order.order_history');
             } else {
                 return redirect()->route('dashboard.order.order_active');

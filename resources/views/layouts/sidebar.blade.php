@@ -14,7 +14,7 @@
           </li>
 
           {{-- FINANCE --}}
-          @if (Auth::user()->id != 2)
+          @if (Auth::user()->id == 1) 
             <li>
               <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'bg-gray-100' : '' }}"
@@ -78,7 +78,7 @@
           {{-- END ORDER --}}
 
           {{-- COMPANY --}}
-          @if (Auth::user()->id != 2)
+          @if (Auth::user()->id == 1)
             <li>
               <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.') ? 'bg-gray-100' : '' }}"
@@ -102,7 +102,7 @@
           {{-- END COMPANY --}}
 
           {{-- MASTER DATA --}}
-          @if (Auth::user()->id != 2)
+          @if (Auth::user()->id == 1)
             <li>
               <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.') ? 'bg-gray-100' : '' }}"

@@ -77,6 +77,16 @@ class CashFlowController extends Controller
             $periode = $request->periode;
         }
 
+        $fund = Fund::where('company_id', Auth::user()->company_id)->get();
+        $result_fund = array();
+        foreach($fund AS $item) {
+            array_push($result_fund, (object) array(
+                'name' => $item->type,
+                'cash_in' => 0,
+                'cash_out' => 0
+            ));
+        }
+
         $cash_in = CashIn::where('datetime', 'like', $periode . '%')
             ->select('*', 'type AS type_fund', DB::raw('"cash-in" AS type'))
             ->where('company_id', '=', $company_id)->orderBy('datetime')->get();
@@ -87,10 +97,24 @@ class CashFlowController extends Controller
         $total_cash_in = 0;
         foreach($cash_in AS $item) {
             $total_cash_in += (int)$item->fund;
+
+            foreach($result_fund as $key => $value) {
+                if ($value->name == $item->type_fund) {
+                    $result_fund[$key]->cash_in += (int)$item->fund;
+                    break;
+                }
+            }
         }
         $total_cash_out = 0;
         foreach($cash_out AS $item) {
             $total_cash_out += (int)$item->fund;
+
+            foreach($result_fund as $key => $value) {
+                if ($value->name == $item->type_fund) {
+                    $result_fund[$key]->cash_out += (int)$item->fund;
+                    break;
+                }
+            }
         }
 
         $result = $cash_in->push(...$cash_out);
@@ -111,7 +135,8 @@ class CashFlowController extends Controller
         return view('dashboard.finance.cash-flow.daily', [
             'data' => $paginatedData, 
             'total_cash_in' => $total_cash_in, 
-            'total_cash_out' => $total_cash_out
+            'total_cash_out' => $total_cash_out,
+            'result_fund' => $result_fund,
         ]);
     }
 
@@ -120,15 +145,18 @@ class CashFlowController extends Controller
             DB::beginTransaction();
             $query_data = ['periode' => $request->periode];
 
+            $equite_total = (int) str_replace('.', '', $request->equite_total);
+            $target = (int) str_replace('.', '', $request->target);
+
             ClosingCycle::create([
                 'company_id' => Auth::user()->company_id,
                 'periode' => $request->periode,
-                'equity' => $request->equite_total,
-                'target' => $request->target,
+                'equity' => $equite_total,
+                'target' => $target,
             ]);
 
             foreach($request->equite AS $key => $item) {
-                $equite = $item ? (int) $item : 0;
+                $equite = $item ? (int) str_replace('.', '', $item) : 0;
 
                 $cash_in = CashIn::where('company_id', Auth::user()->company)
                     ->where('type', $key)
@@ -159,7 +187,7 @@ class CashFlowController extends Controller
                 ->where('datetime', 'like', $request->periode . '%')
                 ->orderBy('datetime')->get();
             
-            $amount = $request->equite_total ? (int) $request->equite_total : 0;
+            $amount = $equite_total ? (int) $equite_total : 0;
             foreach($monthly AS $item_monthly) {
                 $amount += (int) $item_monthly->amount;
                 CashMonthly::where('id', $item_monthly->id)
@@ -179,25 +207,32 @@ class CashFlowController extends Controller
             DB::beginTransaction();
             $query_data = ['periode' => $request->periode];
 
+            $income = (int) str_replace('.', '', $request->income);
+            $expenditure = (int) str_replace('.', '', $request->expenditure);
+            $profit = (int) str_replace('.', '', $request->profit);
+
             ClosingCycle::where('company_id', Auth::user()->company_id)
                 ->where('periode', $request->periode)
                 ->update([
-                    'income' => $request->income,
-                    'expenditure' => $request->expenditure,
-                    'profit' => $request->profit,
+                    'income' => $income,
+                    'expenditure' => $expenditure,
+                    'profit' => $profit,
                     'is_done' => 1,
                 ]);
 
             if ($request->set_equity) {
+                $next_equite_total = (int) str_replace('.', '', $request->next_equite_total);
+                $next_target = (int) str_replace('.', '', $request->next_target);
+
                 ClosingCycle::create([
                     'company_id' => Auth::user()->company_id,
                     'periode' => $request->next_periode,
-                    'equity' => $request->next_equite_total,
-                    'target' => $request->next_target,
+                    'equity' => $next_equite_total,
+                    'target' => $next_target,
                 ]);
 
                 foreach($request->next_equite AS $key => $item) {
-                    $equite = $item ? (int) $item : 0;
+                    $equite = $item ? (int) str_replace('.', '', $item) : 0;
 
                     $cash_in = CashIn::where('company_id', Auth::user()->company)
                         ->where('type', $key)
@@ -228,7 +263,7 @@ class CashFlowController extends Controller
                     ->where('datetime', 'like', $request->next_periode . '%')
                     ->orderBy('datetime')->get();
                 
-                $amount = $request->next_equite_total ? (int) $request->next_equite_total : 0;
+                $amount = $next_equite_total ? (int) $next_equite_total : 0;
                 foreach($monthly AS $item_monthly) {
                     $amount += (int) $item_monthly->amount;
                     CashMonthly::where('id', $item_monthly->id)

@@ -49,7 +49,8 @@
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 placeholder="Search for daily cash flow"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}"
-                onchange="change_search()">
+                onchange="change_search()"
+                max="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
             </div>
           </form>
           {{-- <div class="flex w-full items-center sm:justify-end">
@@ -193,6 +194,29 @@
                       class="p-4 text-center text-base font-medium uppercase text-gray-500">
                     </th>
                   </tr>
+                  <tr class="border-t">
+                    <th scope="col" colspan="7" class="p-4 text-center text-sm font-bold uppercase text-gray-500">
+                      Detail Total Of Fund
+                    </th>
+                  </tr>
+                  @foreach ($result_fund as $item)
+                      <tr class="bg-white border-t">
+                        <th scope="col" class="p-4 text-center text-sm font-normal">
+                        </th>
+                        <th scope="col" class="p-4 text-left text-sm font-normal">
+                          {{ $item->name }}
+                        </th>
+                        <th scope="col" class="p-4 text-right text-sm font-normal">
+                          {{ format_rupiah($item->cash_out) }}
+                        </th>
+                        <th scope="col" class="p-4 text-right text-sm font-normal">
+                          {{ format_rupiah($item->cash_in) }}
+                        </th>
+                        <th scope="col" colspan="3"
+                          class="p-4 text-center text-sm font-normal">
+                        </th>
+                      </tr>
+                  @endforeach
                 </tfoot>
               </table>
             </div>

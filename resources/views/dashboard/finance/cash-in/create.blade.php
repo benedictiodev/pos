@@ -39,7 +39,7 @@
           <div class="space-y-6">
             <div>
               <label for="fund" class="mb-2 block text-sm font-medium text-gray-900">Fund</label>
-              <input type="number" name="fund" id="fund" min="0"
+              <input type="text" name="fund" id="fund" onkeyup="keyup_rupiah(this)"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Nominal" value="{{ old('fund') }}" required>
               @error('fund')

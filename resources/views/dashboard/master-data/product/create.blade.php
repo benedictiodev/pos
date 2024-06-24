@@ -51,7 +51,8 @@
             <div>
               <label for="price" class="mb-2 block text-sm font-medium text-gray-900">Price
                 Product</label>
-              <input type="number" name="price" id="price"
+              <input type="text" name="price" id="price"
+                onkeyup="keyup_rupiah(this)"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Price Product" required>
             </div>
