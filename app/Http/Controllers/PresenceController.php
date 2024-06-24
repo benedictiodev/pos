@@ -21,7 +21,7 @@ class PresenceController extends Controller
         }
         $data = User::with(['presence' => function ($query) use ($periode) {
             $query->where('created_at', 'like', "%$periode%")->limit(1);
-        }])->where("company_id", Auth::user()->id)->paginate(5);
+        }])->where("company_id", Auth::user()->id)->paginate(10);
         return view('dashboard.presence.index', [
             "data" => $data
         ]);

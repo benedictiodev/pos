@@ -119,15 +119,23 @@
                         @if (isset($item->presence[0]))
                           <p class="text-sm font-normal text-gray-900">{{ $item->presence[0]->created_at }}</p>
                         @else
-                          @if (Carbon\Carbon::create($_GET['periode'])->diffInDays(Carbon\Carbon::now()) > 1)
-                            <p class="text-sm font-normal text-gray-900">-</p>
+                          @if (isset($_GET['periode']))
+                            @if (Carbon\Carbon::create($_GET['periode'])->diffInDays(Carbon\Carbon::now()) > 1)
+                              <p class="text-sm font-normal text-gray-900">-</p>
+                            @endif
                           @endif
                         @endif
-                        <button type="button" id="deleteProductButton" data-drawer-target="drawer-presence-default"
+                        <button type="button" id="presenceButton" data-drawer-target="drawer-presence-default"
                           data-drawer-show="drawer-presence-default" aria-controls="drawer-presence-default"
                           data-drawer-placement="right"
                           class="items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300
-                          @if (isset($item->presence[0]) or Carbon\Carbon::create($_GET['periode'])->diffInDays(Carbon\Carbon::now()) > 1) hidden @else inline-flex @endif
+                          @if (isset($item->presence[0])) hidden 
+                          @else 
+                            @if (isset($_GET['periode']))
+                              @if (Carbon\Carbon::create($_GET['periode'])->diffInDays(Carbon\Carbon::now()) > 1) hidden @endif
+                            @endif 
+                            inline-flex
+                          @endif
                           "
                           data-id="{{ $item->id }}">
                           <x-fas-user-pen class="mr-2 h-4 w-4" />
@@ -148,10 +156,10 @@
         </div>
       </div>
 
-      <div
+      {{-- <div
         class="sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between">
         {{ $data->withQueryString()->links('vendor.pagination.tailwind') }}
-      </div>
+      </div> --}}
     </div>
   </div>
 
@@ -166,10 +174,10 @@
       <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
       <span class="sr-only">Close menu</span>
     </button>
-    <form id="form-presence" method="POST" action="#">
+    <form id="form-presence" method="POST" action="{{ route('dashboard.presence.store') }}">
       @csrf
-      <input type="text" id="presence-id" value="" name="user_id" hidden>
-      <input type="text" id="presence-id" value="{{ Auth::user()->id }}" name="company_id" hidden>
+      <input type="text" id="presence-id" name="user_id" hidden>
+      <input type="text" value="{{ Auth::user()->id }}" name="company_id" hidden>
       <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
       <h3 class="mb-6 text-lg text-gray-500">Are you sure you want to presence this user?</h3>
       <button type="button" data-type="button-presence"
@@ -195,16 +203,13 @@
     window.onload = () => {
       document.addEventListener('click', async (event) => {
         // PRESENCE
+        console.log(event.target);
         if (event.target.getAttribute('data-drawer-target') == "drawer-presence-default") {
           const id = event.target.getAttribute("data-id");
-          document.querySelector("#presence-id").value = id;
           console.log(id);
+          document.querySelector("#presence-id").value = id;
         }
         if (event.target.getAttribute('data-type') == "button-presence") {
-          const id = document.querySelector("#presence-id").value;
-          document.querySelector("#form-presence").method = "POST";
-          document.querySelector("#form-presence").action =
-            `/dashboard/presence`;
           document.querySelector("#form-presence").submit();
         }
       })

@@ -148,8 +148,7 @@
             <button type="button"
               class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.') ? 'bg-gray-100' : '' }}"
               aria-controls="dropdown-presence" data-collapse-toggle="dropdown-presence">
-              <x-fas-shopping-basket
-                class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              <x-fas-user-check class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Presence</span>
               <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
             </button>
