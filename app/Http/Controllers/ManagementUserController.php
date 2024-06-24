@@ -14,7 +14,11 @@ class ManagementUserController extends Controller
     public function user_index(Request $request)
     {
         return view('dashboard.management-user.user.index', [
-            "data" => User::query()->where("company_id", Auth::user()->company_id)->where("name", "LIKE", "%$request->search%")->paginate(10)
+            "data" => User::query()
+                ->where("company_id", Auth::user()->company_id)
+                ->where("id", '!=', 1)
+                ->where("name", "LIKE", "%$request->search%")
+                ->paginate(10)
         ]);
     }
 
