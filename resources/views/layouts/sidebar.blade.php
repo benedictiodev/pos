@@ -169,6 +169,33 @@
             </ul>
           </li>
           {{-- END PRESENCE --}}
+          {{-- PRESENCE --}}
+          <li>
+            <button type="button"
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.') ? 'bg-gray-100' : '' }}"
+              aria-controls="dropdown-management-user" data-collapse-toggle="dropdown-management-user">
+              <x-fas-user-group class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Management User</span>
+              <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+            </button>
+            <ul id="dropdown-management-user"
+              class="{{ str_contains(Request::route()->getName(), 'dashboard.management-user.') ? '' : 'hidden' }} py-2 space-y-2">
+              <li>
+                <a href="{{ route('dashboard.management-user.user.index') }}"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.user.index') ? 'bg-gray-100' : '' }}">
+                  User
+                </a>
+              </li>
+              {{-- <li>
+                <a href="#"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.role.index') ? 'bg-gray-100' : '' }}"
+                  disabled>
+                  Role
+                </a>
+              </li> --}}
+            </ul>
+          </li>
+          {{-- END PRESENCE --}}
         </ul>
       </div>
     </div>
