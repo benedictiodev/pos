@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('main')
-  <div>
+  <div class="pb-1">
     <div class="mb-1 w-full">
       <div class="mb-4">
         <nav class="mb-5 flex" aria-label="Breadcrumb">
@@ -41,9 +41,9 @@
     @endif
 
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 mb-4">
-      <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
+      {{-- <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
-          {{-- <form class="sm:pr-3" action="{{ route('dashboard.presence.presence_history') }}" method="GET"
+          <form class="sm:pr-3" action="{{ route('dashboard.presence.presence_history') }}" method="GET"
             id="form-search">
             <label for="presence-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
@@ -53,22 +53,22 @@
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m') }}"
                 onchange="change_search()">
             </div>
-          </form> --}}
-          {{-- <div class="flex w-full items-center sm:justify-end">
+          </form>
+          <div class="flex w-full items-center sm:justify-end">
             <div class="flex space-x-1 pl-2">
               <a href="#"
                 class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                 <x-fas-trash-alt class="h-6 w-6" />
               </a>
             </div>
-          </div> --}}
+          </div>
         </div>
-        {{-- <a id="createProductButton" href="{{ route('dashboard.master-data.category-product.create') }}"
+        <a id="createProductButton" href="{{ route('dashboard.master-data.category-product.create') }}"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
           Add new product
-        </a> --}}
-      </div>
-      <div id="calender"></div>
+        </a>
+      </div> --}}
+      <div id="calender" class="mb-2"></div>
       {{-- <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
@@ -121,10 +121,10 @@
         </div>
       </div> --}}
 
-      <div
+      {{-- <div
         class="sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between">
-        {{-- {{ $data->withQueryString()->links('vendor.pagination.tailwind') }} --}}
-      </div>
+        {{ $data->withQueryString()->links('vendor.pagination.tailwind') }}
+      </div> --}}
     </div>
   </div>
 
@@ -186,6 +186,7 @@
           center: 'title',
           end: 'prev,next' // will normally be on the right. if RTL, will be on the left
         },
+        height: 750,
         initialView: 'dayGridMonth',
         allDaySlot: false,
         events,
