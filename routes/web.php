@@ -100,6 +100,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/new-order", [OrderController::class, 'add_new_order'])->name('dashboard.order.order_active.add_new_order');
         Route::post("/post_new_order", [OrderController::class, 'post_new_order'])->name('dashboard.order.order_active.post_new_order');
         Route::get("/history", [OrderController::class, 'order_history'])->name('dashboard.order.order_history');
+        Route::get("/{id}/edit", [OrderController::class, 'order_history_edit'])->name('dashboard.order.order_history_edit');
+        Route::put("/{id}", [OrderController::class, 'order_history_update'])->name('dashboard.order.order_history_update');
         Route::get("/{id}/detail", [OrderController::class, 'order_detail'])->name('dashboard.order.order_detail');
         Route::delete("/{id}", [OrderController::class, 'delete_order'])->name('dashboard.order.delete_order');
         Route::get("/update/{id}", [OrderController::class, 'edit_order'])->name('dashboard.order.edit_order');
