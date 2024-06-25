@@ -41,7 +41,6 @@
     @endif
 
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4 mx-auto text-center">
-
       @if ($user->presence->count() != 0)
         <div class="mb-4 rounded-lg bg-green-50 p-4 text-sm text-green-800 flex flex-col gap-1" role="alert">
           <span class="font-medium text-lg">Your attendance today has been recorded.</span>
@@ -59,6 +58,10 @@
           </button>
         </div>
       @endif
+    </div>
+
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4 mx-auto text-center">
+      <div id="calender"></div>
     </div>
   </div>
 
@@ -90,3 +93,43 @@
     </form>
   </div>
 @endsection
+
+@push('script')
+  <script>
+    $(document).ready(function() {
+      const history = {!! json_encode($history) !!}
+
+      let events = [];
+      history?.presence?.forEach(item => {
+        events.push({
+          id: item?.created_at,
+          start: item?.created_at,
+          color: "#bfdbfe",
+          className: ["bg-primary-200", "hover:bg-primary-100", ],
+        });
+      });
+
+      const calenderElement = document.getElementById('calender');
+      const calendar = new FullCalendar.Calendar(calenderElement, {
+        headerToolbar: {
+          start: 'today', // will normally be on the left. if RTL, will be on the right
+          center: 'title',
+          end: 'prev,next' // will normally be on the right. if RTL, will be on the left
+        },
+        initialView: 'dayGridMonth',
+        allDaySlot: false,
+        height: 600,
+        events,
+        displayEventTime: false,
+        eventTimeFormat: { // like '14:30:00'
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          meridiem: false,
+          hour12: false
+        },
+      });
+      calendar.render();
+    });
+  </script>
+@endpush

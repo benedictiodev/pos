@@ -10,9 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class PresenceController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
         $periode = Carbon::now()->format('Y-m-d');
@@ -27,17 +24,6 @@ class PresenceController extends Controller
         ]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -57,47 +43,9 @@ class PresenceController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(Presence $presence)
+    public function history()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Presence $presence)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Presence $presence)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Presence $presence)
-    {
-        //
-    }
-
-    public function history(Request $request)
-    {
-        $periode = Carbon::now()->format('Y-m');
-        if ($request->periode) {
-            $periode = $request->periode;
-        }
-        $data = User::with(['presence' => function ($query) use ($periode) {
-            $query->where("created_at", "like", "%$periode%");
-        }])->where('users.id', '!=', 1)->where("company_id", Auth::user()->company_id)->get();
+        $data = Presence::with(['user'])->where("user_id", "!=", Auth::user()->id)->where("company_id", Auth::user()->company_id)->get();
         return view('dashboard.presence.history', [
             "data" => $data
         ]);
@@ -109,8 +57,12 @@ class PresenceController extends Controller
         $user = User::with(['presence' => function ($query) use ($periode) {
             $query->where("created_at", "like", "%$periode%");
         }])->where("id", "=", Auth::user()->id)->where("company_id", Auth::user()->company_id)->first();
+
+        $history = User::with(['presence'])->where("id", "=", Auth::user()->id)->where("company_id", Auth::user()->company_id)->first();
+
         return view('dashboard.presence.user_presence', [
-            "user" => $user
+            "user" => $user,
+            "history" => $history,
         ]);
     }
 
