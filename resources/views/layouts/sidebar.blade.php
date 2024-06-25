@@ -14,7 +14,7 @@
           </li>
 
           {{-- FINANCE --}}
-          @if (Auth::user()->id == 1) 
+          @if (Auth::user()->id == 1)
             <li>
               <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'bg-gray-100' : '' }}"
@@ -166,10 +166,17 @@
                   Presence History
                 </a>
               </li>
+              <li>
+                <a href="{{ route('dashboard.presence.presence_user') }}"
+                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.presence_user') ? 'bg-gray-100' : '' }}">
+                  Presence User
+                </a>
+              </li>
             </ul>
           </li>
           {{-- END PRESENCE --}}
-          {{-- PRESENCE --}}
+
+          {{-- MANAGEMENT USER --}}
           <li>
             <button type="button"
               class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.') ? 'bg-gray-100' : '' }}"
@@ -195,7 +202,7 @@
               </li> --}}
             </ul>
           </li>
-          {{-- END PRESENCE --}}
+          {{-- END MANAGEMENT USER --}}
         </ul>
       </div>
     </div>

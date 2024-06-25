@@ -14,18 +14,18 @@
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Presence</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Management User</span>
               </div>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">User Presence</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">User</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">User Presence</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">User</h1>
       </div>
     </div>
 

@@ -129,6 +129,8 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/", [PresenceController::class, 'index'])->name('dashboard.presence.index');
         Route::post("/", [PresenceController::class, 'store'])->name('dashboard.presence.store');
         Route::get("/presence_history", [PresenceController::class, 'history'])->name('dashboard.presence.presence_history');
+        Route::get("/presence_user", [PresenceController::class, 'presence_user'])->name('dashboard.presence.presence_user');
+        Route::post("/presence_user", [PresenceController::class, 'presence_user_store'])->name('dashboard.presence.presence_user_store');
     });
 
     // Management User

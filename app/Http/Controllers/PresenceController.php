@@ -21,7 +21,7 @@ class PresenceController extends Controller
         }
         $data = User::with(['presence' => function ($query) use ($periode) {
             $query->where('created_at', 'like', "%$periode%")->limit(1);
-        }])->where('users.id', '!=', 1)->where("company_id", Auth::user()->id)->paginate(10);
+        }])->where('users.id', '!=', 1)->where("company_id", Auth::user()->company_id)->paginate(10);
         return view('dashboard.presence.index', [
             "data" => $data
         ]);
@@ -91,18 +91,46 @@ class PresenceController extends Controller
 
     public function history(Request $request)
     {
-        // $data = User::with(['presence' => function ($query) {
-        //     $query->orderBy('created_at', 'desc')->limit(1);
-        // }])->where("company_id", Auth::user()->id)->where("name", 'like', "%$request->search%")->paginate(5);
         $periode = Carbon::now()->format('Y-m');
         if ($request->periode) {
             $periode = $request->periode;
         }
         $data = User::with(['presence' => function ($query) use ($periode) {
             $query->where("created_at", "like", "%$periode%");
-        }])->where('users.id', '!=', 1)->where("company_id", Auth::user()->id)->get();
+        }])->where('users.id', '!=', 1)->where("company_id", Auth::user()->company_id)->get();
         return view('dashboard.presence.history', [
             "data" => $data
         ]);
+    }
+
+    public function presence_user()
+    {
+        $periode = Carbon::now()->format('Y-m-d');
+        $user = User::with(['presence' => function ($query) use ($periode) {
+            $query->where("created_at", "like", "%$periode%");
+        }])->where("id", "=", Auth::user()->id)->where("company_id", Auth::user()->company_id)->first();
+        return view('dashboard.presence.user_presence', [
+            "user" => $user
+        ]);
+    }
+
+    public function presence_user_store(Request $request)
+    {
+        $validate = $request->validate([
+            'id' => 'required',
+        ]);
+
+        $user = User::query()->findOrFail($validate['id']);
+
+        $store = Presence::create([
+            'user_id' => $validate['id'],
+            'company_id' => $user->company_id
+        ]);
+
+        if ($store) {
+            return redirect()->route('dashboard.presence.presence_user')->with('success', "Successfully to user presence.");
+        } else {
+            return redirect()->route('dashboard.presence.presence_user')->with('failed', "Failed to user presence.");
+        }
     }
 }
