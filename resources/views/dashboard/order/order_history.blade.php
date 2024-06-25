@@ -156,7 +156,7 @@
                     </tr>
                   @endforelse
                 </tbody>
-                @if (Auth::user()->id != 2)
+                @if (Auth::user()->id == 1)
                   <tfoot class="bg-gray-100">
                     <tr>
                       <th scope="col" colspan="2s"
