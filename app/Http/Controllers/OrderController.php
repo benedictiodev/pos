@@ -248,10 +248,8 @@ class OrderController extends Controller
                     'change' => $change,
                     'payment_method' => $request['confirm_order-payment_method'],
                     'order_type' => $request['confirm_order-order_type'],
-                    'status' =>  'done',
                     'remarks' => $request['confirm_order-remarks'],
                 ]);
-
 
             foreach ($order_add as $item) {
                 OrderItems::create([
@@ -265,7 +263,7 @@ class OrderController extends Controller
             }
 
             foreach ($order_delete as $item) {
-                OrderItems::query()->where('id', '=', $item)->first()->delete();
+                OrderItems::where('id', $item)->delete();
             }
 
             foreach ($order_update as $item) {
@@ -280,53 +278,39 @@ class OrderController extends Controller
                     ]);
             }
 
-            // if ($request["confirm_order-pay_now"]) {
-            CashIn::where('company_id', Auth::user()->company_id)->where('order_id', $id)->update([
-                // 'company_id' => Auth::user()->company_id,
+            $old_data_cash = CashIn::where('company_id', Auth::user()->company_id)
+                ->where('order_id', $id)->first();
+
+            CashIn::where('id', $old_data_cash->id)->update([
                 'fund' => $total_payment,
-                'remark' => '',
-                'datetime' => Carbon::now()->toDateTimeString(),
                 'type' => $request['confirm_order-payment_method'],
-                // 'order_id' => $id,
-                'remarks_from_master' => '',
             ]);
 
             $closing_cyle = ClosingCycle::where("company_id", Auth::user()->company_id)
-                ->where("periode", Carbon::now()->format('Y-m'))
+                ->where("periode", Carbon::parse($old_data_cash->datetime)->format('Y-m'))
                 ->first();
 
             if ($closing_cyle) {
-                $fund = Fund::where("company_id", Auth::user()->company_id)
+                $fund_old = Fund::where("company_id", Auth::user()->company_id)
+                    ->where("type", $old_data_cash->type)->first();
+                $fund_old->update(["fund" => $fund_old->fund - $old_data_cash->fund]);
+
+                $fund_new = Fund::where("company_id", Auth::user()->company_id)
                     ->where("type", $request["confirm_order-payment_method"])->first();
-                $fund->update(["fund" => $fund->fund + $total_payment]);
+                $fund_new->update(["fund" => $fund_new->fund + $total_payment]);
             }
 
             $cash_monthly = CashMonthly::where("company_id", Auth::user()->company_id)
-                ->where("datetime", Carbon::now()->toDateString())->first();
+                ->where("datetime", Carbon::parse($old_data_cash->datetime)->toDateString())->first();
 
-            if ($cash_monthly) {
-                CashMonthly::where("id", $cash_monthly->id)->update([
-                    "kredit" => (int) $cash_monthly->kredit + $total_payment,
-                    "amount" => (int) $cash_monthly->amount + $total_payment,
-                    "total_amount" => $closing_cyle ? (int) $cash_monthly->total_amount + $total_payment : 0,
-                ]);
-            } else {
-                CashMonthly::create([
-                    "company_id" => Auth::user()->company_id,
-                    "debit" => 0,
-                    "kredit" => $total_payment,
-                    "amount" => $total_payment,
-                    "total_amount" => $closing_cyle ? $total_payment : 0,
-                    "datetime" => Carbon::now()->toDateString()
-                ]);
-            }
-            // }
+            CashMonthly::where("id", $cash_monthly->id)->update([
+                "kredit" => (int) $cash_monthly->kredit - $old_data_cash->fund + $total_payment,
+                "amount" => (int) $cash_monthly->amount - $old_data_cash->fund + $total_payment,
+                "total_amount" => $closing_cyle ? (int) $cash_monthly->total_amount - $old_data_cash->fund + $total_payment : 0,
+            ]);
+
             DB::commit();
-            // if ($request["confirm_order-pay_now"]) {
-            return redirect()->route('dashboard.order.order_history')->with("success", "Successfully to update order history");
-            // } else {
-            // return redirect()->route('dashboard.order.order_active');
-            // }
+            return redirect()->route('dashboard.order.order_history');
         } catch (Throwable $error) {
             DB::rollBack();
             return redirect()->route('dashboard.order.order_history')->with('failed', "Failed to update order history");

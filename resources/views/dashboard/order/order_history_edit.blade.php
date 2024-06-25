@@ -273,7 +273,7 @@
                   class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                   placeholder="Enter event remarks here">{{ $order->remarks }}</textarea>
               </div>
-              <div class="mb-3">
+              <div class="mb-6">
                 <label for="confirm_order-order_type" class="mb-2 block text-sm font-medium text-gray-900">Order
                   Type</label>
                 <select id="confirm_order-order_type" name="confirm_order-order_type"
@@ -404,8 +404,8 @@
       })
 
       $('#confirm_order-total_payment').val(update_to_format_rupiah(total_price_order));
-      $('#confirm_order-payment').val({!! json_encode($order->payment) !!});
-      $('#confirm_order-change').val({!! json_encode($order->change) !!});
+      $('#confirm_order-payment').val(update_to_format_rupiah({!! json_encode($order->payment) !!}));
+      $('#confirm_order-change').val(update_to_format_rupiah({!! json_encode($order->change) !!}));
       $('#order-total-price').html(format_rupiah(total_price_order));
     }
 
