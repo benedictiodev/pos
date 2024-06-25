@@ -144,17 +144,17 @@
           {{-- END MASTER DATA --}}
 
           {{-- PRESENCE --}}
-          @if (Auth::user()->id == 1)
-            <li>
-              <button type="button"
-                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.') ? 'bg-gray-100' : '' }}"
-                aria-controls="dropdown-presence" data-collapse-toggle="dropdown-presence">
-                <x-fas-user-check class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
-                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Presence</span>
-                <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
-              </button>
-              <ul id="dropdown-presence"
-                class="{{ str_contains(Request::route()->getName(), 'dashboard.presence.') ? '' : 'hidden' }} py-2 space-y-2">
+          <li>
+            <button type="button"
+              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.') ? 'bg-gray-100' : '' }}"
+              aria-controls="dropdown-presence" data-collapse-toggle="dropdown-presence">
+              <x-fas-user-check class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Presence</span>
+              <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+            </button>
+            <ul id="dropdown-presence"
+              class="{{ str_contains(Request::route()->getName(), 'dashboard.presence.') ? '' : 'hidden' }} py-2 space-y-2">
+              @if (Auth::user()->id == 1)
                 <li>
                   <a href="{{ route('dashboard.presence.index') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.index') ? 'bg-gray-100' : '' }}">
@@ -167,15 +167,16 @@
                     Presence History
                   </a>
                 </li>
+              @else 
                 <li>
                   <a href="{{ route('dashboard.presence.presence_user') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.presence_user') ? 'bg-gray-100' : '' }}">
                     Presence User
                   </a>
                 </li>
-              </ul>
-            </li>
-          @endif
+              @endif
+            </ul>
+          </li>
           {{-- END PRESENCE --}}
 
           {{-- USER MANAGEMENT --}}
