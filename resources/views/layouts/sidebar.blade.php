@@ -167,18 +167,19 @@
                     Presence History
                   </a>
                 </li>
+              @else
+                <li>
+                  <a href="{{ route('dashboard.presence.presence_user') }}"
+                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.presence_user') ? 'bg-gray-100' : '' }}">
+                    Presence User
+                  </a>
+                </li>
               @endif
-              <li>
-                <a href="{{ route('dashboard.presence.presence_user') }}"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.presence_user') ? 'bg-gray-100' : '' }}">
-                  Presence User
-                </a>
-              </li>
             </ul>
           </li>
           {{-- END PRESENCE --}}
 
-          {{-- MANAGEMENT USER --}}
+          {{-- USER MANAGEMENT --}}
           @if (Auth::user()->id == 1)
             <li>
               <button type="button"
@@ -198,16 +199,16 @@
                   </a>
                 </li>
                 {{-- <li>
-                <a href="#"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.role.index') ? 'bg-gray-100' : '' }}"
-                  disabled>
-                  Role
-                </a>
-              </li> --}}
+                  <a href="#"
+                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.role.index') ? 'bg-gray-100' : '' }}"
+                    disabled>
+                    Role
+                  </a>
+                </li> --}}
               </ul>
             </li>
           @endif
-          {{-- END MANAGEMENT USER --}}
+          {{-- END USER MANAGEMENT --}}
         </ul>
       </div>
     </div>
