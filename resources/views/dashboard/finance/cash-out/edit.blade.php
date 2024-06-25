@@ -6,8 +6,7 @@
       <nav class="mb-5 flex" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
           <li class="inline-flex items-center">
-            <a href="#"
-              class="inline-flex items-center text-gray-700 hover:text-primary-600">
+            <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
               Dashboard
             </a>
           </li>
@@ -33,8 +32,7 @@
       </a>
     </div>
 
-    <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
       <div class="mb-4">
         <form action="{{ route('dashboard.finance.cash-out.update', ['id' => $data->id]) }}" method="POST">
           @csrf
@@ -65,12 +63,11 @@
               @enderror
             </div>
             <div>
-              <label for="remarks_from_master"
-                class="mb-2 block text-sm font-medium text-gray-900">Remark</label>
+              <label for="remarks_from_master" class="mb-2 block text-sm font-medium text-gray-900">Category</label>
               <select id="remarks_from_master" name="remarks_from_master"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required onchange="extendRemark()">
-                <option disabled value="" selected>~ Select Remark ~</option>
+                <option value="No Categories" @if (old('remarks_from_master', $data->remarks_from_master) == 'No Categories') selected @endif>No Categories</option>
                 @foreach ($remarks as $item)
                   <option value="{{ $item->name }}" @if (old('remarks_from_master', $data->remarks_from_master) == $item->name) selected @endif>
                     {{ $item->name }}</option>
@@ -82,12 +79,13 @@
             </div>
 
             <div id="optional_remark" class="space-y-2">
+              <label for="remark" class="mb-2 block text-sm font-medium text-gray-900">Remark (Optional)</label>
               <div class="flex items-center">
                 <input id="is_same" aria-describedby="checkbox-1" type="checkbox" name="is_same" value="1"
                   onchange="optionalRemark()"
                   class="focus:ring-3 h-4 w-4 border-gray-300 bg-gray-50 focus:ring-primary-300">
                 <label for="is_same" class="sr-only">checkbox</label>
-                <p class="ml-2 text-sm font-medium text-gray-900">Same the remark</p>
+                <p class="ml-2 text-sm font-medium text-gray-900">Same the category</p>
               </div>
               <textarea id="remark" rows="4" name="remark"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
@@ -122,14 +120,21 @@
 
 @push('script')
   <script>
-    if ($('#remarks_from_master').val() == $('#remark').val()) {
-      $('#is_same').prop('checked', true);
+    if (!$('#remarks_from_master').val()) {
+      $('#optional_remark').addClass('hidden');
+    } else {
+      if ($('#remarks_from_master').val() == $('#remark').val()) {
+        $('#is_same').prop('checked', true);
+      }
     }
 
     const extendRemark = () => {
-      if ($('#remarks_from_master').val() != null) {
+      if ($('#remarks_from_master').val() == 'No Categories') {
+        $('#optional_remark').addClass('hidden');
+        $('#remark').val("");
+        $('#is_same').prop('checked', false);
+      } else {
         $('#optional_remark').removeClass('hidden');
-        $('#remark').attr('required', true);
       }
     }
 

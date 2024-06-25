@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ClosingCycle;
 use App\Models\Order;
 use App\Models\OrderItems;
 use Carbon\Carbon;
@@ -55,12 +56,36 @@ class DashboardController extends Controller
             array_push($result_chart_order_value, $fund);
         }
 
+        $result_closing_cycle_label = array();
+        $result_closing_cycle_value_equite = array();
+        $result_closing_cycle_value_profit = array();
+        $index_data_chart = 0;
+        $closing_cycle = ClosingCycle::where('company_id', Auth::user()->company_id)
+            ->where('periode', 'like', Carbon::now()->format('Y') . '%')
+            ->get();
+        for ($i = 1; $i <= 12; $i++) {
+            $periode = Carbon::now()->format('Y') . '-' . ($i < 10 ? '0' . $i : $i);
+            $equite = 0;
+            $profit = 0;
+            if ($index_data_chart < count($closing_cycle) && $closing_cycle[$index_data_chart]->periode == $periode) {
+                $equite = $closing_cycle[$index_data_chart]->equity;
+                $profit = $closing_cycle[$index_data_chart]->profit;
+                $index_data_chart += 1;
+            }
+            array_push($result_closing_cycle_label, $i < 10 ? '0' . $i : $i);
+            array_push($result_closing_cycle_value_equite, $equite);
+            array_push($result_closing_cycle_value_profit, $profit);
+        }
+
         return view('dashboard.dashboard.index', [
             'order_date_now' => $order_date_now->total_payment,
             'order_month_now' => $order_month_now->total_payment,
             'order_item' => $order_item->quantity,
             'result_chart_order_label' => $result_chart_order_label,
             'result_chart_order_value' => $result_chart_order_value,
+            'result_closing_cycle_label' => $result_closing_cycle_label,
+            'result_closing_cycle_value_equite' => $result_closing_cycle_value_equite,
+            'result_closing_cycle_value_profit' => $result_closing_cycle_value_profit,
         ]);
     }
 }

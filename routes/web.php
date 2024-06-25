@@ -8,7 +8,9 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
+use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemarksCashFlowController;
 use Illuminate\Support\Facades\Route;
@@ -115,11 +117,30 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::get("/", [AuthController::class, 'change_password'])->name('dashboard.change_password');
         Route::post("/", [AuthController::class, 'post_change_password'])->name('dashboard.change_password.post');
     });
+
     // Company
     Route::prefix("/company")->group(function () {
         Route::prefix("/profile")->group(function () {
             Route::get('/', [CompanyController::class, 'index'])->name('dashboard.company.profile');
             Route::put('/{id}', [CompanyController::class, 'update'])->name('dashboard.company.profile.update');
         });
+    });
+
+    // Presence
+    Route::prefix("/presence")->group(function () {
+        Route::get("/", [PresenceController::class, 'index'])->name('dashboard.presence.index');
+        Route::post("/", [PresenceController::class, 'store'])->name('dashboard.presence.store');
+        Route::get("/presence_history", [PresenceController::class, 'history'])->name('dashboard.presence.presence_history');
+    });
+
+    // Management User
+    Route::prefix("/management-user")->group(function () {
+        Route::get("/users", [ManagementUserController::class, 'user_index'])->name('dashboard.management-user.user.index');
+        Route::get("/users/create", [ManagementUserController::class, 'user_create'])->name('dashboard.management-user.user.create');
+        Route::get("/users/{id}/edit", [ManagementUserController::class, 'user_edit'])->name('dashboard.management-user.user.edit');
+        Route::put("/users/{id}", [ManagementUserController::class, 'user_update'])->name('dashboard.management-user.user.update');
+        Route::delete("/users/{id}", [ManagementUserController::class, 'user_destroy'])->name('dashboard.management-user.user.destroy');
+        Route::post("/users", [ManagementUserController::class, 'store'])->name('dashboard.management-user.user.store');
+        Route::get("/roles", [ManagementUserController::class, 'history'])->name('dashboard.management-user.role.index');
     });
 });
