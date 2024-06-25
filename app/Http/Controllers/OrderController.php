@@ -179,6 +179,160 @@ class OrderController extends Controller
         ]);
     }
 
+    public function order_history_edit($id)
+    {
+        $order = Order::where('id', $id)->first();
+        if ($order && $order->company_id == Auth::user()->company_id) {
+            $data_menu = Product::select('products.*', 'category_products.name AS category_name')
+                ->leftJoin('category_products', 'category_products.id', '=', 'products.category_id')
+                ->where('company_id', Auth::user()->company_id)
+                ->orderBy('category_id')
+                ->orderBy('products.id')
+                ->get();
+
+            $result_data_menu = array();
+            foreach ($data_menu as $item) {
+                $find = false;
+                foreach ($result_data_menu as $key => $search_item) {
+                    if ($search_item->category_name == $item->category_name) {
+                        $find = $key;
+                        break;
+                    }
+                }
+
+                if ($find === false) {
+                    array_push($result_data_menu, (object) [
+                        'category_name' => $item->category_name,
+                        'products' => array($item),
+                    ]);
+                } else {
+                    array_push($result_data_menu[$find]->products, $item);
+                }
+            }
+
+            $data_fund = Fund::where('company_id', Auth::user()->company_id)->get();
+
+            $order_item = OrderItems::where('order_id', $id)
+                ->select('order_items.*', 'products.name')
+                ->leftJoin('products', 'products.id', '=', 'order_items.product_id')
+                ->get();
+
+            return view('dashboard.order.order_history_edit', [
+                'list_menu' => $result_data_menu,
+                'list_fund' => $data_fund,
+                'order_item' => $order_item,
+                'order' => $order
+            ]);
+        } else {
+            return redirect()->route('dashboard.order.order_history')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+        }
+    }
+
+    public function order_history_update(Request $request, $id)
+    {
+        try {
+            DB::beginTransaction();
+            $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
+            $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
+            $change = (int) str_replace('.', '', $request['confirm_order-change']);
+            $order_add = json_decode($request['confirm_order-order_add']);
+            $order_update = json_decode($request['confirm_order-order_update']);
+            $order_delete = json_decode($request['confirm_order-order_delete']);
+
+            $update_order = Order::where('id', $id)
+                ->where('company_id', Auth::user()->company_id)
+                ->update([
+                    'customer_name' => $request['confirm_order-customer_name'],
+                    'total_payment' => $total_payment,
+                    'payment' => $payment,
+                    'change' => $change,
+                    'payment_method' => $request['confirm_order-payment_method'],
+                    'order_type' => $request['confirm_order-order_type'],
+                    'status' =>  'done',
+                    'remarks' => $request['confirm_order-remarks'],
+                ]);
+
+
+            foreach ($order_add as $item) {
+                OrderItems::create([
+                    'order_id' => $id,
+                    'product_id' => $item->product_id,
+                    'price' => $item->product_price,
+                    'quantity' => $item->qty,
+                    'amount' => $item->product_price * $item->qty,
+                    'remarks' => $item->remarks,
+                ]);
+            }
+
+            foreach ($order_delete as $item) {
+                OrderItems::query()->where('id', '=', $item)->first()->delete();
+            }
+
+            foreach ($order_update as $item) {
+                OrderItems::where('id', $item->id)
+                    ->update([
+                        'order_id' => $id,
+                        'product_id' => $item->product_id,
+                        'price' => $item->product_price,
+                        'quantity' => $item->qty,
+                        'amount' => $item->product_price * $item->qty,
+                        'remarks' => $item->remarks,
+                    ]);
+            }
+
+            // if ($request["confirm_order-pay_now"]) {
+            CashIn::where('company_id', Auth::user()->company_id)->where('order_id', $id)->update([
+                // 'company_id' => Auth::user()->company_id,
+                'fund' => $total_payment,
+                'remark' => '',
+                'datetime' => Carbon::now()->toDateTimeString(),
+                'type' => $request['confirm_order-payment_method'],
+                // 'order_id' => $id,
+                'remarks_from_master' => '',
+            ]);
+
+            $closing_cyle = ClosingCycle::where("company_id", Auth::user()->company_id)
+                ->where("periode", Carbon::now()->format('Y-m'))
+                ->first();
+
+            if ($closing_cyle) {
+                $fund = Fund::where("company_id", Auth::user()->company_id)
+                    ->where("type", $request["confirm_order-payment_method"])->first();
+                $fund->update(["fund" => $fund->fund + $total_payment]);
+            }
+
+            $cash_monthly = CashMonthly::where("company_id", Auth::user()->company_id)
+                ->where("datetime", Carbon::now()->toDateString())->first();
+
+            if ($cash_monthly) {
+                CashMonthly::where("id", $cash_monthly->id)->update([
+                    "kredit" => (int) $cash_monthly->kredit + $total_payment,
+                    "amount" => (int) $cash_monthly->amount + $total_payment,
+                    "total_amount" => $closing_cyle ? (int) $cash_monthly->total_amount + $total_payment : 0,
+                ]);
+            } else {
+                CashMonthly::create([
+                    "company_id" => Auth::user()->company_id,
+                    "debit" => 0,
+                    "kredit" => $total_payment,
+                    "amount" => $total_payment,
+                    "total_amount" => $closing_cyle ? $total_payment : 0,
+                    "datetime" => Carbon::now()->toDateString()
+                ]);
+            }
+            // }
+            DB::commit();
+            // if ($request["confirm_order-pay_now"]) {
+            return redirect()->route('dashboard.order.order_history')->with("success", "Successfully to update order history");
+            // } else {
+            // return redirect()->route('dashboard.order.order_active');
+            // }
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('dashboard.order.order_history')->with('failed', "Failed to update order history");
+        }
+    }
+
     public function order_detail($id)
     {
         $data = Order::with('items')->where("company_id", Auth::user()->company_id)->where('id', $id)->first();
@@ -298,7 +452,7 @@ class OrderController extends Controller
             }
 
             foreach ($order_delete as $item) {
-                OrderItems::where('id', $item->id)->delete();
+                OrderItems::where('id', $item)->delete();
             }
 
             foreach ($order_update as $item) {
