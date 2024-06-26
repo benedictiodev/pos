@@ -105,7 +105,7 @@
           id: item?.created_at,
           start: item?.created_at,
           color: "#bfdbfe",
-          className: ["bg-primary-200", "hover:bg-primary-100", ],
+          className: ["bg-primary-200", "hover:bg-primary-100", "overflow-x-auto", ],
         });
       });
 
@@ -120,7 +120,7 @@
         allDaySlot: false,
         height: 600,
         events,
-        displayEventTime: false,
+        // displayEventTime: false,
         eventTimeFormat: { // like '14:30:00'
           hour: '2-digit',
           minute: '2-digit',
