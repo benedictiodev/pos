@@ -80,12 +80,15 @@
       @csrf
       <input type="text" id="presence-id" name="id" value="{{ Auth::user()->id }}" hidden>
       <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
-      <h3 class="mb-6 text-lg text-gray-500">Are you sure you want to presence ?</h3>
-      <button type="submit" data-type="button-presence"
-        class="mr-2 inline-flex items-center rounded-lg bg-primary-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-        Yes, I'm sure
-      </button>
+      <h3 class="mb-6 text-lg text-gray-500" id="text-drawer">Are you sure you want to presence ?</h3>
+      <div id="button-drawer-submit">
+        <button type="submit" data-type="button-presence"
+          class="mr-2 inline-flex items-center rounded-lg bg-primary-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+          Yes, I'm sure
+        </button>
+      </div>
       <button type="button"
+        id="button-drawer-cancel"
         class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
         data-drawer-hide="drawer-presence-default">
         No, cancel
@@ -130,6 +133,77 @@
         },
       });
       calendar.render();
+    });
+
+    function toRadians(degrees) {
+      return degrees * (Math.PI / 180);
+    }
+
+    function haversineDistance(coord1, coord2) {
+      const R = 6371; // Radius bumi dalam kilometer
+      const lat1 = toRadians(coord1.latitude);
+      const lon1 = toRadians(coord1.longitude);
+      const lat2 = toRadians(coord2.latitude);
+      const lon2 = toRadians(coord2.longitude);
+
+      const dLat = lat2 - lat1;
+      const dLon = lon2 - lon1;
+
+      const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+                Math.cos(lat1) * Math.cos(lat2) *
+                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+      const distance = (R * c) * 1000;
+      return distance;
+    }
+
+    $('#presenceButton').click(function() {
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition, showError);
+      } else {
+        document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
+      }
+
+      function showPosition(position) {
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        const coord1 = { latitude: -7.0031951, longitude: 107.621522 }; // Store cc
+        const coord2 = { latitude: latitude, longitude: longitude }; // User
+
+        const distance = haversineDistance(coord1, coord2);
+
+        if (distance >= 15) {
+          $('#text-drawer').html('The maximum distance from the shop is 15 meters.');
+          $('#button-drawer-submit').attr('hidden', true);
+          $('#button-drawer-cancel').html('Close');
+        } else {
+          $('#text-drawer').html('Are you sure you want to presence ?');
+          $('#button-drawer-submit').attr('hidden', false);
+          $('#button-drawer-cancel').html('No, cancel');
+        }
+      }
+
+      function showError(error) {
+        $('#button-drawer-submit').attr('hidden', true);
+        $('#button-drawer-cancel').html('Close');
+        switch(error.code) {
+          case error.PERMISSION_DENIED:
+            $('#text-drawer').html('User denied the request for Geolocation.');
+            break;
+          case error.POSITION_UNAVAILABLE:
+            $('#text-drawer').html('Location information is unavailable.');
+            document.getElementById("location").innerHTML = "";
+            break;
+          case error.TIMEOUT:
+            $('#text-drawer').html('The request to get user location timed out.');
+            break;
+          case error.UNKNOWN_ERROR:
+            $('#text-drawer').html('An unknown error occurred.');
+            break;
+        }
+      }
     });
   </script>
 @endpush
