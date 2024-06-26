@@ -503,4 +503,9 @@ class OrderController extends Controller
             return redirect()->route('dashboard.order.update_order')->with('failed', "Failed to update order");
         }
     }
+
+    public function report() {
+        
+        return view('dashboard.order.report');
+    }
 }
