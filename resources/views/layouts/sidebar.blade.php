@@ -173,7 +173,7 @@
                     Presence History
                   </a>
                 </li>
-              @else 
+              @else
                 <li>
                   <a href="{{ route('dashboard.presence.presence_user') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.presence_user') ? 'bg-gray-100' : '' }}">
@@ -193,7 +193,8 @@
                 aria-controls="dropdown-management-user" data-collapse-toggle="dropdown-management-user">
                 <x-fas-user-group class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
                 <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Management User</span>
-                <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+                <x-fas-chevron-down
+                  class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               </button>
               <ul id="dropdown-management-user"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.management-user.') ? '' : 'hidden' }} py-2 space-y-2">

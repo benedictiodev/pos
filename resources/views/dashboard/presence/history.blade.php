@@ -1,7 +1,7 @@
 @extends('layouts.index')
 
 @section('main')
-  <div>
+  <div class="pb-1">
     <div class="mb-1 w-full">
       <div class="mb-4">
         <nav class="mb-5 flex" aria-label="Breadcrumb">
@@ -41,7 +41,7 @@
     @endif
 
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 mb-4">
-      <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
+      {{-- <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
           <form class="sm:pr-3" action="{{ route('dashboard.presence.presence_history') }}" method="GET"
             id="form-search">
@@ -54,34 +54,28 @@
                 onchange="change_search()">
             </div>
           </form>
-          {{-- <div class="flex w-full items-center sm:justify-end">
+          <div class="flex w-full items-center sm:justify-end">
             <div class="flex space-x-1 pl-2">
               <a href="#"
                 class="inline-flex cursor-pointer justify-center rounded p-1 text-gray-500 hover:bg-gray-100 hover:text-gray-900">
                 <x-fas-trash-alt class="h-6 w-6" />
               </a>
             </div>
-          </div> --}}
+          </div>
         </div>
-        {{-- <a id="createProductButton" href="{{ route('dashboard.master-data.category-product.create') }}"
+        <a id="createProductButton" href="{{ route('dashboard.master-data.category-product.create') }}"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
           Add new product
-        </a> --}}
-      </div>
-      <div class="flex flex-col">
+        </a>
+      </div> --}}
+      <div id="calender" class="mb-2"></div>
+      {{-- <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
             <div class="overflow-hidden shadow">
               <table class="min-w-full table-fixed divide-y divide-gray-200">
                 <thead class="bg-gray-100">
                   <tr>
-                    {{-- <th scope="col" class="p-4">
-                      <div class="flex items-center">
-                        <input id="checkbox-all" aria-describedby="checkbox-1" type="checkbox"
-                          class="focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-primary-300">
-                        <label for="checkbox-all" class="sr-only">checkbox</label>
-                      </div>
-                    </th> --}}
                     <th scope="col"
                       class="p-4 text-left text-base font-bold uppercase text-gray-500 border border-black">
                       Name
@@ -97,13 +91,7 @@
                 <tbody class="divide-y divide-gray-200 bg-white">
                   @forelse ($data as $item)
                     <tr class="hover:bg-gray-100">
-                      {{-- <td class="w-4 p-4">
-                        <div class="flex items-center">
-                          <input id="checkbox-" aria-describedby="checkbox-1" type="checkbox"
-                            class="focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-primary-300">
-                          <label for="checkbox-" class="sr-only">checkbox</label>
-                        </div>
-                      </td> --}}
+                      
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500 border border-black">
                         <p class="text-sm font-normal text-gray-900">{{ $item->name }}</p>
                       </td>
@@ -131,12 +119,12 @@
             </div>
           </div>
         </div>
-      </div>
+      </div> --}}
 
-      <div
+      {{-- <div
         class="sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between">
-        {{-- {{ $data->withQueryString()->links('vendor.pagination.tailwind') }} --}}
-      </div>
+        {{ $data->withQueryString()->links('vendor.pagination.tailwind') }}
+      </div> --}}
     </div>
   </div>
 
@@ -176,6 +164,43 @@
       let value = document.querySelector("#presence-search").value;
       document.querySelector("#form-search").submit();
     }
+
+    const presence = {!! json_encode($data) !!}
+
+    let events = [];
+    presence.forEach(item => {
+      events.push({
+        id: item?.created_at,
+        start: item?.created_at,
+        title: item?.user?.name,
+        color: '#60a5fa',
+        className: ["bg-primary-200", "hover:bg-primary-100", "overflow-x-auto", ],
+      });
+    });
+
+    $(document).ready(function() {
+      const calenderElement = document.getElementById('calender');
+      const calendar = new FullCalendar.Calendar(calenderElement, {
+        headerToolbar: {
+          start: 'today', // will normally be on the left. if RTL, will be on the right
+          center: 'title',
+          end: 'prev,next' // will normally be on the right. if RTL, will be on the left
+        },
+        height: 750,
+        initialView: 'dayGridMonth',
+        allDaySlot: false,
+        events,
+        eventTimeFormat: { // like '14:30:00'
+          hour: '2-digit',
+          minute: '2-digit',
+          second: '2-digit',
+          meridiem: false,
+          hour12: false
+        },
+        dayMaxEventRows: true, // for all non-TimeGrid views
+      });
+      calendar.render();
+    });
 
     // window.onload = () => {
     //   document.addEventListener('click', async (event) => {
