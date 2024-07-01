@@ -107,12 +107,10 @@
         if (result.state == "granted") {
           navigator.geolocation.getCurrentPosition(showPosition, showError);
           document.getElementById("text-permission").classList.add("hidden")
-        }
-        if (result.state == "denied") {
+        } else if (result.state == "denied") {
           document.getElementById("text-permission").innerText =
             "You block location access, you cant attendace! Open setting browser to allow your location access.";
-        }
-        if (result.state == "prompt") {
+        } else if (result.state == "prompt") {
           document.getElementById("text-permission").innerText =
             "Please allow your location access to attendance.";
           if (navigator.geolocation) {
@@ -121,6 +119,8 @@
           } else {
             document.getElementById("location").innerText = "Geolocation is not supported by this browser.";
           }
+        } else {
+          document.getElementById("text-permission").innerText = `Error ${result.state}`
         }
         // granted
         // denied
