@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class ManagementUserController extends Controller
@@ -145,7 +146,9 @@ class ManagementUserController extends Controller
      */
     public function role_create()
     {
-        return view('dashboard.management-user.role.create');
+        return view('dashboard.management-user.role.create', [
+            "permission" => Permission::all()
+        ]);
     }
 
     /**
@@ -161,6 +164,8 @@ class ManagementUserController extends Controller
             "name" => $validate["name"],
         ]);
 
+        $store->syncPermissions($request->permission);
+
         if ($store) {
             return redirect()->route("dashboard.management-user.role.index")->with('success', "Successfully to create a user");
         } else {
@@ -173,10 +178,11 @@ class ManagementUserController extends Controller
      */
     public function role_edit(string $id)
     {
-        $user = User::query()->where("company_id", Auth::user()->company_id)->where("id", "=", $id)->first();
-        if ($user) {
+        $role = Role::query()->findOrFail($id);
+        if ($role) {
             return view('dashboard.management-user.role.edit', [
-                "user" => $user
+                "role" => $role,
+                "permission" => Permission::all()
             ]);
         } else {
             return abort(404);
@@ -188,30 +194,13 @@ class ManagementUserController extends Controller
      */
     public function role_update(Request $request, string $id)
     {
-        $user = User::query()->where("company_id", "=", Auth::user()->company_id)->where("id", "=", $id)->first();
+        $role = Role::where("id", $id)->first();
+        $role->syncPermissions($request->permission);
 
-        $validate = $request->validate([
-            "username" => "required|unique:users,username," . $user->id,
-            "name" => "required",
-            "email" => "required|email|unique:users,email," . $user->id,
-            // "password" => "required|confirmed",
-        ]);
-
-
-        $store = $user->update([
-            "username" => $request["username"],
-            "name" => $validate["name"],
-            "email" => $validate["email"],
-            // "password" => $validate["password"],
-            "phone_number" => $request["phone_number"],
-            "address" => $request["address"],
-            "company_id" => Auth::user()->company_id,
-        ]);
-
-        if ($store) {
-            return redirect()->route("dashboard.management-user.role.index")->with('success', "Successfully to update a user");
+        if ($role) {
+            return redirect()->route("dashboard.management-user.role.index")->with('success', "Successfully to update a role");
         } else {
-            return redirect()->route("dashboard.management-user.role.index")->with('failed', "Failed to update a user");
+            return redirect()->route("dashboard.management-user.role.index")->with('failed', "Failed to update a role");
         }
     }
 
@@ -220,16 +209,13 @@ class ManagementUserController extends Controller
      */
     public function role_destroy(string $id)
     {
-        $user = User::query()->where("company_id", "=", Auth::user()->company_id)->where("id", "=", $id)->first();
-        if ($user) {
-            if ($user->id == Auth::user()->id) {
-                return redirect()->route("dashboard.management-user.role.index")->with('failed', "Cannot to delete a user");
-            }
-            $delete = $user->delete();
+        $role = Role::where("id", $id)->first();
+        if ($role) {
+            $delete = $role->delete();
             if ($delete) {
-                return redirect()->route("dashboard.management-user.role.index")->with('success', "Successfully to delete a user");
+                return redirect()->route("dashboard.management-user.role.index")->with('success', "Successfully to delete a role");
             } else {
-                return redirect()->route("dashboard.management-user.role.index")->with('failed', "Failed to delete a user");
+                return redirect()->route("dashboard.management-user.role.index")->with('failed', "Failed to delete a role");
             }
         } else {
             return abort(404);

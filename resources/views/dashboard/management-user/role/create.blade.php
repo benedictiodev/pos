@@ -47,6 +47,19 @@
               @enderror
             </div>
 
+            <div>
+              <label for="checkbos-all" class="mb-2 block text-sm font-medium text-gray-900">Permission</label>
+              <div>
+                <label><input type="checkbox" id="checkbox-all" class="name mb-2">
+                  Check All</label>
+              </div>
+              <div id="checkboxes">
+                @foreach ($permission as $value)
+                  <label><input type="checkbox" name="permission[]" value="{{ $value->name }}" class="name">
+                    {{ $value->name }}</label>
+                @endforeach
+              </div>
+            </div>
             <button type="submit"
               class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
               Add
@@ -59,22 +72,11 @@
 
 @push('script')
   <script>
-    const extendRemark = () => {
-      if ($('#remarks_from_master').val() == 'No Categories') {
-        $('#optional_remark').addClass('hidden');
-        $('#remark').val("");
-        $('#is_same').prop('checked', false);
-      } else {
-        $('#optional_remark').removeClass('hidden');
-      }
-    }
-
-    const optionalRemark = () => {
-      if ($('#is_same').is(':checked')) {
-        $('#remark').val($('#remarks_from_master').val());
-      } else {
-        $('#remark').val("");
-      }
-    }
+    $(document).ready(function() {
+      $('#checkbox-all').click(function() {
+        const checked = $(this).prop('checked');
+        $('#checkboxes').find('input:checkbox').prop('checked', checked);
+      });
+    });
   </script>
 @endpush

@@ -141,20 +141,20 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::prefix('users')->group(function () {
             Route::get("/", [ManagementUserController::class, 'user_index'])->name('dashboard.management-user.user.index');
             Route::get("/create", [ManagementUserController::class, 'user_create'])->name('dashboard.management-user.user.create');
+            Route::post("/", [ManagementUserController::class, 'user_store'])->name('dashboard.management-user.user.store');
             Route::get("/{id}/edit", [ManagementUserController::class, 'user_edit'])->name('dashboard.management-user.user.edit');
             Route::put("/{id}", [ManagementUserController::class, 'user_update'])->name('dashboard.management-user.user.update');
             Route::delete("/{id}", [ManagementUserController::class, 'user_destroy'])->name('dashboard.management-user.user.destroy');
-            Route::post("/users", [ManagementUserController::class, 'store'])->name('dashboard.management-user.user.store');
         });
 
         // Role
         Route::prefix('roles')->group(function () {
             Route::get("/", [ManagementUserController::class, 'role_index'])->name('dashboard.management-user.role.index');
             Route::get("/create", [ManagementUserController::class, 'role_create'])->name('dashboard.management-user.role.create');
+            Route::post("/", [ManagementUserController::class, 'role_store'])->name('dashboard.management-user.role.store');
             Route::get("/{id}/edit", [ManagementUserController::class, 'role_edit'])->name('dashboard.management-user.role.edit');
             Route::put("/{id}", [ManagementUserController::class, 'role_update'])->name('dashboard.management-user.role.update');
             Route::delete("/{id}", [ManagementUserController::class, 'role_destroy'])->name('dashboard.management-user.role.destroy');
-            Route::post("/users", [ManagementUserController::class, 'store'])->name('dashboard.management-user.role.store');
         });
     });
 });

@@ -108,8 +108,8 @@
                           Update
                         </a>
 
-                        <button type="button" id="presenceButton" data-drawer-target="drawer-user-default"
-                          data-drawer-show="drawer-user-default" aria-controls="drawer-user-default"
+                        <button type="button" id="deleteButton" data-drawer-target="drawer-role-default"
+                          data-drawer-show="drawer-role-default" aria-controls="drawer-role-default"
                           data-drawer-placement="right"
                           class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-primary-300
                           "
@@ -139,31 +139,30 @@
     </div>
   </div>
 
-  <!-- User Drawer -->
-  <div id="drawer-user-default"
+  <!-- Role Drawer -->
+  <div id="drawer-role-default"
     class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
     tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-    <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">User
+    <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Role
     </h5>
-    <button type="button" data-drawer-dismiss="drawer-user-default" aria-controls="drawer-user-default"
+    <button type="button" data-drawer-dismiss="drawer-role-default" aria-controls="drawer-role-default"
       class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900">
       <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
       <span class="sr-only">Close menu</span>
     </button>
-    <form id="form-user" method="POST">
+    <form id="form-role" method="POST">
       @csrf
       @method('DELETE')
-      <input type="text" id="user-id" name="user_id" hidden>
-      <input type="text" value="{{ Auth::user()->id }}" name="company_id" hidden>
+      <input type="text" id="role-id" name="role_id" hidden>
       <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
-      <h3 class="mb-6 text-lg text-gray-500">Are you sure you want to delete this user?</h3>
+      <h3 class="mb-6 text-lg text-gray-500">Are you sure you want to delete this role?</h3>
       <button type="button" data-type="button-delete"
         class="mr-2 inline-flex items-center rounded-lg bg-primary-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
         Yes, I'm sure
       </button>
       <button type="button"
         class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
-        data-drawer-hide="drawer-user-default">
+        data-drawer-hide="drawer-role-default">
         No, cancel
       </button>
     </form>
@@ -175,16 +174,16 @@
     window.onload = () => {
       document.addEventListener('click', async (event) => {
         // PRESENCE
-        if (event.target.getAttribute('data-drawer-target') == "drawer-user-default") {
+        if (event.target.getAttribute('data-drawer-target') == "drawer-role-default") {
           const id = event.target.getAttribute("data-id");
-          document.querySelector("#user-id").value = id;
+          document.querySelector("#role-id").value = id;
           console.log(id);
         }
         if (event.target.getAttribute('data-type') == "button-delete") {
-          const id = document.querySelector("#user-id").value;
-          document.querySelector("#form-user").action = '/dashboard/management-user/users/' + id;
-          console.log(id, document.querySelector("#form-user"));
-          document.querySelector("#form-user").submit();
+          const id = document.querySelector("#role-id").value;
+          document.querySelector("#form-role").action = '/dashboard/management-user/roles/' + id;
+          console.log(id, document.querySelector("#form-role"));
+          document.querySelector("#form-role").submit();
         }
       })
     }
