@@ -124,6 +124,10 @@
           label: 'Order',
           data: {!! json_encode($result_chart_order_value_count) !!},
           borderWidth: 1
+        }, {
+          label: 'Items sold',
+          data: {!! json_encode($result_chart_order_item_value) !!},
+          borderWidth: 1
         }]
       },
       options: {

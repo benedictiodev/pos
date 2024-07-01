@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CategoryProduct;
 use App\Models\ClosingCycle;
+use App\Models\Fund;
 use App\Models\Order;
 use App\Models\OrderItems;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -77,7 +80,16 @@ class DashboardController extends Controller
             array_push($result_closing_cycle_value_profit, $profit);
         }
 
+        $category = CategoryProduct::where('company_id', Auth::user()->company_id)->get();
+        $product = Product::where('company_id', Auth::user()->company_id)
+            ->leftJoin('category_products', 'category_products.id', '=', 'products.category_id')
+            ->get();
+        $fund_master = Fund::where('company_id', Auth::user()->company_id)->get();
+
         return view('dashboard.dashboard.index', [
+            'category' => count($category),
+            'product' => count($product),
+            'fund_master' => count($fund_master),
             'order_date_now' => $order_date_now->total_payment,
             'order_month_now' => $order_month_now->total_payment,
             'order_item' => $order_item->quantity,
