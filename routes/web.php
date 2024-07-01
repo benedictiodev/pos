@@ -137,12 +137,24 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
 
     // Management User
     Route::prefix("/management-user")->group(function () {
-        Route::get("/users", [ManagementUserController::class, 'user_index'])->name('dashboard.management-user.user.index');
-        Route::get("/users/create", [ManagementUserController::class, 'user_create'])->name('dashboard.management-user.user.create');
-        Route::get("/users/{id}/edit", [ManagementUserController::class, 'user_edit'])->name('dashboard.management-user.user.edit');
-        Route::put("/users/{id}", [ManagementUserController::class, 'user_update'])->name('dashboard.management-user.user.update');
-        Route::delete("/users/{id}", [ManagementUserController::class, 'user_destroy'])->name('dashboard.management-user.user.destroy');
-        Route::post("/users", [ManagementUserController::class, 'store'])->name('dashboard.management-user.user.store');
-        Route::get("/roles", [ManagementUserController::class, 'history'])->name('dashboard.management-user.role.index');
+        // User
+        Route::prefix('users')->group(function () {
+            Route::get("/", [ManagementUserController::class, 'user_index'])->name('dashboard.management-user.user.index');
+            Route::get("/create", [ManagementUserController::class, 'user_create'])->name('dashboard.management-user.user.create');
+            Route::get("/{id}/edit", [ManagementUserController::class, 'user_edit'])->name('dashboard.management-user.user.edit');
+            Route::put("/{id}", [ManagementUserController::class, 'user_update'])->name('dashboard.management-user.user.update');
+            Route::delete("/{id}", [ManagementUserController::class, 'user_destroy'])->name('dashboard.management-user.user.destroy');
+            Route::post("/users", [ManagementUserController::class, 'store'])->name('dashboard.management-user.user.store');
+        });
+
+        // Role
+        Route::prefix('roles')->group(function () {
+            Route::get("/", [ManagementUserController::class, 'role_index'])->name('dashboard.management-user.role.index');
+            Route::get("/create", [ManagementUserController::class, 'role_create'])->name('dashboard.management-user.role.create');
+            Route::get("/{id}/edit", [ManagementUserController::class, 'role_edit'])->name('dashboard.management-user.role.edit');
+            Route::put("/{id}", [ManagementUserController::class, 'role_update'])->name('dashboard.management-user.role.update');
+            Route::delete("/{id}", [ManagementUserController::class, 'role_destroy'])->name('dashboard.management-user.role.destroy');
+            Route::post("/users", [ManagementUserController::class, 'store'])->name('dashboard.management-user.role.store');
+        });
     });
 });
