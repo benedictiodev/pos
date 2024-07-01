@@ -144,8 +144,8 @@
 
         const distance = haversineDistance(coord1, coord2);
 
-        if (distance >= 15) {
-          $('#text-drawer').html('The maximum distance from the shop is 15 meters.');
+        if (distance >= 100) {
+          $('#text-drawer').html('The maximum distance from the shop is 100 meters.');
           $('#button-drawer-submit').attr('hidden', true);
           $('#button-drawer-cancel').html('Close');
         } else {
