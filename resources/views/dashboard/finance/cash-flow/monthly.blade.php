@@ -137,7 +137,7 @@
                         </td>
                       </tr>
                     @endif
-                  @else
+                  @elseif ($type_closing_cycle == 'clear' || $type_closing_cycle == 'add_equite')
                     <tr>
                       <td scope="col" colspan="6"
                         class="p-4 text-center text-base font-normal uppercase text-black">
