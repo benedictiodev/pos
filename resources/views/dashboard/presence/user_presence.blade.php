@@ -48,14 +48,16 @@
         </div>
       @else
         <div class="space-y-3">
-          <p class="text-base font-light">You haven't done your attendance today?</p>
-          <button type="button" id="presenceButton" data-drawer-target="drawer-presence-default"
-            data-drawer-show="drawer-presence-default" aria-controls="drawer-presence-default"
-            data-drawer-placement="right"
-            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-            <x-fas-user-pen class="mr-2 h-4 w-4" />
-            Presence Now
-          </button>
+          <p class="text-lg font-medium" id="text-permission"></p>
+          <div id="presenceButton" class="hidden flex flex-col items-center justify-center gap-2">
+            <p class="text-base font-light">You haven't done your attendance today?</p>
+            <button type="button" data-drawer-target="drawer-presence-default" data-drawer-show="drawer-presence-default"
+              aria-controls="drawer-presence-default" data-drawer-placement="right"
+              class="w-fit inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+              <x-fas-user-pen class="mr-2 h-4 w-4" />
+              Presence Now
+            </button>
+          </div>
         </div>
       @endif
     </div>
@@ -87,8 +89,7 @@
           Yes, I'm sure
         </button>
       </div>
-      <button type="button"
-        id="button-drawer-cancel"
+      <button type="button" id="button-drawer-cancel"
         class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
         data-drawer-hide="drawer-presence-default">
         No, cancel
@@ -100,6 +101,80 @@
 @push('script')
   <script>
     $(document).ready(function() {
+      navigator.permissions.query({
+        name: "geolocation"
+      }).then((result) => {
+        if (result.state == "granted") {
+          navigator.geolocation.getCurrentPosition(showPosition, showError);
+          document.getElementById("text-permission").classList.add("hidden")
+        } else if (result.state == "denied") {
+          document.getElementById("text-permission").innerText =
+            "You block location access, you cant attendace! Open setting browser to allow your location access.";
+        } else if (result.state == "prompt") {
+          document.getElementById("text-permission").innerText =
+            "Please allow your location access to attendance.";
+          if (navigator.geolocation) {
+            document.getElementById("text-permission").classList.add("hidden")
+            navigator.geolocation.getCurrentPosition(showPosition, showError);
+          } else {
+            document.getElementById("location").innerText = "Geolocation is not supported by this browser.";
+          }
+        } else {
+          document.getElementById("text-permission").innerText = `Error ${result.state}`
+        }
+        // granted
+        // denied
+        // prompt
+      })
+
+      function showPosition(position) {
+        $('#presenceButton').removeClass("hidden");
+        $('#presenceButton').addClass("inline-flex");
+        var latitude = position.coords.latitude;
+        var longitude = position.coords.longitude;
+
+        const coord1 = {
+          latitude: -7.0031951,
+          longitude: 107.621522
+        }; // Store cc
+        const coord2 = {
+          latitude: latitude,
+          longitude: longitude
+        }; // User
+
+        const distance = haversineDistance(coord1, coord2);
+
+        if (distance >= 100) {
+          $('#text-drawer').html('The maximum distance from the shop is 100 meters.');
+          $('#button-drawer-submit').attr('hidden', true);
+          $('#button-drawer-cancel').html('Close');
+        } else {
+          $('#text-drawer').html('Are you sure you want to presence ?');
+          $('#button-drawer-submit').attr('hidden', false);
+          $('#button-drawer-cancel').html('No, cancel');
+        }
+      }
+
+      function showError(error) {
+        $('#button-drawer-submit').attr('hidden', true);
+        $('#button-drawer-cancel').html('Close');
+        switch (error.code) {
+          case error.PERMISSION_DENIED:
+            $('#text-drawer').html('User denied the request for Geolocation.');
+            break;
+          case error.POSITION_UNAVAILABLE:
+            $('#text-drawer').html('Location information is unavailable.');
+            document.getElementById("location").innerHTML = "";
+            break;
+          case error.TIMEOUT:
+            $('#text-drawer').html('The request to get user location timed out.');
+            break;
+          case error.UNKNOWN_ERROR:
+            $('#text-drawer').html('An unknown error occurred.');
+            break;
+        }
+      }
+
       const history = {!! json_encode($history) !!}
 
       let events = [];
@@ -150,60 +225,12 @@
       const dLon = lon2 - lon1;
 
       const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-                Math.cos(lat1) * Math.cos(lat2) *
-                Math.sin(dLon / 2) * Math.sin(dLon / 2);
+        Math.cos(lat1) * Math.cos(lat2) *
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
       const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
       const distance = (R * c) * 1000;
       return distance;
     }
-
-    $('#presenceButton').click(function() {
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition, showError);
-      } else {
-        document.getElementById("location").innerHTML = "Geolocation is not supported by this browser.";
-      }
-
-      function showPosition(position) {
-        var latitude = position.coords.latitude;
-        var longitude = position.coords.longitude;
-
-        const coord1 = { latitude: -7.0031951, longitude: 107.621522 }; // Store cc
-        const coord2 = { latitude: latitude, longitude: longitude }; // User
-
-        const distance = haversineDistance(coord1, coord2);
-
-        if (distance >= 15) {
-          $('#text-drawer').html('The maximum distance from the shop is 15 meters.');
-          $('#button-drawer-submit').attr('hidden', true);
-          $('#button-drawer-cancel').html('Close');
-        } else {
-          $('#text-drawer').html('Are you sure you want to presence ?');
-          $('#button-drawer-submit').attr('hidden', false);
-          $('#button-drawer-cancel').html('No, cancel');
-        }
-      }
-
-      function showError(error) {
-        $('#button-drawer-submit').attr('hidden', true);
-        $('#button-drawer-cancel').html('Close');
-        switch(error.code) {
-          case error.PERMISSION_DENIED:
-            $('#text-drawer').html('User denied the request for Geolocation.');
-            break;
-          case error.POSITION_UNAVAILABLE:
-            $('#text-drawer').html('Location information is unavailable.');
-            document.getElementById("location").innerHTML = "";
-            break;
-          case error.TIMEOUT:
-            $('#text-drawer').html('The request to get user location timed out.');
-            break;
-          case error.UNKNOWN_ERROR:
-            $('#text-drawer').html('An unknown error occurred.');
-            break;
-        }
-      }
-    });
   </script>
 @endpush
