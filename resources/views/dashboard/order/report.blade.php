@@ -32,12 +32,25 @@
     </div>
 
     <div>
+      <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
+        <div class="mb-4 flex items-center sm:mb-0">
+          <form class="sm:pr-3" action="#" method="GET" id="form-search">
+            <label for="order-search" class="sr-only">Search</label>
+            <div class="relative mt-1 w-order sm:w-64 xl:w-96">
+              <input type="month" name="periode" id="search"
+                class="block w-full rounded-lg border border-gray-300 order-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                placeholder="Search for daily cash flow"
+                value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m') }}"
+                onchange="change_search()"
+                max="{{ Carbon\Carbon::now()->format('Y-m') }}">
+            </div>
+          </form>
+        </div>
+      </div>
       <div class="grid grid-col-1 lg:grid-cols-3 gap-4 mb-4">
         <div class="flex justify-between p-3 h-24 rounded-lg bg-green-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
-            <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"></path>
-            </svg>
+            <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Total Order</p>
           </div>
           <div class="flex justify-end items-center">
@@ -46,9 +59,7 @@
         </div>
         <div class="flex justify-between p-3 h-24 rounded-lg bg-yellow-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
-            <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13.6 16.733c.234.269.548.456.895.534a1.4 1.4 0 0 0 1.75-.762c.172-.615-.446-1.287-1.242-1.481-.796-.194-1.41-.861-1.241-1.481a1.4 1.4 0 0 1 1.75-.762c.343.077.654.26.888.524m-1.358 4.017v.617m0-5.939v.725M4 15v4m3-6v6M6 8.5 10.5 5 14 7.5 18 4m0 0h-3.5M18 4v3m2 8a5 5 0 1 1-10 0 5 5 0 0 1 10 0Z"></path>
-            </svg>
+            <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Sales This Month</p>
           </div>
           <div class="flex justify-end items-center">
@@ -57,9 +68,7 @@
         </div>
         <div class="flex justify-between p-3 h-24 rounded-lg bg-sky-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
-            <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 18">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4h1.5L8 16m0 0h8m-8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm8 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4Zm.75-3H7.5M11 7H6.312M17 4v6m-3-3h6"></path>
-            </svg>
+            <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Products Sold This Month</p>
           </div>
           <div class="flex justify-center items-center">
@@ -75,6 +84,43 @@
           <canvas id="chart_modal_order"></canvas>
         </div>
       </div>
+      <div class="grid grid-cols-1 gap-4 mb-4">
+        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-gray-50 shadow-md border">
+          <div class="overflow-x-auto">
+            <div class="inline-block align-middle">
+              <div class="overflow-hidden shadow">
+                <table class="w-full table-fixed divide-y divide-gray-200">
+                  <tbody class="divide-y divide-gray-200 bg-white">
+                    @forelse ($result_order as $item)
+                      <tr class="bg-gray-100">
+                        <th colspan="3" class="p-4 text-base font-bold uppercase text-gray-500">{{ $item->category_name }}</th>
+                      </tr>
+                      <tr class="bg-gray-100">
+                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Product Name</th>
+                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Product Sold</th>
+                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Percentage Sold</th>
+                      </tr>
+                      @foreach ($item->product as $item_product)
+                        <tr class="divide-y divide-gray-200 bg-white hover:bg-gray-100">
+                          <td class="whitespace-nowrap text-center p-4 text-sm font-normal text-gray-500">{{ $item_product->product_name }}</td>
+                          <td class="whitespace-nowrap text-center p-4 text-sm font-normal text-gray-500">{{ $item_product->sold }}</td>
+                          <td class="whitespace-nowrap text-center p-4 text-sm font-normal text-gray-500">
+                            {{ $item->category_total_quantity == 0 ? 0 : ($item_product->sold / $item->category_total_quantity * 100 ) }} %
+                          </td>
+                        </tr>
+                      @endforeach
+                    @empty
+                      <tr>
+                        <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
+                      </tr>
+                    @endforelse
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 @endsection
@@ -82,6 +128,12 @@
 @push('script')
   <script src="{{ asset('assets/plugins/chart_js/chart.js')}}"></script>
   <script>
+    function change_search() {
+      let value = document.querySelector("#search").value;
+      document.querySelector("#form-search").action = `/dashboard/order/report`;
+      document.querySelector("#form-search").submit();
+    }
+
     const ctx_penjualan = document.getElementById('chart_penjualan');
     new Chart(ctx_penjualan, {
       type: 'bar',

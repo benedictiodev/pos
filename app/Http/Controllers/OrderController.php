@@ -504,8 +504,11 @@ class OrderController extends Controller
         }
     }
 
-    public function report() {
+    public function report(Request $request) {
         $month = Carbon::now()->format('Y-m');
+        if ($request->periode) {
+            $month = $request->periode;
+        }
 
         $order_month_now = Order::where('company_id', Auth::user()->company_id)
             ->select(DB::raw("SUM(total_payment) as total_payment"), DB::raw("COUNT(id) as total_order"))
@@ -567,6 +570,51 @@ class OrderController extends Controller
             array_push($result_chart_order_item_value, $count_item);
         }
 
+        $product = Product::where('company_id', Auth::user()->company_id)
+            ->select('products.*', 'category_products.name AS category_name')
+            ->leftJoin('category_products', 'category_products.id', '=', 'products.category_id')
+            ->orderBy('category_id')
+            ->orderBy('id')
+            ->get();
+
+        $result_order = array();
+        foreach($product as $item) {
+            $items_order = OrderItems::where('company_id', Auth::user()->company_id)
+                ->leftJoin('orders', 'order_items.order_id', '=', 'orders.id')
+                ->select(DB::raw("SUM(quantity) as total_quantity"))
+                ->where('status', 'done')
+                ->where('order_items.product_id', $item->id)
+                ->where('order_items.created_at', 'like', $month . '%')
+                ->first();
+            
+            $found = false;
+            $product_item = (object) [
+                "product_name" => $item->name,
+                "sold" => $items_order->total_quantity ? (int) $items_order->total_quantity : 0,
+            ];
+            foreach($result_order as $key => $value) {
+                if ($value->category_id == $item->category_id) {
+                    $result_order[$key]->category_total_quantity += $items_order->total_quantity ? (int) $items_order->total_quantity : 0;
+                    $result_order[$key]->product->push($product_item);
+                    $found = true;
+                    break;
+                }
+            }
+            if (!$found) {
+                array_push($result_order, (object) [
+                    "category_id" => $item->category_id,
+                    "category_name" => $item->category_name,
+                    "category_total_quantity" => $items_order->total_quantity ? (int) $items_order->total_quantity : 0,
+                    "product" => collect(),
+                ]);
+                $result_order[count($result_order) - 1]->product->push($product_item);
+            }
+        }
+
+        foreach ($result_order AS $item) {
+            $item->product = $item->product->sortByDesc('sold');
+        }
+
         return view('dashboard.order.report', [
             'total_order' => $order_month_now,
             'total_item_order' => $order_item,
@@ -575,6 +623,7 @@ class OrderController extends Controller
             'result_chart_order_value_avg' => $result_chart_order_value_avg,
             'result_chart_order_value_count' => $result_chart_order_value_count,
             'result_chart_order_item_value' => $result_chart_order_item_value,
+            'result_order' => $result_order,
         ]);
     }
 }
