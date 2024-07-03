@@ -106,7 +106,6 @@
       }).then((result) => {
         if (result.state == "granted") {
           navigator.geolocation.getCurrentPosition(showPosition, showError);
-          document.getElementById("text-permission").classList.add("hidden")
         } else if (result.state == "denied") {
           document.getElementById("text-permission").innerText =
             "You block location access, you cant attendace! Open setting browser to allow your location access.";
@@ -114,7 +113,6 @@
           document.getElementById("text-permission").innerText =
             "Please allow your location access to attendance.";
           if (navigator.geolocation) {
-            document.getElementById("text-permission").classList.add("hidden")
             navigator.geolocation.getCurrentPosition(showPosition, showError);
           } else {
             document.getElementById("location").innerText = "Geolocation is not supported by this browser.";
@@ -128,6 +126,7 @@
       })
 
       function showPosition(position) {
+        document.getElementById("text-permission").classList.add("hidden")
         $('#presenceButton').removeClass("hidden");
         $('#presenceButton').addClass("inline-flex");
         var latitude = position.coords.latitude;
