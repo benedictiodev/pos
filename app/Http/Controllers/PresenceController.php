@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanySetting;
 use App\Models\Presence;
 use App\Models\User;
 use Carbon\Carbon;
@@ -60,9 +61,12 @@ class PresenceController extends Controller
 
         $history = User::with(['presence'])->where("id", "=", Auth::user()->id)->where("company_id", Auth::user()->company_id)->first();
 
+        $setting = CompanySetting::query()->where("company_id", '=', Auth::user()->company_id)->first();
+
         return view('dashboard.presence.user_presence', [
             "user" => $user,
             "history" => $history,
+            "setting" => $setting,
         ]);
     }
 

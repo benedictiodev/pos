@@ -121,8 +121,10 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
     // Company
     Route::prefix("/company")->group(function () {
         Route::prefix("/profile")->group(function () {
-            Route::get('/', [CompanyController::class, 'index'])->name('dashboard.company.profile');
-            Route::put('/{id}', [CompanyController::class, 'update'])->name('dashboard.company.profile.update');
+            Route::get('/', [CompanyController::class, 'index_company'])->name('dashboard.company.profile');
+            Route::put('/{id}', [CompanyController::class, 'update_company'])->name('dashboard.company.profile.update');
+            Route::get('/settings', [CompanyController::class, 'index_setting'])->name('dashboard.company.setting');
+            Route::put('/settings/{id}', [CompanyController::class, 'update_setting'])->name('dashboard.company.setting.update');
         });
     });
 

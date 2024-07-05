@@ -58,6 +58,7 @@
               Presence Now
             </button>
           </div>
+          <div id="maps" class="h-96 mt-3"></div>
         </div>
       @endif
     </div>
@@ -69,7 +70,7 @@
 
   <!-- Presence Drawer -->
   <div id="drawer-presence-default"
-    class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
+    class="fixed right-0 top-0 z-[99999] h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
     tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
     <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Presence
     </h5>
@@ -99,13 +100,18 @@
 @endsection
 
 @push('script')
-  <script>
+  <script type="text/javascript">
     $(document).ready(function() {
+      const setting_distance = {!! json_encode($setting->distance) !!}
+      const setting_latitude = {!! json_encode($setting->latitude) !!}
+      const setting_longitude = {!! json_encode($setting->longitude) !!}
       navigator.permissions.query({
         name: "geolocation"
       }).then((result) => {
         if (result.state == "granted") {
-          navigator.geolocation.getCurrentPosition(showPosition, showError);
+          navigator.geolocation.watchPosition(showPosition, showError, {
+            enableHighAccuracy: true
+          });
         } else if (result.state == "denied") {
           document.getElementById("text-permission").innerText =
             "You block location access, you cant attendace! Open setting browser to allow your location access.";
@@ -133,18 +139,44 @@
         var longitude = position.coords.longitude;
 
         const coord1 = {
-          latitude: -7.0031951,
-          longitude: 107.621522
+          latitude: setting_latitude,
+          longitude: setting_longitude
         }; // Store cc
         const coord2 = {
           latitude: latitude,
           longitude: longitude
         }; // User
 
+        const maps = L.map('maps').setView([latitude, longitude], 19);
+        const googleStreet = L.tileLayer('http://{s}.google.com/vt/lyrs=m&x={x}&y={y}&z={z}', {
+          maxZoom: 20,
+          subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+          attribution: '&copy; <a href="http://www.maps.google.com/">Google Maps</a>'
+        }).addTo(maps);
+        layerGroup = L.layerGroup().addTo(maps);
+
+        L.marker({
+          lat: latitude,
+          lng: longitude
+        }).bindTooltip("User", {
+          permanent: true,
+          direction: 'top'
+        }).addTo(layerGroup);
+
+        L.marker({
+          lat: setting_latitude,
+          lng: setting_longitude
+        }).bindTooltip("Workplace", {
+          permanent: true,
+          direction: 'top'
+        }).addTo(layerGroup);
+
+        L.circle([setting_latitude, setting_longitude], setting_distance).addTo(layerGroup);
+
         const distance = haversineDistance(coord1, coord2);
 
-        if (distance >= 100) {
-          $('#text-drawer').html('The maximum distance from the shop is 100 meters.');
+        if (distance >= setting_distance) {
+          $('#text-drawer').html(`The maximum distance from the shop is ${setting_distance} meters.`);
           $('#button-drawer-submit').attr('hidden', true);
           $('#button-drawer-cancel').html('Close');
         } else {
