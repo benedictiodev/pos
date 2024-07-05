@@ -106,6 +106,7 @@ Route::prefix("/dashboard")->middleware('auth')->group(function () {
         Route::delete("/{id}", [OrderController::class, 'delete_order'])->name('dashboard.order.delete_order');
         Route::get("/update/{id}", [OrderController::class, 'edit_order'])->name('dashboard.order.edit_order');
         Route::put("/update/{id}", [OrderController::class, 'update_order'])->name('dashboard.order.update_order');
+        Route::get("/report", [OrderController::class, 'report'])->name('dashboard.order.report');
     });
 
     // Profile
