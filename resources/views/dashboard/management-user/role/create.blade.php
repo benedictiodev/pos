@@ -48,35 +48,105 @@
             </div>
 
             <div>
-              <label for="checkbos-all" class="mb-2 block text-sm font-medium text-gray-900">Permission</label>
-              <div>
-                <label><input type="checkbox" id="checkbox-all" class="name mb-2">
-                  Check All</label>
-              </div>
-              <div id="checkboxes">
-                @foreach ($permission as $value)
-                  <label><input type="checkbox" name="permission[]" value="{{ $value->name }}" class="name">
-                    {{ $value->name }}</label>
-                @endforeach
+              <label for="checkbos-all" class="mb-2 block text-base font-semibold text-gray-900">Permission</label>
+              <div class="space-y-3">
+                <div>
+                  <label for="master-data" class="mb-1 block text-base font-semibold text-gray-900">Master Data</label>
+                  <div class="flex flex-row gap-3 items-center">
+                    @foreach ($permission as $value)
+                      @if (str_contains($value->name, 'master data'))
+                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}">
+                          {{ $value->name }}</label>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
+
+                <div>
+                  <label for="finance" class="mb-1 block text-base font-semibold text-gray-900">Finance</label>
+                  <div class="flex flex-row gap-3 items-center">
+                    @foreach ($permission as $value)
+                      @if (str_contains($value->name, 'finance'))
+                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}">
+                          {{ $value->name }}</label>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
+
+                <div>
+                  <label for="company" class="mb-1 block text-base font-semibold text-gray-900">Company</label>
+                  <div class="flex flex-row gap-3 items-center">
+                    @foreach ($permission as $value)
+                      @if (str_contains($value->name, 'company'))
+                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}">
+                          {{ $value->name }}</label>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
+
+                <div>
+                  <label for="order-history" class="mb-1 block text-base font-semibold text-gray-900">Order
+                    History</label>
+                  <div class="flex flex-row gap-3 items-center">
+                    @foreach ($permission as $value)
+                      @if (str_contains($value->name, 'order history'))
+                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}">
+                          {{ $value->name }}</label>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
+
+                <div>
+                  <label for="order-active" class="mb-1 block text-base font-semibold text-gray-900">Order
+                    Active</label>
+                  <div class="flex flex-row gap-3 items-center">
+                    @foreach ($permission as $value)
+                      @if (str_contains($value->name, 'order active'))
+                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}">
+                          {{ $value->name }}</label>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
+
+                <div>
+                  <label for="presence-user" class="mb-1 block text-base font-semibold text-gray-900">Presence
+                    User</label>
+                  <div class="flex flex-row gap-3 items-center">
+                    @foreach ($permission as $value)
+                      @if (str_contains($value->name, 'presence user'))
+                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}">
+                          {{ $value->name }}</label>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
+
+                <div>
+                  <label for="management-user" class="mb-1 block text-base font-semibold text-gray-900">Management
+                    User</label>
+                  <div class="flex flex-row gap-3 items-center">
+                    @foreach ($permission as $value)
+                      @if (str_contains($value->name, 'management user'))
+                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}">
+                          {{ $value->name }}</label>
+                      @endif
+                    @endforeach
+                  </div>
+                </div>
               </div>
             </div>
-            <button type="submit"
-              class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-              Add
-            </button>
+            <div>
+              <button type="submit"
+                class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                Add
+              </button>
+            </div>
         </form>
       </div>
     </div>
   </div>
 @endsection
-
-@push('script')
-  <script>
-    $(document).ready(function() {
-      $('#checkbox-all').click(function() {
-        const checked = $(this).prop('checked');
-        $('#checkboxes').find('input:checkbox').prop('checked', checked);
-      });
-    });
-  </script>
-@endpush
