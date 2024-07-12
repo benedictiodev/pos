@@ -8,12 +8,12 @@
           <li class="inline-flex items-center">
             <a href="#"
               class="inline-flex items-center text-gray-700 hover:text-primary-600">
-              Dashboard
+              Beranda
             </a>
           </li>
         </ol>
       </nav>
-      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Dashboard</h1>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Beranda</h1>
     </div>
   </div>
 
@@ -23,7 +23,7 @@
         <div class="flex justify-between p-3 h-24 rounded-lg bg-orange-300 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-database class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-            <p class="text-base text-gray-500">Total Category Product</p>
+            <p class="text-base text-gray-500">Total Produk Kategori</p>
           </div>
           <div class="flex justify-end items-center">
             <p class="text-2xl font-bold text-gray-500">{{ $category ? $category : 0 }}</p>
@@ -32,7 +32,7 @@
         <div class="flex justify-between p-3 h-24 rounded-lg bg-gray-300 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-database class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-            <p class="text-base text-gray-500">Total Product</p>
+            <p class="text-base text-gray-500">Total Produk</p>
           </div>
           <div class="flex justify-end items-center">
             <p class="text-2xl font-bold text-gray-500">{{ $product ? $product : 0 }}</p>
@@ -41,7 +41,7 @@
         <div class="flex justify-between p-3 h-24 rounded-lg bg-green-300 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-            <p class="text-base text-gray-500">Master Fund</p>
+            <p class="text-base text-gray-500">Total Tipe Dana</p>
           </div>
           <div class="flex justify-center items-center">
             <p class="text-2xl font-bold text-gray-500">{{ $fund_master ? $fund_master : 0 }}</p>
@@ -52,7 +52,7 @@
         <div class="flex justify-between p-3 h-24 rounded-lg bg-green-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-            <p class="text-base text-gray-500">Today's Sales</p>
+            <p class="text-base text-gray-500">Penjualan Hari Ini</p>
           </div>
           <div class="flex justify-end items-center">
             <p class="text-2xl font-bold text-gray-500">{{ $order_date_now ? format_rupiah($order_date_now) : 0 }}</p>
@@ -61,7 +61,7 @@
         <div class="flex justify-between p-3 h-24 rounded-lg bg-yellow-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-            <p class="text-base text-gray-500">Sales This Month</p>
+            <p class="text-base text-gray-500">Penjualan Bulan Ini</p>
           </div>
           <div class="flex justify-end items-center">
             <p class="text-2xl font-bold text-gray-500">{{ $order_month_now ? format_rupiah($order_month_now) : 0 }}</p>
@@ -70,7 +70,7 @@
         <div class="flex justify-between p-3 h-24 rounded-lg bg-sky-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-            <p class="text-base text-gray-500">Products Sold This Month</p>
+            <p class="text-base text-gray-500">Produk Terjual Bulan Ini</p>
           </div>
           <div class="flex justify-center items-center">
             <p class="text-2xl font-bold text-gray-500">{{ $order_item ? $order_item : 0 }}</p>
@@ -98,7 +98,7 @@
       data: {
         labels: {!! json_encode($result_chart_order_label) !!},
         datasets: [{
-          label: 'Sales',
+          label: 'Penjualan',
           data: {!! json_encode($result_chart_order_value) !!},
           borderWidth: 1
         }]
@@ -115,7 +115,7 @@
         plugins: {
           title: {
             display: true,
-            text: `Sales Graph For The Period {!! Carbon\Carbon::now()->format('Y-m') !!}`,
+            text: `Grafik penjualan periode {!! Carbon\Carbon::now()->format('Y-m') !!}`,
           }
         }
       }
@@ -126,11 +126,11 @@
       data: {
         labels: {!! json_encode($result_closing_cycle_label) !!},
         datasets: [{
-          label: 'Equite',
+          label: 'Modal',
           data: {!! json_encode($result_closing_cycle_value_equite) !!},
           borderWidth: 1
         }, {
-          label: 'Profit',
+          label: 'Keuntungan',
           data: {!! json_encode($result_closing_cycle_value_profit) !!},
           borderWidth: 1
         }]
@@ -147,7 +147,7 @@
         plugins: {
           title: {
             display: true,
-            text: `Capital And Profit Graph {!! Carbon\Carbon::now()->format('Y') !!}`,
+            text: `Grafik modal dan keuntungan {!! Carbon\Carbon::now()->format('Y') !!}`,
           }
         }
       }

@@ -9,7 +9,7 @@
             <a href="{{ route('dashboard') }}"
               class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ Request::route()->getName() == 'dashboard' ? 'bg-gray-100' : '' }}">
               <x-fas-home class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-              <span class="ml-3" sidebar-toggle-item>Dashboard</span>
+              <span class="ml-3" sidebar-toggle-item>Beranda</span>
             </a>
           </li>
 
@@ -20,7 +20,7 @@
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'bg-gray-100' : '' }}"
                 aria-controls="dropdown-finance" data-collapse-toggle="dropdown-finance">
                 <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
-                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Finance</span>
+                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Keuangan</span>
                 <x-fas-chevron-down
                   class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               </button>
@@ -29,19 +29,19 @@
                 <li>
                   <a href="{{ route('dashboard.finance.funds') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.finance.funds') ? 'bg-gray-100' : '' }}">
-                    Funds
+                    Dana
                   </a>
                 </li>
                 <li>
                   <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-daily' ? 'bg-gray-100' : '' }}">
-                    Daily Cash Flow
+                    Arus Kas Harian
                   </a>
                 </li>
                 <li>
                   <a href="{{ route('dashboard.finance.cash-flow-monthly') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-monthly' ? 'bg-gray-100' : '' }}">
-                    Monthly Cash Flow
+                    Arus Kas Bulanan
                   </a>
                 </li>
               </ul>
@@ -64,20 +64,20 @@
               <li>
                 <a href="{{ route('dashboard.order.order_active') }}"
                   class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_active') ? 'bg-gray-100' : '' }}">
-                  Order Active
+                  Order Aktif
                 </a>
               </li>
               <li>
                 <a href="{{ route('dashboard.order.order_history') }}"
                   class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_history') ? 'bg-gray-100' : '' }}">
-                  Order History
+                  Riwayat Order
                 </a>
               </li>
               @if (Auth::user()->id == 1)
                 <li>
                   <a href="{{ route('dashboard.order.report') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.report') ? 'bg-gray-100' : '' }}">
-                    Report
+                    Pelaporan
                   </a>
                 </li>
               @endif
@@ -92,7 +92,7 @@
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.') ? 'bg-gray-100' : '' }}"
                 aria-controls="dropdown-company" data-collapse-toggle="dropdown-company">
                 <x-fas-building class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
-                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Company</span>
+                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Toko</span>
                 <x-fas-chevron-down
                   class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               </button>
@@ -101,13 +101,13 @@
                 <li>
                   <a href="{{ route('dashboard.company.profile') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.profile') ? 'bg-gray-100' : '' }}">
-                    Profile
+                    Profil
                   </a>
                 </li>
                 <li>
                   <a href="{{ route('dashboard.company.setting') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.setting') ? 'bg-gray-100' : '' }}">
-                    Setting
+                    Pengaturan
                   </a>
                 </li>
               </ul>
@@ -131,25 +131,25 @@
                 <li>
                   <a href="{{ route('dashboard.master-data.category-product') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.category-product') ? 'bg-gray-100' : '' }}">
-                    Category Products
+                    Produk Kategori
                   </a>
                 </li>
                 <li>
                   <a href="{{ route('dashboard.master-data.product') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.product') ? 'bg-gray-100' : '' }}">
-                    Products
+                    Produk
                   </a>
                 </li>
                 <li>
                   <a href="{{ route('dashboard.master-data.funds') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.funds') ? 'bg-gray-100' : '' }}">
-                    Funds
+                    Tipe Dana
                   </a>
                 </li>
                 <li>
                   <a href="{{ route('dashboard.master-data.remarks-cash-flow') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.remarks-cash-flow') ? 'bg-gray-100' : '' }}">
-                    Remarks Cash Flow
+                    Keterangan Arus Kas
                   </a>
                 </li>
               </ul>
@@ -163,7 +163,7 @@
               class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.') ? 'bg-gray-100' : '' }}"
               aria-controls="dropdown-presence" data-collapse-toggle="dropdown-presence">
               <x-fas-user-check class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
-              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Presence</span>
+              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Absensi</span>
               <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
             </button>
             <ul id="dropdown-presence"
@@ -172,20 +172,20 @@
                 <li>
                   <a href="{{ route('dashboard.presence.index') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.index') ? 'bg-gray-100' : '' }}">
-                    Presence
+                    Absensi
                   </a>
                 </li>
                 <li>
                   <a href="{{ route('dashboard.presence.presence_history') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.presence_history') ? 'bg-gray-100' : '' }}">
-                    Presence History
+                    Riwayat Absensi
                   </a>
                 </li>
               @else
                 <li>
                   <a href="{{ route('dashboard.presence.presence_user') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.presence_user') ? 'bg-gray-100' : '' }}">
-                    Presence User
+                    Absensi Pengguna
                   </a>
                 </li>
               @endif
@@ -200,7 +200,7 @@
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.') ? 'bg-gray-100' : '' }}"
                 aria-controls="dropdown-management-user" data-collapse-toggle="dropdown-management-user">
                 <x-fas-user-group class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
-                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Management User</span>
+                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Pengelolaan Akun</span>
                 <x-fas-chevron-down
                   class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
               </button>
@@ -209,7 +209,7 @@
                 <li>
                   <a href="{{ route('dashboard.management-user.user.index') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.user.index') ? 'bg-gray-100' : '' }}">
-                    User
+                    Akun Pengguna
                   </a>
                 </li>
                 {{-- <li>
