@@ -8,7 +8,7 @@
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
               <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-                Dashboard
+                Beranda
               </a>
             </li>
             <li>
@@ -22,12 +22,12 @@
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Report</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Pelaporan</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Report</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Pelaporan</h1>
       </div>
     </div>
 
@@ -39,7 +39,7 @@
             <div class="relative mt-1 w-order sm:w-64 xl:w-96">
               <input type="month" name="periode" id="search"
                 class="block w-full rounded-lg border border-gray-300 order-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for daily cash flow"
+                placeholder="Search"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m') }}"
                 onchange="change_search()"
                 max="{{ Carbon\Carbon::now()->format('Y-m') }}">
@@ -60,7 +60,7 @@
         <div class="flex justify-between p-3 h-24 rounded-lg bg-yellow-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-            <p class="text-base text-gray-500">Sales This Month</p>
+            <p class="text-base text-gray-500">Penjualan Bulan Ini</p>
           </div>
           <div class="flex justify-end items-center">
             <p class="text-2xl font-bold text-gray-500">{{ $total_order->total_payment ? format_rupiah($total_order->total_payment) : 0 }}</p>
@@ -69,7 +69,7 @@
         <div class="flex justify-between p-3 h-24 rounded-lg bg-sky-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
-            <p class="text-base text-gray-500">Products Sold This Month</p>
+            <p class="text-base text-gray-500">Produk Terjual Bulan Ini</p>
           </div>
           <div class="flex justify-center items-center">
             <p class="text-2xl font-bold text-gray-500">{{ $total_item_order->quantity ? $total_item_order->quantity : 0 }}</p>
@@ -96,9 +96,9 @@
                         <th colspan="3" class="p-4 text-base font-bold uppercase text-gray-500">{{ $item->category_name }}</th>
                       </tr>
                       <tr class="bg-gray-100">
-                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Product Name</th>
-                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Product Sold</th>
-                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Percentage Sold</th>
+                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Nama Produk</th>
+                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Produk Terjual</th>
+                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Persentase Penjualan</th>
                       </tr>
                       @foreach ($item->product as $item_product)
                         <tr class="divide-y divide-gray-200 bg-white hover:bg-gray-100">
@@ -111,7 +111,7 @@
                       @endforeach
                     @empty
                       <tr>
-                        <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
+                        <td class="text-center text-base font-light p-4" colspan="7">Data Kosong</td>
                       </tr>
                     @endforelse
                   </tbody>
@@ -140,11 +140,11 @@
       data: {
         labels: {!! json_encode($result_chart_order_label) !!},
         datasets: [{
-          label: 'Total Payment',
+          label: 'Total Pembayaran',
           data: {!! json_encode($result_chart_order_value) !!},
           borderWidth: 1
         }, {
-          label: 'Average Payment',
+          label: 'Rata Rata Pembayaran',
           data: {!! json_encode($result_chart_order_value_avg) !!},
           borderWidth: 1
         }]
@@ -161,7 +161,7 @@
         plugins: {
           title: {
             display: true,
-            text: `Sales Graph For The Period {!! Carbon\Carbon::now()->format('Y-m') !!}`,
+            text: `Grafik penjualan periode {!! Carbon\Carbon::now()->format('Y-m') !!}`,
           }
         }
       }
@@ -177,7 +177,7 @@
           data: {!! json_encode($result_chart_order_value_count) !!},
           borderWidth: 1
         }, {
-          label: 'Items sold',
+          label: 'Item terjual',
           data: {!! json_encode($result_chart_order_item_value) !!},
           borderWidth: 1
         }]
@@ -194,7 +194,7 @@
         plugins: {
           title: {
             display: true,
-            text: `Order Graph For The Period {!! Carbon\Carbon::now()->format('Y-m') !!}`,
+            text: `Grafik order periode {!! Carbon\Carbon::now()->format('Y-m') !!}`,
           }
         }
       }

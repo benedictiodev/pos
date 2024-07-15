@@ -382,7 +382,6 @@
         </div>
       </div>
     </div>
-
   </div>
 @endsection
 
@@ -451,8 +450,8 @@
     }
 
     const update_order_from_chart = (sequence_id) => {
-      $('#modal-add-to-cart-title').html('Update');
-      $('#modal-add-to-cart-text').html('update');
+      $('#modal-add-to-cart-title').html('Pembaruan');
+      $('#modal-add-to-cart-text').html('pembaruan');
 
       let item = data_order.find(data => data.sequence == sequence_id);
       $('#button-trigger-modal').trigger("click");
@@ -466,8 +465,8 @@
     }
 
     const add_new_order = (id, name, price) => {
-      $('#modal-add-to-cart-title').html('Add');
-      $('#modal-add-to-cart-text').html('add');
+      $('#modal-add-to-cart-title').html('Menambahkan');
+      $('#modal-add-to-cart-text').html('menambahkan');
 
       $('#order-sequence').val('');
       $('#order-product_id').val(id);
