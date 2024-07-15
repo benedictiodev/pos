@@ -7,24 +7,24 @@
         <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
           <li class="inline-flex items-center">
             <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-              Dashboard
+              Beranda
             </a>
           </li>
           <li>
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Company</span>
+              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Toko</span>
             </div>
           </li>
           <li>
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Setting</span>
+              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Pengaturan</span>
             </div>
           </li>
         </ol>
       </nav>
-      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Setting</h1>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Pengaturan</h1>
     </div>
 
     @if (session('success'))
@@ -44,25 +44,24 @@
           @method('PUT')
           <div class="space-y-6">
             <div>
-              <label for="distance" class="mb-2 block text-sm font-medium text-gray-900">Max distance for presence
-                user</label>
+              <label for="distance" class="mb-2 block text-sm font-medium text-gray-900">Jarak maksimal untuk kehadiran pengguna (Meter)</label>
               <input type="text" name="distance" id="distance"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                placeholder="Max distance for presence user (Meter)" value="{{ old('distance', $data->distance) }}"
+                placeholder="Jarak maksimal untuk kehadiran pengguna (Meter)" value="{{ old('distance', $data->distance) }}"
                 readonly>
               @error('distance')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
               @enderror
             </div>
             <div>
-              <label for="location" class="mb-2 block text-sm font-medium text-gray-900">Location</label>
+              <label for="location" class="mb-2 block text-sm font-medium text-gray-900">Lokasi</label>
               <p id="error-location-text"></p>
               <div id="maps" class="h-96"></div>
               <input type="text" name="latitude" id="latitude" value="{{ old('latitude', $data->latitude) }}" hidden>
               <input type="text" name="longitude" id="longitude" value="{{ old('longitude', $data->longitude) }}"
                 hidden>
               <p class="mt-2 text-sm text-green-600 font-medium" id="help-text-map" hidden>
-                Click your location on map.
+                Klik lokasi Anda di peta.
               </p>
               @error('latitude')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</span></p>
@@ -71,17 +70,17 @@
             <div id="frame_button_before_edit">
               <button type="button" onclick="edit_form()"
                 class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Edit
+                Perbarui
               </button>
             </div>
             <div id="frame_button_after_edit" hidden>
               <button type="submit"
                 class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Submit
+                Kirim
               </button>
               <button type="button" onclick="cancel_form()"
                 class="w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-3000">
-                Cancel
+                Batalkan
               </button>
             </div>
           </div>
@@ -109,14 +108,14 @@
         navigator.geolocation.getCurrentPosition(showPosition, showError);
       } else if (result.state == "denied") {
         document.getElementById("error-location-text").innerText =
-          "You block location access, you cant setup for user attendace! Open setting browser to allow your location access.";
+          "Anda memblokir akses lokasi, Anda tidak dapat mengatur kehadiran pengguna! Buka pengaturan browser untuk mengizinkan akses lokasi Anda.";
       } else if (result.state == "prompt") {
         document.getElementById("error-location-text").innerText =
-          "Please allow your location access to user attendance.";
+          "Harap izinkan akses lokasi Anda ke kehadiran pengguna.";
         if (navigator.geolocation) {
           navigator.geolocation.getCurrentPosition(showPosition, showError);
         } else {
-          document.getElementById("location").innerText = "Geolocation is not supported by this browser.";
+          document.getElementById("location").innerText = "Geolokasi tidak didukung oleh browser ini.";
         }
       } else {
         document.getElementById("error-location-text").innerText = `Error ${result.state}`
@@ -153,17 +152,17 @@
     function showError(error) {
       switch (error.code) {
         case error.PERMISSION_DENIED:
-          $('#error-location-text').html('User denied the request for Geolocation.');
+          $('#error-location-text').html('Pengguna menolak permintaan Geolokasi.');
           break;
         case error.POSITION_UNAVAILABLE:
-          $('#error-location-text').html('Location information is unavailable.');
+          $('#error-location-text').html('Informasi lokasi tidak tersedia.');
           document.getElementById("location").innerHTML = "";
           break;
         case error.TIMEOUT:
-          $('#error-location-text').html('The request to get user location timed out.');
+          $('#error-location-text').html('Waktu permintaan untuk mendapatkan lokasi pengguna telah habis.');
           break;
         case error.UNKNOWN_ERROR:
-          $('#error-location-text').html('An unknown error occurred.');
+          $('#error-location-text').html('Terjadi kesalahan yang tidak diketahui.');
           break;
       }
     }

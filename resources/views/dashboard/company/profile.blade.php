@@ -8,24 +8,24 @@
           <li class="inline-flex items-center">
             <a href="#"
               class="inline-flex items-center text-gray-700 hover:text-primary-600">
-              Dashboard
+              Beranda
             </a>
           </li>
           <li>
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Company</span>
+              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Toko</span>
             </div>
           </li>
           <li>
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Profile</span>
+              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Profil</span>
             </div>
           </li>
         </ol>
       </nav>
-      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Profile</h1>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Profil</h1>
     </div>
 
     @if (session('success'))
@@ -48,26 +48,25 @@
           @method('PUT')
           <div class="space-y-6">
             <div>
-              <label for="name" class="mb-2 block text-sm font-medium text-gray-900">Name</label>
+              <label for="name" class="mb-2 block text-sm font-medium text-gray-900">Nama Toko</label>
               <input type="text" name="name" id="name"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                placeholder="Fullname" value="{{ old('name', $data->name) }}" required readonly>
+                placeholder="Nama Toko" value="{{ old('name', $data->name) }}" required readonly>
             </div>
             <div>
-              <label for="phone_number" class="mb-2 block text-sm font-medium text-gray-900">Phone
-                Number</label>
+              <label for="phone_number" class="mb-2 block text-sm font-medium text-gray-900">Nomor Telfon</label>
               <input type="text" name="phone_number" id="phone_number"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                placeholder="Phone Number" value="{{ old('phone_number', $data->phone_number) }}" readonly>
+                placeholder="Nomor Telfon" value="{{ old('phone_number', $data->phone_number) }}" readonly>
             </div>
             <div>
-              <label for="address" class="mb-2 block text-sm font-medium text-gray-900">Address</label>
+              <label for="address" class="mb-2 block text-sm font-medium text-gray-900">Alamat</label>
               <textarea id="address" rows="4" name="address"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
-                placeholder="Address" readonly>{{ old('address', $data->address) }}</textarea>
+                placeholder="Alamat" readonly>{{ old('address', $data->address) }}</textarea>
             </div>
             <div>
-              <label class="mb-2 block text-sm font-medium text-gray-900" for="image">Image</label>
+              <label class="mb-2 block text-sm font-medium text-gray-900" for="image">Logo</label>
               <input type="text" value="{{ $data->image }}" name="old_image" hidden>
               <img id="preview-image"
                 @if ($data->image) src="{{ asset('storage/' . $data->image) }}" alt="{{ asset($data->image) }}" @endif
@@ -79,17 +78,17 @@
             <div id="frame_button_before_edit">
               <button type="button" onclick="edit_form()"
                 class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Edit
+                Perbarui
               </button>
             </div>
             <div id="frame_button_after_edit" hidden>
               <button type="submit"
                 class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Submit
+                Kirim
               </button>
               <button type="button" onclick="cancel_form()"
                 class="w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-3000">
-                Cancel
+                Batalkan
               </button>
             </div>
           </div>
