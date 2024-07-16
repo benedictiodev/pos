@@ -8,24 +8,24 @@
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
               <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-                Dashboard
+                Beranda
               </a>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Presence</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Presensi</span>
               </div>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">User Presence</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Presensi Pengguna</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">User Presence</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Presensi Pengguna</h1>
       </div>
     </div>
 
@@ -48,7 +48,7 @@
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
               <input type="date" name="periode" id="presence-search" max="{{ Carbon\Carbon::now()->format('Y-m-d') }}"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for daily presence"
+                placeholder="Cari data presensi"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}"
                 onchange="change_search()"
                 max="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
@@ -83,13 +83,13 @@
                       </div>
                     </th> --}}
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Name
+                      Nama
                     </th>
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
                       Email
                     </th>
                     <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
-                      Presence
+                      Presensi
                     </th>
                   </tr>
                 </thead>
@@ -140,14 +140,14 @@
                           "
                           data-id="{{ $item->id }}">
                           <x-fas-user-pen class="mr-2 h-4 w-4" />
-                          Presence
+                          Presensi
                         </button>
 
                       </td>
                     </tr>
                   @empty
                     <tr>
-                      <td class="text-center text-base font-light p-4" colspan="3">Empty Data</td>
+                      <td class="text-center text-base font-light p-4" colspan="3">Data Kosong</td>
                     </tr>
                   @endforelse
                 </tbody>
@@ -168,27 +168,27 @@
   <div id="drawer-presence-default"
     class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
     tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-    <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Presence
+    <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Presensi
     </h5>
     <button type="button" data-drawer-dismiss="drawer-presence-default" aria-controls="drawer-presence-default"
       class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900">
       <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
-      <span class="sr-only">Close menu</span>
+      <span class="sr-only">Tutup</span>
     </button>
     <form id="form-presence" method="POST" action="{{ route('dashboard.presence.store') }}">
       @csrf
       <input type="text" id="presence-id" name="user_id" hidden>
       <input type="text" value="{{ Auth::user()->id }}" name="company_id" hidden>
       <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
-      <h3 class="mb-6 text-lg text-gray-500">Are you sure you want to presence this user?</h3>
+      <h3 class="mb-6 text-lg text-gray-500">Apakah anda yakin untuk melakukan presensi pengguna ini?</h3>
       <button type="button" data-type="button-presence"
         class="mr-2 inline-flex items-center rounded-lg bg-primary-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-        Yes, I'm sure
+        Ya, Saya Yakin
       </button>
       <button type="button"
         class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
         data-drawer-hide="drawer-presence-default">
-        No, cancel
+        Tidak, Batalkan
       </button>
     </form>
   </div>
