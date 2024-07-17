@@ -36,9 +36,9 @@ class FundsController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.master-data.funds')->with('success', "Successfully to create fund");
+            return redirect()->route('dashboard.master-data.funds')->with('success', "Berhasil menambahkan data tipe dana");
         } else {
-            return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to create fund");
+            return redirect()->route('dashboard.master-data.funds')->with('failed', "Gagal menambahkan data tipe dana");
         }
     }
 
@@ -48,7 +48,7 @@ class FundsController extends Controller
         if ($data && $data->company_id == Auth::user()->company_id) {
             return view("dashboard.master-data.funds.edit", ["data" => $data]);
         } else {
-            return view('dashboard.master-data.funds')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return view('dashboard.master-data.funds')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -66,12 +66,12 @@ class FundsController extends Controller
             ]);
 
             if ($update) {
-                return redirect()->route('dashboard.master-data.funds')->with('success', "Successfully to update fund");
+                return redirect()->route('dashboard.master-data.funds')->with('success', "Berhasil memperbarui data tipe dana");
             } else {
-                return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to update fund");
+                return redirect()->route('dashboard.master-data.funds')->with('failed', "Gagal memperbarui data tipe dana");
             }
         } else {
-            return view('dashboard.master-data.funds')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return view('dashboard.master-data.funds')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -80,17 +80,17 @@ class FundsController extends Controller
         $data = Fund::findOrFail($id);
         if ($data && $data->company_id == Auth::user()->company_id) {
             if ($data->fund > 0) {
-                return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund, funds more than 0");
+                return redirect()->route('dashboard.master-data.funds')->with('failed', "Berhasil menghapus data tipe dana, total dana lebih dari 0");
             }
 
             $delete =  Fund::findOrFail($id);
             if ($delete->delete()) {
-                return redirect()->route('dashboard.master-data.funds')->with('success', "Successfully to delete fund");
+                return redirect()->route('dashboard.master-data.funds')->with('success', "Berhasil menghapus data tipe dana");
             } else {
-                return redirect()->route('dashboard.master-data.funds')->with('failed', "Failed to delete fund");
+                return redirect()->route('dashboard.master-data.funds')->with('failed', "Gagal menghapus data tipe dana");
             }
         } else {
-            return view('dashboard.master-data.funds')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return view('dashboard.master-data.funds')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -151,10 +151,10 @@ class FundsController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('dashboard.finance.funds')->with('success', "Successfully to create diversion of fund allocation");
+            return redirect()->route('dashboard.finance.funds')->with('success', "Berhasil melakukan pengalihan alokasi dana");
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.finance.funds.create')->with('failed', "Failed to create diversion of fund allocation");
+            return redirect()->route('dashboard.finance.funds.create')->with('failed', "Gagal melakukan pengalihan alokasi dana");
         }
     }
 }

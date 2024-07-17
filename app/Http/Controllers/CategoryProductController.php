@@ -32,9 +32,9 @@ class CategoryProductController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to create category product");
+            return redirect()->route('dashboard.master-data.category-product')->with('success', "Berhasil menambahkan data kategori produk");
         } else {
-            return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to create category product");
+            return redirect()->route('dashboard.master-data.category-product')->with('failed', "Gagal menambahkan data kategori produk");
         }
     }
 
@@ -44,7 +44,7 @@ class CategoryProductController extends Controller
         if ($data && $data->company_id == Auth::user()->company_id) {
             return view("dashboard.master-data.category-product.edit", ["data" => $data]);
         } else {
-            return redirect()->route('dashboard.master-data.category-product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.master-data.category-product')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -62,12 +62,12 @@ class CategoryProductController extends Controller
             ]);
 
             if ($update) {
-                return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to update category product");
+                return redirect()->route('dashboard.master-data.category-product')->with('success', "Berhasil memperbarui data kategori produk");
             } else {
-                return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to update category product");
+                return redirect()->route('dashboard.master-data.category-product')->with('failed', "Gagal memperbarui data kategori produk");
             }
         } else {
-            return redirect()->route('dashboard.master-data.category-product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.master-data.category-product')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -77,12 +77,12 @@ class CategoryProductController extends Controller
         if ($data && $data->company_id == Auth::user()->company_id) {
             $delete =  CategoryProduct::destroy($id);
             if ($delete) {
-                return redirect()->route('dashboard.master-data.category-product')->with('success', "Successfully to delete category product");
+                return redirect()->route('dashboard.master-data.category-product')->with('success', "Berhasil menghapus data kategori produk");
             } else {
-                return redirect()->route('dashboard.master-data.category-product')->with('failed', "Failed to delete category product");
+                return redirect()->route('dashboard.master-data.category-product')->with('failed', "Gagal menghapus data kategori produk");
             }
         } else {
-            return redirect()->route('dashboard.master-data.category-product')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.master-data.category-product')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 }

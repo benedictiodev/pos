@@ -154,7 +154,7 @@ class OrderController extends Controller
             }
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.order.order_active.add_new_order')->with('failed', "Failed to add order");
+            return redirect()->route('dashboard.order.order_active.add_new_order')->with('failed', "Gagal menambahkan order");
         }
     }
 
@@ -224,7 +224,7 @@ class OrderController extends Controller
                 'order' => $order
             ]);
         } else {
-            return redirect()->route('dashboard.order.order_history')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.order.order_history')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -313,7 +313,7 @@ class OrderController extends Controller
             return redirect()->route('dashboard.order.order_history');
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.order.order_history')->with('failed', "Failed to update order history");
+            return redirect()->route('dashboard.order.order_history')->with('failed', "Gagal memperbarui riwayat order");
         }
     }
 
@@ -340,14 +340,14 @@ class OrderController extends Controller
                 Order::where('id', $id)->delete();
 
                 DB::commit();
-                return redirect()->route('dashboard.order.order_active')->with('success', "Successfully to delete order");
+                return redirect()->route('dashboard.order.order_active')->with('success', "Berhasil menghapus order");
             } else {
                 DB::rollBack();
-                return redirect()->route('dashboard.order.order_active')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+                return redirect()->route('dashboard.order.order_active')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
             }
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.order.order_active')->with('failed', 'Failed to delete order');
+            return redirect()->route('dashboard.order.order_active')->with('failed', 'Gagal menghapus order');
         }
     }
 
@@ -396,7 +396,7 @@ class OrderController extends Controller
                 'order' => $order
             ]);
         } else {
-            return redirect()->route('dashboard.order.order_active')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return redirect()->route('dashboard.order.order_active')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -500,7 +500,7 @@ class OrderController extends Controller
             }
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.order.update_order')->with('failed', "Failed to update order");
+            return redirect()->route('dashboard.order.update_order')->with('failed', "Gagal memperbarui order");
         }
     }
 

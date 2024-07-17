@@ -28,7 +28,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             return redirect()->intended('/dashboard');
         } else {
-            return redirect()->back()->with('failed', "Email or Password is wrong");
+            return redirect()->back()->with('failed', "Email atau Kata Sandi Salah");
         }
     }
 
@@ -60,9 +60,9 @@ class AuthController extends Controller
         ]);
 
         if ($update) {
-            return redirect()->route('dashboard.profile')->with('success', "Successfully to update profile");
+            return redirect()->route('dashboard.profile')->with('success', "Berhasil memperbarui profil");
         } else {
-            return redirect()->route('dashboard.profile')->with('failed', "Failed to update profile");
+            return redirect()->route('dashboard.profile')->with('failed', "Gagal memperbarui profil");
         }
     }
 
@@ -78,13 +78,13 @@ class AuthController extends Controller
         ]);
 
         if ($validate['new_password'] != $validate['confirm_password']) {
-            return redirect()->route('dashboard.change_password')->with('failed', "New password and Confirm password are different");
+            return redirect()->route('dashboard.change_password')->with('failed', "Kata sandi baru dan konfirmasi kata sandi berbeda");
         }
 
         $data = User::findOrFail(Auth::user()->id);
 
         if (!Hash::check($validate['old_password'], $data->password)) {
-            return redirect()->route('dashboard.change_password')->with('failed', "Old password are difference");
+            return redirect()->route('dashboard.change_password')->with('failed', "Kata sandi lama berbeda");
         }
 
         $update = $data->update([
@@ -92,9 +92,9 @@ class AuthController extends Controller
         ]);
 
         if ($update) {
-            return redirect()->route('dashboard.change_password')->with('success', "Successfully to change password");
+            return redirect()->route('dashboard.change_password')->with('success', "Berhasil merubah kata sandi");
         } else {
-            return redirect()->route('dashboard.change_password')->with('failed', "Failed to change password");
+            return redirect()->route('dashboard.change_password')->with('failed', "Gagal merubah kata sandi");
         }
     }
 }

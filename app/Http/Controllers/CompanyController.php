@@ -42,9 +42,9 @@ class CompanyController extends Controller
         $update = $data->update($validate);
 
         if ($update) {
-            return redirect()->route('dashboard.company.profile')->with('success', "Successfully to update  product");
+            return redirect()->route('dashboard.company.profile')->with('success', "Berhasil memperbarui data toko");
         } else {
-            return redirect()->route('dashboard.company.profile')->with('failed', "Failed to update  product");
+            return redirect()->route('dashboard.company.profile')->with('failed', "Gagal memperbarui data toko");
         }
     }
 
@@ -70,9 +70,9 @@ class CompanyController extends Controller
             $update = $setting->update($validate);
 
             if ($update) {
-                return redirect()->route('dashboard.company.setting')->with('success', "Successfully to update setting");
+                return redirect()->route('dashboard.company.setting')->with('success', "Berhasil memperbarui data pengaturan toko");
             } else {
-                return redirect()->route('dashboard.company.setting')->with('failed', "Failed to update setting");
+                return redirect()->route('dashboard.company.setting')->with('failed', "Gagal memperbarui data pengaturan toko");
             }
         } else {
             return abort(404);

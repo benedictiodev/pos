@@ -195,10 +195,10 @@ class CashFlowController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('success', "Success to add equite");
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('success', "Berhasil menambah data modal");
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to add equite");
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Gagal menambah data modal");
         }
     }
 
@@ -272,10 +272,10 @@ class CashFlowController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('success', "Success to closing cycle");
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('success', "Berhasil menambah data tutup buku");
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Failed to closing cycle");
+            return redirect()->route('dashboard.finance.cash-flow-monthly', $query_data)->with('failed', "Gagal menambah data tutup buku");
         }
     }
 }

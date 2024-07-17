@@ -38,9 +38,9 @@ class PresenceController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.presence.index')->with('success', "Successfully to user presence.");
+            return redirect()->route('dashboard.presence.index')->with('success', "Berhasil melakukan presensi.");
         } else {
-            return redirect()->route('dashboard.presence.index')->with('failed', "Failed to user presence.");
+            return redirect()->route('dashboard.presence.index')->with('failed', "Gagal melakukan presensi.");
         }
     }
 
@@ -84,9 +84,9 @@ class PresenceController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.presence.presence_user')->with('success', "Successfully to user presence.");
+            return redirect()->route('dashboard.presence.presence_user')->with('success', "Berhasil melakukan presensi.");
         } else {
-            return redirect()->route('dashboard.presence.presence_user')->with('failed', "Failed to user presence.");
+            return redirect()->route('dashboard.presence.presence_user')->with('failed', "Gagal melakukan presensi.");
         }
     }
 }
