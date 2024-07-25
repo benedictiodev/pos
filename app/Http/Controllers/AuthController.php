@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -10,9 +12,17 @@ use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
-    function index() {
+    function index(Request $request) {
          if (Auth::check()) {
-            return redirect()->route('dashboard');
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            if ($company->grace_days_ended_at <= (Carbon::now()->format('Y-m-d') . ' 23:59:59')) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->back()->with('failed', "Masa berlaku langganan toko anda sudah habis");
+            } else {
+                return redirect()->route('dashboard');
+            }
         } else {
             return view('auth.login');
         }
@@ -25,8 +35,16 @@ class AuthController extends Controller
         ]);
  
         if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            return redirect()->intended('/dashboard');
+            $company = Company::where('id', Auth::user()->company_id)->first();
+            if ($company->grace_days_ended_at <= (Carbon::now()->format('Y-m-d') . ' 23:59:59')) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+                return redirect()->back()->with('failed', "Masa berlaku langganan toko anda sudah habis");
+            } else {
+                $request->session()->regenerate();
+                return redirect()->intended('/dashboard');
+            }
         } else {
             return redirect()->back()->with('failed', "Email atau Kata Sandi Salah");
         }
