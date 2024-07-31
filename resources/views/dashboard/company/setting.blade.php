@@ -44,11 +44,12 @@
           @method('PUT')
           <div class="space-y-6">
             <div>
-              <label for="distance" class="mb-2 block text-sm font-medium text-gray-900">Jarak maksimal untuk kehadiran pengguna (Meter)</label>
+              <label for="distance" class="mb-2 block text-sm font-medium text-gray-900">Jarak maksimal untuk kehadiran
+                pengguna (Meter)</label>
               <input type="text" name="distance" id="distance"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                placeholder="Jarak maksimal untuk kehadiran pengguna (Meter)" value="{{ old('distance', $data->distance) }}"
-                readonly>
+                placeholder="Jarak maksimal untuk kehadiran pengguna (Meter)"
+                value="{{ old('distance', $data->distance) }}" readonly>
               @error('distance')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
               @enderror
@@ -191,6 +192,13 @@
 
         maps.off('click');
         layerGroup.clearLayers();
+        layerGroup = L.layerGroup().addTo(maps);
+        if (lat && lng) {
+          L.marker({
+            lat,
+            lng
+          }).addTo(layerGroup);
+        }
 
         inputLatitude.value = ""
         inputLongitude.value = ""
