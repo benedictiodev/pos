@@ -193,9 +193,19 @@ class OrderController extends Controller
         }
     }
 
-    public function order_history_edit() {}
+    public function order_history_edit() {
+        return response()->json([
+            'status' => 200,
+            'message' => 'Fitur not avilable',
+        ], 200);
+    }
 
-    public function order_history_update() {}
+    public function order_history_update() {
+        return response()->json([
+            'status' => 200,
+            'message' => 'Fitur not avilable',
+        ], 200);
+    }
 
     public function order_detail($id) {
         try {
@@ -214,7 +224,12 @@ class OrderController extends Controller
         }
     }
 
-    public function delete_order() {}
+    public function delete_order() {
+        return response()->json([
+            'status' => 200,
+            'message' => 'Fitur not avilable',
+        ], 200);
+    }
 
     public function edit_order($id) {
         try {
@@ -357,5 +372,10 @@ class OrderController extends Controller
         }
     }
 
-    public function report() {}
+    public function report() {
+        return response()->json([
+            'status' => 200,
+            'message' => 'Fitur not avilable',
+        ], 200);
+    }
 }
