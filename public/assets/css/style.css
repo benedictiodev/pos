@@ -1452,6 +1452,10 @@ input:checked + .toggle-bg {
   width: 2.5rem;
 }
 
+.w-2\/3 {
+  width: 66.666667%;
+}
+
 .w-2\/6 {
   width: 33.333333%;
 }
@@ -1495,10 +1499,6 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
 }
 
 .min-w-full {
