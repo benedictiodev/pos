@@ -210,12 +210,16 @@ class OrderController extends Controller
                 ->leftJoin('products', 'products.id', '=', 'order_items.product_id')
                 ->get();
 
-            return view('dashboard.order.order_history_edit', [
-                'list_menu' => $data_menu,
-                'list_fund' => $data_fund,
-                'order_item' => $order_item,
-                'order' => $order
-            ]);
+            return response()->json([
+                'status' => 200,
+                'message' => 'Pengambilan data berhasil',
+                'data' => (object) [
+                    'list_menu' => $data_menu,
+                    'list_fund' => $data_fund,
+                    'order_item' => $order_item,
+                    'order' => $order
+                ]
+            ], 200);
         } catch (Throwable $error) {
             return response()->json([
                 'status' => 500,
