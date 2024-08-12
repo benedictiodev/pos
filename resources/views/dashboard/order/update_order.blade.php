@@ -536,6 +536,7 @@
 
     const change_discount = () => {
       let total_price_item = parseInt(($('#confirm_order-total_price_item').val()).replaceAll('.', ''));
+      let payment = parseInt(($('#confirm_order-payment').val()).replaceAll('.', ''));
       let discount = parseInt(($('#confirm_order-discount').val()).replaceAll('.', ''));
       discount = discount ? (discount > 100 ? 100 : discount) : 0;
       let total_discount = (Number(total_price_item) * Number(discount)) / 100;
@@ -544,6 +545,7 @@
       $('#confirm_order-total_discount').val(update_to_format_rupiah(total_discount));
       $('#confirm_order-discount').val(update_to_format_rupiah(discount));
       $('#confirm_order-total_payment').val(update_to_format_rupiah(total_payment));
+      $('#confirm_order-change').val(update_to_format_rupiah(payment > 0 ? payment - total_payment : 0));
     }
 
     const count_change_payment = () => {

@@ -66,6 +66,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
+            $total_price_item = (int) str_replace('.', '', $request['confirm_order-total_price_item']);
+            $discount = (int) str_replace('.', '', $request['confirm_order-discount']);
+            $total_discount = (int) str_replace('.', '', $request['confirm_order-total_discount']);
             $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
             $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
             $change = (int) str_replace('.', '', $request['confirm_order-change']);
@@ -85,6 +88,9 @@ class OrderController extends Controller
                 'cashier_name' => Auth::user()->name,
                 'datetime' => Carbon::now()->toDateTimeString(),
                 'total_payment' => $total_payment,
+                'total_price_item' => $total_price_item,
+                'discount' => $discount,
+                'total_discount' => $total_discount,
                 'payment' => $payment,
                 'change' => $change,
                 'payment_method' => $request['confirm_order-payment_method'],
@@ -92,6 +98,8 @@ class OrderController extends Controller
                 'status' => $request["confirm_order-pay_now"] ? 'done' : 'waiting payment',
                 'remarks' => $request['confirm_order-remarks'],
                 'sequence' => $next_sequence,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
 
             foreach ($order as $item) {
@@ -232,6 +240,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
+            $total_price_item = (int) str_replace('.', '', $request['confirm_order-total_price_item']);
+            $discount = (int) str_replace('.', '', $request['confirm_order-discount']);
+            $total_discount = (int) str_replace('.', '', $request['confirm_order-total_discount']);
             $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
             $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
             $change = (int) str_replace('.', '', $request['confirm_order-change']);
@@ -244,6 +255,9 @@ class OrderController extends Controller
                 ->update([
                     'customer_name' => $request['confirm_order-customer_name'],
                     'total_payment' => $total_payment,
+                    'total_price_item' => $total_price_item,
+                    'discount' => $discount,
+                    'total_discount' => $total_discount,
                     'payment' => $payment,
                     'change' => $change,
                     'payment_method' => $request['confirm_order-payment_method'],
@@ -404,6 +418,9 @@ class OrderController extends Controller
     {
         try {
             DB::beginTransaction();
+            $total_price_item = (int) str_replace('.', '', $request['confirm_order-total_price_item']);
+            $discount = (int) str_replace('.', '', $request['confirm_order-discount']);
+            $total_discount = (int) str_replace('.', '', $request['confirm_order-total_discount']);
             $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
             $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
             $change = (int) str_replace('.', '', $request['confirm_order-change']);
@@ -416,6 +433,9 @@ class OrderController extends Controller
                 ->update([
                     'customer_name' => $request['confirm_order-customer_name'],
                     'total_payment' => $total_payment,
+                    'total_price_item' => $total_price_item,
+                    'discount' => $discount,
+                    'total_discount' => $total_discount,
                     'payment' => $payment,
                     'change' => $change,
                     'payment_method' => $request['confirm_order-payment_method'],
