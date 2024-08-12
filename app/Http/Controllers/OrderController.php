@@ -472,44 +472,77 @@ class OrderController extends Controller
             }
 
             if ($request["confirm_order-pay_now"]) {
-                CashIn::create([
-                    'company_id' => Auth::user()->company_id,
-                    'fund' => $total_payment,
-                    'remark' => '',
-                    'datetime' => Carbon::now()->toDateTimeString(),
-                    'type' => $request['confirm_order-payment_method'],
-                    'order_id' => $id,
-                    'remarks_from_master' => '',
-                ]);
+                $old_data_cash = CashIn::where('company_id', Auth::user()->company_id)
+                    ->where('order_id', $id)->first();
 
-                $closing_cyle = ClosingCycle::where("company_id", Auth::user()->company_id)
-                    ->where("periode", Carbon::now()->format('Y-m'))
-                    ->first();
+                if ($old_data_cash) {
+                    CashIn::where('id', $old_data_cash->id)->update([
+                        'fund' => $total_payment,
+                        'type' => $request['confirm_order-payment_method'],
+                    ]);
 
-                if ($closing_cyle) {
-                    $fund = Fund::where("company_id", Auth::user()->company_id)
-                        ->where("type", $request["confirm_order-payment_method"])->first();
-                    $fund->update(["fund" => $fund->fund + $total_payment]);
-                }
+                    $closing_cyle = ClosingCycle::where("company_id", Auth::user()->company_id)
+                        ->where("periode", Carbon::parse($old_data_cash->datetime)->format('Y-m'))
+                        ->first();
 
-                $cash_monthly = CashMonthly::where("company_id", Auth::user()->company_id)
-                    ->where("datetime", Carbon::now()->toDateString())->first();
+                    if ($closing_cyle) {
+                        $fund_old = Fund::where("company_id", Auth::user()->company_id)
+                            ->where("type", $old_data_cash->type)->first();
+                        $fund_old->update(["fund" => $fund_old->fund - $old_data_cash->fund]);
 
-                if ($cash_monthly) {
+                        $fund_new = Fund::where("company_id", Auth::user()->company_id)
+                            ->where("type", $request["confirm_order-payment_method"])->first();
+                        $fund_new->update(["fund" => $fund_new->fund + $total_payment]);
+                    }
+
+                    $cash_monthly = CashMonthly::where("company_id", Auth::user()->company_id)
+                        ->where("datetime", Carbon::parse($old_data_cash->datetime)->toDateString())->first();
+
                     CashMonthly::where("id", $cash_monthly->id)->update([
-                        "kredit" => (int) $cash_monthly->kredit + $total_payment,
-                        "amount" => (int) $cash_monthly->amount + $total_payment,
-                        "total_amount" => $closing_cyle ? (int) $cash_monthly->total_amount + $total_payment : 0,
+                        "kredit" => (int) $cash_monthly->kredit - $old_data_cash->fund + $total_payment,
+                        "amount" => (int) $cash_monthly->amount - $old_data_cash->fund + $total_payment,
+                        "total_amount" => $closing_cyle ? (int) $cash_monthly->total_amount - $old_data_cash->fund + $total_payment : 0,
                     ]);
                 } else {
-                    CashMonthly::create([
-                        "company_id" => Auth::user()->company_id,
-                        "debit" => 0,
-                        "kredit" => $total_payment,
-                        "amount" => $total_payment,
-                        "total_amount" => $closing_cyle ? $total_payment : 0,
-                        "datetime" => Carbon::now()->toDateString()
+                    CashIn::create([
+                        'company_id' => Auth::user()->company_id,
+                        'fund' => $total_payment,
+                        'remark' => '',
+                        'datetime' => Carbon::now()->toDateTimeString(),
+                        'type' => $request['confirm_order-payment_method'],
+                        'order_id' => $id,
+                        'remarks_from_master' => '',
                     ]);
+    
+                    $closing_cyle = ClosingCycle::where("company_id", Auth::user()->company_id)
+                        ->where("periode", Carbon::now()->format('Y-m'))
+                        ->first();
+    
+                    if ($closing_cyle) {
+                        $fund = Fund::where("company_id", Auth::user()->company_id)
+                            ->where("type", $request["confirm_order-payment_method"])->first();
+                        $fund->update(["fund" => $fund->fund + $total_payment]);
+                    }
+    
+                    $cash_monthly = CashMonthly::where("company_id", Auth::user()->company_id)
+                        ->where("datetime", Carbon::now()->toDateString())->first();
+    
+                    if ($cash_monthly) {
+                        CashMonthly::where("id", $cash_monthly->id)->update([
+                            "kredit" => (int) $cash_monthly->kredit + $total_payment,
+                            "amount" => (int) $cash_monthly->amount + $total_payment,
+                            "total_amount" => $closing_cyle ? (int) $cash_monthly->total_amount + $total_payment : 0,
+                        ]);
+                    } else {
+                        CashMonthly::create([
+                            "company_id" => Auth::user()->company_id,
+                            "debit" => 0,
+                            "kredit" => $total_payment,
+                            "amount" => $total_payment,
+                            "total_amount" => $closing_cyle ? $total_payment : 0,
+                            "datetime" => Carbon::now()->toDateString()
+                        ]);
+                    }
                 }
             }
             DB::commit();
