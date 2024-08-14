@@ -44,13 +44,33 @@ class OrderController extends Controller
                 ->orderBy('products.id')
                 ->get();
 
+            $result_data_menu = array();
+            foreach ($data_menu as $item) {
+                $find = false;
+                foreach ($result_data_menu as $key => $search_item) {
+                    if ($search_item->category_name == $item->category_name) {
+                        $find = $key;
+                        break;
+                    }
+                }
+
+                if ($find === false) {
+                    array_push($result_data_menu, (object) [
+                        'category_name' => $item->category_name,
+                        'products' => array($item),
+                    ]);
+                } else {
+                    array_push($result_data_menu[$find]->products, $item);
+                }
+            }
+
             $data_fund = Fund::where('company_id', 1)->get();
 
             return response()->json([
                 'status' => 200,
                 'message' => 'Pengambilan data berhasil',
                 'data' => (object) [
-                    "data_menu" => $data_menu,
+                    "data_menu" => $result_data_menu,
                     "data_fund" => $data_fund,
                 ]
             ], 200);
@@ -203,6 +223,26 @@ class OrderController extends Controller
                 ->orderBy('products.id')
                 ->get();
 
+            $result_data_menu = array();
+            foreach ($data_menu as $item) {
+                $find = false;
+                foreach ($result_data_menu as $key => $search_item) {
+                    if ($search_item->category_name == $item->category_name) {
+                        $find = $key;
+                        break;
+                    }
+                }
+
+                if ($find === false) {
+                    array_push($result_data_menu, (object) [
+                        'category_name' => $item->category_name,
+                        'products' => array($item),
+                    ]);
+                } else {
+                    array_push($result_data_menu[$find]->products, $item);
+                }
+            }
+
             $data_fund = Fund::where('company_id', 1)->get();
 
             $order_item = OrderItems::where('order_id', $id)
@@ -214,7 +254,7 @@ class OrderController extends Controller
                 'status' => 200,
                 'message' => 'Pengambilan data berhasil',
                 'data' => (object) [
-                    'list_menu' => $data_menu,
+                    'list_menu' => $result_data_menu,
                     'list_fund' => $data_fund,
                     'order_item' => $order_item,
                     'order' => $order
@@ -370,6 +410,26 @@ class OrderController extends Controller
                 ->orderBy('products.id')
                 ->get();
 
+            $result_data_menu = array();
+            foreach ($data_menu as $item) {
+                $find = false;
+                foreach ($result_data_menu as $key => $search_item) {
+                    if ($search_item->category_name == $item->category_name) {
+                        $find = $key;
+                        break;
+                    }
+                }
+
+                if ($find === false) {
+                    array_push($result_data_menu, (object) [
+                        'category_name' => $item->category_name,
+                        'products' => array($item),
+                    ]);
+                } else {
+                    array_push($result_data_menu[$find]->products, $item);
+                }
+            }
+
             $data_fund = Fund::where('company_id', 1)->get();
 
             $order_item = OrderItems::where('order_id', $id)
@@ -383,7 +443,7 @@ class OrderController extends Controller
                 'status' => 200,
                 'message' => 'Pengambilan data berhasil',
                 'data' => (object) [
-                    "data_menu" => $data_menu,
+                    "data_menu" => $result_data_menu,
                     "data_fund" => $data_fund,
                     "order_item" => $order_item,
                     "order" => $order,
