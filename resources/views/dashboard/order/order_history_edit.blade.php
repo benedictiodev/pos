@@ -313,11 +313,44 @@
                   </select>
                 </div>
                 <div class="mb-3">
+                  <label for="confirm_order-total_price_item" class="mb-2 block text-sm font-medium text-gray-900">
+                    Total Harga  
+                  </label>
+                  <input type="text" min="0" name="confirm_order-total_price_item"
+                    id="confirm_order-total_price_item"
+                    value="{{ str_replace('Rp ', '', format_rupiah($order->total_price_item)) }}"
+                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                    placeholder="Total Harga" readonly>
+                </div>
+                <div class="mb-3 flex justify-between">
+                  <div class="w-1/3 mr-2">
+                    <label for="confirm_order-discount" class="mb-2 block text-sm font-medium text-gray-900">
+                      Diskon (%)  
+                    </label>
+                    <input type="text" min="0" name="confirm_order-discount"
+                      id="confirm_order-discount"
+                      value="{{ $order->discount }}"
+                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                      placeholder="Diskon" onkeyup="change_discount()" value="0">
+                  </div>
+                  <div class="w-2/3 ml-2">
+                    <label for="confirm_order-total_discount" class="mb-2 block text-sm font-medium text-gray-900">
+                      Total Diskon
+                    </label>
+                    <input type="text" min="0" name="confirm_order-total_discount"
+                      id="confirm_order-total_discount"
+                      value="{{ str_replace('Rp ', '', format_rupiah($order->total_discount)) }}"
+                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                      placeholder="Total Diskon" readonly>
+                  </div>
+                </div>
+                <div class="mb-3">
                   <label for="confirm_order-total_payment" class="mb-2 block text-sm font-medium text-gray-900">
                     Total Harga Yang Harus Dibayar  
                   </label>
                   <input type="text" min="0" name="confirm_order-total_payment"
                     id="confirm_order-total_payment"
+                    value="{{ str_replace('Rp ', '', format_rupiah($order->total_payment)) }}"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Total Harga Yang Harus Dibayar" readonly>
                 </div>
@@ -325,12 +358,14 @@
                   <label for="confirm_order-payment"
                     class="mb-2 block text-sm font-medium text-gray-900">Pembayaran</label>
                   <input type="text" min="0" name="confirm_order-payment" id="confirm_order-payment"
+                    value="{{ str_replace('Rp ', '', format_rupiah($order->payment)) }}"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Pembayaran" onkeyup="count_change_payment()">
                 </div>
                 <div class="">
                   <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900">Kembalian</label>
                   <input type="text" min="0" name="confirm_order-change" id="confirm_order-change"
+                    value="{{ str_replace('Rp ', '', format_rupiah($order->change)) }}"
                     class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Kembalian" readonly>
                 </div>
@@ -377,10 +412,10 @@
         sequence += 1;
       });
 
-      draw_order_item();
+      draw_order_item(true);
     });
 
-    const draw_order_item = () => {
+    const draw_order_item = (is_first = false) => {
       $('#body-order-item').html("");
       let total_price_order = 0;
       data_order.forEach((item, index) => {
@@ -412,10 +447,15 @@
         `);
       })
 
-      $('#confirm_order-total_payment').val(update_to_format_rupiah(total_price_order));
-      $('#confirm_order-payment').val(update_to_format_rupiah({!! json_encode($order->payment) !!}));
-      $('#confirm_order-change').val(update_to_format_rupiah({!! json_encode($order->change) !!}));
-      $('#order-total-price').html(format_rupiah(total_price_order));
+      if (!is_first) {
+        $('#confirm_order-total_payment').val(update_to_format_rupiah(total_price_order));
+        $('#confirm_order-total_price_item').val(update_to_format_rupiah(total_price_order));
+        $('#confirm_order-discount').val(0);
+        $('#confirm_order-total_discount').val(0);
+        $('#confirm_order-payment').val(update_to_format_rupiah({!! json_encode($order->payment) !!}));
+        $('#confirm_order-change').val(update_to_format_rupiah({!! json_encode($order->change) !!}));
+        $('#order-total-price').html(format_rupiah(total_price_order));
+      }
     }
 
     const hover_order_item = (sequence_id) => {
@@ -561,6 +601,20 @@
     //     $('#payment_form').attr('hidden', true);
     //   }
     // });
+
+    const change_discount = () => {
+      let total_price_item = parseInt(($('#confirm_order-total_price_item').val()).replaceAll('.', ''));
+      let payment = parseInt(($('#confirm_order-payment').val()).replaceAll('.', ''));
+      let discount = parseInt(($('#confirm_order-discount').val()).replaceAll('.', ''));
+      discount = discount ? (discount > 100 ? 100 : discount) : 0;
+      let total_discount = (Number(total_price_item) * Number(discount)) / 100;
+      let total_payment = Number(total_price_item) - Number(total_discount);
+
+      $('#confirm_order-total_discount').val(update_to_format_rupiah(total_discount));
+      $('#confirm_order-discount').val(update_to_format_rupiah(discount));
+      $('#confirm_order-total_payment').val(update_to_format_rupiah(total_payment));
+      $('#confirm_order-change').val(update_to_format_rupiah(payment > 0 ? payment - total_payment : 0));
+    }
 
     const count_change_payment = () => {
       let total_payment = parseInt(($('#confirm_order-total_payment').val()).replaceAll('.', ''));
