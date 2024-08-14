@@ -9,11 +9,17 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
 use App\Http\Controllers\ManagementUserController;
+use App\Http\Controllers\MigrationDataController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemarksCashFlowController;
 use Illuminate\Support\Facades\Route;
+
+
+Route::prefix('/migration')->group(function() {
+    Route::get('/', [MigrationDataController::class, 'add_data_discount_for_order_old']);
+});
 
 
 Route::get('/', function () {
