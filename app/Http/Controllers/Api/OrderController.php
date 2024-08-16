@@ -528,7 +528,7 @@ class OrderController extends Controller
             }
 
             if ($request["confirm_order-pay_now"]) {
-                $old_data_cash = CashIn::where('company_id', Auth::user()->company_id)
+                $old_data_cash = CashIn::where('company_id', 1)
                     ->where('order_id', $id)->first();
 
                 if ($old_data_cash) {
@@ -537,21 +537,21 @@ class OrderController extends Controller
                         'type' => $request['confirm_order-payment_method'],
                     ]);
 
-                    $closing_cyle = ClosingCycle::where("company_id", Auth::user()->company_id)
+                    $closing_cyle = ClosingCycle::where("company_id", 1)
                         ->where("periode", Carbon::parse($old_data_cash->datetime)->format('Y-m'))
                         ->first();
 
                     if ($closing_cyle) {
-                        $fund_old = Fund::where("company_id", Auth::user()->company_id)
+                        $fund_old = Fund::where("company_id", 1)
                             ->where("type", $old_data_cash->type)->first();
                         $fund_old->update(["fund" => $fund_old->fund - $old_data_cash->fund]);
 
-                        $fund_new = Fund::where("company_id", Auth::user()->company_id)
+                        $fund_new = Fund::where("company_id", 1)
                             ->where("type", $request["confirm_order-payment_method"])->first();
                         $fund_new->update(["fund" => $fund_new->fund + $total_payment]);
                     }
 
-                    $cash_monthly = CashMonthly::where("company_id", Auth::user()->company_id)
+                    $cash_monthly = CashMonthly::where("company_id", 1)
                         ->where("datetime", Carbon::parse($old_data_cash->datetime)->toDateString())->first();
 
                     CashMonthly::where("id", $cash_monthly->id)->update([
