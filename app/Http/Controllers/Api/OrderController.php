@@ -378,7 +378,7 @@ class OrderController extends Controller
 
     public function order_detail($id) {
         try {
-            $data = Order::with('items')->where("company_id", 1)->where('id', $id)->first();
+            $data = Order::with(['items.product'])->where("company_id", 1)->where('id', $id)->first();
 
             return response()->json([
                 'status' => 200,
