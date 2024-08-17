@@ -16,7 +16,7 @@ class AuthMobileCheck
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check()) {
+        if (Auth::guard('sanctum')->check()) {
             return $next($request);
         } else {
             return response()->json([
