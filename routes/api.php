@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::prefix('/')->middleware([
-    AuthMobileCheck::class
+    // AuthMobileCheck::class
 ])->group(function() {
     Route::prefix('/order')->group(function() {
         Route::get("/", [OrderController::class, 'order_active']);
