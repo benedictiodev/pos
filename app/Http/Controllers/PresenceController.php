@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\CompanySetting;
 use App\Models\Presence;
 use App\Models\User;
 use Carbon\Carbon;
@@ -37,9 +38,9 @@ class PresenceController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.presence.index')->with('success', "Successfully to user presence.");
+            return redirect()->route('dashboard.presence.index')->with('success', "Berhasil melakukan presensi.");
         } else {
-            return redirect()->route('dashboard.presence.index')->with('failed', "Failed to user presence.");
+            return redirect()->route('dashboard.presence.index')->with('failed', "Gagal melakukan presensi.");
         }
     }
 
@@ -60,9 +61,12 @@ class PresenceController extends Controller
 
         $history = User::with(['presence'])->where("id", "=", Auth::user()->id)->where("company_id", Auth::user()->company_id)->first();
 
+        $setting = CompanySetting::query()->where("company_id", '=', Auth::user()->company_id)->first();
+
         return view('dashboard.presence.user_presence', [
             "user" => $user,
             "history" => $history,
+            "setting" => $setting,
         ]);
     }
 
@@ -80,9 +84,9 @@ class PresenceController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route('dashboard.presence.presence_user')->with('success', "Successfully to user presence.");
+            return redirect()->route('dashboard.presence.presence_user')->with('success', "Berhasil melakukan presensi.");
         } else {
-            return redirect()->route('dashboard.presence.presence_user')->with('failed', "Failed to user presence.");
+            return redirect()->route('dashboard.presence.presence_user')->with('failed', "Gagal melakukan presensi.");
         }
     }
 }

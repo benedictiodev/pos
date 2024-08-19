@@ -8,25 +8,26 @@
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
               <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-                Dashboard
+                Beranda
               </a>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Finance</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Keuangan</span>
               </div>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
                 <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">
-                  Funds</span>
+                  Dana
+                </span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Funds</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Dana</h1>
       </div>
     </div>
 
@@ -46,7 +47,7 @@
         class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-1 lg:mb-2 mx-1">
         <div class="flex items-center text-sm">
           <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" /> Total
-          Funds :
+          Dana :
         </div>
         <div class="font-bold text-sm"> {{ format_rupiah($total_fund) }}</div>
       </div>
@@ -70,7 +71,7 @@
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
               <input type="text" name="search" id="products-search"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for diversion of fund allocation"
+                placeholder="Pencarian pengalihan alokasi dana"
                 @if (isset($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
             </div>
           </form>
@@ -78,7 +79,7 @@
         <a id="createProductButton"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
           href="{{ route('dashboard.finance.funds.create') }}">
-          Add new diversion of fund allocation
+          Tambahkan pengalihan baru alokasi dana
         </a>
       </div>
       <div class="flex flex-col">
@@ -89,16 +90,16 @@
                 <thead class="bg-gray-100">
                   <tr>
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Datetime
+                      Waktu
                     </th>
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      From Fund
+                      Dari Tipe Dana
                     </th>
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      To Fund
+                      Tujuan Tipe Dana
                     </th>
                     <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
-                      Amount
+                      Total Dana Yang Dipindahkan
                     </th>
                   </tr>
                 </thead>

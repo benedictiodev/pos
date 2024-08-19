@@ -8,7 +8,7 @@
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
               <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-                Dashboard
+                Beranda
               </a>
             </li>
             <li>
@@ -20,12 +20,12 @@
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">History</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Riwayat</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Order History</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Riwayat Order</h1>
       </div>
     </div>
 
@@ -48,9 +48,9 @@
             <div class="relative mt-1 w-order sm:w-64 xl:w-96">
               <input type="date" name="periode" id="order-search"
                 class="block w-full rounded-lg border border-gray-300 order-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for daily cash flow"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}"
-                onchange="change_search()">
+                onchange="change_search()"
+                max="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
             </div>
           </form>
           {{-- <div class="flex w-full items-center sm:justify-end">
@@ -81,22 +81,22 @@
                       Order ID
                     </th>
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Datetime
+                      Waktu
                     </th>
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Cashier
+                      Kasir
                     </th>
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Payment Method
+                      Metode Pembayaran
                     </th>
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Order Type
+                      Tipe Order
                     </th>
                     <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
                       Total
                     </th>
                     <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
-                      Actions
+                      Aksi
                     </th>
                   </tr>
                 </thead>
@@ -145,20 +145,20 @@
                         @if (Auth::user()->id == 1)
                           <a href="{{ route('dashboard.order.order_history_edit', $item) }}"
                             class="inline-flex items-center rounded-lg bg-slate-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-slate-800 focus:ring-4 focus:ring-primary-300">
-                            Update
+                            Perbarui
                           </a>
                         @endif
                         <a href="{{ route('dashboard.order.order_detail', ['id' => $item->id]) }}"
                           class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                           <x-fas-file class="mr-2 h-4 w-4" />
-                          View Order
+                          Lihat Order
                         </a>
                       </td>
                     </tr>
 
                   @empty
                     <tr>
-                      <td class="text-center text-base font-light p-4" colspan="8">Empty Data</td>
+                      <td class="text-center text-base font-light p-4" colspan="8">Data Kosong</td>
                     </tr>
                   @endforelse
                 </tbody>
@@ -167,7 +167,7 @@
                     <tr>
                       <th scope="col" colspan="2s"
                         class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                        Grand Total
+                        Jumlah Total
                       </th>
                       <th scope="col" colspan="5"
                         class="p-4 text-right text-base font-bold uppercase text-gray-500">

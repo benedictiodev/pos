@@ -8,28 +8,29 @@
           <li class="inline-flex items-center">
             <a href="#"
               class="inline-flex items-center text-gray-700 hover:text-primary-600">
-              Dashboard
+              Beranda
             </a>
           </li>
           <li>
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Finance</span>
+              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Keuangan</span>
             </div>
           </li>
           <li>
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
               <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">
-                Diversion of fund allocation</span>
+                Pengalihan alokasi dana
+              </span>
             </div>
           </li>
         </ol>
       </nav>
-      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Diversion of fund allocation</h1>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Pengalihan alokasi dana</h1>
       <a href="{{ route('dashboard.finance.funds') }}"
         class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
-        Back
+        Kembali
       </a>
     </div>
 
@@ -46,22 +47,22 @@
           @csrf
           <div class="space-y-6">
             <div>
-              <label for="amount" class="mb-2 block text-sm font-medium text-gray-900">Amount</label>
+              <label for="amount" class="mb-2 block text-sm font-medium text-gray-900">Total Dana Yang Dipindahkan</label>
               <input type="text" name="amount" id="amount"
                 onkeyup="keyup_rupiah(this)"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                placeholder="Amount" value="{{ old('amount') }}" required>
+                placeholder="Total Dana Yang Dipindahkan" value="{{ old('amount') }}" required>
               @error('amount')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
               @enderror
             </div>
 
             <div>
-              <label for="from_type" class="block mb-2 text-sm font-medium text-gray-900">From Type</label>
+              <label for="from_type" class="block mb-2 text-sm font-medium text-gray-900">Dari Tipe Dana</label>
               <select id="from_type" name="from_type"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required>
-                <option disabled value="" selected>~ Select Type ~</option>
+                <option disabled value="" selected>~ Pilih Tipe Dana ~</option>
                 @foreach ($funds as $item)
                   <option value="{{ $item->type }}" @if (old('from_type') == $item->type) selected @endif>
                     {{ $item->type }}</option>
@@ -74,11 +75,11 @@
             </div>
 
             <div>
-              <label for="to_type" class="block mb-2 text-sm font-medium text-gray-900">To Type</label>
+              <label for="to_type" class="block mb-2 text-sm font-medium text-gray-900">Tujuan Tipe Dana</label>
               <select id="to_type" name="to_type"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required>
-                <option disabled value="" selected>~ Select Type ~</option>
+                <option disabled value="" selected>~ Pilih Tipe Dana ~</option>
                 @foreach ($funds as $item)
                   <option value="{{ $item->type }}" @if (old('to_type') == $item->type) selected @endif>
                     {{ $item->type }}</option>
@@ -91,10 +92,10 @@
             </div>
 
             <div>
-              <label for="datetime" class="mb-2 block text-sm font-medium text-gray-900">Date</label>
+              <label for="datetime" class="mb-2 block text-sm font-medium text-gray-900">Waktu</label>
               <input type="datetime-local" name="datetime" id="datetime"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                placeholder="Date" value="{{ old('datetime') }}" required>
+                placeholder="Waktu" value="{{ old('datetime') }}" required>
               @error('datetime')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
               @enderror
@@ -104,7 +105,7 @@
               data-drawer-show="drawer-add" aria-controls="drawer-add"
               data-drawer-placement="right"
               class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-              Add
+              Tambahkan
             </button>
           </div>
         </form>
@@ -115,7 +116,7 @@
       class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
       tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
       <h5 id="drawer-label"
-        class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Diversion of fund allocation
+        class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Pengalihan alokasi dana
       </h5>
       <button type="button" data-drawer-dismiss="drawer-add"
         aria-controls="drawer-add"
@@ -128,12 +129,12 @@
         <div id="button-div-control" hidden>
           <button type="button" data-type="button-submit"
             class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300">
-            Yes, I'm sure
+            Ya, Saya Yakin
           </button>
           <button type="button"
             class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
             data-drawer-hide="drawer-add">
-            No, cancel
+            Tidak, Batalkan
           </button>
         </div>
     </div>
@@ -154,14 +155,14 @@
           if (amount && from_type && to_type && datetime) {
             if (from_type == to_type) {
               document.querySelector('#button-div-control').hidden = true;
-              document.querySelector('#info-text-drawer').innerHTML = "From type to type must be different!";
+              document.querySelector('#info-text-drawer').innerHTML = "'Dari tipe dana' dan 'tujuan tipe dana' harus berbeda!";
             } else {
               document.querySelector('#button-div-control').hidden = false;
-              document.querySelector('#info-text-drawer').innerHTML = "Are you sure you want to add this diversion of fund allocation?";
+              document.querySelector('#info-text-drawer').innerHTML = "Yakin ingin menambahkan pengalihan alokasi dana ini?";
             }
           } else {
             document.querySelector('#button-div-control').hidden = true;
-            document.querySelector('#info-text-drawer').innerHTML = "Please fill out field!";
+            document.querySelector('#info-text-drawer').innerHTML = "Silakan isi kolom!";
           }
         }
         if (event.target.getAttribute('data-type') == "button-submit") {

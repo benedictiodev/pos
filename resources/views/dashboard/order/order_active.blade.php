@@ -8,7 +8,7 @@
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
               <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-                Dashboard
+                Beranda
               </a>
             </li>
             <li>
@@ -22,12 +22,12 @@
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Order Active</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Order Aktif</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Order Active</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Order Aktif</h1>
       </div>
     </div>
 
@@ -49,7 +49,7 @@
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
               <input type="text" name="search" id="search"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
-                placeholder="Search for order" @if (isset($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
+                placeholder="Cari Data Order" @if (isset($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
             </div>
           </form>
           {{-- <div class="flex w-full items-center sm:justify-end">
@@ -64,7 +64,7 @@
         <a id="createProductButton"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
           href="{{ route('dashboard.order.order_active.add_new_order') }}">
-          Add new order
+          Tambahkan Order Baru
         </a>
       </div>
       <div class="flex flex-col">
@@ -85,19 +85,19 @@
                       Order ID
                     </th>
                     <th scope="col" class="p-4 text-start text-base font-bold uppercase text-gray-500">
-                      Date Time
+                      Waktu
                     </th>
                     <th scope="col" class="p-4 text-start text-base font-bold uppercase text-gray-500">
-                      Customer Name
+                      Nama Pelanggan
                     </th>
                     <th scope="col" class="p-4 text-start text-base font-bold uppercase text-gray-500">
-                      Remarks
+                      Keterangan
                     </th>
                     <th scope="col" class="p-4 text-start text-base font-bold uppercase text-gray-500">
-                      Order Type
+                      Tipe Order
                     </th>
                     <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
-                      Actions
+                      Aksi
                     </th>
                   </tr>
                 </thead>
@@ -140,7 +140,7 @@
                           data-drawer-placement="right"
                           class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                           <x-fas-edit class="mr-2 h-4 w-4" />
-                          Update
+                          Perbarui
                         </a>
                         <button type="button" id="deleteProductButton" data-drawer-target="drawer-delete-order"
                           data-drawer-show="drawer-delete-order" aria-controls="drawer-delete-order"
@@ -148,13 +148,13 @@
                           class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300"
                           data-id="{{ $item->id }}">
                           <x-fas-trash-alt class="mr-2 h-4 w-4" />
-                          Delete
+                          Hapus
                         </button>
                       </td>
                     </tr>
                   @empty
                     <tr>
-                      <td class="text-center text-base font-light p-4" colspan="7">Empty Data</td>
+                      <td class="text-center text-base font-light p-4" colspan="7">Data Kosong</td>
                     </tr>
                   @endforelse
                 </tbody>
@@ -174,27 +174,27 @@
   <div id="drawer-delete-order"
     class="fixed right-0 top-0 z-40 h-screen w-full max-w-xs translate-x-full overflow-y-auto bg-white p-4 transition-transform"
     tabindex="-1" aria-labelledby="drawer-label" aria-hidden="true">
-    <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Delete item
+    <h5 id="drawer-label" class="inline-flex items-center text-sm font-semibold uppercase text-gray-500">Hapus Data
     </h5>
     <button type="button" data-drawer-dismiss="drawer-delete-order" aria-controls="drawer-delete-order"
       class="absolute right-2.5 top-2.5 inline-flex items-center rounded-lg bg-transparent p-1.5 text-sm text-gray-400 hover:bg-gray-200 hover:text-gray-900">
       <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
-      <span class="sr-only">Close menu</span>
+      <span class="sr-only">Tutup</span>
     </button>
     <form id="form-delete">
       @csrf
       @method('DELETE')
       <input type="text" id="delete-id" value="" hidden>
       <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
-      <h3 class="mb-6 text-lg text-gray-500">Are you sure you want to delete this order?</h3>
+      <h3 class="mb-6 text-lg text-gray-500">Apakah anda yakin untuk menghapus data order ini?</h3>
       <button type="button" data-type="button-delete"
         class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300">
-        Yes, I'm sure
+        Ya, Saya Yakin
       </button>
       <button type="button"
         class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
         data-drawer-hide="drawer-delete-order">
-        No, cancel
+        Tidak, Batalkan
       </button>
     </form>
   </div>

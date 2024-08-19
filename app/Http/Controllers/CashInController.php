@@ -95,10 +95,10 @@ class CashInController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to create cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Berhasil menambahkan data pemasukkan dana");
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to create cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Gagal menambahkan data pemasukkan dana");
         }
     }
 
@@ -118,7 +118,7 @@ class CashInController extends Controller
                 "remarks" => $remarks
             ]);
         } else {
-            return view('dashboard.finance.cash-in')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return view('dashboard.finance.cash-in')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -189,14 +189,14 @@ class CashInController extends Controller
                     "total_amount" => $closing_cyle ? (int) $cash_monthly->total_amount - $amount + $validate["fund"] : 0,
                 ]);
                 DB::commit();
-                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to update cash in");
+                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Berhasil memperbarui data pemasukkan dana");
             } else {
                 DB::rollBack();
                 return abort(404);
             }
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to update cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Gagal memperbarui data pemasukkan dana");
         }
     }
 
@@ -236,14 +236,14 @@ class CashInController extends Controller
                 $delete =  CashIn::destroy($id);
 
                 DB::commit();
-                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to delete cash in");
+                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Berhasil menghapus data pemasukkan dana");
             } else {
                 DB::rollBack();
                 return abort(404);
             }
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to delete cash in");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Gagal menghapus data pemasukkan dana");
         }
     }
 }

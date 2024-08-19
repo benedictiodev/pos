@@ -55,9 +55,9 @@ class ManagementUserController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route("dashboard.management-user.user.index")->with('success', "Successfully to create a user");
+            return redirect()->route("dashboard.management-user.user.index")->with('success', "Berhasil menambahkan akun pengguna baru");
         } else {
-            return redirect()->route("dashboard.management-user.user.index")->with('failed', "Failed to create a user");
+            return redirect()->route("dashboard.management-user.user.index")->with('failed', "Gagal menambahkan akun pengguna baru");
         }
     }
 
@@ -102,9 +102,9 @@ class ManagementUserController extends Controller
         ]);
 
         if ($store) {
-            return redirect()->route("dashboard.management-user.user.index")->with('success', "Successfully to update a user");
+            return redirect()->route("dashboard.management-user.user.index")->with('success', "Berhasil memperbarui akun pengguna");
         } else {
-            return redirect()->route("dashboard.management-user.user.index")->with('failed', "Failed to update a user");
+            return redirect()->route("dashboard.management-user.user.index")->with('failed', "Gagal memperbarui akun pengguna");
         }
     }
 
@@ -116,13 +116,13 @@ class ManagementUserController extends Controller
         $user = User::query()->where("company_id", "=", Auth::user()->company_id)->where("id", "=", $id)->first();
         if ($user) {
             if ($user->id == Auth::user()->id) {
-                return redirect()->route("dashboard.management-user.user.index")->with('failed', "Cannot to delete a user");
+                return redirect()->route("dashboard.management-user.user.index")->with('failed', "User tidak dapat dihapus");
             }
             $delete = $user->delete();
             if ($delete) {
-                return redirect()->route("dashboard.management-user.user.index")->with('success', "Successfully to delete a user");
+                return redirect()->route("dashboard.management-user.user.index")->with('success', "Berhasil menghapus akun pengguna");
             } else {
-                return redirect()->route("dashboard.management-user.user.index")->with('failed', "Failed to delete a user");
+                return redirect()->route("dashboard.management-user.user.index")->with('failed', "Gagal menghapus akun pengguna");
             }
         } else {
             return abort(404);

@@ -96,9 +96,9 @@ class CashOutController extends Controller
             }
 
             DB::commit();
-            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to create cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Berhasil menambah data pengeluaran dana");
         } catch (Throwable $error) {
-            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to create cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Gagal menambah data pengeluaran dana");
         }
     }
 
@@ -118,7 +118,7 @@ class CashOutController extends Controller
                 "remarks" => $remarks
             ]);
         } else {
-            return view('dashboard.finance.cash-out')->with('failed', 'Oops! Looks like you followed a bad link. If you think this is a problem with us, please tell us.');
+            return view('dashboard.finance.cash-out')->with('failed', 'Ups! Sepertinya Anda mengikuti tautan yang buruk. Jika menurut Anda ini adalah masalah kami, beri tahu kami.');
         }
     }
 
@@ -190,14 +190,14 @@ class CashOutController extends Controller
                 ]);
 
                 DB::commit();
-                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to update cash out");
+                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Berhasil memperbarui data pengeluaran dana");
             } else {
                 DB::rollBack();
                 return abort(404);
             }
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to update cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Gagal memperbarui data pengeluaran dana");
         }
     }
 
@@ -237,14 +237,14 @@ class CashOutController extends Controller
                 $delete =  CashOut::destroy($id);
 
                 DB::commit();
-                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Successfully to delete cash out");
+                return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('success', "Berhasil menghapus data pengeluaran dana");
             } else {
                 DB::rollBack();
                 return abort(404);
             }
         } catch (Throwable $error) {
             DB::rollBack();
-            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Failed to delete cash out");
+            return redirect()->route('dashboard.finance.cash-flow-daily', $query_data)->with('failed', "Berhasil menghapus data pengeluaran dana");
         }
     }
 }

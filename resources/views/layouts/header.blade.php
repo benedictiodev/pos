@@ -84,12 +84,12 @@
               <li>
                 <a href="{{ route('dashboard.profile') }}"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem">Profile</a>
+                  role="menuitem">Profil</a>
               </li>
               <li>
                 <a href="{{ route('dashboard.change_password') }}"
                   class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem">Change Password</a>
+                  role="menuitem">Rubah Password</a>
               </li>
               <li>
                 <form action="{{ route('logout') }}" method="POST" id="logout">
@@ -99,7 +99,7 @@
                   class="w-full text-left block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   role="menuitem" type="submit" form="logout"
                 >
-                  Sign out
+                  Keluar
                 </button>
               </li>
             </ul>

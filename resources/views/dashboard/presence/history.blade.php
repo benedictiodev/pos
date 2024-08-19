@@ -8,24 +8,24 @@
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
               <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-                Dashboard
+                Beranda
               </a>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Presence</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Presensi</span>
               </div>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">History User Presence</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Riwayat Presensi Pengguna</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">History User Presence</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Riwayat Presensi Pengguna</h1>
       </div>
     </div>
 
