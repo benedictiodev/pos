@@ -53,7 +53,7 @@ class ProductController extends Controller
             'price' => $validate['price'],
             'category_id' => $validate['category_id'],
             'description' => $request['description'],
-            'image' => $validate['image'],
+            'image' => $validate['image'] ?? null,
             'is_available' => $validate['is_available'],
         ]);
 
@@ -100,23 +100,23 @@ class ProductController extends Controller
             ->first();
 
         if ($data && $data->company_id == Auth::user()->company_id) {
+            $data_push = array(
+                'name' => $validate['name'],
+                'price' => $validate['price'],
+                'category_id' => $validate['category_id'],
+                'description' => $request['description'],
+                'is_available' => $request["is_available"] ? 1 : 0,
+            );
+
             if ($request->file('image')) {
                 if ($request->old_image) {
                     Storage::delete($request->old_image);
                 }
                 $validate['image'] = $request->file('image')->storeAs('images/master-data/product', time() . '.' . $request->image->extension());
+                $data_push["image"] = $validate['image'];
             }
 
-            $validate['is_available'] = $request["is_available"] ? 1 : 0;
-
-            $update = $data->update([
-                'name' => $validate['name'],
-                'price' => $validate['price'],
-                'category_id' => $validate['category_id'],
-                'description' => $request['description'],
-                'image' => $validate['image'],
-                'is_available' => $validate['is_available'],
-            ]);
+            $update = $data->update($data_push);
 
             if ($update) {
                 return redirect()->route('dashboard.master-data.product')->with('success', "Berhasil memperbarui data produk");
