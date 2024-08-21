@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Permission;
@@ -14,33 +15,25 @@ class RolePermissionSeeder extends Seeder
      */
     public function run(): void
     {
-        Permission::create(["name" => "view master data"]);
-        Permission::create(["name" => "action master data"]);
+        Permission::create(["name" => "Master Data-view"]);
+        Permission::create(["name" => "Master Data-action"]);
 
-        Permission::create(["name" => "view finance"]);
-        Permission::create(["name" => "action finance"]);
+        Permission::create(["name" => "Keuangan-view"]);
+        Permission::create(["name" => "Keuangan-action"]);
 
-        Permission::create(["name" => "view company"]);
-        Permission::create(["name" => "action company"]);
+        Permission::create(["name" => "Toko-view"]);
+        Permission::create(["name" => "Toko-action"]);
 
-        Permission::create(["name" => "view order history"]);
-        Permission::create(["name" => "action order history"]);
+        Permission::create(["name" => "Riwayat Order-view"]);
+        Permission::create(["name" => "Riwayat Order-action"]);
 
-        Permission::create(["name" => "view order active"]);
-        Permission::create(["name" => "action order active"]);
+        Permission::create(["name" => "Riwayat Absensi-view"]);
+        Permission::create(["name" => "Riwayat Absensi-action"]);
 
-        Permission::create(["name" => "view presence history"]);
-        Permission::create(["name" => "action presence history"]);
+        Permission::create(["name" => "Pengelolaan Akun-view"]);
+        Permission::create(["name" => "Pengelolaan Akun-action"]);
 
-        Permission::create(["name" => "view presence user"]);
-        Permission::create(["name" => "action presence user"]);
-
-        Permission::create(["name" => "view management user"]);
-        Permission::create(["name" => "action management user"]);
-
-        // Role::create(['name' => 'owner-pro']);
-        // Role::create(['name' => 'owner-basic']);
-        Role::create(['name' => 'owner']);
-        Role::create(['name' => 'staff']);
+        $owner_pro = Role::create(['name' => 'Owner-Pro'])->givePermissionTo(Permission::all());
+        User::where('id', 1)->first()->assignRole($owner_pro);
     }
 }
