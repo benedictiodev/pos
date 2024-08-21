@@ -51,100 +51,23 @@
             <div>
               <label for="checkbos-all" class="mb-2 block text-base font-semibold text-gray-900">Permission</label>
               <div class="space-y-3">
-                <div>
-                  <label for="master-data" class="mb-1 block text-base font-semibold text-gray-900">Master Data</label>
-                  <div class="flex flex-row gap-3 items-center">
-                    @foreach ($permission as $value)
-                      @if (str_contains($value->name, 'master data'))
-                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                            @if ($role->hasPermissionTo($value->name)) checked @endif>
-                          {{ $value->name }}</label>
-                      @endif
-                    @endforeach
+                
+                @foreach ($permission as $value)
+                  <div>
+                    <h3 class="mb-4 font-semibold text-gray-900 dark:text-white text-sm">{{ $value->menu }}</h3>
+                    <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
+                      @foreach ($value->permission as $item)    
+                        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
+                          <div class="flex items-center ps-3">
+                            <input @if ($role->hasPermissionTo($value->menu . '-' . $item)) checked @endif id="vue-checkbox-list" type="checkbox" name="permission[]" value="{{ $value->menu . '-' . $item }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
+                            <label for="vue-checkbox-list" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $item }}</label>
+                          </div>
+                        </li>
+                      @endforeach
+                    </ul>
                   </div>
-                </div>
+                @endforeach
 
-                <div>
-                  <label for="finance" class="mb-1 block text-base font-semibold text-gray-900">Finance</label>
-                  <div class="flex flex-row gap-3 items-center">
-                    @foreach ($permission as $value)
-                      @if (str_contains($value->name, 'finance'))
-                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                            @if ($role->hasPermissionTo($value->name)) checked @endif>
-                          {{ $value->name }}</label>
-                      @endif
-                    @endforeach
-                  </div>
-                </div>
-
-                <div>
-                  <label for="company" class="mb-1 block text-base font-semibold text-gray-900">Company</label>
-                  <div class="flex flex-row gap-3 items-center">
-                    @foreach ($permission as $value)
-                      @if (str_contains($value->name, 'company'))
-                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                            @if ($role->hasPermissionTo($value->name)) checked @endif>
-                          {{ $value->name }}</label>
-                      @endif
-                    @endforeach
-                  </div>
-                </div>
-
-                <div>
-                  <label for="order-history" class="mb-1 block text-base font-semibold text-gray-900">Order
-                    History</label>
-                  <div class="flex flex-row gap-3 items-center">
-                    @foreach ($permission as $value)
-                      @if (str_contains($value->name, 'order history'))
-                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                            @if ($role->hasPermissionTo($value->name)) checked @endif>
-                          {{ $value->name }}</label>
-                      @endif
-                    @endforeach
-                  </div>
-                </div>
-
-                <div>
-                  <label for="order-active" class="mb-1 block text-base font-semibold text-gray-900">Order
-                    Active</label>
-                  <div class="flex flex-row gap-3 items-center">
-                    @foreach ($permission as $value)
-                      @if (str_contains($value->name, 'order active'))
-                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                            @if ($role->hasPermissionTo($value->name)) checked @endif>
-                          {{ $value->name }}</label>
-                      @endif
-                    @endforeach
-                  </div>
-                </div>
-
-                <div>
-                  <label for="presence-user" class="mb-1 block text-base font-semibold text-gray-900">Presence
-                    User</label>
-                  <div class="flex flex-row gap-3 items-center">
-                    @foreach ($permission as $value)
-                      @if (str_contains($value->name, 'presence user'))
-                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                            @if ($role->hasPermissionTo($value->name)) checked @endif>
-                          {{ $value->name }}</label>
-                      @endif
-                    @endforeach
-                  </div>
-                </div>
-
-                <div>
-                  <label for="management-user" class="mb-1 block text-base font-semibold text-gray-900">Management
-                    User</label>
-                  <div class="flex flex-row gap-3 items-center">
-                    @foreach ($permission as $value)
-                      @if (str_contains($value->name, 'management user'))
-                        <label class="capitalize"><input type="checkbox" name="permission[]" value="{{ $value->name }}"
-                            @if ($role->hasPermissionTo($value->name)) checked @endif>
-                          {{ $value->name }}</label>
-                      @endif
-                    @endforeach
-                  </div>
-                </div>
               </div>
             </div>
 

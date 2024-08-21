@@ -203,9 +203,31 @@ class ManagementUserController extends Controller
     {
         $role = Role::query()->findOrFail($id);
         if ($role) {
+            $array_result = array();
+            $data_permission = Permission::all();
+            foreach ($data_permission AS $item) {
+                $find = false;
+                $menu = explode("-", $item->name);
+                foreach ($array_result as $key => $search_item) {
+                    if ($search_item->menu == $menu[0]) {
+                        $find = $key;
+                        break;
+                    }
+                }
+
+                if ($find === false) {
+                    array_push($array_result, (object) [
+                        'menu' => $menu[0],
+                        'permission' => array($menu[1]),
+                    ]);
+                } else {
+                    array_push($array_result[$find]->permission, $menu[1]);
+                }
+            }
+                
             return view('dashboard.management-user.role.edit', [
                 "role" => $role,
-                "permission" => Permission::all()
+                "permission" => $array_result
             ]);
         } else {
             return abort(404);
