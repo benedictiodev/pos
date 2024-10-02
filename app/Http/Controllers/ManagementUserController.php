@@ -153,7 +153,7 @@ class ManagementUserController extends Controller
             $find = false;
             $menu = explode("-", $item->name);
             foreach ($array_result as $key => $search_item) {
-                if ($search_item->menu == $menu[0]) {
+                if ($search_item->menu == $menu[1]) {
                     $find = $key;
                     break;
                 }
@@ -161,11 +161,29 @@ class ManagementUserController extends Controller
 
             if ($find === false) {
                 array_push($array_result, (object) [
-                    'menu' => $menu[0],
-                    'permission' => array($menu[1]),
+                    'menu' => $menu[1],
+                    'sub_menu' => array((object) [
+                        'sub_menu' => $menu[2],
+                        'permission' => array($menu[3]),
+                    ]),
                 ]);
             } else {
-                array_push($array_result[$find]->permission, $menu[1]);
+                $find_sub = false;
+                foreach ($array_result[$find]->sub_menu as $key => $search_item) {
+                    if ($search_item->sub_menu == $menu[2]) {
+                        $find_sub = $key;
+                        break;
+                    }
+                }
+
+                if ($find_sub === false) {
+                    array_push($array_result[$find]->sub_menu, (object) [
+                        'sub_menu' => $menu[2],
+                        'permission' => array($menu[3]),
+                    ]);
+                } else {
+                    array_push($array_result[$find]->sub_menu[$find_sub]->permission, $menu[3]);
+                }
             }
         }
 

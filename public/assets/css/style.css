@@ -1316,6 +1316,22 @@ input:checked + .toggle-bg {
   margin-top: 2rem;
 }
 
+.me-3 {
+  margin-inline-end: 0.75rem;
+}
+
+.me-10 {
+  margin-inline-end: 2.5rem;
+}
+
+.ms-10 {
+  margin-inline-start: 2.5rem;
+}
+
+.ms-6 {
+  margin-inline-start: 1.5rem;
+}
+
 .block {
   display: block;
 }
