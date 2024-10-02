@@ -1452,6 +1452,10 @@ input:checked + .toggle-bg {
   width: 2.5rem;
 }
 
+.w-2\/3 {
+  width: 66.666667%;
+}
+
 .w-2\/6 {
   width: 33.333333%;
 }
@@ -1495,10 +1499,6 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
 }
 
 .min-w-full {
@@ -2212,6 +2212,10 @@ input:checked + .toggle-bg {
   padding-right: 1rem;
 }
 
+.ps-3 {
+  padding-inline-start: 0.75rem;
+}
+
 .pt-0 {
   padding-top: 0px;
 }
@@ -2320,6 +2324,10 @@ input:checked + .toggle-bg {
 
 .uppercase {
   text-transform: uppercase;
+}
+
+.capitalize {
+  text-transform: capitalize;
 }
 
 .leading-5 {
@@ -2757,6 +2765,11 @@ input:checked + .toggle-bg {
   border-color: rgb(63 131 248 / var(--tw-border-opacity));
 }
 
+.dark\:border-gray-500:is(.dark *) {
+  --tw-border-opacity: 1;
+  border-color: rgb(107 114 128 / var(--tw-border-opacity));
+}
+
 .dark\:border-gray-600:is(.dark *) {
   --tw-border-opacity: 1;
   border-color: rgb(75 85 99 / var(--tw-border-opacity));
@@ -2814,6 +2827,11 @@ input:checked + .toggle-bg {
   color: rgb(63 131 248 / var(--tw-text-opacity));
 }
 
+.dark\:text-gray-300:is(.dark *) {
+  --tw-text-opacity: 1;
+  color: rgb(209 213 219 / var(--tw-text-opacity));
+}
+
 .dark\:text-gray-400:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(156 163 175 / var(--tw-text-opacity));
@@ -2822,6 +2840,10 @@ input:checked + .toggle-bg {
 .dark\:text-white:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.dark\:ring-offset-gray-700:is(.dark *) {
+  --tw-ring-offset-color: #374151;
 }
 
 .dark\:hover\:\!bg-primary-700:hover:is(.dark *) {
@@ -2857,6 +2879,15 @@ input:checked + .toggle-bg {
 .dark\:hover\:text-white:hover:is(.dark *) {
   --tw-text-opacity: 1;
   color: rgb(255 255 255 / var(--tw-text-opacity));
+}
+
+.dark\:focus\:ring-blue-600:focus:is(.dark *) {
+  --tw-ring-opacity: 1;
+  --tw-ring-color: rgb(28 100 242 / var(--tw-ring-opacity));
+}
+
+.dark\:focus\:ring-offset-gray-700:focus:is(.dark *) {
+  --tw-ring-offset-color: #374151;
 }
 
 @media (min-width: 640px) {
@@ -2898,6 +2929,14 @@ input:checked + .toggle-bg {
 
   .sm\:justify-between {
     justify-content: space-between;
+  }
+
+  .sm\:border-b-0 {
+    border-bottom-width: 0px;
+  }
+
+  .sm\:border-r {
+    border-right-width: 1px;
   }
 
   .sm\:p-6 {
