@@ -13,6 +13,50 @@ class ManagementUserController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function rolesFunction($data_permission) {
+        $array_result = array();
+        foreach ($data_permission AS $item) {
+            $find = false;
+            $menu = explode("-", $item->name);
+            foreach ($array_result as $key => $search_item) {
+                if ($search_item->menu == $menu[0]) {
+                    $find = $key;
+                    break;
+                }
+            }
+
+            if ($find === false) {
+                array_push($array_result, (object) [
+                    'menu' => $menu[0],
+                    'sub_menu' => array((object) [
+                        'sub_menu' => $menu[1],
+                        'permission' => array($menu[2]),
+                    ]),
+                ]);
+            } else {
+                $find_sub = false;
+                foreach ($array_result[$find]->sub_menu as $key => $search_item) {
+                    if ($search_item->sub_menu == $menu[1]) {
+                        $find_sub = $key;
+                        break;
+                    }
+                }
+
+                if ($find_sub === false) {
+                    array_push($array_result[$find]->sub_menu, (object) [
+                        'sub_menu' => $menu[1],
+                        'permission' => array($menu[2]),
+                    ]);
+                } else {
+                    array_push($array_result[$find]->sub_menu[$find_sub]->permission, $menu[2]);
+                }
+            }
+        }
+
+        return $array_result;
+    }
+
+
     public function user_index(Request $request)
     {
         return view('dashboard.management-user.user.index', [
@@ -147,45 +191,10 @@ class ManagementUserController extends Controller
      */
     public function role_create()
     {
-        $array_result = array();
-        $data_permission = Permission::all();
-        foreach ($data_permission AS $item) {
-            $find = false;
-            $menu = explode("-", $item->name);
-            foreach ($array_result as $key => $search_item) {
-                if ($search_item->menu == $menu[1]) {
-                    $find = $key;
-                    break;
-                }
-            }
-
-            if ($find === false) {
-                array_push($array_result, (object) [
-                    'menu' => $menu[1],
-                    'sub_menu' => array((object) [
-                        'sub_menu' => $menu[2],
-                        'permission' => array($menu[3]),
-                    ]),
-                ]);
-            } else {
-                $find_sub = false;
-                foreach ($array_result[$find]->sub_menu as $key => $search_item) {
-                    if ($search_item->sub_menu == $menu[2]) {
-                        $find_sub = $key;
-                        break;
-                    }
-                }
-
-                if ($find_sub === false) {
-                    array_push($array_result[$find]->sub_menu, (object) [
-                        'sub_menu' => $menu[2],
-                        'permission' => array($menu[3]),
-                    ]);
-                } else {
-                    array_push($array_result[$find]->sub_menu[$find_sub]->permission, $menu[3]);
-                }
-            }
-        }
+        $permission = Role::with('permissions')
+            ->where('is_superadmin', true)
+            ->get();
+        $array_result = $this->rolesFunction(Permission::all());
 
         return view('dashboard.management-user.role.create', [
             "permission" => $array_result,
@@ -202,7 +211,9 @@ class ManagementUserController extends Controller
         ]);
 
         $store = Role::create([
+            "company_id" => Auth::user()->company_id,
             "name" => $validate["name"],
+            "is_superadmin" => false,
         ]);
 
         $store->syncPermissions($request->permission);

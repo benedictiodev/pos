@@ -51,22 +51,36 @@
             <div>
               <label for="checkbos-all" class="mb-2 block text-base font-semibold text-gray-900">Permission</label>
               <div class="space-y-3">
-                
-                @foreach ($permission as $value)
-                  <div>
-                    <h3 class="mb-4 font-semibold text-gray-900 dark:text-white text-sm">{{ $value->menu }}</h3>
-                    <ul class="items-center w-full text-sm font-medium text-gray-900 bg-white border border-gray-200 rounded-lg sm:flex dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-                      @foreach ($value->permission as $item)    
-                        <li class="w-full border-b border-gray-200 sm:border-b-0 sm:border-r dark:border-gray-600">
-                          <div class="flex items-center ps-3">
-                            <input @if ($role->hasPermissionTo($value->menu . '-' . $item)) checked @endif id="vue-checkbox-list" type="checkbox" name="permission[]" value="{{ $value->menu . '-' . $item }}" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-700 dark:focus:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                            <label for="vue-checkbox-list" class="w-full py-3 ms-2 text-sm font-medium text-gray-900 dark:text-gray-300">{{ $item }}</label>
+                @foreach ($permission as $key_menu => $value_menu)
+                    <h2 id="accordion-role-menu-heading-{{ $key_menu }}">
+                      <button type="button" class="flex items-center justify-between w-full px-3 py-2.5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100 gap-3" data-accordion-target="#accordion-role-menu-body-{{ $key_menu }}" aria-expanded="false" aria-controls="accordion-role-menu-body-{{ $key_menu }}">
+                        <span class="capitalize">{{ $value_menu->menu }}</span>
+                        <svg data-accordion-icon class="w-3 h-3 rotate-180 shrink-0" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5 5 1 1 5"/>
+                        </svg>
+                      </button>
+                    </h2>
+                    <div id="accordion-role-menu-body-{{ $key_menu }}" class="hidden" aria-labelledby="accordion-role-menu-heading-{{ $key_menu }}">
+                      <div class="p-3 pb-0 border border-t-0 border-gray-200 dark:border-gray-700">
+                        @foreach ($value_menu->sub_menu as $value_sub_menu)
+                          <div class="mb-2">
+                            <h3 class="mb-1 font-semibold text-gray-900 dark:text-white text-sm capitalize">{{ $value_sub_menu->sub_menu }}</h3>
+                            <div class="grid grid-cols-4 max-w-full mt-1">
+                              @foreach ($value_sub_menu->permission as $item)
+                                <div class="mb-1">
+                                  <label class="inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" name="permission[]" value="{{ $value_menu->menu . '-' . $value_sub_menu->sub_menu . '-' . $item }}" class="sr-only peer">
+                                    <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                                    <span class="ms-3 text-xs font-medium text-gray-900 dark:text-gray-300 capitalize">{{ $item }}</span>
+                                  </label>
+                                </div>
+                              @endforeach
+                            </div>
                           </div>
-                        </li>
-                      @endforeach
-                    </ul>
-                  </div>
-                @endforeach
+                        @endforeach
+                      </div>
+                    </div>
+                  @endforeach
 
               </div>
             </div>
