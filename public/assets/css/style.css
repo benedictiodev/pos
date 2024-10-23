@@ -3245,6 +3245,10 @@ input:checked + .toggle-bg {
     width: 24rem;
   }
 
+  .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
   .xl\:p-8 {
     padding: 2rem;
   }

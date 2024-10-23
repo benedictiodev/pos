@@ -82,7 +82,7 @@
                   @foreach ($list_menu as $category)
                     <div>
                       <div class="bg-[#E5E7EB] py-1 px-2 sm:text-sm">Kategori : {{ $category->category_name }}</div>
-                      <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 px-1 py-2">
+                      <div class="grid grid-cols-2 xl:grid-cols-4 gap-2 px-1 py-2">
                         @foreach ($category->products as $item)
                           <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
                             <div class="border p-2 rounded-md flex items-center justify-center h-32 max-h-32">
