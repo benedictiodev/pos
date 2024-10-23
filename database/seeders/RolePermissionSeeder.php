@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -54,6 +55,11 @@ class RolePermissionSeeder extends Seeder
         Permission::create(["name" => "master data-keterangan arus kas-hapus"]);
 
         $owner_pro = Role::create(['name' => 'Owner-Pro', 'is_superadmin' => true])->givePermissionTo(Permission::all());
-        User::where('id', 1)->first()->assignRole($owner_pro);
+        $user = User::where('id', 1)->first();
+        $user->assignRole($owner_pro);
+
+        Company::where('id', $user->company_id)->update([
+            "role_id" => $owner_pro->id,
+        ]);
     }
 }

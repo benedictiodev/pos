@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('roles', function (Blueprint $table) {
             $table->foreignId('company_id')->nullable();
-            $table->boolean('is_superadmin')->default(false);
+            $table->boolean('is_superadmin')->default(false); 
 
             $table->index('company_id');
             $table->foreign('company_id')->references('id')->on('companies');

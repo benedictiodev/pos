@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Company;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -189,11 +190,10 @@ class ManagementUserController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function role_create()
-    {
+    public function role_create() {
         $permission = Role::with('permissions')
-            ->where('is_superadmin', true)
-            ->get();
+            ->where('id', Company::where('id', Auth::user()->company_id))
+            ->first();
         $array_result = $this->rolesFunction(Permission::all());
 
         return view('dashboard.management-user.role.create', [
