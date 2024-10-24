@@ -51,8 +51,8 @@
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
             <div class="sm:flex">
-              <div class="w-full sm:w-1/2 border sm:mr-3 rounded-xl max-h-[320px] sm:max-h-[450px]">
-                <div class="h-[255px] sm:h-[385px] lg:h-5/6 overflow-auto">
+              <div class="w-full sm:w-1/2 border sm:mr-3 rounded-xl max-h-[320px] sm:max-h-[300px]">
+                <div class="h-[255px] sm:h-[235px] lg:h-5/6 overflow-auto">
                   <div class="mx-2 px-2 py-3 flex border-b font-semibold sm:text-sm">
                     <div class="w-3/6">Menu</div>
                     <div class="w-1/6 text-center">Qty</div>
@@ -74,7 +74,7 @@
                     data-modal-toggle="modal-add-to-cart" class="hidden"></button>
                 </div>
               </div>
-              <div class="w-full sm:w-1/2 border sm:ml-3 rounded-xl mt-4 sm:mt-0 sm:max-h-[450px] overflow-auto">
+              <div class="w-full sm:w-1/2 border sm:ml-3 rounded-xl mt-4 sm:mt-0 sm:max-h-[300px] overflow-auto">
                 <div class="p-2 text-center sm:text-base text-lg font-semibold bg-[#E5E7EB] rounded-t-lg border-b-2 border-white">
                   Daftar Menu
                 </div>
