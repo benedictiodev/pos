@@ -44,6 +44,11 @@
           class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto">
           Masuk ke akun Anda
         </button>
+        <button type="button"
+          onclick="cek_screen_size()"
+          class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto">
+          Cek Ukuran Layar
+        </button>
       </form>
     </div>
   </div>

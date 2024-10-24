@@ -1420,38 +1420,6 @@ input:checked + .toggle-bg {
   height: 100vh;
 }
 
-.h-\[100vh\] {
-  height: 100vh;
-}
-
-.h-\[50vh\] {
-  height: 50vh;
-}
-
-.h-\[40vh\] {
-  height: 40vh;
-}
-
-.h-\[45vh\] {
-  height: 45vh;
-}
-
-.h-\[35vh\] {
-  height: 35vh;
-}
-
-.h-\[33vh\] {
-  height: 33vh;
-}
-
-.h-\[34vh\] {
-  height: 34vh;
-}
-
-.h-\[90vh\] {
-  height: 90vh;
-}
-
 .max-h-32 {
   max-height: 8rem;
 }
@@ -1462,50 +1430,6 @@ input:checked + .toggle-bg {
 
 .max-h-full {
   max-height: 100%;
-}
-
-.max-h-\[100vh\] {
-  max-height: 100vh;
-}
-
-.max-h-\[10vh\] {
-  max-height: 10vh;
-}
-
-.max-h-\[90vh\] {
-  max-height: 90vh;
-}
-
-.max-h-\[50vh\] {
-  max-height: 50vh;
-}
-
-.max-h-\[40vh\] {
-  max-height: 40vh;
-}
-
-.max-h-\[55vh\] {
-  max-height: 55vh;
-}
-
-.max-h-\[45vh\] {
-  max-height: 45vh;
-}
-
-.max-h-\[48vh\] {
-  max-height: 48vh;
-}
-
-.max-h-\[80vh\] {
-  max-height: 80vh;
-}
-
-.max-h-\[32opx\] {
-  max-height: 32opx;
-}
-
-.max-h-\[450px\] {
-  max-height: 450px;
 }
 
 .min-h-0 {
@@ -1994,11 +1918,6 @@ input:checked + .toggle-bg {
 .border-white {
   --tw-border-opacity: 1;
   border-color: rgb(255 255 255 / var(--tw-border-opacity));
-}
-
-.border-blue-500 {
-  --tw-border-opacity: 1;
-  border-color: rgb(63 131 248 / var(--tw-border-opacity));
 }
 
 .\!bg-primary-600 {
@@ -2965,14 +2884,6 @@ input:checked + .toggle-bg {
     display: none;
   }
 
-  .sm\:h-\[450px\] {
-    height: 450px;
-  }
-
-  .sm\:h-\[320px\] {
-    height: 320px;
-  }
-
   .sm\:h-\[385px\] {
     height: 385px;
   }
@@ -2981,8 +2892,8 @@ input:checked + .toggle-bg {
     max-height: 450px;
   }
 
-  .sm\:max-h-\[100vh\] {
-    max-height: 100vh;
+  .sm\:w-1\/2 {
+    width: 50%;
   }
 
   .sm\:w-64 {
@@ -2991,22 +2902,6 @@ input:checked + .toggle-bg {
 
   .sm\:w-auto {
     width: auto;
-  }
-
-  .sm\:w-2\/5 {
-    width: 40%;
-  }
-
-  .sm\:w-3\/5 {
-    width: 60%;
-  }
-
-  .sm\:w-3\/6 {
-    width: 50%;
-  }
-
-  .sm\:w-1\/2 {
-    width: 50%;
   }
 
   .sm\:flex-1 {
@@ -3029,35 +2924,16 @@ input:checked + .toggle-bg {
     justify-content: space-between;
   }
 
+  .sm\:p-3 {
+    padding: 0.75rem;
+  }
+
   .sm\:p-6 {
     padding: 1.5rem;
   }
 
   .sm\:p-8 {
     padding: 2rem;
-  }
-
-  .sm\:p-2 {
-    padding: 0.5rem;
-  }
-
-  .sm\:p-3 {
-    padding: 0.75rem;
-  }
-
-  .sm\:py-2 {
-    padding-top: 0.5rem;
-    padding-bottom: 0.5rem;
-  }
-
-  .sm\:py-3 {
-    padding-top: 0.75rem;
-    padding-bottom: 0.75rem;
-  }
-
-  .sm\:px-3 {
-    padding-left: 0.75rem;
-    padding-right: 0.75rem;
   }
 
   .sm\:pr-3 {
@@ -3069,6 +2945,11 @@ input:checked + .toggle-bg {
     line-height: 2rem;
   }
 
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
@@ -3077,16 +2958,6 @@ input:checked + .toggle-bg {
   .sm\:text-xs {
     font-size: 0.75rem;
     line-height: 1rem;
-  }
-
-  .sm\:text-lg {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
-  }
-
-  .sm\:text-base {
-    font-size: 1rem;
-    line-height: 1.5rem;
   }
 }
 
@@ -3170,10 +3041,6 @@ input:checked + .toggle-bg {
     margin-left: 16rem;
   }
 
-  .lg\:mr-3 {
-    margin-right: 0.75rem;
-  }
-
   .lg\:mt-0 {
     margin-top: 0px;
   }
@@ -3200,10 +3067,6 @@ input:checked + .toggle-bg {
 
   .lg\:max-h-\[450px\] {
     max-height: 450px;
-  }
-
-  .lg\:w-2\/5 {
-    width: 40%;
   }
 
   .lg\:w-3\/5 {
