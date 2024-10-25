@@ -18,7 +18,8 @@ use Throwable;
 
 class OrderController extends Controller
 {
-    public function order_active(Request $request) {
+    public function order_active(Request $request)
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
 
@@ -34,11 +35,12 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function add_new_order() {
+    public function add_new_order()
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
 
@@ -83,22 +85,23 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function post_new_order(Request $request) {
+    public function post_new_order(Request $request)
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
 
             DB::beginTransaction();
-            $total_price_item = (int) str_replace('.', '', $request['confirm_order-total_price_item']);
-            $discount = (int) str_replace('.', '', $request['confirm_order-discount']);
-            $total_discount = (int) str_replace('.', '', $request['confirm_order-total_discount']);
-            $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
-            $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
-            $change = (int) str_replace('.', '', $request['confirm_order-change']);
-            $order = json_decode($request['confirm_order-order']);
+            $total_price_item = (int) $request['total_price_item'];
+            $discount = (int) $request['discount'];
+            $total_discount = (int) $request['total_discount'];
+            $total_payment = (int) $request['total_payment'];
+            $payment = (int) $request['payment'];
+            $change = (int) $request['change'];
+            $order = json_decode($request['order']);
 
             $data_order = Order::where('company_id', $company_id)
                 ->where('datetime', 'like', Carbon::now()->toDateString() . '%')
@@ -110,7 +113,7 @@ class OrderController extends Controller
             $insert_order = Order::insertGetId([
                 'company_id' => $company_id,
                 'id_order' => $id_order,
-                'customer_name' => $request['confirm_order-customer_name'],
+                'customer_name' => $request['customer_name'],
                 'cashier_name' => 'Mobile',
                 'datetime' => Carbon::now()->toDateTimeString(),
                 'total_payment' => $total_payment,
@@ -119,10 +122,10 @@ class OrderController extends Controller
                 'total_discount' => $total_discount,
                 'payment' => $payment,
                 'change' => $change,
-                'payment_method' => $request['confirm_order-payment_method'],
-                'order_type' => $request['confirm_order-order_type'],
-                'status' => $request["confirm_order-pay_now"] ? 'done' : 'waiting payment',
-                'remarks' => $request['confirm_order-remarks'],
+                'payment_method' => $request['payment_method'],
+                'order_type' => $request['order_type'],
+                'status' => $request["pay_now"] ? 'done' : 'waiting payment',
+                'remarks' => $request['remarks'],
                 'sequence' => $next_sequence,
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
@@ -131,21 +134,21 @@ class OrderController extends Controller
             foreach ($order as $item) {
                 OrderItems::create([
                     'order_id' => $insert_order,
-                    'product_id' => $item->product_id,
-                    'price' => $item->product_price,
-                    'quantity' => $item->qty,
-                    'amount' => $item->product_price * $item->qty,
-                    'remarks' => $item->remarks,
+                    'product_id' => $item->product->id,
+                    'price' => $item->product->price,
+                    'quantity' => $item->quantity,
+                    'amount' => $item->product->price * $item->quantity,
+                    'remarks' => $item->description,
                 ]);
             }
 
-            if ($request["confirm_order-pay_now"]) {
+            if ($request["pay_now"]) {
                 CashIn::create([
                     'company_id' => $company_id,
                     'fund' => $total_payment,
                     'remark' => '',
                     'datetime' => Carbon::now()->toDateTimeString(),
-                    'type' => $request['confirm_order-payment_method'],
+                    'type' => $request['payment_method'],
                     'order_id' => $insert_order,
                     'remarks_from_master' => '',
                 ]);
@@ -156,7 +159,7 @@ class OrderController extends Controller
 
                 if ($closing_cyle) {
                     $fund = Fund::where("company_id", $company_id)
-                        ->where("type", $request["confirm_order-payment_method"])->first();
+                        ->where("type", $request["payment_method"])->first();
                     $fund->update(["fund" => $fund->fund + $total_payment]);
                 }
 
@@ -190,11 +193,12 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function order_history(Request $request) {
+    public function order_history(Request $request)
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
             $periode = Carbon::now()->format('Y-m-d');
@@ -225,11 +229,12 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function order_history_edit($id) {
+    public function order_history_edit($id)
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
 
@@ -282,21 +287,22 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function order_history_update(Request $request, $id) {
+    public function order_history_update(Request $request, $id)
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
 
             DB::beginTransaction();
-            $total_price_item = (int) str_replace('.', '', $request['confirm_order-total_price_item']);
-            $discount = (int) str_replace('.', '', $request['confirm_order-discount']);
-            $total_discount = (int) str_replace('.', '', $request['confirm_order-total_discount']);
-            $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
-            $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
-            $change = (int) str_replace('.', '', $request['confirm_order-change']);
+            $total_price_item = (int) $request['confirm_order-total_price_item'];
+            $discount = (int) $request['confirm_order-discount'];
+            $total_discount = (int) $request['confirm_order-total_discount'];
+            $total_payment = (int) $request['confirm_order-total_payment'];
+            $payment = (int) $request['confirm_order-payment'];
+            $change = (int) $request['confirm_order-change'];
             $order_add = json_decode($request['confirm_order-order_add']);
             $order_update = json_decode($request['confirm_order-order_update']);
             $order_delete = json_decode($request['confirm_order-order_delete']);
@@ -384,11 +390,12 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function order_detail($id) {
+    public function order_detail($id)
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
 
@@ -403,11 +410,12 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function delete_order($id) {
+    public function delete_order($id)
+    {
         try {
             DB::beginTransaction();
             $data =  Order::findOrFail($id);
@@ -425,11 +433,12 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function edit_order($id) {
+    public function edit_order($id)
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
 
@@ -483,49 +492,50 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500); 
+            ], 500);
         }
     }
 
-    public function update_order(Request $request, $id) {
+    public function update_order(Request $request, $id)
+    {
         try {
             $company_id = Auth::guard('sanctum')->user()->company_id;
 
             DB::beginTransaction();
-            $total_price_item = (int) str_replace('.', '', $request['confirm_order-total_price_item']);
-            $discount = (int) str_replace('.', '', $request['confirm_order-discount']);
-            $total_discount = (int) str_replace('.', '', $request['confirm_order-total_discount']);
-            $total_payment = (int) str_replace('.', '', $request['confirm_order-total_payment']);
-            $payment = (int) str_replace('.', '', $request['confirm_order-payment']);
-            $change = (int) str_replace('.', '', $request['confirm_order-change']);
-            $order_add = json_decode($request['confirm_order-order_add']);
-            $order_update = json_decode($request['confirm_order-order_update']);
-            $order_delete = json_decode($request['confirm_order-order_delete']);
+            $total_price_item = (int) $request['total_price_item'];
+            $discount = (int) $request['discount'];
+            $total_discount = (int) $request['total_discount'];
+            $total_payment = (int) $request['total_payment'];
+            $payment = (int) $request['payment'];
+            $change = (int) $request['change'];
+            $order_add = json_decode($request['order_add']);
+            $order_update = json_decode($request['order_update']);
+            $order_delete = json_decode($request['order_delete']);
 
             $update_order = Order::where('id', $id)
                 ->where('company_id', $company_id)
                 ->update([
-                    'customer_name' => $request['confirm_order-customer_name'],
+                    'customer_name' => $request['customer_name'],
                     'total_payment' => $total_payment,
                     'total_price_item' => $total_price_item,
                     'discount' => $discount,
                     'total_discount' => $total_discount,
                     'payment' => $payment,
                     'change' => $change,
-                    'payment_method' => $request['confirm_order-payment_method'],
-                    'order_type' => $request['confirm_order-order_type'],
-                    'status' => $request["confirm_order-pay_now"]  ? 'done' : 'waiting payment',
-                    'remarks' => $request['confirm_order-remarks'],
+                    'payment_method' => $request['payment_method'],
+                    'order_type' => $request['order_type'],
+                    'status' => $request["pay_now"]  ? 'done' : 'waiting payment',
+                    'remarks' => $request['remarks'],
                 ]);
 
             foreach ($order_add as $item) {
                 OrderItems::create([
                     'order_id' => $id,
-                    'product_id' => $item->product_id,
-                    'price' => $item->product_price,
-                    'quantity' => $item->qty,
-                    'amount' => $item->product_price * $item->qty,
-                    'remarks' => $item->remarks,
+                    'product_id' => $item->product->id,
+                    'price' => $item->product->price,
+                    'quantity' => $item->quantity,
+                    'amount' => $item->product->price * $item->quantity,
+                    'remarks' => $item->description,
                 ]);
             }
 
@@ -537,22 +547,22 @@ class OrderController extends Controller
                 OrderItems::where('id', $item->id)
                     ->update([
                         'order_id' => $id,
-                        'product_id' => $item->product_id,
-                        'price' => $item->product_price,
-                        'quantity' => $item->qty,
-                        'amount' => $item->product_price * $item->qty,
-                        'remarks' => $item->remarks,
+                        'product_id' => $item->product->id,
+                        'price' => $item->product->price,
+                        'quantity' => $item->quantity,
+                        'amount' => $item->product->price * $item->quantity,
+                        'remarks' => $item->description,
                     ]);
             }
 
-            if ($request["confirm_order-pay_now"]) {
+            if ($request["pay_now"]) {
                 $old_data_cash = CashIn::where('company_id', $company_id)
                     ->where('order_id', $id)->first();
 
                 if ($old_data_cash) {
                     CashIn::where('id', $old_data_cash->id)->update([
                         'fund' => $total_payment,
-                        'type' => $request['confirm_order-payment_method'],
+                        'type' => $request['payment_method'],
                     ]);
 
                     $closing_cyle = ClosingCycle::where("company_id", $company_id)
@@ -565,7 +575,7 @@ class OrderController extends Controller
                         $fund_old->update(["fund" => $fund_old->fund - $old_data_cash->fund]);
 
                         $fund_new = Fund::where("company_id", $company_id)
-                            ->where("type", $request["confirm_order-payment_method"])->first();
+                            ->where("type", $request["payment_method"])->first();
                         $fund_new->update(["fund" => $fund_new->fund + $total_payment]);
                     }
 
@@ -583,24 +593,24 @@ class OrderController extends Controller
                         'fund' => $total_payment,
                         'remark' => '',
                         'datetime' => Carbon::now()->toDateTimeString(),
-                        'type' => $request['confirm_order-payment_method'],
+                        'type' => $request['payment_method'],
                         'order_id' => $id,
                         'remarks_from_master' => '',
                     ]);
-    
+
                     $closing_cyle = ClosingCycle::where("company_id", $company_id)
                         ->where("periode", Carbon::now()->format('Y-m'))
                         ->first();
-    
+
                     if ($closing_cyle) {
                         $fund = Fund::where("company_id", $company_id)
-                            ->where("type", $request["confirm_order-payment_method"])->first();
+                            ->where("type", $request["payment_method"])->first();
                         $fund->update(["fund" => $fund->fund + $total_payment]);
                     }
-    
+
                     $cash_monthly = CashMonthly::where("company_id", $company_id)
                         ->where("datetime", Carbon::now()->toDateString())->first();
-    
+
                     if ($cash_monthly) {
                         CashMonthly::where("id", $cash_monthly->id)->update([
                             "kredit" => (int) $cash_monthly->kredit + $total_payment,
@@ -629,11 +639,12 @@ class OrderController extends Controller
             return response()->json([
                 'status' => 500,
                 'message' => $error->getMessage(),
-            ], 500);  
+            ], 500);
         }
     }
 
-    public function report() {
+    public function report()
+    {
         return response()->json([
             'status' => 200,
             'message' => 'Fitur not avilable',
