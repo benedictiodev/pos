@@ -4,7 +4,6 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OrderController;
 use App\Http\Middleware\AuthMobileCheck;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login', [AuthController::class, 'login']);
@@ -12,6 +11,9 @@ Route::post('/logout', [AuthController::class, 'logout']);
 Route::prefix('/')->middleware([
     AuthMobileCheck::class
 ])->group(function () {
+    Route::get('/user', function () {
+        return response()->json(auth('sanctum')->user());
+    });
     Route::prefix('/order')->group(function () {
         Route::get("/", [OrderController::class, 'order_active']);
         Route::get("/new-order", [OrderController::class, 'add_new_order']);

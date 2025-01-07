@@ -508,9 +508,9 @@ class OrderController extends Controller
             $total_payment = (int) $request['total_payment'];
             $payment = (int) $request['payment'];
             $change = (int) $request['change'];
-            $order_add = json_decode($request['order_add']);
-            $order_update = json_decode($request['order_update']);
-            $order_delete = json_decode($request['order_delete']);
+            $order_add = json_decode($request['order_add']) ?? [];
+            $order_update = json_decode($request['order_update']) ?? [];
+            $order_delete = json_decode($request['order_delete']) ?? [];
 
             $update_order = Order::where('id', $id)
                 ->where('company_id', $company_id)
