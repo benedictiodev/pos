@@ -416,7 +416,7 @@
             </div>
             <div class="mb-3" id="next_equite_form" hidden>
               <input type="text" name="next_periode"
-                value="{{ Request::get('periode') ? Date::parse(Request::get('periode'))->addMonths(1)->format('Y-m') : Date::now()->addMonths(1)->format('Y-m') }}"
+                value="{{ Request::get('periode') ? Date::parse(Request::get('periode') . '-01')->addMonths(1)->format('Y-m') : Date::parse(Date::now()->format('Y-m') . '-01')->addMonths(1)->format('Y-m') }}"
                 hidden>
               <div id="payment_form" class="border pl-4 pr-2 pt-4 pb-2 rounded-lg relative mb-3">
                 <div class="absolute top-[-11px] left-0 right-0 flex justify-center">

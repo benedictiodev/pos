@@ -1432,6 +1432,10 @@ input:checked + .toggle-bg {
   max-height: 100%;
 }
 
+.max-h-\[120px\] {
+  max-height: 120px;
+}
+
 .min-h-0 {
   min-height: 0px;
 }
@@ -1499,10 +1503,6 @@ input:checked + .toggle-bg {
 
 .w-full {
   width: 100%;
-}
-
-.w-2\/3 {
-  width: 66.666667%;
 }
 
 .min-w-full {
@@ -1609,6 +1609,10 @@ input:checked + .toggle-bg {
 
 .grid-cols-7 {
   grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-cols-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -2864,8 +2868,24 @@ input:checked + .toggle-bg {
 }
 
 @media (min-width: 640px) {
+  .sm\:col-span-3 {
+    grid-column: span 3 / span 3;
+  }
+
   .sm\:mb-0 {
     margin-bottom: 0px;
+  }
+
+  .sm\:ml-3 {
+    margin-left: 0.75rem;
+  }
+
+  .sm\:mr-3 {
+    margin-right: 0.75rem;
+  }
+
+  .sm\:mt-0 {
+    margin-top: 0px;
   }
 
   .sm\:flex {
@@ -2874,6 +2894,38 @@ input:checked + .toggle-bg {
 
   .sm\:hidden {
     display: none;
+  }
+
+  .sm\:h-\[385px\] {
+    height: 385px;
+  }
+
+  .sm\:h-\[200px\] {
+    height: 200px;
+  }
+
+  .sm\:h-\[220px\] {
+    height: 220px;
+  }
+
+  .sm\:h-\[235px\] {
+    height: 235px;
+  }
+
+  .sm\:max-h-\[450px\] {
+    max-height: 450px;
+  }
+
+  .sm\:max-h-\[200px\] {
+    max-height: 200px;
+  }
+
+  .sm\:max-h-\[300px\] {
+    max-height: 300px;
+  }
+
+  .sm\:w-1\/2 {
+    width: 50%;
   }
 
   .sm\:w-64 {
@@ -2886,6 +2938,18 @@ input:checked + .toggle-bg {
 
   .sm\:flex-1 {
     flex: 1 1 0%;
+  }
+
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .sm\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .sm\:items-center {
@@ -2902,6 +2966,10 @@ input:checked + .toggle-bg {
 
   .sm\:justify-between {
     justify-content: space-between;
+  }
+
+  .sm\:p-3 {
+    padding: 0.75rem;
   }
 
   .sm\:p-6 {
@@ -2921,9 +2989,19 @@ input:checked + .toggle-bg {
     line-height: 2rem;
   }
 
+  .sm\:text-base {
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
   .sm\:text-sm {
     font-size: 0.875rem;
     line-height: 1.25rem;
+  }
+
+  .sm\:text-xs {
+    font-size: 0.75rem;
+    line-height: 1rem;
   }
 }
 
@@ -3007,10 +3085,6 @@ input:checked + .toggle-bg {
     margin-left: 16rem;
   }
 
-  .lg\:mr-3 {
-    margin-right: 0.75rem;
-  }
-
   .lg\:mt-0 {
     margin-top: 0px;
   }
@@ -3037,10 +3111,6 @@ input:checked + .toggle-bg {
 
   .lg\:max-h-\[450px\] {
     max-height: 450px;
-  }
-
-  .lg\:w-2\/5 {
-    width: 40%;
   }
 
   .lg\:w-3\/5 {
@@ -3080,6 +3150,10 @@ input:checked + .toggle-bg {
 @media (min-width: 1280px) {
   .xl\:w-96 {
     width: 24rem;
+  }
+
+  .xl\:grid-cols-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .xl\:p-8 {

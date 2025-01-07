@@ -42,7 +42,7 @@
       </div>
     @endif
 
-    <div class="grid grid-col-2 lg:grid-cols-4 gap-4 mx-[-0.25rem]">
+    <div class="grid grid-col-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mx-[-0.25rem]">
       <div
         class="flex justify-between items-center bg-sky-200 border border-gray-200 rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-1 lg:mb-2 mx-1">
         <div class="flex items-center text-sm">

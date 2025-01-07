@@ -28,7 +28,7 @@
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Pembaruan Order</h1>
+        <h1 class="text-xl font-semibold text-gray-900 mb-4">Tambahkan Order Baru</h1>
         <a href="{{ route('dashboard.order.order_active') }}"
           class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
           Kembali
@@ -47,23 +47,23 @@
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
-    <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+
+    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-3 mb-4">
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
-            <div class="lg:flex">
-              <div class="w-full lg:w-2/5 border lg:mr-3 rounded-xl max-h-[320px] lg:max-h-[450px]">
-                <div class="h-[255px] lg:h-5/6 overflow-auto">
-                  <div class="mx-2 px-2 py-3 flex border-b font-semibold">
+            <div class="sm:flex">
+               <div class="w-full sm:w-1/2 border sm:mr-3 rounded-xl max-h-[320px] sm:max-h-[300px]">
+                <div class="h-[255px] sm:h-[235px] lg:h-5/6 overflow-auto">
+                  <div class="mx-2 px-2 py-3 flex border-b font-semibold sm:text-sm">
                     <div class="w-3/6">Menu</div>
                     <div class="w-1/6 text-center">Qty</div>
                     <div class="w-2/6 text-right">Harga</div>
                   </div>
-                  <div id="body-order-item"></div>
+                  <div id="body-order-item" class="sm:text-sm"></div>
                 </div>
-                <div class="h-[65px] lg:h-1/6 bg-[#E5E7EB] rounded-b-lg flex flex-col justify-center items-center px-4">
-                  <div class="flex justify-between w-full font-semibold text-sm mb-2">
+               <div class="w-full sm:w-1/2 border sm:ml-3 rounded-xl mt-4 sm:mt-0 sm:max-h-[450px] overflow-auto">
+                <div class="p-2 text-center sm:text-base text-lg font-semibold bg-[#E5E7EB] rounded-t-lg border-b-2 border-white">
                     <div>Total Harga</div>
                     <div id="order-total-price"></div>
                   </div>
@@ -79,13 +79,13 @@
                     class="hidden"></button>
                 </div>
               </div>
-              <div class="w-full lg:w-3/5 border lg:ml-3 rounded-xl mt-4 lg:mt-0 lg:max-h-[450px] overflow-auto">
+              <div class="w-full sm:w-1/2 border sm:ml-3 rounded-xl mt-4 sm:mt-0 sm:max-h-[300px] overflow-auto">
                 <div class="p-2 text-center text-lg font-semibold bg-[#E5E7EB] rounded-t-lg border-b-2 border-white">Daftar Menu</div>
                 <div>
                   @foreach ($list_menu as $category)  
                     <div>
                       <div class="bg-[#E5E7EB] py-1 px-2">Category : {{ $category->category_name }}</div>
-                      <div class="grid grid-cols-2 lg:grid-cols-4 gap-2 px-1 py-2">
+                      <div class="grid grid-cols-2 xl:grid-cols-4 gap-2 px-1 py-2">
                         @foreach ($category->products as $item) 
                           <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
                             <div class="border p-2 rounded-md flex items-center justify-center h-32 max-h-32">
