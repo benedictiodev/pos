@@ -6,6 +6,9 @@ use App\Http\Middleware\AuthMobileCheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
+Route::get('/api-test', function () {
+    return response()->json(["message" => "OK"]);
+});
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::prefix('/')->middleware([
