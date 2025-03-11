@@ -216,7 +216,7 @@
                   <a href="{{ route('dashboard.management-user.role.index') }}"
                     class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.role.index') ? 'bg-gray-100' : '' }}"
                     disabled>
-                    Role
+                    Hak Akses
                   </a>
                 </li>
               </ul>

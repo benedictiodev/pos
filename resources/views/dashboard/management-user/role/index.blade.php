@@ -8,24 +8,24 @@
           <ol class="inline-flex items-center space-x-1 text-sm font-medium md:space-x-2">
             <li class="inline-flex items-center">
               <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-                Dashboard
+                Beranda
               </a>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Management User</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Pengelola Akun</span>
               </div>
             </li>
             <li>
               <div class="flex items-center">
                 <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Roles</span>
+                <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Hak Akses</span>
               </div>
             </li>
           </ol>
         </nav>
-        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Role</h1>
+        <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl">Hak Akses</h1>
       </div>
     </div>
 
@@ -62,7 +62,7 @@
         </div>
         <a id="createRoleButton" href="{{ route('dashboard.management-user.role.create') }}"
           class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-          Add new Role
+          Tambah Hak Akses Baru
         </a>
       </div>
       <div class="flex flex-col">
@@ -80,10 +80,10 @@
                       </div>
                     </th> --}}
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
-                      Name
+                      Nama
                     </th>
                     <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
-                      Action
+                      Aksi
                     </th>
                   </tr>
                 </thead>
@@ -105,7 +105,7 @@
                         <a href="{{ route('dashboard.management-user.role.edit', $item) }}"
                           class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                           <x-fas-edit class="mr-2 h-4 w-4" />
-                          Update
+                          Perbarui
                         </a>
 
                         <button type="button" id="deleteButton" data-drawer-target="drawer-role-default"
@@ -115,7 +115,7 @@
                           "
                           data-id="{{ $item->id }}">
                           <x-fas-trash class="mr-2 h-4 w-4" />
-                          Delete
+                          Hapus
                         </button>
 
                       </td>
@@ -155,15 +155,15 @@
       @method('DELETE')
       <input type="text" id="role-id" name="role_id" hidden>
       <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
-      <h3 class="mb-6 text-lg text-gray-500">Are you sure you want to delete this role?</h3>
+      <h3 class="mb-6 text-lg text-gray-500">Apakah anda yakin untuk menghapus hak akses ini?</h3>
       <button type="button" data-type="button-delete"
         class="mr-2 inline-flex items-center rounded-lg bg-primary-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-        Yes, I'm sure
+        Ya, Saya Yakin
       </button>
       <button type="button"
         class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
         data-drawer-hide="drawer-role-default">
-        No, cancel
+        Tidak, Batalkan
       </button>
     </form>
   </div>
@@ -177,12 +177,10 @@
         if (event.target.getAttribute('data-drawer-target') == "drawer-role-default") {
           const id = event.target.getAttribute("data-id");
           document.querySelector("#role-id").value = id;
-          console.log(id);
         }
         if (event.target.getAttribute('data-type') == "button-delete") {
           const id = document.querySelector("#role-id").value;
           document.querySelector("#form-role").action = '/dashboard/management-user/roles/' + id;
-          console.log(id, document.querySelector("#form-role"));
           document.querySelector("#form-role").submit();
         }
       })

@@ -70,9 +70,9 @@
                               @foreach ($value_sub_menu->permission as $item)
                                 <div class="mb-1">
                                   <label class="inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" name="permission[]" value="{{ $value_menu->menu . '-' . $value_sub_menu->sub_menu . '-' . $item }}" class="sr-only peer">
+                                    <input type="checkbox" name="permission[]" value="{{ $value_menu->menu . '-' . $value_sub_menu->sub_menu . '-' . $item->code }}" class="sr-only peer">
                                     <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                    <span class="ms-3 text-xs font-medium text-gray-900 dark:text-gray-300 capitalize">{{ $item }}</span>
+                                    <span class="ms-3 text-xs font-medium text-gray-900 dark:text-gray-300 capitalize">{{ $item->code }}</span>
                                   </label>
                                 </div>
                               @endforeach
@@ -88,7 +88,7 @@
             <div>
               <button type="submit"
                 class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Add
+                Tambah
               </button>
             </div>
         </form>

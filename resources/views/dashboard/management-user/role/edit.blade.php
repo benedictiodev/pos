@@ -51,7 +51,8 @@
             <div>
               <label for="checkbos-all" class="mb-2 block text-base font-semibold text-gray-900">Permission</label>
               <div class="space-y-3">
-                @foreach ($permission as $key_menu => $value_menu)
+                <div id="accordion-role-menu" data-accordion="open">
+                  @foreach ($permission as $key_menu => $value_menu)
                     <h2 id="accordion-role-menu-heading-{{ $key_menu }}">
                       <button type="button" class="flex items-center justify-between w-full px-3 py-2.5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 hover:bg-gray-100 gap-3" data-accordion-target="#accordion-role-menu-body-{{ $key_menu }}" aria-expanded="false" aria-controls="accordion-role-menu-body-{{ $key_menu }}">
                         <span class="capitalize">{{ $value_menu->menu }}</span>
@@ -69,9 +70,9 @@
                               @foreach ($value_sub_menu->permission as $item)
                                 <div class="mb-1">
                                   <label class="inline-flex items-center cursor-pointer">
-                                    <input type="checkbox" name="permission[]" value="{{ $value_menu->menu . '-' . $value_sub_menu->sub_menu . '-' . $item }}" class="sr-only peer">
+                                    <input type="checkbox" name="permission[]" value="{{ $value_menu->menu . '-' . $value_sub_menu->sub_menu . '-' . $item->code }}" {{$item->checked ? 'checked' : ''}} class="sr-only peer">
                                     <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-                                    <span class="ms-3 text-xs font-medium text-gray-900 dark:text-gray-300 capitalize">{{ $item }}</span>
+                                    <span class="ms-3 text-xs font-medium text-gray-900 dark:text-gray-300 capitalize">{{ $item->code }}</span>
                                   </label>
                                 </div>
                               @endforeach
@@ -81,7 +82,7 @@
                       </div>
                     </div>
                   @endforeach
-
+                </div>
               </div>
             </div>
 

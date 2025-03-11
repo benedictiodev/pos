@@ -14,9 +14,17 @@ class ManagementUserController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function rolesFunction($data_permission) {
+    public function rolesFunction($data_permission, $with_permission = []) {
         $array_result = array();
         foreach ($data_permission AS $item) {
+            $checked = false;
+            if (count($with_permission) > 0) {
+                $index_checked = array_search($item->name, $with_permission);
+                if ($index_checked !== false) {
+                    $checked = true;
+                }
+            }
+
             $find = false;
             $menu = explode("-", $item->name);
             foreach ($array_result as $key => $search_item) {
@@ -31,7 +39,10 @@ class ManagementUserController extends Controller
                     'menu' => $menu[0],
                     'sub_menu' => array((object) [
                         'sub_menu' => $menu[1],
-                        'permission' => array($menu[2]),
+                        'permission' => array((object) [
+                            'code' => $menu[2],
+                            'checked' => $checked,
+                        ]),
                     ]),
                 ]);
             } else {
@@ -46,10 +57,16 @@ class ManagementUserController extends Controller
                 if ($find_sub === false) {
                     array_push($array_result[$find]->sub_menu, (object) [
                         'sub_menu' => $menu[1],
-                        'permission' => array($menu[2]),
+                        'permission' => array((object) [
+                            'code' => $menu[2],
+                            'checked' => $checked,
+                        ]),
                     ]);
                 } else {
-                    array_push($array_result[$find]->sub_menu[$find_sub]->permission, $menu[2]);
+                    array_push($array_result[$find]->sub_menu[$find_sub]->permission, (object) [
+                        'code' => $menu[2],
+                        'checked' => $checked,
+                    ]);
                 }
             }
         }
@@ -191,9 +208,6 @@ class ManagementUserController extends Controller
      * Show the form for creating a new resource.
      */
     public function role_create() {
-        $permission = Role::with('permissions')
-            ->where('id', Company::where('id', Auth::user()->company_id))
-            ->first();
         $array_result = $this->rolesFunction(Permission::all());
 
         return view('dashboard.management-user.role.create', [
@@ -216,7 +230,7 @@ class ManagementUserController extends Controller
             "is_superadmin" => false,
         ]);
 
-        $store->syncPermissions($request->permission);
+        $store->givePermissionTo($request->permission);
 
         if ($store) {
             return redirect()->route("dashboard.management-user.role.index")->with('success', "Successfully to create a user");
@@ -232,27 +246,8 @@ class ManagementUserController extends Controller
     {
         $role = Role::query()->findOrFail($id);
         if ($role) {
-            $array_result = array();
-            $data_permission = Permission::all();
-            foreach ($data_permission AS $item) {
-                $find = false;
-                $menu = explode("-", $item->name);
-                foreach ($array_result as $key => $search_item) {
-                    if ($search_item->menu == $menu[0]) {
-                        $find = $key;
-                        break;
-                    }
-                }
-
-                if ($find === false) {
-                    array_push($array_result, (object) [
-                        'menu' => $menu[0],
-                        'permission' => array($menu[1]),
-                    ]);
-                } else {
-                    array_push($array_result[$find]->permission, $menu[1]);
-                }
-            }
+            $data_permission = $role->permissions->pluck('name')->toArray();
+            $array_result = $this->rolesFunction(Permission::all(), $data_permission);
                 
             return view('dashboard.management-user.role.edit', [
                 "role" => $role,
