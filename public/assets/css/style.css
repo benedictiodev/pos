@@ -1180,6 +1180,10 @@ input:checked + .toggle-bg {
   z-index: 99999;
 }
 
+.m-auto {
+  margin: auto;
+}
+
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -1432,10 +1436,6 @@ input:checked + .toggle-bg {
   max-height: 100%;
 }
 
-.max-h-\[120px\] {
-  max-height: 120px;
-}
-
 .min-h-0 {
   min-height: 0px;
 }
@@ -1609,10 +1609,6 @@ input:checked + .toggle-bg {
 
 .grid-cols-7 {
   grid-template-columns: repeat(7, minmax(0, 1fr));
-}
-
-.grid-cols-3 {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .flex-col {
@@ -2330,6 +2326,10 @@ input:checked + .toggle-bg {
   text-transform: uppercase;
 }
 
+.italic {
+  font-style: italic;
+}
+
 .leading-5 {
   line-height: 1.25rem;
 }
@@ -2868,10 +2868,6 @@ input:checked + .toggle-bg {
 }
 
 @media (min-width: 640px) {
-  .sm\:col-span-3 {
-    grid-column: span 3 / span 3;
-  }
-
   .sm\:mb-0 {
     margin-bottom: 0px;
   }
@@ -2896,32 +2892,16 @@ input:checked + .toggle-bg {
     display: none;
   }
 
-  .sm\:h-\[385px\] {
-    height: 385px;
-  }
-
-  .sm\:h-\[200px\] {
-    height: 200px;
-  }
-
-  .sm\:h-\[220px\] {
-    height: 220px;
-  }
-
   .sm\:h-\[235px\] {
     height: 235px;
   }
 
-  .sm\:max-h-\[450px\] {
-    max-height: 450px;
-  }
-
-  .sm\:max-h-\[200px\] {
-    max-height: 200px;
-  }
-
   .sm\:max-h-\[300px\] {
     max-height: 300px;
+  }
+
+  .sm\:max-h-\[450px\] {
+    max-height: 450px;
   }
 
   .sm\:w-1\/2 {
@@ -2940,16 +2920,8 @@ input:checked + .toggle-bg {
     flex: 1 1 0%;
   }
 
-  .sm\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .sm\:grid-cols-3 {
     grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
-  .sm\:grid-cols-4 {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
   .sm\:items-center {
@@ -3077,16 +3049,8 @@ input:checked + .toggle-bg {
     margin-bottom: 0.5rem;
   }
 
-  .lg\:ml-3 {
-    margin-left: 0.75rem;
-  }
-
   .lg\:ml-64 {
     margin-left: 16rem;
-  }
-
-  .lg\:mt-0 {
-    margin-top: 0px;
   }
 
   .lg\:block {
@@ -3107,14 +3071,6 @@ input:checked + .toggle-bg {
 
   .lg\:h-5\/6 {
     height: 83.333333%;
-  }
-
-  .lg\:max-h-\[450px\] {
-    max-height: 450px;
-  }
-
-  .lg\:w-3\/5 {
-    width: 60%;
   }
 
   .lg\:w-96 {
