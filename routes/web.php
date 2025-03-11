@@ -14,23 +14,33 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemarksCashFlowController;
+use App\Http\Middleware\RedirectWeb;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('/migration')->group(function() {
-    Route::get('/', [MigrationDataController::class, 'add_data_discount_for_order_old']);
-});
+// Route::prefix('/migration')->group(function() {
+//     Route::get('/', [MigrationDataController::class, 'add_data_discount_for_order_old']);
+// });
 
+Route::get('/redirect', function () {
+    return view('auth.redirect');
+})->name('redirect');
 
 Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/login', [AuthController::class, 'index'])->name('login');
-Route::post('/login', [AuthController::class, 'post_login'])->name('post_login');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/login', [AuthController::class, 'index'])->middleware([
+    RedirectWeb::class
+])->name('login');
+Route::post('/login', [AuthController::class, 'post_login'])->middleware([
+    RedirectWeb::class
+])->name('post_login');
+Route::post('/logout', [AuthController::class, 'logout'])->middleware([
+    RedirectWeb::class
+])->name('logout');
 
-Route::prefix("/dashboard")->middleware('auth')->group(function () {
+Route::prefix("/dashboard")->middleware([RedirectWeb::class, 'auth'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Master Data

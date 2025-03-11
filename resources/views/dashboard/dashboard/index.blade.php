@@ -19,7 +19,7 @@
 
   @if (Auth::user()->id == 1)
     <div>
-      <div class="grid grid-col-1 lg:grid-cols-3 gap-4 mb-4">
+      <div class="grid grid-col-1 sm:grid-cols-3 gap-4 mb-4">
         <div class="flex justify-between p-3 h-24 rounded-lg bg-orange-300 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-database class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
@@ -48,7 +48,7 @@
           </div>
         </div>
       </div>
-      <div class="grid grid-col-1 lg:grid-cols-3 gap-4 mb-4">
+      <div class="grid grid-col-1 sm:grid-cols-3 gap-4 mb-4">
         <div class="flex justify-between p-3 h-24 rounded-lg bg-green-200 shadow-md border">
           <div class="flex flex-col justify-center items-center">
             <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
