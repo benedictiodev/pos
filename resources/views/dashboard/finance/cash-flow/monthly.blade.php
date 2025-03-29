@@ -100,11 +100,17 @@
                     </tr>
                     @if ($closing_cycle->is_done == 0)
                       @if (
-                          (Request::get('periode') &&
-                              ((Request::get('periode') == Date::now()->format('Y-m') &&
-                                  Date::now()->format('d') == Date::now()->endOfMonth()->format('d')) ||
-                                  Request::get('periode') < Date::now()->format('Y-m'))) ||
-                              (!Request::get('periode') && Date::now()->format('d') == Date::now()->endOfMonth()->format('d')))
+                        (Request::get('periode') &&
+                          (
+                            (Request::get('periode') == Date::now()->format('Y-m') &&
+                              (Carbon::now()->format('d') <= Carbon::now()->endOfMonth()->format('d') && Carbon::now()->format('d') >= Carbon::now()->endOfMonth()->subDays(7)->format('d'))
+                            ) || Request::get('periode') < Date::now()->format('Y-m')
+                          )
+                        ) || (
+                          !Request::get('periode') && 
+                          (Carbon::now()->format('d') <= Carbon::now()->endOfMonth()->format('d') && Carbon::now()->format('d') >= Carbon::now()->endOfMonth()->subDays(7)->format('d'))
+                        )
+                      )
                         <tr>
                           <td scope="col" colspan="6"
                             class="p-4 text-center text-base font-semibold uppercase text-black">

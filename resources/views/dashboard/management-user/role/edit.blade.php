@@ -7,28 +7,28 @@
         <ol class="inline-flex items-center space-x-1 text-sm font-semibold md:space-x-2">
           <li class="inline-flex items-center">
             <a href="#" class="inline-flex items-center text-gray-700 hover:text-primary-600">
-              Dashboard
+              Beranda
             </a>
           </li>
           <li>
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
-              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Management User</span>
+              <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">Pengelola Akun</span>
             </div>
           </li>
           <li>
             <div class="flex items-center">
               <x-fas-chevron-right class="h-3 w-3 text-gray-400" />
               <span class="ml-1 text-gray-400 md:ml-2" aria-current="page">
-                Role</span>
+                Hak Akses</span>
             </div>
           </li>
         </ol>
       </nav>
-      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Edit Role</h1>
+      <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Perbarui Hak Akses</h1>
       <a href="{{ route('dashboard.management-user.role.index') }}"
         class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-semibold text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
-        Back
+        Kembali
       </a>
     </div>
 
@@ -89,7 +89,7 @@
             <div>
               <button type="submit"
                 class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-semibold text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Edit
+                Perbarui
               </button>
             </div>
           </div>
