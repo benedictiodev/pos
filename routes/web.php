@@ -30,15 +30,9 @@ Route::get('/', function () {
     return redirect('/login');
 });
 
-Route::get('/login', [AuthController::class, 'index'])->middleware([
-    RedirectWeb::class
-])->name('login');
-Route::post('/login', [AuthController::class, 'post_login'])->middleware([
-    RedirectWeb::class
-])->name('post_login');
-Route::post('/logout', [AuthController::class, 'logout'])->middleware([
-    RedirectWeb::class
-])->name('logout');
+Route::get('/login', [AuthController::class, 'index'])->name('login');
+Route::post('/login', [AuthController::class, 'post_login'])->name('post_login');
+Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 Route::prefix("/dashboard")->middleware([
     // RedirectWeb::class, 
