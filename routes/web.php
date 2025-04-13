@@ -40,7 +40,10 @@ Route::post('/logout', [AuthController::class, 'logout'])->middleware([
     RedirectWeb::class
 ])->name('logout');
 
-Route::prefix("/dashboard")->middleware([RedirectWeb::class, 'auth'])->group(function () {
+Route::prefix("/dashboard")->middleware([
+    // RedirectWeb::class, 
+    'auth'
+])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Master Data
