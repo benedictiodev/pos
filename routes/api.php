@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\OrderController;
+use App\Http\Controllers\Api\SettingsController;
 use App\Http\Middleware\AuthMobileCheck;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/api-test', function () {
     return response()->json(["message" => "OK"]);
 });
+
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout']);
 Route::prefix('/')->middleware([
@@ -29,5 +31,8 @@ Route::prefix('/')->middleware([
         Route::get("/update/{id}", [OrderController::class, 'edit_order']);
         Route::put("/update/{id}", [OrderController::class, 'update_order']);
         Route::get("/report", [OrderController::class, 'report']);
+    });
+    Route::prefix('/settings')->group(function () {
+        Route::get('/printer_order', [SettingsController::class, 'printer_order']);
     });
 });
