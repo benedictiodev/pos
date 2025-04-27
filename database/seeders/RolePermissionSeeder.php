@@ -28,6 +28,7 @@ class RolePermissionSeeder extends Seeder
         Permission::create(["name" => "keuangan-arus kas harian-perbarui dana"]);
         Permission::create(["name" => "keuangan-arus kas harian-hapus dana"]);
         Permission::create(["name" => "keuangan-arus kas bulanan-lihat"]);
+        Permission::create(["name" => "keuangan-arus kas bulanan-tambah modal bulanan"]);
         Permission::create(["name" => "order-order aktif-lihat"]);
         Permission::create(["name" => "order-order aktif-tambah order baru"]);
         Permission::create(["name" => "order-order aktif-perbarui order"]);
@@ -37,6 +38,7 @@ class RolePermissionSeeder extends Seeder
         Permission::create(["name" => "toko-profil-lihat"]);
         Permission::create(["name" => "toko-profil-perbarui"]);
         Permission::create(["name" => "toko-pengaturan-lihat"]);
+        Permission::create(["name" => "toko-pengaturan-perbarui"]);
         Permission::create(["name" => "master data-produk kategori-lihat"]);
         Permission::create(["name" => "master data-produk kategori-tambah"]);
         Permission::create(["name" => "master data-produk kategori-perbarui"]);
@@ -53,6 +55,14 @@ class RolePermissionSeeder extends Seeder
         Permission::create(["name" => "master data-keterangan arus kas-tambah"]);
         Permission::create(["name" => "master data-keterangan arus kas-perbarui"]);
         Permission::create(["name" => "master data-keterangan arus kas-hapus"]);
+        Permission::create(["name" => "pengelolaan akun-akun pengguna-lihat"]);
+        Permission::create(["name" => "pengelolaan akun-akun pengguna-tambah"]);
+        Permission::create(["name" => "pengelolaan akun-akun pengguna-perbarui"]);
+        Permission::create(["name" => "pengelolaan akun-akun pengguna-hapus"]);
+        Permission::create(["name" => "pengelolaan akun-hak akses-lihat"]);
+        Permission::create(["name" => "pengelolaan akun-hak akses-tambah"]);
+        Permission::create(["name" => "pengelolaan akun-hak akses-perbarui"]);
+        Permission::create(["name" => "pengelolaan akun-hak akses-hapus"]);
 
         $owner_pro = Role::create(['name' => 'Owner-Pro', 'is_superadmin' => true])->givePermissionTo(Permission::all());
         $user = User::where('id', 1)->first();
