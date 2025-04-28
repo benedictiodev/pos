@@ -15,10 +15,9 @@
 
           {{-- FINANCE --}}
           @canany([
-            'keuangan-dana-lihat', 'keuangan-dana-tambah pengalihan baru alokasi dana', 
-            'keuangan-arus kas harian-lihat', 'keuangan-arus kas harian-tambah pemasukkan dana', 'keuangan-arus kas harian-tambah pengeluaran dana', 
-            'keuangan-arus kas harian-perbarui dana', 'keuangan-arus kas harian-hapus dana',
-            'keuangan-arus kas bulanan-lihat', 'keuangan-arus kas bulanan-tambah modal bulanan'
+            'keuangan-dana-lihat', 
+            'keuangan-arus kas harian-lihat', 
+            'keuangan-arus kas bulanan-lihat'
           ])
             <li>
               <button type="button"
@@ -31,26 +30,23 @@
               </button>
               <ul id="dropdown-finance"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? '' : 'hidden' }} py-2 space-y-2">
-                @canany(['keuangan-dana-lihat', 'keuangan-dana-tambah pengalihan baru alokasi dana'])    
+                @can('keuangan-dana-lihat')    
                   <li>
                     <a href="{{ route('dashboard.finance.funds') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.finance.funds') ? 'bg-gray-100' : '' }}">
                       Dana
                     </a>
                   </li>
-                @endcanany
-                @canany([
-                  'keuangan-arus kas harian-lihat', 'keuangan-arus kas harian-tambah pemasukkan dana', 'keuangan-arus kas harian-tambah pengeluaran dana', 
-                  'keuangan-arus kas harian-perbarui dana', 'keuangan-arus kas harian-hapus dana',
-                ])
+                @endcan
+                @can('keuangan-arus kas harian-lihat')
                   <li>
                     <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-daily' ? 'bg-gray-100' : '' }}">
                       Arus Kas Harian
                     </a>
                   </li>
-                @endcanany
-                @canany(['keuangan-arus kas bulanan-lihat', 'keuangan-arus kas bulanan-tambah modal bulanan'])
+                @endcan
+                @canany('keuangan-arus kas bulanan-lihat')
                   <li>
                     <a href="{{ route('dashboard.finance.cash-flow-monthly') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-monthly' ? 'bg-gray-100' : '' }}">
@@ -65,7 +61,7 @@
 
           {{-- ORDER --}}
           @canany([
-            'order-order aktif-lihat', 'order-order aktif-tambah order baru', 'order-order aktif-perbarui order', 'order-order aktif-hapus order',
+            'order-order aktif-lihat',
             'order-riwayat order-lihat',
             'order-pelaporan-lihat'
           ])  
@@ -80,14 +76,14 @@
               </button>
               <ul id="dropdown-order"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.order.') ? '' : 'hidden' }} py-2 space-y-2">
-                @canany(['order-order aktif-lihat', 'order-order aktif-tambah order baru', 'order-order aktif-perbarui order', 'order-order aktif-hapus order']) 
+                @can('order-order aktif-lihat') 
                   <li>
                     <a href="{{ route('dashboard.order.order_active') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_active') ? 'bg-gray-100' : '' }}">
                       Order Aktif
                     </a>
                   </li>
-                @endcanany
+                @endcan
                 @can('order-riwayat order-lihat')
                   <li>
                     <a href="{{ route('dashboard.order.order_history') }}"
@@ -111,8 +107,8 @@
 
           {{-- COMPANY --}}
           @canany([
-            'toko-profil-lihat', 'toko-profil-perbarui',
-            'toko-pengaturan-lihat', 'toko-pengaturan-perbarui'
+            'toko-profil-lihat',
+            'toko-pengaturan-lihat'
           ])
             <li>
               <button type="button"
@@ -125,22 +121,22 @@
               </button>
               <ul id="dropdown-company"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.company.') ? '' : 'hidden' }} py-2 space-y-2">
-                @canany(['toko-profil-lihat', 'toko-profil-perbarui']) 
+                @can('toko-profil-lihat') 
                   <li>
                     <a href="{{ route('dashboard.company.profile') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.profile') ? 'bg-gray-100' : '' }}">
                       Profil
                     </a>
                   </li>
-                @endcanany
-                @canany(['toko-pengaturan-lihat', 'toko-pengaturan-perbarui'])
+                @endcan
+                @can('toko-pengaturan-lihat')
                   <li>
                     <a href="{{ route('dashboard.company.setting') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.setting') ? 'bg-gray-100' : '' }}">
                       Pengaturan
                     </a>
                   </li>
-                @endcanany
+                @endcan
               </ul>
             </li>
           @endcanany
@@ -148,10 +144,10 @@
 
           {{-- MASTER DATA --}}
           @canany([
-            'master data-produk kategori-lihat', 'master data-produk kategori-tambah', 'master data-produk kategori-perbarui', 'master data-produk kategori-hapus',
-            'master data-produk-lihat', 'master data-produk-tambah', 'master data-produk-perbarui', 'master data-produk-hapus',
-            'master data-tipe dana-lihat', 'master data-tipe dana-tambah', 'master data-tipe dana-perbarui', 'master data-tipe dana-hapus', 
-            'master data-keterangan arus kas-lihat', 'master data-keterangan arus kas-tambah', 'master data-keterangan arus kas-perbarui', 'master data-keterangan arus kas-hapus'
+            'master data-produk kategori-lihat',
+            'master data-produk-lihat',
+            'master data-tipe dana-lihat',
+            'master data-keterangan arus kas-lihat'
           ])
             <li>
               <button type="button"
@@ -164,38 +160,38 @@
               </button>
               <ul id="dropdown-master-data"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.master-data.') ? '' : 'hidden' }} py-2 space-y-2">
-                @canany(['master data-produk kategori-lihat', 'master data-produk kategori-tambah', 'master data-produk kategori-perbarui', 'master data-produk kategori-hapus'])
+                @can('master data-produk kategori-lihat')
                   <li>
                     <a href="{{ route('dashboard.master-data.category-product') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.category-product') ? 'bg-gray-100' : '' }}">
                       Produk Kategori
                     </a>
                   </li>
-                @endcanany
-                @canany(['master data-produk-lihat', 'master data-produk-tambah', 'master data-produk-perbarui', 'master data-produk-hapus'])
+                @endcan
+                @can('master data-produk-lihat')
                   <li>
                     <a href="{{ route('dashboard.master-data.product') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.product') ? 'bg-gray-100' : '' }}">
                       Produk
                     </a>
                   </li>
-                @endcanany
-                @canany(['master data-tipe dana-lihat', 'master data-tipe dana-tambah', 'master data-tipe dana-perbarui', 'master data-tipe dana-hapus'])
+                @endcan
+                @can('master data-tipe dana-lihat')
                   <li>
                     <a href="{{ route('dashboard.master-data.funds') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.funds') ? 'bg-gray-100' : '' }}">
                       Tipe Dana
                     </a>
                   </li>
-                @endcanany
-                @canany(['master data-keterangan arus kas-lihat', 'master data-keterangan arus kas-tambah', 'master data-keterangan arus kas-perbarui', 'master data-keterangan arus kas-hapus'])
+                @endcan
+                @can('master data-keterangan arus kas-lihat')
                   <li>
                     <a href="{{ route('dashboard.master-data.remarks-cash-flow') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.remarks-cash-flow') ? 'bg-gray-100' : '' }}">
                       Keterangan Arus Kas
                     </a>
                   </li>
-                @endcanany
+                @endcan
               </ul>
             </li>
           @canany
@@ -239,8 +235,8 @@
 
           {{-- USER MANAGEMENT --}}
           @canany([
-            'pengelolaan akun-akun pengguna-lihat', 'pengelolaan akun-akun pengguna-tambah', 'pengelolaan akun-akun pengguna-perbarui', 'pengelolaan akun-akun pengguna-hapus',
-            'pengelolaan akun-hak akses-lihat', 'pengelolaan akun-hak akses-tambah', 'pengelolaan akun-hak akses-perbarui', 'pengelolaan akun-hak akses-hapus'
+            'pengelolaan akun-akun pengguna-lihat',
+            'pengelolaan akun-hak akses-lihat'
           ])
             <li>
               <button type="button"
@@ -253,15 +249,15 @@
               </button>
               <ul id="dropdown-management-user"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.management-user.') ? '' : 'hidden' }} py-2 space-y-2">
-                @canany(['pengelolaan akun-akun pengguna-lihat', 'pengelolaan akun-akun pengguna-tambah', 'pengelolaan akun-akun pengguna-perbarui', 'pengelolaan akun-akun pengguna-hapus']) 
+                @can('pengelolaan akun-akun pengguna-lihat') 
                   <li>
                     <a href="{{ route('dashboard.management-user.user.index') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.user.index') ? 'bg-gray-100' : '' }}">
                       Akun Pengguna
                     </a>
                   </li>
-                @endcanany
-                @canany(['pengelolaan akun-hak akses-lihat', 'pengelolaan akun-hak akses-tambah', 'pengelolaan akun-hak akses-perbarui', 'pengelolaan akun-hak akses-hapus'])
+                @endcan
+                @can('pengelolaan akun-hak akses-lihat')
                   <li>
                     <a href="{{ route('dashboard.management-user.role.index') }}"
                       class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.role.') ? 'bg-gray-100' : '' }}"
@@ -269,7 +265,7 @@
                       Hak Akses
                     </a>
                   </li>
-                @endcanany
+                @endcan
               </ul>
             </li>
           @endcanany
