@@ -194,7 +194,7 @@
                 @endcan
               </ul>
             </li>
-          @canany
+          @endcanany
           {{-- END MASTER DATA --}}
 
           {{-- PRESENCE --}}
