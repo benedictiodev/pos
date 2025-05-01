@@ -40,6 +40,7 @@
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
+
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
@@ -60,11 +61,13 @@
             </div>
           </div> --}}
         </div>
-        <a id="createProductButton"
-          class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
-          href="{{ route('dashboard.master-data.product.create') }}">
-          Tambahkan Produk Baru
-        </a>
+        @can('master data-produk-tambah')
+          <a id="createProductButton"
+            class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
+            href="{{ route('dashboard.master-data.product.create') }}">
+            Tambahkan Produk Baru
+          </a>
+        @endcan
       </div>
       <div class="flex flex-col">
         <div class="overflow-x-auto">
@@ -144,23 +147,27 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.master-data.product.edit', ['id' => $item->id]) }}"
-                          id="updateProductButton" data-drawer-target="drawer-update-product-default"
-                          data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
-                          data-drawer-placement="right"
-                          class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                          <x-fas-edit class="mr-2 h-4 w-4" />
-                          Perbarui
-                        </a>
-                        <button type="button" id="deleteProductButton"
-                          data-drawer-target="drawer-delete-product-default"
-                          data-drawer-show="drawer-delete-product-default" aria-controls="drawer-delete-product-default"
-                          data-drawer-placement="right"
-                          class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300"
-                          data-id="{{ $item->id }}">
-                          <x-fas-trash-alt class="mr-2 h-4 w-4" />
-                          Hapus
-                        </button>
+                        @can('master data-produk-perbarui')
+                          <a href="{{ route('dashboard.master-data.product.edit', ['id' => $item->id]) }}"
+                            id="updateProductButton" data-drawer-target="drawer-update-product-default"
+                            data-drawer-show="drawer-update-product-default" aria-controls="drawer-update-product-default"
+                            data-drawer-placement="right"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                            <x-fas-edit class="mr-2 h-4 w-4" />
+                            Perbarui
+                          </a>
+                        @endcan
+                        @can('master data-produk-hapus')
+                          <button type="button" id="deleteProductButton"
+                            data-drawer-target="drawer-delete-product-default"
+                            data-drawer-show="drawer-delete-product-default" aria-controls="drawer-delete-product-default"
+                            data-drawer-placement="right"
+                            class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300"
+                            data-id="{{ $item->id }}">
+                            <x-fas-trash-alt class="mr-2 h-4 w-4" />
+                            Hapus
+                          </button>
+                        @endcan
                       </td>
                     </tr>
                   @empty

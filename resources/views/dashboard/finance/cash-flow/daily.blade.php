@@ -39,6 +39,7 @@
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
+
     <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
@@ -64,16 +65,20 @@
         </div>
         @if (request()->get('periode') == Carbon\Carbon::now()->format('Y-m-d') or !request()->get('periode'))
           <div>
-            <a id="createProductButton"
-              class="mr-2 rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
-              href="{{ route('dashboard.finance.cash-in.create') }}">
-              Tambahkan Pemasukan Dana
-            </a>
-            <a id="createProductButton"
-              class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
-              href="{{ route('dashboard.finance.cash-out.create') }}">
-              Tambahakan Pengeluaran Dana
-            </a>
+            @can('keuangan-arus kas harian-tambah pemasukkan dana')
+              <a id="createProductButton"
+                class="mr-2 rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
+                href="{{ route('dashboard.finance.cash-in.create') }}">
+                Tambahkan Pemasukan Dana
+              </a>
+            @endcan
+            @can('keuangan-arus kas harian-tambah pengeluaran dana')
+              <a id="createProductButton"
+                class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
+                href="{{ route('dashboard.finance.cash-out.create') }}">
+                Tambahakan Pengeluaran Dana
+              </a>
+            @endcan
           </div>
         @endif
       </div>
@@ -147,27 +152,33 @@
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
                         @if ($item->type == 'cash-in' && $item->order_id)
-                          <a href="{{ route('dashboard.order.order_detail', ['id' => $item->order_id]) }}"
-                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                            <x-fas-file class="mr-2 h-4 w-4" />
-                            Lihat Order
-                          </a>
+                          @canany(['order-order aktif-lihat', 'order-riwayat order-lihat'])
+                            <a href="{{ route('dashboard.order.order_detail', ['id' => $item->order_id]) }}"
+                              class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                              <x-fas-file class="mr-2 h-4 w-4" />
+                              Lihat Order
+                            </a>
+                          @endcanany
                         @else
-                          <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}"
-                            id="updateProductButton"
-                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                            <x-fas-edit class="mr-2 h-4 w-4" />
-                            Perbarui
-                          </a>
-                          <button type="button" id="deleteProductButton"
-                            data-drawer-target="drawer-delete-cash-in-default"
-                            data-drawer-show="drawer-delete-cash-in-default"
-                            aria-controls="drawer-delete-cash-in-default" data-drawer-placement="right"
-                            class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300"
-                            data-id="{{ $item->id }}" data-type="{{ $item->type }}">
-                            <x-fas-trash-alt class="mr-2 h-4 w-4" />
-                            Hapus
-                          </button>
+                          @can('keuangan-arus kas harian-perbarui dana') 
+                            <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}"
+                              id="updateProductButton"
+                              class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                              <x-fas-edit class="mr-2 h-4 w-4" />
+                              Perbarui
+                            </a>
+                          @endcan
+                          @can('keuangan-arus kas harian-hapus dana') 
+                            <button type="button" id="deleteProductButton"
+                              data-drawer-target="drawer-delete-cash-in-default"
+                              data-drawer-show="drawer-delete-cash-in-default"
+                              aria-controls="drawer-delete-cash-in-default" data-drawer-placement="right"
+                              class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300"
+                              data-id="{{ $item->id }}" data-type="{{ $item->type }}">
+                              <x-fas-trash-alt class="mr-2 h-4 w-4" />
+                              Hapus
+                            </button>
+                          @endcan
                         @endif
                       </td>
                     </tr>

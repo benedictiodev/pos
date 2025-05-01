@@ -98,22 +98,31 @@
                         {{ $closing_cycle->is_done == 1 ? ($closing_cycle->profit / $closing_cycle->target) * 100 . '%' : '-' }}
                       </td>
                     </tr>
+
                     @if ($closing_cycle->is_done == 0)
                       @if (
-                          (Request::get('periode') &&
-                              ((Request::get('periode') == Date::now()->format('Y-m') &&
-                                  Date::now()->format('d') == Date::now()->endOfMonth()->format('d')) ||
-                                  Request::get('periode') < Date::now()->format('Y-m'))) ||
-                              (!Request::get('periode') && Date::now()->format('d') == Date::now()->endOfMonth()->format('d')))
-                        <tr>
-                          <td scope="col" colspan="6"
-                            class="p-4 text-center text-base font-semibold uppercase text-black">
-                            <button data-modal-target="modal-closing-cycle" data-modal-toggle="modal-closing-cycle"
-                              class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                              Tutup Buku Untuk Bulan Ini
-                            </button>
-                          </td>
-                        </tr>
+                        (Request::get('periode') &&
+                          (
+                            (Request::get('periode') == Date::now()->format('Y-m') &&
+                              (Carbon::now()->format('d') <= Carbon::now()->endOfMonth()->format('d') && Carbon::now()->format('d') >= Carbon::now()->endOfMonth()->subDays(7)->format('d'))
+                            ) || Request::get('periode') < Date::now()->format('Y-m')
+                          )
+                        ) || (
+                          !Request::get('periode') && 
+                          (Carbon::now()->format('d') <= Carbon::now()->endOfMonth()->format('d') && Carbon::now()->format('d') >= Carbon::now()->endOfMonth()->subDays(7)->format('d'))
+                        )
+                      )
+                        @can('keuangan-arus kas bulanan-tutup buku bulanan')
+                          <tr>
+                            <td scope="col" colspan="6"
+                              class="p-4 text-center text-base font-semibold uppercase text-black">
+                              <button data-modal-target="modal-closing-cycle" data-modal-toggle="modal-closing-cycle"
+                                class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                                Tutup Buku Untuk Bulan Ini
+                              </button>
+                            </td>
+                          </tr>
+                        @endcan
                       @endif
                     @else
                       <tr>
@@ -138,15 +147,17 @@
                       </tr>
                     @endif
                   @elseif ($type_closing_cycle == 'clear' || $type_closing_cycle == 'add_equite')
-                    <tr>
-                      <td scope="col" colspan="6"
-                        class="p-4 text-center text-base font-normal uppercase text-black">
-                        <button data-modal-target="modal-add-equite" data-modal-toggle="modal-add-equite"
-                          class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                          Tambahkan Modal Untuk Bulan Ini
-                        </button>
-                      </td>
-                    </tr>
+                    @can('keuangan-arus kas bulanan-tambah modal bulanan')
+                      <tr>
+                        <td scope="col" colspan="6"
+                          class="p-4 text-center text-base font-normal uppercase text-black">
+                          <button data-modal-target="modal-add-equite" data-modal-toggle="modal-add-equite"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                            Tambahkan Modal Untuk Bulan Ini
+                          </button>
+                        </td>
+                      </tr>
+                    @endcan
                   @endif
                 </tbody>
               </table>

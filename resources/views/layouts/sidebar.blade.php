@@ -14,7 +14,11 @@
           </li>
 
           {{-- FINANCE --}}
-          @if (Auth::user()->id == 1)
+          @canany([
+            'keuangan-dana-lihat', 
+            'keuangan-arus kas harian-lihat', 
+            'keuangan-arus kas bulanan-lihat'
+          ])
             <li>
               <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'bg-gray-100' : '' }}"
@@ -26,67 +30,86 @@
               </button>
               <ul id="dropdown-finance"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? '' : 'hidden' }} py-2 space-y-2">
-                <li>
-                  <a href="{{ route('dashboard.finance.funds') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.finance.funds') ? 'bg-gray-100' : '' }}">
-                    Dana
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-daily' ? 'bg-gray-100' : '' }}">
-                    Arus Kas Harian
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('dashboard.finance.cash-flow-monthly') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-monthly' ? 'bg-gray-100' : '' }}">
-                    Arus Kas Bulanan
-                  </a>
-                </li>
+                @can('keuangan-dana-lihat')    
+                  <li>
+                    <a href="{{ route('dashboard.finance.funds') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.finance.funds') ? 'bg-gray-100' : '' }}">
+                      Dana
+                    </a>
+                  </li>
+                @endcan
+                @can('keuangan-arus kas harian-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-daily' ? 'bg-gray-100' : '' }}">
+                      Arus Kas Harian
+                    </a>
+                  </li>
+                @endcan
+                @canany('keuangan-arus kas bulanan-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.finance.cash-flow-monthly') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ Request::route()->getName() == 'dashboard.finance.cash-flow-monthly' ? 'bg-gray-100' : '' }}">
+                      Arus Kas Bulanan
+                    </a>
+                  </li>
+                @endcanany
               </ul>
             </li>
-          @endif
+          @endcanany
           {{-- END FINANCE --}}
 
           {{-- ORDER --}}
-          <li>
-            <button type="button"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.') ? 'bg-gray-100' : '' }}"
-              aria-controls="dropdown-order" data-collapse-toggle="dropdown-order">
-              <x-fas-shopping-basket
-                class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
-              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Order</span>
-              <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
-            </button>
-            <ul id="dropdown-order"
-              class="{{ str_contains(Request::route()->getName(), 'dashboard.order.') ? '' : 'hidden' }} py-2 space-y-2">
-              <li>
-                <a href="{{ route('dashboard.order.order_active') }}"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_active') ? 'bg-gray-100' : '' }}">
-                  Order Aktif
-                </a>
-              </li>
-              <li>
-                <a href="{{ route('dashboard.order.order_history') }}"
-                  class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_history') ? 'bg-gray-100' : '' }}">
-                  Riwayat Order
-                </a>
-              </li>
-              @if (Auth::user()->id == 1)
-                <li>
-                  <a href="{{ route('dashboard.order.report') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.report') ? 'bg-gray-100' : '' }}">
-                    Pelaporan
-                  </a>
-                </li>
-              @endif
-            </ul>
-          </li>
+          @canany([
+            'order-order aktif-lihat',
+            'order-riwayat order-lihat',
+            'order-pelaporan-lihat'
+          ])  
+            <li>
+              <button type="button"
+                class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.') ? 'bg-gray-100' : '' }}"
+                aria-controls="dropdown-order" data-collapse-toggle="dropdown-order">
+                <x-fas-shopping-basket
+                  class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+                <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Order</span>
+                <x-fas-chevron-down class="w-4 h-4 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              </button>
+              <ul id="dropdown-order"
+                class="{{ str_contains(Request::route()->getName(), 'dashboard.order.') ? '' : 'hidden' }} py-2 space-y-2">
+                @can('order-order aktif-lihat') 
+                  <li>
+                    <a href="{{ route('dashboard.order.order_active') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_active') ? 'bg-gray-100' : '' }}">
+                      Order Aktif
+                    </a>
+                  </li>
+                @endcan
+                @can('order-riwayat order-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.order.order_history') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.order_history') ? 'bg-gray-100' : '' }}">
+                      Riwayat Order
+                    </a>
+                  </li>
+                @endcan
+                @can('order-pelaporan-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.order.report') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.order.report') ? 'bg-gray-100' : '' }}">
+                      Pelaporan
+                    </a>
+                  </li>
+                @endcan
+              </ul>
+            </li>
+          @endcanany
           {{-- END ORDER --}}
 
           {{-- COMPANY --}}
-          @if (Auth::user()->id == 1)
+          @canany([
+            'toko-profil-lihat',
+            'toko-pengaturan-lihat'
+          ])
             <li>
               <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.') ? 'bg-gray-100' : '' }}"
@@ -98,25 +121,34 @@
               </button>
               <ul id="dropdown-company"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.company.') ? '' : 'hidden' }} py-2 space-y-2">
-                <li>
-                  <a href="{{ route('dashboard.company.profile') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.profile') ? 'bg-gray-100' : '' }}">
-                    Profil
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('dashboard.company.setting') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.setting') ? 'bg-gray-100' : '' }}">
-                    Pengaturan
-                  </a>
-                </li>
+                @can('toko-profil-lihat') 
+                  <li>
+                    <a href="{{ route('dashboard.company.profile') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.profile') ? 'bg-gray-100' : '' }}">
+                      Profil
+                    </a>
+                  </li>
+                @endcan
+                @can('toko-pengaturan-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.company.setting') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.company.setting') ? 'bg-gray-100' : '' }}">
+                      Pengaturan
+                    </a>
+                  </li>
+                @endcan
               </ul>
             </li>
-          @endif
+          @endcanany
           {{-- END COMPANY --}}
 
           {{-- MASTER DATA --}}
-          @if (Auth::user()->id == 1)
+          @canany([
+            'master data-produk kategori-lihat',
+            'master data-produk-lihat',
+            'master data-tipe dana-lihat',
+            'master data-keterangan arus kas-lihat'
+          ])
             <li>
               <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.') ? 'bg-gray-100' : '' }}"
@@ -128,37 +160,45 @@
               </button>
               <ul id="dropdown-master-data"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.master-data.') ? '' : 'hidden' }} py-2 space-y-2">
-                <li>
-                  <a href="{{ route('dashboard.master-data.category-product') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.category-product') ? 'bg-gray-100' : '' }}">
-                    Produk Kategori
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('dashboard.master-data.product') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.product') ? 'bg-gray-100' : '' }}">
-                    Produk
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('dashboard.master-data.funds') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.funds') ? 'bg-gray-100' : '' }}">
-                    Tipe Dana
-                  </a>
-                </li>
-                <li>
-                  <a href="{{ route('dashboard.master-data.remarks-cash-flow') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.remarks-cash-flow') ? 'bg-gray-100' : '' }}">
-                    Keterangan Arus Kas
-                  </a>
-                </li>
+                @can('master data-produk kategori-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.master-data.category-product') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.category-product') ? 'bg-gray-100' : '' }}">
+                      Produk Kategori
+                    </a>
+                  </li>
+                @endcan
+                @can('master data-produk-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.master-data.product') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.product') ? 'bg-gray-100' : '' }}">
+                      Produk
+                    </a>
+                  </li>
+                @endcan
+                @can('master data-tipe dana-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.master-data.funds') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.funds') ? 'bg-gray-100' : '' }}">
+                      Tipe Dana
+                    </a>
+                  </li>
+                @endcan
+                @can('master data-keterangan arus kas-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.master-data.remarks-cash-flow') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.master-data.remarks-cash-flow') ? 'bg-gray-100' : '' }}">
+                      Keterangan Arus Kas
+                    </a>
+                  </li>
+                @endcan
               </ul>
             </li>
-          @endif
+          @endcanany
           {{-- END MASTER DATA --}}
 
           {{-- PRESENCE --}}
-          <li>
+          {{-- <li>
             <button type="button"
               class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.presence.') ? 'bg-gray-100' : '' }}"
               aria-controls="dropdown-presence" data-collapse-toggle="dropdown-presence">
@@ -190,11 +230,14 @@
                 </li>
               @endif
             </ul>
-          </li>
+          </li> --}}
           {{-- END PRESENCE --}}
 
           {{-- USER MANAGEMENT --}}
-          @if (Auth::user()->id == 1)
+          @canany([
+            'pengelolaan akun-akun pengguna-lihat',
+            'pengelolaan akun-hak akses-lihat'
+          ])
             <li>
               <button type="button"
                 class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.') ? 'bg-gray-100' : '' }}"
@@ -206,22 +249,26 @@
               </button>
               <ul id="dropdown-management-user"
                 class="{{ str_contains(Request::route()->getName(), 'dashboard.management-user.') ? '' : 'hidden' }} py-2 space-y-2">
-                <li>
-                  <a href="{{ route('dashboard.management-user.user.index') }}"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.user.index') ? 'bg-gray-100' : '' }}">
-                    Akun Pengguna
-                  </a>
-                </li>
-                {{-- <li>
-                  <a href="#"
-                    class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.role.index') ? 'bg-gray-100' : '' }}"
-                    disabled>
-                    Role
-                  </a>
-                </li> --}}
+                @can('pengelolaan akun-akun pengguna-lihat') 
+                  <li>
+                    <a href="{{ route('dashboard.management-user.user.index') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.user.index') ? 'bg-gray-100' : '' }}">
+                      Akun Pengguna
+                    </a>
+                  </li>
+                @endcan
+                @can('pengelolaan akun-hak akses-lihat')
+                  <li>
+                    <a href="{{ route('dashboard.management-user.role.index') }}"
+                      class="flex items-center p-2 text-base text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 {{ str_contains(Request::route()->getName(), 'dashboard.management-user.role.') ? 'bg-gray-100' : '' }}"
+                      disabled>
+                      Hak Akses
+                    </a>
+                  </li>
+                @endcan
               </ul>
             </li>
-          @endif
+          @endcanany
           {{-- END USER MANAGEMENT --}}
         </ul>
       </div>

@@ -39,6 +39,7 @@
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
+
     <div
       class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
       <div class="mb-4">
@@ -75,22 +76,24 @@
                 class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-200 text-sm text-gray-900 focus:outline-none"
                 id="image" type="file" accept="image/*" onchange="onChange()" name="image" disabled>
             </div>
-            <div id="frame_button_before_edit">
-              <button type="button" onclick="edit_form()"
-                class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Perbarui
-              </button>
-            </div>
-            <div id="frame_button_after_edit" hidden>
-              <button type="submit"
-                class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Kirim
-              </button>
-              <button type="button" onclick="cancel_form()"
-                class="w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-3000">
-                Batalkan
-              </button>
-            </div>
+            @can('toko-profil-perbarui')
+              <div id="frame_button_before_edit">
+                <button type="button" onclick="edit_form()"
+                  class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                  Perbarui
+                </button>
+              </div>
+              <div id="frame_button_after_edit" hidden>
+                <button type="submit"
+                  class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                  Kirim
+                </button>
+                <button type="button" onclick="cancel_form()"
+                  class="w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-3000">
+                  Batalkan
+                </button>
+              </div>
+            @endcan
           </div>
         </form>
       </div>
