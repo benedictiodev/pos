@@ -18,9 +18,10 @@ use App\Http\Middleware\RedirectWeb;
 use Illuminate\Support\Facades\Route;
 
 
-// Route::prefix('/migration')->group(function() {
-//     Route::get('/', [MigrationDataController::class, 'add_data_discount_for_order_old']);
-// });
+Route::prefix('/migration')->group(function() {
+    // Route::get('/', [MigrationDataController::class, 'add_data_discount_for_order_old']);
+    Route::get('/seeder', [MigrationDataController::class, 'running_seeder']);
+});
 
 Route::get('/redirect', function () {
     return view('auth.redirect');
@@ -103,7 +104,7 @@ Route::prefix("/dashboard")->middleware([
         });
         Route::prefix("/equite")->group(function () {
             Route::post("/add", [CashFlowController::class, 'add_equite'])->name('dashboard.finance.equite.post')->middleware(['permission:keuangan-arus kas bulanan-tambah modal bulanan']);
-            Route::post("/closing", [CashFlowController::class, 'add_closing_cycle'])->name('dashboard.finance.equite.closing');
+            Route::post("/closing", [CashFlowController::class, 'add_closing_cycle'])->name('dashboard.finance.equite.closing')->middleware(['permission:keuangan-arus kas bulanan-tutup buku bulanan']);
         });
     });
 

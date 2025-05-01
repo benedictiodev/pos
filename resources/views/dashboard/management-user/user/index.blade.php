@@ -60,10 +60,12 @@
             </div>
           </div> --}}
         </div>
-        <a id="createUserButton" href="{{ route('dashboard.management-user.user.create') }}"
-          class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-          Tambahkan Akun Pengguna Baru
-        </a>
+        @can('pengelolaan akun-akun pengguna-tambah')
+          <a id="createUserButton" href="{{ route('dashboard.management-user.user.create') }}"
+            class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+            Tambahkan Akun Pengguna Baru
+          </a>
+        @endcan
       </div>
       <div class="flex flex-col">
         <div class="overflow-x-auto">
@@ -108,22 +110,25 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.management-user.user.edit', $item) }}"
-                          class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                          <x-fas-edit class="mr-2 h-4 w-4" />
-                          Perbarui
-                        </a>
+                        @can('pengelolaan akun-akun pengguna-perbarui')
+                          <a href="{{ route('dashboard.management-user.user.edit', $item) }}"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                            <x-fas-edit class="mr-2 h-4 w-4" />
+                            Perbarui
+                          </a>
+                        @endcan
 
-                        <button type="button" id="presenceButton" data-drawer-target="drawer-user-default"
-                          data-drawer-show="drawer-user-default" aria-controls="drawer-user-default"
-                          data-drawer-placement="right"
-                          class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-primary-300
-                          "
-                          data-id="{{ $item->id }}">
-                          <x-fas-trash class="mr-2 h-4 w-4" />
-                          Hapus
-                        </button>
-
+                        @can('pengelolaan akun-akun pengguna-hapus')
+                          <button type="button" id="presenceButton" data-drawer-target="drawer-user-default"
+                            data-drawer-show="drawer-user-default" aria-controls="drawer-user-default"
+                            data-drawer-placement="right"
+                            class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-primary-300
+                            "
+                            data-id="{{ $item->id }}">
+                            <x-fas-trash class="mr-2 h-4 w-4" />
+                            Hapus
+                          </button>
+                        @endcan
                       </td>
                     </tr>
                   @empty

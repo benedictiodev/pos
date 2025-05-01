@@ -29,11 +29,14 @@ class RolePermissionSeeder extends Seeder
         Permission::create(["name" => "keuangan-arus kas harian-hapus dana"]);
         Permission::create(["name" => "keuangan-arus kas bulanan-lihat"]);
         Permission::create(["name" => "keuangan-arus kas bulanan-tambah modal bulanan"]);
+        Permission::create(["name" => "keuangan-arus kas bulanan-tutup buku bulanan"]);
         Permission::create(["name" => "order-order aktif-lihat"]);
         Permission::create(["name" => "order-order aktif-tambah order baru"]);
         Permission::create(["name" => "order-order aktif-perbarui order"]);
         Permission::create(["name" => "order-order aktif-hapus order"]);
         Permission::create(["name" => "order-riwayat order-lihat"]);
+        Permission::create(["name" => "order-riwayat order-perbarui riwayat order"]);
+        Permission::create(["name" => "order-riwayat order-lihat jumlah pendapatan order"]);
         Permission::create(["name" => "order-pelaporan-lihat"]);
         Permission::create(["name" => "toko-profil-lihat"]);
         Permission::create(["name" => "toko-profil-perbarui"]);

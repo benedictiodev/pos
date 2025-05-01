@@ -142,12 +142,12 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4 inline-flex items-center gap-2">
-                        @if (Auth::user()->id == 1)
+                        @can('order-riwayat order-perbarui riwayat order')
                           <a href="{{ route('dashboard.order.order_history_edit', $item) }}"
                             class="inline-flex items-center rounded-lg bg-slate-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-slate-800 focus:ring-4 focus:ring-primary-300">
                             Perbarui
                           </a>
-                        @endif
+                        @endcan
                         <a href="{{ route('dashboard.order.order_detail', ['id' => $item->id]) }}"
                           class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                           <x-fas-file class="mr-2 h-4 w-4" />
@@ -162,7 +162,7 @@
                     </tr>
                   @endforelse
                 </tbody>
-                @if (Auth::user()->id == 1)
+                @can('order-riwayat order-lihat jumlah pendapatan order')
                   <tfoot class="bg-gray-100">
                     <tr>
                       <th scope="col" colspan="2s"
@@ -177,7 +177,7 @@
                       </th>
                     </tr>
                   </tfoot>
-                @endif
+                @endcan
               </table>
             </div>
           </div>

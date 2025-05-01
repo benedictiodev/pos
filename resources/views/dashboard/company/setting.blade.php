@@ -68,22 +68,24 @@
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</span></p>
               @enderror
             </div>
-            <div id="frame_button_before_edit">
-              <button type="button" onclick="edit_form()"
-                class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Perbarui
-              </button>
-            </div>
-            <div id="frame_button_after_edit" hidden>
-              <button type="submit"
-                class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-                Kirim
-              </button>
-              <button type="button" onclick="cancel_form()"
-                class="w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-3000">
-                Batalkan
-              </button>
-            </div>
+            @can('toko-pengaturan-perbarui') 
+              <div id="frame_button_before_edit">
+                <button type="button" onclick="edit_form()"
+                  class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                  Perbarui
+                </button>
+              </div>
+              <div id="frame_button_after_edit" hidden>
+                <button type="submit"
+                  class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                  Kirim
+                </button>
+                <button type="button" onclick="cancel_form()"
+                  class="w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-3000">
+                  Batalkan
+                </button>
+              </div>
+            @endcan
           </div>
         </form>
       </div>

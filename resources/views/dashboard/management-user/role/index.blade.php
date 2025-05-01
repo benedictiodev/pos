@@ -60,10 +60,12 @@
             </div>
           </div> --}}
         </div>
-        <a id="createRoleButton" href="{{ route('dashboard.management-user.role.create') }}"
-          class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
-          Tambah Hak Akses Baru
-        </a>
+        @can('pengelolaan akun-hak akses-tambah')
+          <a id="createRoleButton" href="{{ route('dashboard.management-user.role.create') }}"
+            class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+            Tambah Hak Akses Baru
+          </a>
+        @endcan
       </div>
       <div class="flex flex-col">
         <div class="overflow-x-auto">
@@ -102,22 +104,25 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.management-user.role.edit', $item) }}"
-                          class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
-                          <x-fas-edit class="mr-2 h-4 w-4" />
-                          Perbarui
-                        </a>
+                        @can('pengelolaan akun-hak akses-perbarui')
+                          <a href="{{ route('dashboard.management-user.role.edit', $item) }}"
+                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                            <x-fas-edit class="mr-2 h-4 w-4" />
+                            Perbarui
+                          </a>
+                        @endcan
 
-                        <button type="button" id="deleteButton" data-drawer-target="drawer-role-default"
-                          data-drawer-show="drawer-role-default" aria-controls="drawer-role-default"
-                          data-drawer-placement="right"
-                          class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-primary-300
-                          "
-                          data-id="{{ $item->id }}">
-                          <x-fas-trash class="mr-2 h-4 w-4" />
-                          Hapus
-                        </button>
-
+                        @can('pengelolaan akun-hak akses-hapus')
+                          <button type="button" id="deleteButton" data-drawer-target="drawer-role-default"
+                            data-drawer-show="drawer-role-default" aria-controls="drawer-role-default"
+                            data-drawer-placement="right"
+                            class="inline-flex items-center rounded-lg bg-red-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-primary-300
+                            "
+                            data-id="{{ $item->id }}">
+                            <x-fas-trash class="mr-2 h-4 w-4" />
+                            Hapus
+                          </button>
+                        @endcan
                       </td>
                     </tr>
                   @empty

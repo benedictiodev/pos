@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
 use Throwable;
 
@@ -27,5 +28,15 @@ class MigrationDataController extends Controller
             DB::rollBack();
             throw $error;
         }
+    }
+
+    public function running_seeder(Request $request) {
+        Artisan::call('db:seed', [
+            '--class' => $request->class
+        ]);
+
+        return response()->json([
+            'message' => 'Seeder berhasil dijalankan!',
+        ]);
     }
 }
