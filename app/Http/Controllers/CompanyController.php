@@ -58,19 +58,19 @@ class CompanyController extends Controller
     {
         $setting_printer = json_encode((array) [
             "store_name" => (array) [
-                "show" => true,
+                "show" => isset($request['setting_printer-store_name_show']),
                 "value" =>  $request['setting_printer-store_name_value'],
             ],
             "address" => (array) [
-                "show" => true,
+                "show" => isset($request['setting_printer-store_address_show']),
                 "value" =>  $request['setting_printer-store_address_value'],
             ],
             "wa" => (array) [
-                "show" => true,
+                "show" => isset($request['setting_printer-store_whatsapp_show']),
                 "value" =>  $request['setting_printer-store_whatsapp_value'],
             ],
             "ig" => (array) [
-                "show" => true,
+                "show" => isset($request['setting_printer-store_ig_show']),
                 "value" => $request['setting_printer-store_ig_value'],
             ],
             "footer" => (array) [

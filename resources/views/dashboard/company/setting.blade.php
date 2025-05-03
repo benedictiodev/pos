@@ -48,26 +48,55 @@
                 <div class="absolute top-[-11px] left-0 right-0 flex justify-center">
                   <div class="bg-white px-4 text-sm font-semibold">Pengaturan Tampilan Struk Pembayaran</div>
                 </div>
+                
                 <label for="setting_printer-store_name_value" class="mb-2 block text-sm font-medium text-gray-900">Nama Toko</label>
+                <div class="flex items-center mb-2">
+                  <input id="setting_printer-store_name_show" aria-describedby="checkbox-1" type="checkbox" name="setting_printer-store_name_show" value="1"
+                    class="focus:ring-3 h-4 w-4 border-gray-300 bg-gray-50 focus:ring-primary-300" {{ $setting_printer->store_name->show ? 'checked' : '' }} disabled>
+                  <label for="setting_printer-store_name_show" class="sr-only">checkbox</label>
+                  <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan Nama Toko Pada Struk Pembayaran</p>
+                </div>
                 <input type="text" name="setting_printer-store_name_value" id="setting_printer-store_name_value"
                   class="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Nama Toko"
                   value="{{ old('setting_printer-store_name_value', $setting_printer->store_name->value) }}" readonly>
+
                 <label for="setting_printer-store_address_value" class="mb-2 block text-sm font-medium text-gray-900">Alamat Toko</label>
+                <div class="flex items-center mb-2">
+                  <input id="setting_printer-store_address_show" aria-describedby="checkbox-1" type="checkbox" name="setting_printer-store_address_show" value="1"
+                    class="focus:ring-3 h-4 w-4 border-gray-300 bg-gray-50 focus:ring-primary-300" {{ $setting_printer->address->show ? 'checked' : '' }} disabled>
+                  <label for="setting_printer-store_address_show" class="sr-only">checkbox</label>
+                  <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan Alamat Toko Pada Struk Pembayaran</p>
+                </div>
                 <input type="text" name="setting_printer-store_address_value" id="setting_printer-store_address_value"
                   class="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Alamat Toko"
                   value="{{ old('setting_printer-store_address_value', $setting_printer->address->value) }}" readonly>
+
                 <label for="setting_printer-store_whatsapp_value" class="mb-2 block text-sm font-medium text-gray-900">No WhatsApp Toko</label>
+                <div class="flex items-center mb-2">
+                  <input id="setting_printer-store_whatsapp_show" aria-describedby="checkbox-1" type="checkbox" name="setting_printer-store_whatsapp_show" value="1"
+                    class="focus:ring-3 h-4 w-4 border-gray-300 bg-gray-50 focus:ring-primary-300" {{ $setting_printer->wa->show ? 'checked' : '' }} disabled>
+                  <label for="setting_printer-store_whatsapp_show" class="sr-only">checkbox</label>
+                  <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan No WhatsApp Toko Pada Struk Pembayaran</p>
+                </div>
                 <input type="text" name="setting_printer-store_whatsapp_value" id="setting_printer-store_whatsapp_value"
                   class="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="No WhatsApp Toko"
                   value="{{ old('setting_printer-store_whatsapp_value', $setting_printer->wa->value) }}" readonly>
+
                 <label for="setting_printer-store_ig_value" class="mb-2 block text-sm font-medium text-gray-900">Instagram Toko</label>
+                <div class="flex items-center mb-2">
+                  <input id="setting_printer-store_ig_show" aria-describedby="checkbox-1" type="checkbox" name="setting_printer-store_ig_show" value="1"
+                    class="focus:ring-3 h-4 w-4 border-gray-300 bg-gray-50 focus:ring-primary-300" {{ $setting_printer->ig->show ? 'checked' : '' }} disabled>
+                  <label for="setting_printer-store_ig_show" class="sr-only">checkbox</label>
+                  <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan Instagram Toko Pada Struk Pembayaran</p>
+                </div>
                 <input type="text" name="setting_printer-store_ig_value" id="setting_printer-store_ig_value"
                   class="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Instagram Toko"
                   value="{{ old('setting_printer-store_ig_value', $setting_printer->ig->value) }}" readonly>
+
               </div>
               @error('distance')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
@@ -103,18 +132,22 @@
 
     function edit_form() {
       document.querySelector('#setting_printer-store_name_value').readOnly = false;
+      document.querySelector('#setting_printer-store_name_show').disabled = false;
       document.querySelector('#setting_printer-store_name_value').classList.remove("bg-gray-200");
       document.querySelector('#setting_printer-store_name_value').classList.add("bg-gray-50");
       
       document.querySelector('#setting_printer-store_address_value').readOnly = false;
+      document.querySelector('#setting_printer-store_address_show').disabled = false;
       document.querySelector('#setting_printer-store_address_value').classList.remove("bg-gray-200");
       document.querySelector('#setting_printer-store_address_value').classList.add("bg-gray-50");
 
       document.querySelector('#setting_printer-store_whatsapp_value').readOnly = false;
+      document.querySelector('#setting_printer-store_whatsapp_show').disabled = false;
       document.querySelector('#setting_printer-store_whatsapp_value').classList.remove("bg-gray-200");
       document.querySelector('#setting_printer-store_whatsapp_value').classList.add("bg-gray-50");
 
       document.querySelector('#setting_printer-store_ig_value').readOnly = false;
+      document.querySelector('#setting_printer-store_ig_show').disabled = false;
       document.querySelector('#setting_printer-store_ig_value').classList.remove("bg-gray-200");
       document.querySelector('#setting_printer-store_ig_value').classList.add("bg-gray-50");
 
@@ -124,18 +157,22 @@
 
     function cancel_form() {
       document.querySelector('#setting_printer-store_name_value').readOnly = true;
+      document.querySelector('#setting_printer-store_name_show').disabled = true;
       document.querySelector('#setting_printer-store_name_value').classList.add("bg-gray-200");
       document.querySelector('#setting_printer-store_name_value').classList.remove("bg-gray-50");
 
       document.querySelector('#setting_printer-store_address_value').readOnly = true;
+      document.querySelector('#setting_printer-store_address_show').disabled = true;
       document.querySelector('#setting_printer-store_address_value').classList.add("bg-gray-200");
       document.querySelector('#setting_printer-store_address_value').classList.remove("bg-gray-50");
 
       document.querySelector('#setting_printer-store_whatsapp_value').readOnly = true;
+      document.querySelector('#setting_printer-store_whatsapp_show').disabled = true;
       document.querySelector('#setting_printer-store_whatsapp_value').classList.add("bg-gray-200");
       document.querySelector('#setting_printer-store_whatsapp_value').classList.remove("bg-gray-50");
 
       document.querySelector('#setting_printer-store_ig_value').readOnly = true;
+      document.querySelector('#setting_printer-store_ig_show').disabled = true;
       document.querySelector('#setting_printer-store_ig_value').classList.add("bg-gray-200");
       document.querySelector('#setting_printer-store_ig_value').classList.remove("bg-gray-50");
 
