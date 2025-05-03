@@ -50,24 +50,42 @@ class CompanyController extends Controller
 
     public function index_setting()
     {
-        $data = CompanySetting::query()->where("company_id", "=", Auth::user()->company_id)->first();
-        return view('dashboard.company.setting', ["data" => $data]);
+        $setting_printer = Company::query()->select('settings_printer')->where("id", "=", Auth::user()->company_id)->first();
+        return view('dashboard.company.setting', ["setting_printer" => json_decode($setting_printer->settings_printer)]);
     }
 
     public function update_setting(Request $request, $id)
     {
-        $validate = $request->validate([
-            "distance" => "required",
-            "latitude" => "required",
-            "longitude" => "required",
-        ], [
-            "latitude" => 'The location marker is required.',
-            "longitude" => 'The location marker is required.',
+        $setting_printer = json_encode((array) [
+            "store_name" => (array) [
+                "show" => isset($request['setting_printer-store_name_show']),
+                "value" =>  $request['setting_printer-store_name_value'],
+            ],
+            "address" => (array) [
+                "show" => isset($request['setting_printer-store_address_show']),
+                "value" =>  $request['setting_printer-store_address_value'],
+            ],
+            "wa" => (array) [
+                "show" => isset($request['setting_printer-store_whatsapp_show']),
+                "value" =>  $request['setting_printer-store_whatsapp_value'],
+            ],
+            "ig" => (array) [
+                "show" => isset($request['setting_printer-store_ig_show']),
+                "value" => $request['setting_printer-store_ig_value'],
+            ],
+            "footer" => (array) [
+                "show" => true,
+                "value" => (array) [
+                    "Terimakasih",
+                    "Ditunggu Kedatangannya Kembali"
+                ]
+            ]
         ]);
-        $setting = CompanySetting::query()->where("company_id", '=', Auth::user()->company_id)->where("id", '=', $id)->first();
-        if ($setting) {
-
-            $update = $setting->update($validate);
+        $company = Company::query()->where("id", '=', $id)->first();
+        if ($company) {
+            $update = $company->update([
+                "settings_printer" => $setting_printer,
+            ]);
 
             if ($update) {
                 return redirect()->route('dashboard.company.setting')->with('success', "Berhasil memperbarui data pengaturan toko");

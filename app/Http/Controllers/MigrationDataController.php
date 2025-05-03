@@ -39,4 +39,12 @@ class MigrationDataController extends Controller
             'message' => 'Seeder berhasil dijalankan!',
         ]);
     }
+
+    public function running_migration() {
+        Artisan::call('migrate');
+
+        return response()->json([
+            'message' => 'migrate berhasil dijalankan!',
+        ]);
+    }
 }
