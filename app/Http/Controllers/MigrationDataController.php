@@ -127,6 +127,10 @@ class MigrationDataController extends Controller
     public function optimize() {
         try {
             Artisan::call('optimize:clear');
+
+            return response()->json([
+                'message' => 'optimize berhasil dijalankan!',
+            ]);
         } catch (Exception $e) {
             throw $e;
         }
