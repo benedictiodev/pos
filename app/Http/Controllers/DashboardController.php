@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\DB;
 class DashboardController extends Controller
 {
     public function index() {
+        dd(Auth::user()->getAllPermissions()->pluck('name')->toArray());
         $month = Carbon::now()->format('Y-m');
 
         $order_date_now = Order::where('company_id', Auth::user()->company_id)
