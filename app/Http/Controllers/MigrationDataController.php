@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Company;
 use App\Models\Order;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\DB;
@@ -121,5 +122,13 @@ class MigrationDataController extends Controller
         return response()->json([
             'message' => 'migrate berhasil dijalankan!',
         ]);
+    }
+
+    public function optimize() {
+        try {
+            Artisan::call('optimize:clear');
+        } catch (Exception $e) {
+            throw $e;
+        }
     }
 }
