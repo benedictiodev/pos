@@ -56,6 +56,15 @@ class CompanyController extends Controller
 
     public function update_setting(Request $request, $id)
     {
+        $value_footer = [];
+        if (isset($request['setting_printer-footer_value'])) {
+            foreach($request['setting_printer-footer_value'] as $item) {
+                if ($item !== null) {
+                    array_push($value_footer, $item);
+                }
+            }
+        }
+
         $setting_printer = json_encode((array) [
             "store_name" => (array) [
                 "show" => isset($request['setting_printer-store_name_show']),
@@ -74,11 +83,8 @@ class CompanyController extends Controller
                 "value" => $request['setting_printer-store_ig_value'],
             ],
             "footer" => (array) [
-                "show" => true,
-                "value" => (array) [
-                    "Terimakasih",
-                    "Ditunggu Kedatangannya Kembali"
-                ]
+                "show" => isset($request['setting_printer-footer_show']),
+                "value" => $value_footer,
             ]
         ]);
         $company = Company::query()->where("id", '=', $id)->first();

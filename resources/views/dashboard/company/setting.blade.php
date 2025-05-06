@@ -57,7 +57,7 @@
                   <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan Nama Toko Pada Struk Pembayaran</p>
                 </div>
                 <input type="text" name="setting_printer-store_name_value" id="setting_printer-store_name_value"
-                  class="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                  class="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Nama Toko"
                   value="{{ old('setting_printer-store_name_value', $setting_printer->store_name->value) }}" readonly>
 
@@ -69,7 +69,7 @@
                   <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan Alamat Toko Pada Struk Pembayaran</p>
                 </div>
                 <input type="text" name="setting_printer-store_address_value" id="setting_printer-store_address_value"
-                  class="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                  class="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Alamat Toko"
                   value="{{ old('setting_printer-store_address_value', $setting_printer->address->value) }}" readonly>
 
@@ -81,7 +81,7 @@
                   <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan No WhatsApp Toko Pada Struk Pembayaran</p>
                 </div>
                 <input type="text" name="setting_printer-store_whatsapp_value" id="setting_printer-store_whatsapp_value"
-                  class="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                  class="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="No WhatsApp Toko"
                   value="{{ old('setting_printer-store_whatsapp_value', $setting_printer->wa->value) }}" readonly>
 
@@ -93,9 +93,36 @@
                   <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan Instagram Toko Pada Struk Pembayaran</p>
                 </div>
                 <input type="text" name="setting_printer-store_ig_value" id="setting_printer-store_ig_value"
-                  class="mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                  class="mb-3 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Instagram Toko"
                   value="{{ old('setting_printer-store_ig_value', $setting_printer->ig->value) }}" readonly>
+
+                <label for="setting_printer-footer_value" class="mb-2 block text-sm font-medium text-gray-900">Footer</label>
+                <div class="flex items-center mb-2">
+                  <input id="setting_printer-footer_show" aria-describedby="checkbox-1" type="checkbox" name="setting_printer-footer_show" value="1"
+                    class="focus:ring-3 h-4 w-4 border-gray-300 bg-gray-50 focus:ring-primary-300" {{ $setting_printer->ig->show ? 'checked' : '' }} disabled>
+                  <label for="setting_printer-footer_show" class="sr-only">checkbox</label>
+                  <p class="ml-2 text-sm font-medium text-gray-900">Tampilkan Footer Pada Struk Pembayaran</p>
+                </div>
+                <div id="body_footer">
+                  @foreach ($setting_printer->footer->value as $index => $item) 
+                    <div class="flex" id="setting_printer-footer_value-{{$index}}">
+                      <input type="text" name="setting_printer-footer_value[]"
+                        class="setting_printer-footer_value mb-2 block w-full rounded-lg border border-gray-300 bg-gray-200 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                        placeholder="Footer"
+                        value="{{ old('setting_printer-footer_value', $item) }}" readonly>
+                      <button type="button" onclick="delete_seetings_printer_footer({{$index}})" hidden
+                        class="button_footer mb-2 w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300">
+                        Hapus
+                      </button>
+                    </div>
+                  @endforeach
+                </div>
+                <button type="button" onclick="add_settings_printer_footer({{count($setting_printer->footer->value)}})" hidden
+                  class="button_footer mb-2 w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+                  Tambahkan Baris Footer
+                </button>
+              </div>
 
               </div>
               @error('distance')
@@ -115,7 +142,7 @@
                   Kirim
                 </button>
                 <button type="button" onclick="cancel_form()"
-                  class="w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-3000">
+                  class="w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300">
                   Batalkan
                 </button>
               </div>
@@ -151,6 +178,17 @@
       document.querySelector('#setting_printer-store_ig_value').classList.remove("bg-gray-200");
       document.querySelector('#setting_printer-store_ig_value').classList.add("bg-gray-50");
 
+      document.querySelectorAll('.setting_printer-footer_value').forEach(function(item) {
+        item.readOnly = false;
+        item.classList.remove("bg-gray-200");
+        item.classList.add("bg-gray-50");
+        item.classList.add("mr-2");
+      });
+      document.querySelectorAll('.button_footer').forEach(function(item) {
+        item.hidden = false;
+      });
+      document.querySelector('#setting_printer-footer_show').disabled = false;
+
       document.querySelector('#frame_button_before_edit').hidden = true;
       document.querySelector('#frame_button_after_edit').hidden = false;
     }
@@ -176,8 +214,45 @@
       document.querySelector('#setting_printer-store_ig_value').classList.add("bg-gray-200");
       document.querySelector('#setting_printer-store_ig_value').classList.remove("bg-gray-50");
 
+      document.querySelectorAll('.setting_printer-footer_value').forEach(function(item) {
+        item.readOnly = true;
+        item.classList.add("bg-gray-200");
+        item.classList.remove("bg-gray-50");
+        item.classList.remove("mr-2");
+      });
+      document.querySelectorAll('.button_footer').forEach(function(item) {
+        item.hidden = true;
+      });
+      document.querySelector('#setting_printer-footer_show').disabled = true;
+
       document.querySelector('#frame_button_before_edit').hidden = false;
       document.querySelector('#frame_button_after_edit').hidden = true;
+    }
+
+    let index_footer = null;
+    function add_settings_printer_footer(intial_index) {
+      if (!index_footer) {
+        index_footer = intial_index;
+      }
+      
+      $('#body_footer').append(`
+        <div class="flex" id="setting_printer-footer_value-${index_footer}">
+          <input type="text" name="setting_printer-footer_value[]"
+            class="setting_printer-footer_value mb-2 mr-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+            placeholder="Footer"
+            value="">
+          <button type="button" onclick="delete_seetings_printer_footer(${index_footer})" 
+            class="button_footer mb-2 w-fit justify-center rounded-lg bg-yellow-400 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-yellow-500 focus:outline-none focus:ring-4 focus:ring-yellow-300">
+            Hapus
+          </button>
+        </div>
+      `);
+
+      index_footer += 1;
+    }
+
+    function delete_seetings_printer_footer(index) {
+      $(`#setting_printer-footer_value-${index}`).remove();
     }
   </script>
 @endpush
