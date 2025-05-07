@@ -8,6 +8,7 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
+use App\Http\Controllers\Management\CompanyController as ManagementCompanyController;
 use App\Http\Controllers\Management\DashboardController as ManagementDashboardController;
 use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\MigrationDataController;
@@ -185,4 +186,9 @@ Route::prefix('/management')->middleware([
     ManagementAuth::class
 ])->group(function() {
     Route::get('/', [ManagementDashboardController::class, 'index'])->name('management.dashboard');
+
+    Route::prefix("/company")->group(function() {
+        Route::get("/", [ManagementCompanyController::class, 'index'])->name('management.company.index');
+        Route::get("/create", [ManagementCompanyController::class, 'create'])->name('management.company.create');
+    });
 });

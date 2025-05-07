@@ -7,9 +7,17 @@
         <ul class="pb-2 space-y-2">
           <li>
             <a href="{{ route('management.dashboard') }}"
-              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ Request::route()->getName() == 'dashboard' ? 'bg-gray-100' : '' }}">
+              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ Request::route()->getName() == 'management.dashboard' ? 'bg-gray-100' : '' }}">
               <x-fas-home class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
               <span class="ml-3" sidebar-toggle-item>Beranda</span>
+            </a>
+          </li>
+
+          <li>
+            <a href="{{ route('management.company.index') }}"
+              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ str_contains(Request::route()->getName(), 'management.company') ? 'bg-gray-100' : '' }}">
+              <x-fas-building class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              <span class="ml-3" sidebar-toggle-item>Mitra Perusahaan</span>
             </a>
           </li>
         </ul>
