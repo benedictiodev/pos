@@ -8,12 +8,14 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
+use App\Http\Controllers\Management\DashboardController as ManagementDashboardController;
 use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\MigrationDataController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemarksCashFlowController;
+use App\Http\Middleware\ManagementAuth;
 use App\Http\Middleware\RedirectWeb;
 use Illuminate\Support\Facades\Route;
 
@@ -176,4 +178,11 @@ Route::prefix("/dashboard")->middleware([
             Route::delete("/{id}", [ManagementUserController::class, 'role_destroy'])->name('dashboard.management-user.role.destroy')->middleware(['permission:pengelolaan akun-hak akses-hapus']);
         });
     });
+});
+
+Route::prefix('/management')->middleware([
+    'auth',
+    ManagementAuth::class
+])->group(function() {
+    Route::get('/', [ManagementDashboardController::class, 'index'])->name('management.dashboard');
 });
