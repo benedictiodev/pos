@@ -111,16 +111,16 @@
                         <p class="text-sm font-normal text-gray-900">{{ $item->name }}</p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                        <p class="text-sm font-normal text-gray-900">{{ $item->address }}</p>
+                        <p class="text-sm font-normal text-gray-900">{{ $item->address ?? '-' }}</p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                        <p class="text-sm font-normal text-gray-900">{{ $item->phone_number }}</p>
+                        <p class="text-sm font-normal text-gray-900">{{ $item->phone_number ?? '-' }}</p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">{{ $item->type_subscription }}</p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
-                        <p class="text-sm font-normal text-gray-900">{{ $item->subscription_fee }}</p>
+                        <p class="text-sm font-normal text-gray-900">{{ format_rupiah($item->subscription_fee) }}</p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">{{ $item->expired_date }}</p>

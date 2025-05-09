@@ -190,5 +190,6 @@ Route::prefix('/management')->middleware([
     Route::prefix("/company")->group(function() {
         Route::get("/", [ManagementCompanyController::class, 'index'])->name('management.company.index');
         Route::get("/create", [ManagementCompanyController::class, 'create'])->name('management.company.create');
+        Route::post("/store", [ManagementCompanyController::class, 'store'])->name('management.company.store');
     });
 });
