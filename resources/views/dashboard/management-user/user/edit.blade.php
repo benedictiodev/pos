@@ -82,10 +82,23 @@
               <label for="address" class="mb-2 block text-sm font-medium text-gray-900">Alamat</label>
               <textarea type="tel" name="address" id="address"
                 class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                placeholder="Alamat" value="{{ old('address', $user->address) }}"></textarea>
+                placeholder="Alamat">{{ old('address', $user->address) }}</textarea>
               @error('address')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
               @enderror
+            </div>
+
+            <div>
+              <label for="role_id" class="block mb-2 text-sm font-medium text-gray-900">Hak Akses</label>
+              <select id="role_id" name="role_id"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required>
+                <option disabled value="" selected>~ Hak Akses ~</option>
+                @foreach ($roles as $item)
+                  <option value="{{ $item->id }}" @if (old('role_id', $user_role) == $item->id) selected @endif>
+                    {{ $item->name }}</option>
+                @endforeach
+              </select>
             </div>
 
             {{-- <div>
