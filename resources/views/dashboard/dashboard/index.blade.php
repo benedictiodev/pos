@@ -17,7 +17,7 @@
     </div>
   </div>
 
-  @if (Auth::user()->id == 1)
+  @if (Auth::user()->is_owner)
     <div>
       <div class="grid grid-col-1 sm:grid-cols-3 gap-4 mb-4">
         <div class="flex justify-between p-3 h-24 rounded-lg bg-orange-300 shadow-md border">
