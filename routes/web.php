@@ -191,5 +191,7 @@ Route::prefix('/management')->middleware([
         Route::get("/", [ManagementCompanyController::class, 'index'])->name('management.company.index');
         Route::get("/create", [ManagementCompanyController::class, 'create'])->name('management.company.create');
         Route::post("/store", [ManagementCompanyController::class, 'store'])->name('management.company.store');
+        Route::get("{id}/edit", [ManagementCompanyController::class, 'edit'])->name('management.company.edit');
+        Route::put("{id}/update", [ManagementCompanyController::class, 'update'])->name('management.company.update');
     });
 });

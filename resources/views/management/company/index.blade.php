@@ -127,7 +127,7 @@
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">
-                        <a href="{{ route('dashboard.master-data.funds.edit', ['id' => $item->id]) }}"
+                        <a href="{{ route('management.company.edit', ['id' => $item->id]) }}"
                           class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                           <x-fas-edit class="mr-2 h-4 w-4" />
                           Perbarui

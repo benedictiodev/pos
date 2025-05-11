@@ -71,7 +71,7 @@
                   required>
                   <option disabled value="" selected>~ Pilih Tipe Langganan ~</option>
                   <option value="basic">Basic</option>
-                  <option value="basic">Pro</option>
+                  <option value="pro">Pro</option>
                 </select>
                 @error('type_subscription')
                   <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
@@ -100,7 +100,7 @@
                   required>
                   <option disabled value="" selected>~ Role Perusahaan ~</option>
                   @foreach ($roles as $item)
-                    <option value="{{ $item->id }}" @if (old('role_id') == $item->id) selected @endif>
+                    <option value="{{ $item->id }}" @if (old('role_id') == $item->id) @endif>
                       {{ $item->name }}</option>
                   @endforeach
                 </select>
