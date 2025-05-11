@@ -87,6 +87,9 @@
                     <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
                       Email
                     </th>
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                      Hak Akses
+                    </th>
                     <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
                       Aksi
                     </th>
@@ -107,6 +110,9 @@
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">{{ $item->email }}</p>
+                      </td>
+                      <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
+                        <p class="text-sm font-normal text-gray-900">{{ $item->getRoleNames()->first() ?? '-' }}</p>
                       </td>
 
                       <td class="text-center space-x-2 whitespace-nowrap p-4">

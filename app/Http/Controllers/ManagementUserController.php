@@ -91,7 +91,8 @@ class ManagementUserController extends Controller
      */
     public function user_create()
     {
-        return view('dashboard.management-user.user.create');
+        $roles = Role::where('company_id', Auth::user()->company_id)->get();
+        return view('dashboard.management-user.user.create', ['roles' => $roles]);
     }
 
     /**
@@ -102,6 +103,7 @@ class ManagementUserController extends Controller
         $validate = $request->validate([
             "username" => "required|unique:users",
             "name" => "required",
+            "role_id" => "required",
             "email" => "required|unique:users|email",
             "password" => "required|confirmed",
         ]);
@@ -116,6 +118,9 @@ class ManagementUserController extends Controller
             "company_id" => Auth::user()->company_id,
         ]);
 
+        $role = Role::where('id', $validate['role_id'])->first();
+        $store->assignRole($role);
+
         if ($store) {
             return redirect()->route("dashboard.management-user.user.index")->with('success', "Berhasil menambahkan akun pengguna baru");
         } else {
@@ -128,10 +133,19 @@ class ManagementUserController extends Controller
      */
     public function user_edit(string $id)
     {
+        $roles = Role::where('company_id', Auth::user()->company_id)->get();
         $user = User::query()->where("company_id", Auth::user()->company_id)->where("id", "=", $id)->first();
+        $role_id_user = null;
+        if ($user->getRoleNames()->first()) {
+            $user_role = Role::where('company_id', Auth::user()->company_id)->where('name', $user->getRoleNames()->first())->first();
+            $role_id_user = $user_role->id;
+        }
+
         if ($user) {
             return view('dashboard.management-user.user.edit', [
-                "user" => $user
+                "user" => $user,
+                "roles" => $roles,
+                "user_role" => $role_id_user,
             ]);
         } else {
             return abort(404);
@@ -148,6 +162,7 @@ class ManagementUserController extends Controller
         $validate = $request->validate([
             "username" => "required|unique:users,username," . $user->id,
             "name" => "required",
+            "role_id" => "required",
             "email" => "required|email|unique:users,email," . $user->id,
             // "password" => "required|confirmed",
         ]);
@@ -162,6 +177,9 @@ class ManagementUserController extends Controller
             "address" => $request["address"],
             "company_id" => Auth::user()->company_id,
         ]);
+
+        $role = Role::where('id', $validate['role_id'])->first();
+        $user->syncRoles($role->name);
 
         if ($store) {
             return redirect()->route("dashboard.management-user.user.index")->with('success', "Berhasil memperbarui akun pengguna");

@@ -87,6 +87,22 @@
               @enderror
             </div>
 
+            <div class="relative mb-2">
+              <label for="role_id" class="block mb-2 text-sm font-medium text-gray-900">Hak Akses</label>
+              <select id="role_id" name="role_id"
+                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                required>
+                <option disabled value="" selected>~ Hak Akses ~</option>
+                @foreach ($roles as $item)
+                  <option value="{{ $item->id }}" @if (old('role_id') == $item->id) @endif>
+                    {{ $item->name }}</option>
+                @endforeach
+              </select>
+              @error('role_id')
+                <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
+              @enderror
+            </div>
+
             <div>
               <label for="password" class="mb-2 block text-sm font-medium text-gray-900">Kata Sandi*</label>
               <input type="password" name="password" id="password"
