@@ -7,7 +7,7 @@
       <div
         class="flex items-center justify-center mb-8 text-2xl font-semibold lg:mb-10">
         <img src="{{ asset("images/logo_benedictiodev.png")}}" class="mr-4 h-24" alt="Benedictio Logo">
-        <div>
+        <div class="text-[#339bf7]">
           <div>Benedictio Dev</div>
           <div class="text-sm">Point Of Sales Application</div>
         </div>
@@ -38,7 +38,7 @@
           <div class="ml-3 text-sm">
             <label for="remember" class="font-medium text-gray-900">Remember me</label>
           </div> --}}
-          <a href="#" class="ml-auto text-sm text-primary-700 hover:underline">Lupa Kata Sandi?</a>
+          {{-- <a href="#" class="ml-auto text-sm text-primary-700 hover:underline">Lupa Kata Sandi?</a> --}}
         </div>
         <button type="submit"
           class="w-full px-5 py-3 text-base font-medium text-center text-white bg-primary-700 rounded-lg hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 sm:w-auto">

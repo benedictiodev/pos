@@ -27,6 +27,8 @@ class User extends Authenticatable
         'company_id',
         'phone_number',
         'username',
+        'is_owner',
+        'is_management',
     ];
 
     /**

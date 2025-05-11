@@ -19,7 +19,7 @@
         </button>
         <a href="{{ route('dashboard') }}" class="flex ml-2 md:mr-24">
           <img src="{{ asset("images/logo_benedictiodev.png")}}" class="mr-4 h-12" alt="Benedictio Logo">
-          <div>
+          <div class="text-[#339bf7]">
             <div class="self-center font-semibold sm:text-2xl whitespace-nowrap">Benedictio Dev</div>
             <div class="text-xs">Point Of Sales Application</div>
           </div>

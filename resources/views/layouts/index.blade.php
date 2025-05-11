@@ -38,7 +38,19 @@
 <body class="bg-gray-200">
   @include('layouts.header')
   <div class="flex pt-16 overflow-hidden bg-gray-50">
-    @include('layouts.sidebar')
+    @if (Str::startsWith(Route::currentRouteName(), 'management.'))  
+      @include('layouts.sidebar_management')
+    @else  
+      @if (Auth::user()->is_management && in_array(Route::currentRouteName(), [
+        'dashboard.profile',
+        'dashboard.change_password'
+        ])
+      )
+        @include('layouts.sidebar_management')
+      @else  
+        @include('layouts.sidebar')
+      @endif
+    @endif
 
     <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64">
       <main class="h-[calc(100vh-72px)] bg-slate-50 px-4 pt-6">@yield('main')</main>

@@ -8,12 +8,15 @@ use App\Http\Controllers\CategoryProductController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
+use App\Http\Controllers\Management\CompanyController as ManagementCompanyController;
+use App\Http\Controllers\Management\DashboardController as ManagementDashboardController;
 use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\MigrationDataController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\PresenceController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\RemarksCashFlowController;
+use App\Http\Middleware\ManagementAuth;
 use App\Http\Middleware\RedirectWeb;
 use Illuminate\Support\Facades\Route;
 
@@ -175,5 +178,20 @@ Route::prefix("/dashboard")->middleware([
             Route::put("/{id}", [ManagementUserController::class, 'role_update'])->name('dashboard.management-user.role.update')->middleware(['permission:pengelolaan akun-hak akses-perbarui']);
             Route::delete("/{id}", [ManagementUserController::class, 'role_destroy'])->name('dashboard.management-user.role.destroy')->middleware(['permission:pengelolaan akun-hak akses-hapus']);
         });
+    });
+});
+
+Route::prefix('/management')->middleware([
+    'auth',
+    ManagementAuth::class
+])->group(function() {
+    Route::get('/', [ManagementDashboardController::class, 'index'])->name('management.dashboard');
+
+    Route::prefix("/company")->group(function() {
+        Route::get("/", [ManagementCompanyController::class, 'index'])->name('management.company.index');
+        Route::get("/create", [ManagementCompanyController::class, 'create'])->name('management.company.create');
+        Route::post("/store", [ManagementCompanyController::class, 'store'])->name('management.company.store');
+        Route::get("{id}/edit", [ManagementCompanyController::class, 'edit'])->name('management.company.edit');
+        Route::put("{id}/update", [ManagementCompanyController::class, 'update'])->name('management.company.update');
     });
 });

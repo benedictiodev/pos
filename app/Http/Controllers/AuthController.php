@@ -21,6 +21,9 @@ class AuthController extends Controller
                 $request->session()->regenerateToken();
                 return redirect()->back()->with('failed', "Masa berlaku langganan toko anda sudah habis");
             } else {
+                if (Auth::user()->is_management) {
+                    return redirect()->route('management.dashboard');
+                }
                 return redirect()->route('dashboard');
             }
         } else {
@@ -43,7 +46,10 @@ class AuthController extends Controller
                 return redirect()->back()->with('failed', "Masa berlaku langganan toko anda sudah habis");
             } else {
                 $request->session()->regenerate();
-                return redirect()->intended('/dashboard');
+                if (Auth::user()->is_management) {
+                    return redirect()->route('management.dashboard');
+                }
+                return redirect()->route('dashboard');
             }
         } else {
             return redirect()->back()->with('failed', "Email atau Kata Sandi Salah");
