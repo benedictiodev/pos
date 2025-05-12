@@ -41,7 +41,7 @@
     @endif
 
     <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
+      class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6">
       <div class="mb-4">
         <form action="{{ route('dashboard.company.profile.update', ['id' => $data->id]) }}" method="POST"
           id="form_edit_profile" enctype="multipart/form-data">
@@ -120,7 +120,6 @@
         console.log(element);
         element.readOnly = false;
         element.classList.remove("bg-gray-200");
-        element.classList.add("bg-gray-50");
         if (element.classList.contains("cursor-pointer")) {
           element.removeAttribute("disabled")
         }
@@ -144,7 +143,6 @@
       elements.forEach(element => {
         element.readOnly = true;
         element.classList.add("bg-gray-200");
-        element.classList.remove("bg-gray-50");
         if (element.classList.contains("cursor-pointer")) {
           element.setAttribute("disabled", true)
           const previewImage = document.querySelector("#preview-image")

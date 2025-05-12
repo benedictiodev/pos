@@ -29,7 +29,7 @@
         </nav>
         <h1 class="text-xl font-semibold text-gray-900 mb-4">Tambahkan Order Baru</h1>
         <a href="{{ route('dashboard.order.order_active') }}"
-          class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
+          class="w-fit shadow-lg justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
           Kembali
         </a>
       </div>
@@ -46,7 +46,7 @@
       </div>
     @endif
 
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-3 mb-4">
+    <div class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-3 mb-4">
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">

@@ -40,14 +40,14 @@
       </div>
     @endif
 
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+    <div class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
           <form class="sm:pr-3" action="#" method="GET" id="form-search">
             <label for="order-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-order sm:w-64 xl:w-96">
               <input type="date" name="periode" id="order-search"
-                class="block w-full rounded-lg border border-gray-300 order-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}"
                 onchange="change_search()"
                 max="{{ Carbon\Carbon::now()->format('Y-m-d') }}">
@@ -66,9 +66,9 @@
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden shadow">
+            <div class="overflow-hidden shadow rounded-lg">
               <table class="min-w-full table-fixed divide-y divide-gray-200">
-                <thead class="bg-gray-100">
+                <thead class="bg-sky-300">
                   <tr>
                     <th scope="col" class="p-4">
                       <div class="flex items-center">
@@ -77,25 +77,25 @@
                         <label for="checkbox-all" class="sr-only">checkbox</label>
                       </div>
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Order ID
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Waktu
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Kasir
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Metode Pembayaran
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Tipe Order
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       Total
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       Aksi
                     </th>
                   </tr>
@@ -163,17 +163,17 @@
                   @endforelse
                 </tbody>
                 @can('order-riwayat order-lihat jumlah pendapatan order')
-                  <tfoot class="bg-gray-100">
+                  <tfoot class="bg-sky-300">
                     <tr>
                       <th scope="col" colspan="2s"
-                        class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                        class="p-4 text-left text-base font-bold uppercase text-white">
                         Jumlah Total
                       </th>
                       <th scope="col" colspan="5"
-                        class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                        class="p-4 text-right text-base font-bold uppercase text-white">
                         {{ format_rupiah($total) }}
                       </th>
-                      <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       </th>
                     </tr>
                   </tfoot>
