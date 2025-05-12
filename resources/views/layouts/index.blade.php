@@ -35,9 +35,9 @@
   </script>
 </head>
 
-<body class="bg-gray-200">
+<body class="bg-sky-50">
   @include('layouts.header')
-  <div class="flex pt-16 overflow-hidden bg-gray-50">
+  <div class="flex pt-16 overflow-hidden bg-sky-50">
     @if (Str::startsWith(Route::currentRouteName(), 'management.'))  
       @include('layouts.sidebar_management')
     @else  
@@ -52,8 +52,8 @@
       @endif
     @endif
 
-    <div id="main-content" class="relative w-full h-full overflow-y-auto bg-gray-50 lg:ml-64">
-      <main class="h-[calc(100vh-72px)] bg-slate-50 px-4 pt-6">@yield('main')</main>
+    <div id="main-content" class="relative w-full h-full overflow-y-auto bg-sky-50 lg:ml-64">
+      <main class="h-[calc(100vh-72px)] bg-sky-50 px-4 pt-6">@yield('main')</main>
       {{-- @include('layouts.footer') --}}
     </div>
   </div>
