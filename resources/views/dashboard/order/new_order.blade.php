@@ -60,7 +60,7 @@
                   </div>
                   <div id="body-order-item" class="sm:text-sm"></div>
                 </div>
-                <div class="h-[65px] lg:h-1/6 bg-[#E5E7EB] rounded-b-lg flex flex-col justify-center items-center px-4">
+                <div class="h-[65px] lg:h-1/6 bg-sky-300 rounded-b-lg flex flex-col justify-center items-center px-4">
                   <div class="flex justify-between w-full font-semibold text-sm mb-2">
                     <div>Total Harga</div>
                     <div id="order-total-price"></div>
@@ -75,13 +75,13 @@
                 </div>
               </div>
               <div class="w-full sm:w-1/2 border sm:ml-3 rounded-xl mt-4 sm:mt-0 sm:max-h-[300px] overflow-auto">
-                <div class="p-2 text-center sm:text-base text-lg font-semibold bg-[#E5E7EB] rounded-t-lg border-b-2 border-white">
+                <div class="p-2 text-center sm:text-base text-lg font-semibold bg-sky-300 rounded-t-lg border-b-2 border-white">
                   Daftar Menu
                 </div>
                 <div>
                   @foreach ($list_menu as $category)
                     <div>
-                      <div class="bg-[#E5E7EB] py-1 px-2 sm:text-sm">Kategori : {{ $category->category_name }}</div>
+                      <div class="bg-sky-300 py-1 px-2 sm:text-sm">Kategori : {{ $category->category_name }}</div>
                       <div class="grid grid-cols-2 xl:grid-cols-4 gap-2 px-1 py-2">
                         @foreach ($category->products as $item)
                           <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
@@ -114,8 +114,8 @@
                             </div>
                             @if (!$item->is_available)
                               <div
-                                class="rounded-lg absolute top-0 bottom-0 right-0 left-0 bg-gray-400/70 flex justify-center items-center">
-                                <div class="text-white font-bold text-center">
+                                class="rounded-lg absolute top-0 bottom-0 right-0 left-0 bg-sky-100/70 flex justify-center items-center">
+                                <div class="font-bold text-center">
                                   <div class="text-lg sm:text-base">Oppss!!</div>
                                   <div class="text-sm sm:text-xs">Tidak Tersedia</div>
                                 </div>
