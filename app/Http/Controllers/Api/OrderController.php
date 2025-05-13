@@ -184,9 +184,12 @@ class OrderController extends Controller
                 }
             }
             DB::commit();
+
+            $data = Order::with(['items.product'])->where("company_id", $company_id)->where('id', $insert_order)->first();
             return response()->json([
                 'status' => 200,
                 'message' => 'Order berhasil ditambahkan',
+                'data' => $data,
             ], 200);
         } catch (Throwable $error) {
             DB::rollBack();
@@ -381,9 +384,11 @@ class OrderController extends Controller
             ]);
 
             DB::commit();
+            $data = Order::with(['items.product'])->where("company_id", $company_id)->where('id', $id)->first();
             return response()->json([
                 'status' => 200,
                 'message' => 'Order berhasil diperbaharui',
+                'data' => $data,
             ], 200);
         } catch (Throwable $error) {
             DB::rollBack();
@@ -630,9 +635,11 @@ class OrderController extends Controller
                 }
             }
             DB::commit();
+            $data = Order::with(['items.product'])->where("company_id", $company_id)->where('id', $id)->first();
             return response()->json([
                 'status' => 200,
                 'message' => 'Order berhasil diperbaharui',
+                'data' => $data,
             ], 200);
         } catch (Throwable $error) {
             DB::rollBack();

@@ -212,7 +212,7 @@
         </button>
         <button type="button"
           class="inline-flex items-center rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-center text-sm font-medium text-gray-900 hover:bg-gray-100 focus:ring-4 focus:ring-primary-300"
-          data-drawer-hide="drawer-delete-category-product-default">
+          data-drawer-hide="drawer-delete-product-default">
           Tidak, Batalkan
         </button>
       </form>
