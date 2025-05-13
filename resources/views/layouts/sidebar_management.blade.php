@@ -7,16 +7,16 @@
         <ul class="pb-2 space-y-2">
           <li>
             <a href="{{ route('management.dashboard') }}"
-              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ Request::route()->getName() == 'management.dashboard' ? 'bg-gray-100' : '' }}">
-              <x-fas-home class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
+              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ Request::route()->getName() == 'management.dashboard' ? 'active_sidebar' : '' }}">
+              <x-fas-home class="w-6 h-6 text-gray-500 transition duration-75 {{ Request::route()->getName() == 'management.dashboard' ? 'text-white' : '' }}" />
               <span class="ml-3" sidebar-toggle-item>Beranda</span>
             </a>
           </li>
 
           <li>
             <a href="{{ route('management.company.index') }}"
-              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ str_contains(Request::route()->getName(), 'management.company') ? 'bg-gray-100' : '' }}">
-              <x-fas-building class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ str_contains(Request::route()->getName(), 'management.company') ? 'active_sidebar' : '' }}">
+              <x-fas-building class="w-6 h-6 text-gray-500 transition duration-75 {{ str_contains(Request::route()->getName(), 'management.company') ? 'text-white' : '' }} mr-1" />
               <span class="ml-3" sidebar-toggle-item>Mitra Perusahaan</span>
             </a>
           </li>

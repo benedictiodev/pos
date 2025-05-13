@@ -34,14 +34,14 @@
       </div>
     @endif
 
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+    <div class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
           <form class="sm:pr-3" action="{{ route('management.company.index') }}" method="GET">
             <label for="funds-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
               <input type="text" name="search" id="funds-search"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 placeholder="Cari Mitra Perusahaan"
                 @if (isset($_GET['search'])) value="{{ $_GET['search'] }}" @endif>
             </div>
@@ -56,16 +56,16 @@
           </div> --}}
         </div>
           <a id="createProductButton" href="{{ route('management.company.create') }}"
-            class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+            class="rounded-lg shadow-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
             Tambahkan Mitra Perusahaan Baru
           </a>
       </div>
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden shadow">
+            <div class="overflow-hidden shadow rounded-t-lg">
               <table class="min-w-full table-fixed divide-y divide-gray-200">
-                <thead class="bg-gray-100">
+                <thead class="bg-sky-300">
                   <tr>
                     <th scope="col" class="p-4">
                       <div class="flex items-center">
@@ -74,25 +74,25 @@
                         <label for="checkbox-all" class="sr-only">checkbox</label>
                       </div>
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       Nama
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       Alamat
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       No Telfon
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       Tipe Langganan
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       Harga Langganan
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       Berakhir Langganan
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       Aksi
                     </th>
                   </tr>
