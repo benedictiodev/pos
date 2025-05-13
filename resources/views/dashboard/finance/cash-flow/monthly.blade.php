@@ -40,14 +40,14 @@
       </div>
     @endif
 
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+    <div class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
           <form class="sm:pr-3" action="#" method="GET" id="form-search">
             <label for="cashflow-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
               <input type="month" name="periode" id="cashflow-search"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 placeholder="Search for daily cash flow"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m') }}"
                 onchange="change_search()"
@@ -67,11 +67,11 @@
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden shadow">
+            <div class="overflow-hidden shadow rounded-t-lg">
               <table class="min-w-full table-fixed divide-y divide-gray-200 mb-10 border-b">
-                <thead class="bg-gray-100">
+                <thead class="bg-sky-300">
                   <tr>
-                    <th scope="col" colspan="6" class="p-4 text-Center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" colspan="6" class="p-4 text-Center text-base font-bold uppercase text-white">
                       Detil Keuangan Bulan Ini
                     </th>
                   </tr>
@@ -117,7 +117,7 @@
                             <td scope="col" colspan="6"
                               class="p-4 text-center text-base font-semibold uppercase text-black">
                               <button data-modal-target="modal-closing-cycle" data-modal-toggle="modal-closing-cycle"
-                                class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                                class="inline-flex shadow-lg items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                                 Tutup Buku Untuk Bulan Ini
                               </button>
                             </td>
@@ -152,7 +152,7 @@
                         <td scope="col" colspan="6"
                           class="p-4 text-center text-base font-normal uppercase text-black">
                           <button data-modal-target="modal-add-equite" data-modal-toggle="modal-add-equite"
-                            class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
+                            class="inline-flex shadow-lg items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                             Tambahkan Modal Untuk Bulan Ini
                           </button>
                         </td>
@@ -161,9 +161,10 @@
                   @endif
                 </tbody>
               </table>
-
+            </div>
+            <div class="overflow-hidden shadow rounded-lg">
               <table class="min-w-full table-fixed divide-y divide-gray-200">
-                <thead class="bg-gray-100">
+                <thead class="bg-sky-300">
                   <tr>
                     <th scope="col" class="p-4">
                       <div class="flex items-center">
@@ -172,27 +173,27 @@
                       </div>
                     </th>
                     <th scope="col"
-                      class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                      class="p-4 text-left text-base font-bold uppercase text-white">
                       Waktu
                     </th>
                     <th scope="col"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      class="p-4 text-right text-base font-bold uppercase text-white">
                       Debit
                     </th>
                     <th scope="col"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      class="p-4 text-right text-base font-bold uppercase text-white">
                       Kredit
                     </th>
                     <th scope="col"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      class="p-4 text-right text-base font-bold uppercase text-white">
                       Jumlah
                     </th>
                     <th scope="col"
-                      class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                      class="p-4 text-right text-base font-bold uppercase text-white">
                       Total Jumlah
                     </th>
                     <th scope="col"
-                      class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                      class="p-4 text-center text-base font-bold uppercase text-white">
                       Aksi
                     </th>
                   </tr>
@@ -246,26 +247,26 @@
                     </tr>
                   @endforelse
                 </tbody>
-                <tfoot class="bg-gray-100">
+                <tfoot class="bg-sky-300">
                   <tr>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Total Jumlah
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       {{ format_rupiah($total_cash_out) }}
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       {{ format_rupiah($total_cash_in) }}
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       {{ format_rupiah($total_amount) }}
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                     </th>
                     <th scope="col" colspan="2"
-                      class="p-4 text-center text-base font-medium uppercase text-gray-500">
+                      class="p-4 text-center text-base font-medium uppercase text-white">
                     </th>
                   </tr>
                 </tfoot>
@@ -312,7 +313,7 @@
                 <label for="equite" class="mb-2 block text-sm font-medium text-gray-900">Modal -
                   {{ $item_fund->type }}</label>
                 <input type="text" name="equite[{{ $item_fund->type }}]" onkeyup="equite_change()"
-                  class="option-equite mb-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                  class="option-equite mb-2 block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Modal - {{ $item_fund->type }}">
               @endforeach
             </div>
@@ -320,14 +321,14 @@
               <label for="equite" class="mb-2 block text-sm font-medium text-gray-900">Total Modal</label>
               <input type="text" name="equite_total" id="equite"
                 onkeyup="keyup_rupiah(this)"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Total Modal" value="0" readonly>
             </div>
             <div class="mb-3">
               <label for="target" class="mb-2 block text-sm font-medium text-gray-900">Target</label>
               <input type="text" name="target" id="target"
                 onkeyup="keyup_rupiah(this)"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Target" required>
             </div>
           </form>
@@ -380,19 +381,19 @@
                 <div class="w-1/3">
                   <label for="income" class="mb-2 block text-sm font-medium text-gray-900">Pendapatan</label>
                   <input type="text" name="income" id="income" onkeyup="keyup_rupiah(this)"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Pendapatan" value="{{ str_replace('Rp ', '', format_rupiah($total_cash_in)) }}" readonly>
                 </div>
                 <div class="w-1/3 mx-2">
                   <label for="expenditure" class="mb-2 block text-sm font-medium text-gray-900">Pengeluaran</label>
                   <input type="text" name="expenditure" id="expenditure" onkeyup="keyup_rupiah(this)"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Pengeluaran" value="{{ str_replace('Rp ', '', format_rupiah($total_cash_out)) }}" readonly>
                 </div>
                 <div class="w-1/3">
                   <label for="amount" class="mb-2 block text-sm font-medium text-gray-900">Total</label>
                   <input type="text" name="amount" id="amount" onkeyup="keyup_rupiah(this)"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Total" value="{{ str_replace('Rp ', '', format_rupiah($total_amount)) }}" readonly>
                 </div>
               </div>
@@ -402,19 +403,19 @@
                 <div class="w-1/3">
                   <label for="target" class="mb-2 block text-sm font-medium text-gray-900">Target</label>
                   <input type="text" name="target" id="target" onkeyup="keyup_rupiah(this)"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Target" value="{{ $closing_cycle ? str_replace('Rp ', '', format_rupiah($closing_cycle->target)) : 0 }}" readonly>
                 </div>
                 <div class="w-1/3 mx-2">
                   <label for="equity" class="mb-2 block text-sm font-medium text-gray-900">Modal</label>
                   <input type="text" name="equity" id="equity" onkeyup="keyup_rupiah(this)"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Modal" value="{{ $closing_cycle ? str_replace('Rp ', '', format_rupiah($closing_cycle->equity)) : 0 }}" readonly>
                 </div>
                 <div class="w-1/3">
                   <label for="profit" class="mb-2 block text-sm font-medium text-gray-900">Keuntungan</label>
                   <input type="text" name="profit" id="profit" onkeyup="keyup_rupiah(this)"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                    class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Keuntungan" value="{{ str_replace('Rp ', '', format_rupiah($total_amount - ($closing_cycle ? $closing_cycle->equity : 0))) }}"
                     readonly>
                 </div>
@@ -437,20 +438,20 @@
                   <label for="next_equite" class="mb-2 block text-sm font-medium text-gray-900">Modal -
                     {{ $item_fund->type }}</label>
                   <input type="text" name="next_equite[{{ $item_fund->type }}]" onkeyup="equite_change('next_')"
-                    class="next_option-equite mb-2 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                    class="next_option-equite mb-2 block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                     placeholder="Modal - {{ $item_fund->type }}">
                 @endforeach
               </div>
               <div class="mb-3">
                 <label for="next_equite" class="mb-2 block text-sm font-medium text-gray-900">Total Modal</label>
                 <input type="text" name="next_equite_total" id="next_equite" onkeyup="keyup_rupiah(this)"
-                  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                  class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Total Modal" value="0" readonly>
               </div>
               <div class="mb-3">
                 <label for="next_target" class="mb-2 block text-sm font-medium text-gray-900">Target</label>
                 <input type="text" name="next_target" id="next_target" onkeyup="keyup_rupiah(this)"
-                  class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                  class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                   placeholder="Target">
               </div>
             </div>

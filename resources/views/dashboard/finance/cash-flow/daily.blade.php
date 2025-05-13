@@ -40,14 +40,14 @@
       </div>
     @endif
 
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 mb-4">
+    <div class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 mb-4">
       <div class="block items-center justify-between sm:flex md:divide-x md:divide-gray-100 mb-4">
         <div class="mb-4 flex items-center sm:mb-0">
           <form class="sm:pr-3" action="#" method="GET" id="form-search">
             <label for="cashflow-search" class="sr-only">Pencarian</label>
             <div class="relative mt-1 w-48 sm:w-64 xl:w-96">
               <input type="date" name="periode" id="cashflow-search"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 placeholder="Search for daily cash flow"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m-d') }}"
                 onchange="change_search()"
@@ -67,14 +67,14 @@
           <div>
             @can('keuangan-arus kas harian-tambah pemasukkan dana')
               <a id="createProductButton"
-                class="mr-2 rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
+                class="mr-2 shadow-lg rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
                 href="{{ route('dashboard.finance.cash-in.create') }}">
                 Tambahkan Pemasukan Dana
               </a>
             @endcan
             @can('keuangan-arus kas harian-tambah pengeluaran dana')
               <a id="createProductButton"
-                class="rounded-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
+                class="rounded-lg shadow-lg bg-primary-700 px-5 py-2.5 text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
                 href="{{ route('dashboard.finance.cash-out.create') }}">
                 Tambahakan Pengeluaran Dana
               </a>
@@ -85,9 +85,9 @@
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
-            <div class="overflow-hidden shadow">
+            <div class="overflow-hidden shadow rounded-t-lg">
               <table class="min-w-full table-fixed divide-y divide-gray-200">
-                <thead class="bg-gray-100">
+                <thead class="bg-sky-300">
                   <tr>
                     <th scope="col" class="p-4">
                       <div class="flex items-center">
@@ -96,22 +96,22 @@
                         <label for="checkbox-all" class="sr-only">checkbox</label>
                       </div>
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Waktu
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       Debit
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       Kredit
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Tipe Dana
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Keterangan
                     </th>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                       Aksi
                     </th>
                   </tr>
@@ -188,25 +188,25 @@
                     </tr>
                   @endforelse
                 </tbody>
-                <tfoot class="bg-gray-100">
+                <tfoot class="bg-sky-300">
                   <tr>
-                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-center text-base font-bold uppercase text-white">
                     </th>
-                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-left text-base font-bold uppercase text-white">
                       Jumlah Total
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       {{ format_rupiah($total_cash_out) }}
                     </th>
-                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-gray-500">
+                    <th scope="col" class="p-4 text-right text-base font-bold uppercase text-white">
                       {{ format_rupiah($total_cash_in) }}
                     </th>
                     <th scope="col" colspan="3"
-                      class="p-4 text-center text-base font-medium uppercase text-gray-500">
+                      class="p-4 text-center text-base font-medium uppercase text-white">
                     </th>
                   </tr>
                   <tr class="border-t">
-                    <th scope="col" colspan="7" class="p-4 text-center text-sm font-bold uppercase text-gray-500">
+                    <th scope="col" colspan="7" class="p-4 text-center text-sm font-bold uppercase text-white">
                       Detil Jumlah Setiap Tipe Dana
                     </th>
                   </tr>

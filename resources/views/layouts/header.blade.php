@@ -1,4 +1,4 @@
-<nav class="fixed z-30 w-full bg-white shadow-lg rounded-b-xl border-b border-gray-200">
+<nav class="fixed z-30 w-full bg-white shadow-md rounded-b-xl">
   <div class="px-3 py-3 lg:px-5 lg:pl-3">
     <div class="flex items-center justify-between w-full">
       <div class="flex items-center justify-start w-full">

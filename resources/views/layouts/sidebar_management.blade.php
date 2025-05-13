@@ -1,5 +1,5 @@
 <aside id="sidebar"
-  class="fixed top-0 left-0 z-[99999] flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width hidden"
+  class="fixed top-0 left-0 z-[10] flex flex-col flex-shrink-0 w-64 h-full pt-16 font-normal duration-75 lg:flex transition-width hidden"
   aria-label="Sidebar">
   <div class="relative flex flex-col flex-1 min-h-0 pt-0 bg-white shadow-lg rounded-br-xl border-r border-gray-200">
     <div class="flex flex-col flex-1 pt-5 pb-4 overflow-y-auto">
@@ -7,16 +7,16 @@
         <ul class="pb-2 space-y-2">
           <li>
             <a href="{{ route('management.dashboard') }}"
-              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ Request::route()->getName() == 'management.dashboard' ? 'bg-gray-100' : '' }}">
-              <x-fas-home class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
+              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ Request::route()->getName() == 'management.dashboard' ? 'active_sidebar' : '' }}">
+              <x-fas-home class="w-6 h-6 text-gray-500 transition duration-75 {{ Request::route()->getName() == 'management.dashboard' ? 'text-white' : '' }}" />
               <span class="ml-3" sidebar-toggle-item>Beranda</span>
             </a>
           </li>
 
           <li>
             <a href="{{ route('management.company.index') }}"
-              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ str_contains(Request::route()->getName(), 'management.company') ? 'bg-gray-100' : '' }}">
-              <x-fas-building class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-1" />
+              class="flex items-center p-2 text-base text-gray-900 rounded-lg hover:bg-gray-100 group {{ str_contains(Request::route()->getName(), 'management.company') ? 'active_sidebar' : '' }}">
+              <x-fas-building class="w-6 h-6 text-gray-500 transition duration-75 {{ str_contains(Request::route()->getName(), 'management.company') ? 'text-white' : '' }} mr-1" />
               <span class="ml-3" sidebar-toggle-item>Mitra Perusahaan</span>
             </a>
           </li>

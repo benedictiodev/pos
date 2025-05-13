@@ -20,7 +20,7 @@
   @if (Auth::user()->is_owner)
     <div>
       <div class="grid grid-col-1 sm:grid-cols-3 gap-4 mb-4">
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-orange-300 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-orange-300 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-database class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Total Produk Kategori</p>
@@ -29,7 +29,7 @@
             <p class="text-2xl font-bold text-gray-500">{{ $category ? $category : 0 }}</p>
           </div>
         </div>
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-gray-300 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-gray-300 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-database class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Total Produk</p>
@@ -38,7 +38,7 @@
             <p class="text-2xl font-bold text-gray-500">{{ $product ? $product : 0 }}</p>
           </div>
         </div>
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-green-300 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-green-300 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Total Tipe Dana</p>
@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="grid grid-col-1 sm:grid-cols-3 gap-4 mb-4">
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-green-200 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-green-200 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Penjualan Hari Ini</p>
@@ -58,7 +58,7 @@
             <p class="text-2xl font-bold text-gray-500">{{ $order_date_now ? format_rupiah($order_date_now) : 0 }}</p>
           </div>
         </div>
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-yellow-200 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-yellow-200 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Penjualan Bulan Ini</p>
@@ -67,7 +67,7 @@
             <p class="text-2xl font-bold text-gray-500">{{ $order_month_now ? format_rupiah($order_month_now) : 0 }}</p>
           </div>
         </div>
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-sky-200 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-sky-200 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Produk Terjual Bulan Ini</p>
@@ -78,10 +78,10 @@
         </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-gray-50 shadow-md border">
+        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-white shadow-lg">
           <canvas id="chart_penjualan"></canvas>
         </div>
-        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-gray-50 shadow-md border">
+        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-white shadow-lg">
           <canvas id="chart_modal_keuntungan"></canvas>
         </div>
       </div>

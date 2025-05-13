@@ -29,7 +29,7 @@
       </nav>
       <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Pengalihan alokasi dana</h1>
       <a href="{{ route('dashboard.finance.funds') }}"
-        class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
+        class="w-fit justify-center rounded-lg shadow-md bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
         Kembali
       </a>
     </div>
@@ -41,7 +41,7 @@
     @endif
 
     <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
+      class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6">
       <div class="mb-4">
         <form action="{{ route('dashboard.finance.funds.post') }}" method="POST" id="form-submit">
           @csrf
@@ -50,7 +50,7 @@
               <label for="amount" class="mb-2 block text-sm font-medium text-gray-900">Total Dana Yang Dipindahkan</label>
               <input type="text" name="amount" id="amount"
                 onkeyup="keyup_rupiah(this)"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Total Dana Yang Dipindahkan" value="{{ old('amount') }}" required>
               @error('amount')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
@@ -60,7 +60,7 @@
             <div>
               <label for="from_type" class="block mb-2 text-sm font-medium text-gray-900">Dari Tipe Dana</label>
               <select id="from_type" name="from_type"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required>
                 <option disabled value="" selected>~ Pilih Tipe Dana ~</option>
                 @foreach ($funds as $item)
@@ -77,7 +77,7 @@
             <div>
               <label for="to_type" class="block mb-2 text-sm font-medium text-gray-900">Tujuan Tipe Dana</label>
               <select id="to_type" name="to_type"
-                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
                 required>
                 <option disabled value="" selected>~ Pilih Tipe Dana ~</option>
                 @foreach ($funds as $item)
@@ -94,7 +94,7 @@
             <div>
               <label for="datetime" class="mb-2 block text-sm font-medium text-gray-900">Waktu</label>
               <input type="datetime-local" name="datetime" id="datetime"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Waktu" value="{{ old('datetime') }}" required>
               @error('datetime')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
@@ -104,7 +104,7 @@
             <button type="button" data-drawer-target="drawer-add"
               data-drawer-show="drawer-add" aria-controls="drawer-add"
               data-drawer-placement="right"
-              class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+              class="w-fit shadow-lg justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
               Tambahkan
             </button>
           </div>

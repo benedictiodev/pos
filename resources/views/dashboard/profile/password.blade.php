@@ -34,7 +34,7 @@
       </div>
     @endif
     <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
+      class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6">
       <div class="mb-4">
         <form action="{{ route('dashboard.change_password.post') }}" method="POST" id="form_edit_profile">
           @csrf

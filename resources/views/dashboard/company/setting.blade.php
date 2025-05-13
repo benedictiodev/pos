@@ -37,7 +37,7 @@
         <span class="font-medium">{{ session('failed') }}</span>
       </div>
     @endif
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6">
+    <div class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6">
       <div class="mb-4">
         <form action="{{ route('dashboard.company.setting.update', ['id' => Auth::user()->company_id]) }}" method="POST" id="form_edit_setting">
           @csrf
@@ -161,27 +161,22 @@
       document.querySelector('#setting_printer-store_name_value').readOnly = false;
       document.querySelector('#setting_printer-store_name_show').disabled = false;
       document.querySelector('#setting_printer-store_name_value').classList.remove("bg-gray-200");
-      document.querySelector('#setting_printer-store_name_value').classList.add("bg-gray-50");
       
       document.querySelector('#setting_printer-store_address_value').readOnly = false;
       document.querySelector('#setting_printer-store_address_show').disabled = false;
       document.querySelector('#setting_printer-store_address_value').classList.remove("bg-gray-200");
-      document.querySelector('#setting_printer-store_address_value').classList.add("bg-gray-50");
 
       document.querySelector('#setting_printer-store_whatsapp_value').readOnly = false;
       document.querySelector('#setting_printer-store_whatsapp_show').disabled = false;
       document.querySelector('#setting_printer-store_whatsapp_value').classList.remove("bg-gray-200");
-      document.querySelector('#setting_printer-store_whatsapp_value').classList.add("bg-gray-50");
 
       document.querySelector('#setting_printer-store_ig_value').readOnly = false;
       document.querySelector('#setting_printer-store_ig_show').disabled = false;
       document.querySelector('#setting_printer-store_ig_value').classList.remove("bg-gray-200");
-      document.querySelector('#setting_printer-store_ig_value').classList.add("bg-gray-50");
 
       document.querySelectorAll('.setting_printer-footer_value').forEach(function(item) {
         item.readOnly = false;
         item.classList.remove("bg-gray-200");
-        item.classList.add("bg-gray-50");
         item.classList.add("mr-2");
       });
       document.querySelectorAll('.button_footer').forEach(function(item) {
@@ -197,27 +192,22 @@
       document.querySelector('#setting_printer-store_name_value').readOnly = true;
       document.querySelector('#setting_printer-store_name_show').disabled = true;
       document.querySelector('#setting_printer-store_name_value').classList.add("bg-gray-200");
-      document.querySelector('#setting_printer-store_name_value').classList.remove("bg-gray-50");
 
       document.querySelector('#setting_printer-store_address_value').readOnly = true;
       document.querySelector('#setting_printer-store_address_show').disabled = true;
       document.querySelector('#setting_printer-store_address_value').classList.add("bg-gray-200");
-      document.querySelector('#setting_printer-store_address_value').classList.remove("bg-gray-50");
 
       document.querySelector('#setting_printer-store_whatsapp_value').readOnly = true;
       document.querySelector('#setting_printer-store_whatsapp_show').disabled = true;
       document.querySelector('#setting_printer-store_whatsapp_value').classList.add("bg-gray-200");
-      document.querySelector('#setting_printer-store_whatsapp_value').classList.remove("bg-gray-50");
 
       document.querySelector('#setting_printer-store_ig_value').readOnly = true;
       document.querySelector('#setting_printer-store_ig_show').disabled = true;
       document.querySelector('#setting_printer-store_ig_value').classList.add("bg-gray-200");
-      document.querySelector('#setting_printer-store_ig_value').classList.remove("bg-gray-50");
 
       document.querySelectorAll('.setting_printer-footer_value').forEach(function(item) {
         item.readOnly = true;
         item.classList.add("bg-gray-200");
-        item.classList.remove("bg-gray-50");
         item.classList.remove("mr-2");
       });
       document.querySelectorAll('.button_footer').forEach(function(item) {

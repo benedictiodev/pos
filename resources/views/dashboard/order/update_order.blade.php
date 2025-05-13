@@ -30,7 +30,7 @@
         </nav>
         <h1 class="text-xl font-semibold text-gray-900 mb-4">Tambahkan Order Baru</h1>
         <a href="{{ route('dashboard.order.order_active') }}"
-          class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
+          class="w-fit shadow-lg justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
           Kembali
         </a>
       </div>
@@ -48,7 +48,7 @@
       </div>
     @endif
 
-    <div class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-3 mb-4">
+    <div class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-3 mb-4">
       <div class="flex flex-col">
         <div class="overflow-x-auto">
           <div class="inline-block min-w-full align-middle">
@@ -62,8 +62,8 @@
                   </div>
                   <div id="body-order-item" class="sm:text-sm"></div>
                 </div>
-               <div class="w-full sm:w-1/2 border sm:ml-3 rounded-xl mt-4 sm:mt-0 sm:max-h-[450px] overflow-auto">
-                <div class="p-2 text-center sm:text-base text-lg font-semibold bg-[#E5E7EB] rounded-t-lg border-b-2 border-white">
+                <div class="h-[65px] lg:h-1/6 bg-sky-300 rounded-b-lg flex flex-col justify-center items-center px-4">
+                  <div class="flex justify-between w-full font-semibold text-sm mb-2">
                     <div>Total Harga</div>
                     <div id="order-total-price"></div>
                   </div>
@@ -80,11 +80,11 @@
                 </div>
               </div>
               <div class="w-full sm:w-1/2 border sm:ml-3 rounded-xl mt-4 sm:mt-0 sm:max-h-[300px] overflow-auto">
-                <div class="p-2 text-center text-lg font-semibold bg-[#E5E7EB] rounded-t-lg border-b-2 border-white">Daftar Menu</div>
+                <div class="p-2 text-center text-lg font-semibold bg-sky-300 rounded-t-lg border-b-2 border-white">Daftar Menu</div>
                 <div>
                   @foreach ($list_menu as $category)  
                     <div>
-                      <div class="bg-[#E5E7EB] py-1 px-2">Category : {{ $category->category_name }}</div>
+                      <div class="bg-sky-300 py-1 px-2">Category : {{ $category->category_name }}</div>
                       <div class="grid grid-cols-2 xl:grid-cols-4 gap-2 px-1 py-2">
                         @foreach ($category->products as $item) 
                           <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
@@ -115,8 +115,8 @@
                               @endif
                             </div>
                             @if (!$item->is_available)
-                              <div class="rounded-lg absolute top-0 bottom-0 right-0 left-0 bg-gray-400/70 flex justify-center items-center">
-                                <div class="text-white font-bold text-center">
+                              <div class="rounded-lg absolute top-0 bottom-0 right-0 left-0 bg-sky-100/70 flex justify-center items-center">
+                                <div class="font-bold text-center">
                                   <div class="text-lg">Oppss!!</div>
                                   <div class="text-sm">Tidak Tersedia</div>
                                 </div>

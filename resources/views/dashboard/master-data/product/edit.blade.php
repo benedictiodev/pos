@@ -29,13 +29,13 @@
       </nav>
       <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl mb-4">Pembaruan Produk</h1>
       <a href="{{ route('dashboard.master-data.product') }}"
-        class="w-fit justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
+        class="w-fit shadow-lg justify-center rounded-lg bg-slate-400 px-5 py-1.5 text-center text-sm font-medium text-white hover:bg-slate-800 focus:outline-none focus:ring-4 focus:ring-slate-300">
         Kembali
       </a>
     </div>
 
     <div
-      class="p-4 bg-white border border-gray-200 rounded-lg shadow-sm 2xl:col-span-2 sm:p-6 mb-4">
+      class="p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6 mb-4">
       <div>
         <form action="{{ route('dashboard.master-data.product.update', ['id' => $data->id]) }}" method="POST"
           enctype="multipart/form-data">
@@ -46,7 +46,7 @@
               <label for="name" class="mb-2 block text-sm font-medium text-gray-900">Nama
                 Produk</label>
               <input type="text" name="name" id="name"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Nama Produk" required value="{{ old('name', $data->name) }}">
             </div>
 
@@ -55,7 +55,7 @@
                 Produk</label>
               <input type="text" name="price" id="price"
                 onkeyup="keyup_rupiah(this)"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Harga Produk" required value="{{ old('price', $data->price) }}">
             </div>
 
@@ -63,7 +63,7 @@
               <label for="category-create" class="mb-2 block text-sm font-medium text-gray-900">Kategori
                 Produk</label>
               <select id="category-update" name="category_id"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                 required>
                 <option disabled value="">Pilih Kategori Produk</option>
                 @foreach ($lists as $item)
@@ -78,7 +78,7 @@
               <label for="description"
                 class="mb-2 block text-sm font-medium text-gray-900">Deskripsi</label>
               <textarea id="description" rows="4" name="description"
-                class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500"
                 placeholder="Deskripsi">{{ old('description', $data->description) }}</textarea>
             </div>
 
@@ -90,21 +90,21 @@
                   class="h-64 mb-2 block">
               @endif
               <input
-                class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-50 text-sm text-gray-900 focus:outline-none"
+                class="block w-full cursor-pointer rounded-lg border border-gray-300 text-sm text-gray-900 focus:outline-none"
                 id="create-image" type="file" accept="image/*" onchange="onChange()" name="image">
             </div>
 
             <div class="flex items-center">
               <input id="is_available" aria-describedby="checkbox-1" type="checkbox" name="is_available" value="1"
                 {{ $data->is_available == 1 ? 'checked' : '' }}
-                class="focus:ring-3 h-4 w-4 rounded border-gray-300 bg-gray-50 focus:ring-primary-300">
+                class="focus:ring-3 h-4 w-4 rounded border-gray-300 focus:ring-primary-300">
               <label for="is_available" class="sr-only">checkbox</label>
               <p class="ml-2 text-sm font-medium text-gray-900">Produk Tersedia
               </p>
             </div>
 
             <button type="submit"
-              class="w-fit justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
+              class="w-fit shadow-lg justify-center rounded-lg bg-primary-700 px-5 py-2.5 text-center text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300">
               Perbarui
             </button>
           </div>

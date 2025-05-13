@@ -38,7 +38,7 @@
             <label for="order-search" class="sr-only">Search</label>
             <div class="relative mt-1 w-order sm:w-64 xl:w-96">
               <input type="month" name="periode" id="search"
-                class="block w-full rounded-lg border border-gray-300 order-gray-50 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 placeholder="Search"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m') }}"
                 onchange="change_search()"
@@ -48,7 +48,7 @@
         </div>
       </div>
       <div class="grid grid-col-1 lg:grid-cols-3 gap-4 mb-4">
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-green-200 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-green-200 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Total Order</p>
@@ -57,7 +57,7 @@
             <p class="text-2xl font-bold text-gray-500">{{ $total_order->total_order ? $total_order->total_order : 0 }}</p>
           </div>
         </div>
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-yellow-200 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-yellow-200 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Penjualan Bulan Ini</p>
@@ -66,7 +66,7 @@
             <p class="text-2xl font-bold text-gray-500">{{ $total_order->total_payment ? format_rupiah($total_order->total_payment) : 0 }}</p>
           </div>
         </div>
-        <div class="flex justify-between p-3 h-24 rounded-lg bg-sky-200 shadow-md border">
+        <div class="flex justify-between p-3 h-24 rounded-lg bg-sky-200 shadow-lg">
           <div class="flex flex-col justify-center items-center">
             <x-fas-cart-shopping class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900" />
             <p class="text-base text-gray-500">Produk Terjual Bulan Ini</p>
@@ -77,28 +77,28 @@
         </div>
       </div>
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-4 mb-4">
-        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-gray-50 shadow-md border">
+        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-white shadow-lg">
           <canvas id="chart_penjualan"></canvas>
         </div>
-        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-gray-50 shadow-md border">
+        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-white shadow-lg">
           <canvas id="chart_modal_order"></canvas>
         </div>
       </div>
       <div class="grid grid-cols-1 gap-4 mb-4">
-        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-gray-50 shadow-md border">
-          <div class="overflow-x-auto">
+        <div class="overflow-x-auto flex justify-center p-3 rounded-lg bg-white shadow-lg">
+          <div class="overflow-x-auto shadow rounded-t-lg">
             <div class="inline-block align-middle">
               <div class="overflow-hidden shadow">
                 <table class="w-full table-fixed divide-y divide-gray-200">
                   <tbody class="divide-y divide-gray-200 bg-white">
                     @forelse ($result_order as $item)
-                      <tr class="bg-gray-100">
-                        <th colspan="3" class="p-4 text-base font-bold uppercase text-gray-500">{{ $item->category_name }}</th>
+                      <tr class="bg-sky-300">
+                        <th colspan="3" class="p-4 text-base font-bold uppercase text-white">{{ $item->category_name }}</th>
                       </tr>
-                      <tr class="bg-gray-100">
-                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Nama Produk</th>
-                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Produk Terjual</th>
-                        <th class="px-4 py-2 text-base font-bold uppercase text-gray-500">Persentase Penjualan</th>
+                      <tr class="bg-sky-300">
+                        <th class="px-4 py-2 text-base font-bold uppercase text-white">Nama Produk</th>
+                        <th class="px-4 py-2 text-base font-bold uppercase text-white">Produk Terjual</th>
+                        <th class="px-4 py-2 text-base font-bold uppercase text-white">Persentase Penjualan</th>
                       </tr>
                       @foreach ($item->product as $item_product)
                         <tr class="divide-y divide-gray-200 bg-white hover:bg-gray-100">

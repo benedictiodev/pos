@@ -20,7 +20,7 @@
   <!-- Styles -->
 </head>
 
-<body class="bg-gray-200">
+<body class="bg-sky-100">
   <main>
     @yield('main')
   </main>
