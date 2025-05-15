@@ -20,6 +20,44 @@
               <span class="ml-3" sidebar-toggle-item>Mitra Perusahaan</span>
             </a>
           </li>
+
+          <li>
+            <button type="button"
+              class="flex sidebar_base group {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'active_sidebar' : '' }}"
+              aria-controls="dropdown-finance" data-collapse-toggle="dropdown-finance">
+              <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 mr-1 {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'text-white' : '' }}" />
+              <span class="flex-1 ml-3 text-left whitespace-nowrap" sidebar-toggle-item>Keuangan</span>
+              <x-fas-chevron-down
+                class="w-4 h-4 text-gray-500 transition duration-75 mr-1 {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'text-white' : '' }}" />
+            </button>
+            <ul id="dropdown-finance"
+              class="{{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? '' : 'hidden' }} py-2 space-y-2">
+              @can('keuangan-dana-lihat')    
+                <li>
+                  <a href="{{ route('dashboard.finance.funds') }}"
+                    class="flex sidebar_base pl-11 group {{ str_contains(Request::route()->getName(), 'dashboard.finance.funds') ? 'active_sidebar' : '' }}">
+                    Dana
+                  </a>
+                </li>
+              @endcan
+              @can('keuangan-arus kas harian-lihat')
+                <li>
+                  <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
+                    class="flex sidebar_base pl-11 group {{ Request::route()->getName() == 'dashboard.finance.cash-flow-daily' ? 'active_sidebar' : '' }}">
+                    Arus Kas Harian
+                  </a>
+                </li>
+              @endcan
+              @canany('keuangan-arus kas bulanan-lihat')
+                <li>
+                  <a href="{{ route('dashboard.finance.cash-flow-monthly') }}"
+                    class="flex sidebar_base pl-11 group {{ Request::route()->getName() == 'dashboard.finance.cash-flow-monthly' ? 'active_sidebar' : '' }}">
+                    Arus Kas Bulanan
+                  </a>
+                </li>
+              @endcanany
+            </ul>
+          </li>
         </ul>
       </div>
     </div>

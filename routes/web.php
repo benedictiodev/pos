@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FundsController;
 use App\Http\Controllers\Management\CompanyController as ManagementCompanyController;
 use App\Http\Controllers\Management\DashboardController as ManagementDashboardController;
+use App\Http\Controllers\Management\FundController;
 use App\Http\Controllers\ManagementUserController;
 use App\Http\Controllers\MigrationDataController;
 use App\Http\Controllers\OrderController;
@@ -193,5 +194,9 @@ Route::prefix('/management')->middleware([
         Route::post("/store", [ManagementCompanyController::class, 'store'])->name('management.company.store');
         Route::get("{id}/edit", [ManagementCompanyController::class, 'edit'])->name('management.company.edit');
         Route::put("{id}/update", [ManagementCompanyController::class, 'update'])->name('management.company.update');
+    });
+
+    Route::prefix("/fund")->group(function() {
+        Route::get("/master_fund", [FundController::class, 'master_fund'])->name('management.fund.master_fund');
     });
 });

@@ -104,12 +104,12 @@
                         (Request::get('periode') &&
                           (
                             (Request::get('periode') == Date::now()->format('Y-m') &&
-                              (Carbon::now()->format('d') <= Carbon::now()->endOfMonth()->format('d') && Carbon::now()->format('d') >= Carbon::now()->endOfMonth()->subDays(7)->format('d'))
+                              (Carbon\Carbon::now()->format('d') <= Carbon\Carbon::now()->endOfMonth()->format('d') && Carbon\Carbon::now()->format('d') >= Carbon\Carbon::now()->endOfMonth()->subDays(7)->format('d'))
                             ) || Request::get('periode') < Date::now()->format('Y-m')
                           )
                         ) || (
                           !Request::get('periode') && 
-                          (Carbon::now()->format('d') <= Carbon::now()->endOfMonth()->format('d') && Carbon::now()->format('d') >= Carbon::now()->endOfMonth()->subDays(7)->format('d'))
+                          (Carbon\Carbon::now()->format('d') <= Carbon\Carbon::now()->endOfMonth()->format('d') && Carbon\Carbon::now()->format('d') >= Carbon\Carbon::now()->endOfMonth()->subDays(7)->format('d'))
                         )
                       )
                         @can('keuangan-arus kas bulanan-tutup buku bulanan')
