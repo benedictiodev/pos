@@ -16,7 +16,9 @@ return new class extends Migration
             $table->bigInteger('fund')->default(0);
             $table->text('remarks');
             $table->dateTime('datetime');
+            $table->foreignId('type_fund_id')->nullable()->constrained('management_funds');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

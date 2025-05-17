@@ -18,9 +18,10 @@ return new class extends Migration
             $table->bigInteger('expenditure_operational')->default(0);
             $table->bigInteger('amount_operational')->default(0);
             $table->bigInteger('for_profit')->default(0);
-            $table->bigInteger('for_operational')->default(0);
+            $table->bigInteger('for_development')->default(0);
             $table->bigInteger('for_zakat')->default(0);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

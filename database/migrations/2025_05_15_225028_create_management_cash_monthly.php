@@ -18,6 +18,7 @@ return new class extends Migration
             $table->bigInteger('amount')->default(0);
             $table->date('date');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

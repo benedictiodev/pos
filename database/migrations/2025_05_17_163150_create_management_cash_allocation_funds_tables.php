@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('management_cash_out', function (Blueprint $table) {
+        Schema::create('management_cash_allocation_funds_tables', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('fund')->default(0);
-            $table->text('remarks');
+            $table->foreignId('from_type_id')->nullable()->constrained('management_funds');
+            $table->foreignId('to_type_id')->nullable()->constrained('management_funds');
+            $table->bigInteger('amount')->default(0);
             $table->dateTime('datetime');
-            $table->foreignId('type_fund_id')->nullable()->constrained('management_funds');
             $table->timestamps();
             $table->softDeletes();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('management_cash_out');
+        Schema::dropIfExists('management_cash_allocation_funds_tables');
     }
 };

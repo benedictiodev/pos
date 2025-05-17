@@ -108,7 +108,7 @@
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-200 bg-white">
-                  {{-- @forelse ($data_history as $item)
+                  @forelse ($allocation as $item)
                     <tr class="hover:bg-gray-100">
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">
@@ -135,7 +135,7 @@
                     <tr>
                       <td class="text-center text-base font-light p-4" colspan="4">Empty Data</td>
                     </tr>
-                  @endforelse --}}
+                  @endforelse
                 </tbody>
               </table>
             </div>
@@ -145,7 +145,7 @@
 
       <div
         class="sticky bottom-0 right-0 w-full items-center border-t border-gray-200 bg-white p-4 sm:flex sm:justify-between">
-        {{-- {{ $data_history->links('vendor.pagination.tailwind') }} --}}
+        {{ $allocation->links('vendor.pagination.tailwind') }}
       </div>
     </div>
   </div>

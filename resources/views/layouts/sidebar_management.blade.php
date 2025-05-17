@@ -31,31 +31,13 @@
                 class="w-4 h-4 text-gray-500 transition duration-75 mr-1 {{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? 'text-white' : '' }}" />
             </button>
             <ul id="dropdown-finance"
-              class="{{ str_contains(Request::route()->getName(), 'dashboard.finance.') ? '' : 'hidden' }} py-2 space-y-2">
-              @can('keuangan-dana-lihat')    
-                <li>
-                  <a href="{{ route('dashboard.finance.funds') }}"
-                    class="flex sidebar_base pl-11 group {{ str_contains(Request::route()->getName(), 'dashboard.finance.funds') ? 'active_sidebar' : '' }}">
-                    Dana
-                  </a>
-                </li>
-              @endcan
-              @can('keuangan-arus kas harian-lihat')
-                <li>
-                  <a href="{{ route('dashboard.finance.cash-flow-daily') }}"
-                    class="flex sidebar_base pl-11 group {{ Request::route()->getName() == 'dashboard.finance.cash-flow-daily' ? 'active_sidebar' : '' }}">
-                    Arus Kas Harian
-                  </a>
-                </li>
-              @endcan
-              @canany('keuangan-arus kas bulanan-lihat')
-                <li>
-                  <a href="{{ route('dashboard.finance.cash-flow-monthly') }}"
-                    class="flex sidebar_base pl-11 group {{ Request::route()->getName() == 'dashboard.finance.cash-flow-monthly' ? 'active_sidebar' : '' }}">
-                    Arus Kas Bulanan
-                  </a>
-                </li>
-              @endcanany
+              class="{{ str_contains(Request::route()->getName(), 'management.fund.') ? '' : 'hidden' }} py-2 space-y-2">   
+              <li>
+                <a href="{{ route('management.fund.master_fund') }}"
+                  class="flex sidebar_base pl-11 group {{ str_contains(Request::route()->getName(), 'management.fund.master_fund') ? 'active_sidebar' : '' }}">
+                  Dana
+                </a>
+              </li>
             </ul>
           </li>
         </ul>
