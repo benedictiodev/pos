@@ -26,6 +26,7 @@ Route::prefix('/migration')->group(function() {
     // Route::get('/seeder', [MigrationDataController::class, 'running_seeder']);
     // Route::get('/migrate', [MigrationDataController::class, 'running_migration']);
     Route::get('/optimize', [MigrationDataController::class, 'optimize']);
+    Route::get('/storage', [MigrationDataController::class, 'storage']);
 });
 
 Route::get('/redirect', function () {

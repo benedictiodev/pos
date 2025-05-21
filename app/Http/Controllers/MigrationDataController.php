@@ -135,4 +135,16 @@ class MigrationDataController extends Controller
             throw $e;
         }
     }
+
+    public function storage() {
+        try {
+            Artisan::call('storage:link');
+
+            return response()->json([
+                'message' => 'storage berhasil dijalankan!',
+            ]);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
 }
