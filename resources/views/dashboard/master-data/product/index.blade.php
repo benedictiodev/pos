@@ -134,7 +134,7 @@
                       </td>
                       <td class="whitespace-nowrap p-4">
                         @if ($item->image)
-                          <img src="{{ asset(env('USE_CDN', 'production') == 'local' ? 'storage/' . $item->image : $item->image) }}" alt="{{ $item->name }}" class="h-32" />
+                          <img src="{{ asset(env('APP_ENV', 'production') == 'local' ? 'storage/' . $item->image : $item->image) }}" alt="{{ $item->name }}" class="h-32" />
                         @else
                           <p class="text-sm font-normal text-gray-900">Tidak Ada Gambar
                           </p>
