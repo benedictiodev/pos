@@ -86,7 +86,7 @@
               <label class="mb-2 block text-sm font-medium text-gray-900" for="create-image">Unggah Foto Produk</label>
               <input type="text" value="{{ $data->image }}" name="old_image" hidden>
               @if ($data->image)
-                <img id="preview-image" src="{{ asset('storage/' . $data->image) }}" alt="{{ asset($data->image) }}"
+                <img id="preview-image" src="{{ asset(env('APP_ENV', 'production') == 'local' ? 'storage/' . $data->image : $data->image) }}" alt="{{ asset($data->image) }}"
                   class="h-64 mb-2 block">
               @endif
               <input
