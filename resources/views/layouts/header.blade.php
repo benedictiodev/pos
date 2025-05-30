@@ -17,7 +17,7 @@
               clip-rule="evenodd"></path>
           </svg>
         </button>
-        <a href="{{ route('dashboard') }}" class="flex ml-2 md:mr-24">
+        <a href="{{ route(Auth::user()->is_management ? 'management.dashboard' : 'dashboard') }}" class="flex ml-2 md:mr-24">
           <img src="{{ asset("images/logo_benedictiodev.png")}}" class="mr-4 h-12" alt="Benedictio Logo">
           <div class="text-[#339bf7]">
             <div class="self-center font-semibold sm:text-2xl whitespace-nowrap">Benedictio Dev</div>

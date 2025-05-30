@@ -42,7 +42,7 @@
       </div>
     @endif
 
-    <div class="grid grid-col-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mx-[-0.25rem]">
+    <div class="grid grid-col-3 sm:grid-cols-3 lg:grid-cols-3 gap-4 mx-[-0.25rem]">
       <div
         class="flex justify-between items-center bg-sky-300 text-white rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-1 lg:mb-2 mx-1">
         <div class="flex items-center text-sm">
@@ -50,19 +50,19 @@
           Dana :
         </div>
         <div class="font-bold text-sm"> 
-          {{-- {{ format_rupiah($total_fund) }} --}}
+          {{ format_rupiah($total_fund) }}
         </div>
       </div>
-      {{-- @foreach ($data as $item)
+      @foreach ($data as $item)
         <div
           class="flex justify-between items-center bg-white rounded-lg shadow-lg p-4 2xl:col-span-2 sm:p-6 mb-1 lg:mb-2 mx-1">
           <div class="flex items-center text-sm">
             <x-fas-money-bill class="w-6 h-6 text-gray-500 transition duration-75 group-hover:text-gray-900 mr-2" />
-            {{ $item->type }} :
+            {{ $item->name }} :
           </div>
           <div class="font-bold text-sm"> {{ format_rupiah($item->fund) }}</div>
         </div>
-      @endforeach --}}
+      @endforeach
     </div>
 
     <div class="mt-4 p-4 bg-white rounded-lg shadow-lg 2xl:col-span-2 sm:p-6 mb-4">

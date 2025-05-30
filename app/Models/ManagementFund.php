@@ -9,6 +9,6 @@ class ManagementFund extends Model
 {
     use HasFactory;
 
-    protected $table = 'management_fund';
+    protected $table = 'management_funds';
     protected $guarded = ['id'];
 }
