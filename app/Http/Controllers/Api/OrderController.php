@@ -11,6 +11,7 @@ use App\Models\Order;
 use App\Models\OrderItems;
 use App\Models\Product;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -656,5 +657,24 @@ class OrderController extends Controller
             'status' => 200,
             'message' => 'Fitur not avilable',
         ], 200);
+    }
+
+    public function get_type_fund() {
+        try {
+            $company_id = Auth::guard('sanctum')->user()->company_id;
+
+            $data = Fund::where('company_id', $company_id)->get();
+            
+            return response()->json([
+                'status' => 200,
+                'message' => 'Pengambilan data berhasil',
+                'data' => $data,
+            ], 200);
+        } catch (Exception $error) {
+            return response()->json([
+                'status' => 500,
+                'message' => $error->getMessage(),
+            ], 500);
+        }
     }
 }

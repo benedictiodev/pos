@@ -15,6 +15,21 @@ use Throwable;
 
 class MigrationDataController extends Controller
 {
+    public function storage_link() {
+        $target = storage_path('app/public');
+        $link = public_path('storage');
+
+        if (file_exists($link)) {
+            return response()->json(['message' => 'Link sudah ada.'], 200);
+        }
+
+        if (symlink($target, $link)) {
+            return response()->json(['message' => '✅ Symlink berhasil dibuat.'], 201);
+        } else {
+            return response()->json(['message' => '❌ Gagal membuat symlink.'], 500);
+        }
+    }
+
     public function add_data_discount_for_order_old() {
         try {
             DB::beginTransaction();
@@ -130,6 +145,18 @@ class MigrationDataController extends Controller
 
             return response()->json([
                 'message' => 'optimize berhasil dijalankan!',
+            ]);
+        } catch (Exception $e) {
+            throw $e;
+        }
+    }
+
+    public function storage() {
+        try {
+            Artisan::call('storage:link');
+
+            return response()->json([
+                'message' => 'storage berhasil dijalankan!',
             ]);
         } catch (Exception $e) {
             throw $e;

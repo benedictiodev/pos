@@ -31,6 +31,7 @@ Route::prefix('/')->middleware([
         Route::get("/update/{id}", [OrderController::class, 'edit_order']);
         Route::put("/update/{id}", [OrderController::class, 'update_order']);
         Route::get("/report", [OrderController::class, 'report']);
+        Route::get("/get_type_fund", [OrderController::class, 'get_type_fund']);
     });
     Route::prefix('/settings')->group(function () {
         Route::get('/printer_order', [SettingsController::class, 'printer_order']);

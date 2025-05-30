@@ -90,6 +90,7 @@
                           <div class="mx-1 border-2 p-2 rounded-lg h-full relative pb-20">
                             <div class="border p-2 rounded-md flex items-center justify-center h-32 max-h-32">
                               @if ($item->image)
+                                {{-- <img src="{{ asset(env('APP_ENV', 'production') == 'local' ? 'storage/' . $item->image : $item->image) }}" alt="{{ $item->name }}" class="h-full">   --}}
                                 <img src="{{ asset('storage/' . $item->image) }}" alt="{{ $item->name }}" class="h-full">  
                               @else
                                 <div>Tidak Ada Gambar</div>
