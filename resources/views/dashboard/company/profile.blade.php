@@ -70,7 +70,8 @@
               <label class="mb-2 block text-sm font-medium text-gray-900" for="image">Logo</label>
               <input type="text" value="{{ $data->image }}" name="old_image" hidden>
               <img id="preview-image"
-                @if ($data->image) src="{{ asset(env('APP_ENV', 'production') == 'local' ? 'storage/' . $data->image :  $data->image) }}" alt="{{ asset($data->image) }}" @endif
+                {{-- @if ($data->image) src="{{ asset(env('APP_ENV', 'production') == 'local' ? 'storage/' . $data->image :  $data->image) }}" alt="{{ asset($data->image) }}" @endif --}}
+                @if ($data->image) src="{{ asset('storage/' . $data->image) }}" alt="{{ asset($data->image) }}" @endif
                 class="h-64 mb-2 block {{ $data->image ? '' : 'hidden' }}">
               <input
                 class="block w-full cursor-pointer rounded-lg border border-gray-300 bg-gray-200 text-sm text-gray-900 focus:outline-none"
