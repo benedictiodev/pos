@@ -27,6 +27,7 @@ Route::prefix('/migration')->group(function() {
     // Route::get('/migrate', [MigrationDataController::class, 'running_migration']);
     Route::get('/optimize', [MigrationDataController::class, 'optimize']);
     Route::get('/storage', [MigrationDataController::class, 'storage']);
+    Route::get('/storage_link', [MigrationDataController::class, 'storage_link']);
 });
 
 Route::get('/redirect', function () {
