@@ -81,7 +81,7 @@
         @can('keuangan-dana-tambah pengalihan baru alokasi dana')
           <a id="createProductButton"
             class="rounded-lg bg-primary-700 px-5 py-2.5 shadow-md text-sm font-medium text-white hover:bg-primary-800 focus:outline-none focus:ring-4 focus:ring-primary-300"
-            href="{{ route('dashboard.finance.funds.create') }}">
+            href="{{ route('management.fund.create_allowance_fund') }}">
             Tambahkan pengalihan baru alokasi dana
           </a>
         @endcan
@@ -117,12 +117,12 @@
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">
-                          {{ $item->from_type }}
+                          {{ $item->from_type->name }}
                         </p>
                       </td>
                       <td class="whitespace-nowrap p-4 text-sm font-normal text-gray-500">
                         <p class="text-sm font-normal text-gray-900">
-                          {{ $item->to_type }}
+                          {{ $item->to_type->name }}
                         </p>
                       </td>
                       <td class="text-right whitespace-nowrap p-4 text-sm font-normal text-gray-500">

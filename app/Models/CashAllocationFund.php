@@ -13,4 +13,12 @@ class CashAllocationFund extends Model
 
     protected $table = 'management_cash_allocation_funds_tables';
     protected $guarded = ['id'];
+
+    public function from_type() {
+        return $this->belongsTo(ManagementFund::class, 'from_type_id');
+    }
+
+    public function to_type() {
+        return $this->belongsTo(ManagementFund::class, 'to_type_id');
+    }
 }

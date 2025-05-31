@@ -129,6 +129,11 @@ class FundsController extends Controller
                 Auth::user()->company_id
             )->where('type', $validate['from_type'])->first();
 
+            if ($fund_form->fund - $validate['amount'] < 0) {
+                DB::rollBack();
+                return redirect()->route('dashboard.finance.funds.create')->with('failed', "Nominal 'Dari tipe dana' kurang dari 'Total Dana Yang Dipindahkan'");
+            }
+
             $fund_form->update([
                 "fund" => $fund_form->fund - $validate['amount']
             ]);

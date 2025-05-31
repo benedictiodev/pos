@@ -200,5 +200,7 @@ Route::prefix('/management')->middleware([
 
     Route::prefix("/fund")->group(function() {
         Route::get("/master_fund", [FundController::class, 'master_fund'])->name('management.fund.master_fund');
+        Route::get("/create_allowance_fund", [FundController::class, 'create_allowance_fund'])->name('management.fund.create_allowance_fund');
+        Route::post("/store_allowance_fund", [FundController::class, 'store_allowance_fund'])->name('management.fund.store_allowance_fund');
     });
 });
