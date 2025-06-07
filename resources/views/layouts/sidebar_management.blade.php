@@ -38,6 +38,12 @@
                   Dana
                 </a>
               </li>
+              <li>
+                <a href="{{ route('management.fund.monthly') }}"
+                  class="flex sidebar_base pl-11 group {{ str_contains(Request::route()->getName(), 'management.fund.monthly') ? 'active_sidebar' : '' }}">
+                  Kas Bulanan
+                </a>
+              </li>
             </ul>
           </li>
         </ul>

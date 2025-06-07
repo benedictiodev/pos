@@ -4,9 +4,14 @@ namespace App\Http\Controllers\Management;
 
 use App\Http\Controllers\Controller;
 use App\Models\CashAllocationFund;
+use App\Models\ManagementCashIn;
+use App\Models\ManagementCashOut;
+use App\Models\ManagementClosingCycle;
 use App\Models\ManagementFund;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Throwable;
 
 class FundController extends Controller
@@ -74,6 +79,125 @@ class FundController extends Controller
         } catch (Throwable $error) {
             DB::rollBack();
             return redirect()->route('management.fund.create_allowance_fund')->with('failed', "Gagal melakukan pengalihan alokasi dana");
+        }
+    }
+
+    public function monthly(Request $request) {
+        $periode = Carbon::now()->format('Y-m');
+        if ($request->periode) {
+            $periode = $request->periode;
+        }
+
+        $fund = ManagementFund::get();
+        $result_fund = array();
+        foreach($fund AS $item) {
+            array_push($result_fund, (object) array(
+                'id' => $item->id,
+                'name' => $item->name,
+                'cash_in' => 0,
+                'cash_out' => 0
+            ));
+        }
+
+        $cash_in = ManagementCashIn::select('management_cash_in.*', 'management_funds.name AS type_fund', DB::raw('"cash-in" AS type'))
+            ->leftJoin('management_funds', 'management_funds.id', 'management_cash_in.type_fund_id')
+            ->where('datetime', 'like', $periode . '%')
+            ->orderBy('datetime')->get();
+        $cash_out = ManagementCashOut::select('management_cash_out.*', 'management_funds.name AS type_fund', DB::raw('"cash-out" AS type'))
+            ->leftJoin('management_funds', 'management_funds.id', 'management_cash_out.type_fund_id')
+            ->where('datetime', 'like', $periode . '%')
+            ->orderBy('datetime')->get();
+
+        $total_cash_in = 0;
+        foreach($cash_in AS $item) {
+            $total_cash_in += (int)$item->fund;
+
+            foreach($result_fund as $key => $value) {
+                if ($value->id == $item->type_fund_id) {
+                    $result_fund[$key]->cash_in += (int)$item->fund;
+                    break;
+                }
+            }
+        }
+
+        $total_cash_out = 0;
+        foreach($cash_out AS $item) {
+            $total_cash_out += (int)$item->fund;
+
+            foreach($result_fund as $key => $value) {
+                if ($value->id == $item->type_fund_id) {
+                    $result_fund[$key]->cash_out += (int)$item->fund;
+                    break;
+                }
+            }
+        }
+
+        $result = $cash_in->push(...$cash_out);
+
+        $sortedResult = $result->sortBy(['datetime']);
+        $processedData = collect($sortedResult);
+
+        $perPage = 5; // Replace 15 with the desired number of items per page
+        $page = request()->get('page', 1); // Get the current page number from the request, default to 1
+        $paginatedData = new \Illuminate\Pagination\LengthAwarePaginator(
+            $processedData->slice(($page - 1) * $perPage, $perPage),
+            $processedData->count(),
+            $perPage,
+            $page,
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
+
+        return view('management.fund.monthly.index', [
+            'data' => $paginatedData, 
+            'total_cash_in' => $total_cash_in, 
+            'total_cash_out' => $total_cash_out,
+            'result_fund' => $result_fund,
+        ]);
+    }
+
+    public function create_cash_in() {
+        $funds = ManagementFund::get();
+        return view('management.fund.monthly.create_cash_in', ['funds' => $funds]);
+    }
+
+    public function store_cash_in(Request $request)
+    {
+        $query_data = array();
+        try {
+            DB::beginTransaction();
+
+            $validate = $request->validate([
+                'fund' => 'required',
+                'remarks' => 'required',
+                'datetime' => 'required',
+                'type' => 'required',
+            ]);
+
+            $validate['fund'] = (int) str_replace('.', '', $validate['fund']);
+
+            $store = ManagementCashIn::create([
+                'fund' => $validate['fund'],
+                'remarks' => $request['remarks'] ?? null,
+                'datetime' => $validate['datetime'],
+                'type_fund_id' => $validate['type'],
+            ]);
+
+            $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m')];
+
+            $closing_cyle = ManagementClosingCycle::where("periode", $query_data)
+                ->first();
+
+            if ($closing_cyle) {
+                $fund = ManagementFund::where("type_fund_id", $request["type"])->first();
+                $fund->update(["fund" => $fund->fund + $validate["fund"]]);
+            }
+
+            DB::commit();
+            return redirect()->route('management.fund.monthly', $query_data)->with('success', "Berhasil menambahkan data pemasukkan dana");
+        } catch (Throwable $error) {
+            Log::info($error);
+            DB::rollBack();
+            return redirect()->route('management.fund.monthly', $query_data)->with('failed', "Gagal menambahkan data pemasukkan dana");
         }
     }
 }

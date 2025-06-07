@@ -9,6 +9,6 @@ class ManagementClosingCycle extends Model
 {
     use HasFactory;
 
-    protected $table = 'management_closing_cycle';
+    protected $table = 'management_cash_closing_cycle';
     protected $guarded = ['id'];
 }
