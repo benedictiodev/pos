@@ -161,7 +161,7 @@
                           @endcanany
                         @else
                           @can('keuangan-arus kas harian-perbarui dana') 
-                            <a href="{{ route('dashboard.finance.' . $item->type . '.edit', ['id' => $item->id]) }}"
+                            <a href="{{ route('management.fund.monthly.edit_' . $item->type , ['id' => $item->id]) }}"
                               id="updateProductButton"
                               class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                               <x-fas-edit class="mr-2 h-4 w-4" />

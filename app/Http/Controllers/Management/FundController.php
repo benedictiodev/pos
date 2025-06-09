@@ -200,4 +200,70 @@ class FundController extends Controller
             return redirect()->route('management.fund.monthly', $query_data)->with('failed', "Gagal menambahkan data pemasukkan dana");
         }
     }
+
+    public function edit_cash_in($id) {
+        $funds = ManagementFund::get();
+        $data = ManagementCashIn::where('id', $id)->first();
+        return view('management.fund.monthly.edit_cash_in', ['funds' => $funds, 'data' => $data]);
+    }
+
+    public function update_cash_in(Request $request, string $id)
+    {
+        $query_data = array();
+        try {
+            DB::beginTransaction();
+            $validate = $request->validate([
+                'fund' => 'required',
+                'remarks' => 'required',
+                'datetime' => 'required',
+                'type' => 'required',
+            ]);
+
+            $validate['fund'] = (int) str_replace('.', '', $validate['fund']);
+
+            $data = ManagementCashIn::findOrFail($id);
+            $type = $data->type_fund_id;
+            $amount = $data->fund;
+
+            if ($data) {
+                $update = $data->update([
+                    'fund' => $validate['fund'],
+                    'remarks' => $request['remarks'] ?? null,
+                    'datetime' => $validate['datetime'],
+                    'type_fund_id' => $validate['type'],
+                ]);
+
+                $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m-d')];
+
+                $closing_cyle = ManagementClosingCycle::where("periode", Carbon::parse($validate['datetime'])->format('Y-m'))
+                    ->first();
+
+                if ($closing_cyle) {
+                    if ($type == $validate["type"]) {
+                        $fund = ManagementFund::where('type_fund_id', $type)->first();
+
+                        if ($fund) {
+                            $fund->update(["fund" => $fund->fund - $amount + $validate["fund"]]);
+                        }
+                    } else {
+                        $fundOld = ManagementFund::where('type_fund_id', $type)->first();
+
+                        $fund = ManagementFund::where('type_fund_id', $validate['type'])->first();
+
+                        $fundOld->update(["fund" => $fundOld->fund - $amount]);
+                        $fund->update(["fund" => $fund->fund + $validate["fund"]]);
+                    }
+                }
+
+                DB::commit();
+                return redirect()->route('management.fund.monthly', $query_data)->with('success', "Berhasil memperbarui data pemasukkan dana");
+            } else {
+                DB::rollBack();
+                return abort(404);
+            }
+        } catch (Throwable $error) {
+            DB::rollBack();
+            return redirect()->route('management.fund.monthly.edit_cash-in', $query_data)->with('failed', "Gagal memperbarui data pemasukkan dana");
+        }
+    }
 }

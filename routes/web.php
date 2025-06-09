@@ -206,6 +206,8 @@ Route::prefix('/management')->middleware([
             Route::get('/', [FundController::class, 'monthly'])->name('management.fund.monthly');
             Route::get('/create_cash_in', [FundController::class, 'create_cash_in'])->name('management.fund.monthly.create_cash_in');
             Route::post('/store_cash_in', [FundController::class, 'store_cash_in'])->name('management.fund.monthly.store_cash_in');
+            Route::get('/{id}/edit_cash_in', [FundController::class, 'edit_cash_in'])->name('management.fund.monthly.edit_cash-in');
+            Route::put('/{id}/update_cash_in', [FundController::class, 'update_cash_in'])->name('management.fund.monthly.update_cash_in');
         });
     });
 });
