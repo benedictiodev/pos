@@ -22,7 +22,7 @@ use App\Http\Middleware\RedirectWeb;
 use Illuminate\Support\Facades\Route;
 
 
-Route::prefix('/migration')->group(function() {
+Route::prefix('/migration')->group(function () {
     // Route::get('/', [MigrationDataController::class, 'add_data_discount_for_order_old']);
     // Route::get('/seeder', [MigrationDataController::class, 'running_seeder']);
     // Route::get('/migrate', [MigrationDataController::class, 'running_migration']);
@@ -187,10 +187,10 @@ Route::prefix("/dashboard")->middleware([
 Route::prefix('/management')->middleware([
     'auth',
     ManagementAuth::class
-])->group(function() {
+])->group(function () {
     Route::get('/', [ManagementDashboardController::class, 'index'])->name('management.dashboard');
 
-    Route::prefix("/company")->group(function() {
+    Route::prefix("/company")->group(function () {
         Route::get("/", [ManagementCompanyController::class, 'index'])->name('management.company.index');
         Route::get("/create", [ManagementCompanyController::class, 'create'])->name('management.company.create');
         Route::post("/store", [ManagementCompanyController::class, 'store'])->name('management.company.store');
@@ -198,16 +198,17 @@ Route::prefix('/management')->middleware([
         Route::put("{id}/update", [ManagementCompanyController::class, 'update'])->name('management.company.update');
     });
 
-    Route::prefix("/fund")->group(function() {
+    Route::prefix("/fund")->group(function () {
         Route::get("/master_fund", [FundController::class, 'master_fund'])->name('management.fund.master_fund');
         Route::get("/create_allowance_fund", [FundController::class, 'create_allowance_fund'])->name('management.fund.create_allowance_fund');
         Route::post("/store_allowance_fund", [FundController::class, 'store_allowance_fund'])->name('management.fund.store_allowance_fund');
-        Route::prefix('/monthly')->group(function() {
+        Route::prefix('/monthly')->group(function () {
             Route::get('/', [FundController::class, 'monthly'])->name('management.fund.monthly');
             Route::get('/create_cash_in', [FundController::class, 'create_cash_in'])->name('management.fund.monthly.create_cash_in');
             Route::post('/store_cash_in', [FundController::class, 'store_cash_in'])->name('management.fund.monthly.store_cash_in');
             Route::get('/{id}/edit_cash_in', [FundController::class, 'edit_cash_in'])->name('management.fund.monthly.edit_cash-in');
             Route::put('/{id}/update_cash_in', [FundController::class, 'update_cash_in'])->name('management.fund.monthly.update_cash_in');
+            Route::delete('/cash_in/{id}', [FundController::class, 'delete_cash_in'])->name('management.fund.monthly.delete_cash_in');
         });
     });
 });

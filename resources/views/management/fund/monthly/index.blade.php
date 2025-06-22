@@ -50,8 +50,7 @@
                 class="block w-full rounded-lg border border-gray-300 p-2.5 text-gray-900 focus:border-primary-500 focus:ring-primary-500 sm:text-sm"
                 placeholder="Search for daily cash flow"
                 value="{{ Request::get('periode') ? Request::get('periode') : Date::now()->format('Y-m') }}"
-                onchange="change_search()"
-                max="{{ Carbon\Carbon::now()->format('Y-m') }}">
+                onchange="change_search()" max="{{ Carbon\Carbon::now()->format('Y-m') }}">
             </div>
           </form>
           {{-- <div class="flex w-full items-center sm:justify-end">
@@ -160,15 +159,15 @@
                             </a>
                           @endcanany
                         @else
-                          @can('keuangan-arus kas harian-perbarui dana') 
-                            <a href="{{ route('management.fund.monthly.edit_' . $item->type , ['id' => $item->id]) }}"
+                          @can('keuangan-arus kas harian-perbarui dana')
+                            <a href="{{ route('management.fund.monthly.edit_' . $item->type, ['id' => $item->id]) }}"
                               id="updateProductButton"
                               class="inline-flex items-center rounded-lg bg-primary-700 px-3 py-2 text-center text-sm font-medium text-white hover:bg-primary-800 focus:ring-4 focus:ring-primary-300">
                               <x-fas-edit class="mr-2 h-4 w-4" />
                               Perbarui
                             </a>
                           @endcan
-                          @can('keuangan-arus kas harian-hapus dana') 
+                          @can('keuangan-arus kas harian-hapus dana')
                             <button type="button" id="deleteProductButton"
                               data-drawer-target="drawer-delete-cash-in-default"
                               data-drawer-show="drawer-delete-cash-in-default"
@@ -211,22 +210,21 @@
                     </th>
                   </tr>
                   @foreach ($result_fund as $item)
-                      <tr class="bg-white border-t">
-                        <th scope="col" class="p-4 text-center text-sm font-normal">
-                        </th>
-                        <th scope="col" class="p-4 text-left text-sm font-normal">
-                          {{ $item->name }}
-                        </th>
-                        <th scope="col" class="p-4 text-right text-sm font-normal">
-                          {{ format_rupiah($item->cash_out) }}
-                        </th>
-                        <th scope="col" class="p-4 text-right text-sm font-normal">
-                          {{ format_rupiah($item->cash_in) }}
-                        </th>
-                        <th scope="col" colspan="3"
-                          class="p-4 text-center text-sm font-normal">
-                        </th>
-                      </tr>
+                    <tr class="bg-white border-t">
+                      <th scope="col" class="p-4 text-center text-sm font-normal">
+                      </th>
+                      <th scope="col" class="p-4 text-left text-sm font-normal">
+                        {{ $item->name }}
+                      </th>
+                      <th scope="col" class="p-4 text-right text-sm font-normal">
+                        {{ format_rupiah($item->cash_out) }}
+                      </th>
+                      <th scope="col" class="p-4 text-right text-sm font-normal">
+                        {{ format_rupiah($item->cash_in) }}
+                      </th>
+                      <th scope="col" colspan="3" class="p-4 text-center text-sm font-normal">
+                      </th>
+                    </tr>
                   @endforeach
                 </tfoot>
               </table>
@@ -253,14 +251,13 @@
         <x-fas-info-circle aria-hidden="true" class="h-5 w-5" />
         <span class="sr-only">Tutup</span>
       </button>
-      <form id="form-delete">
+      <form id="form-delete" method="POST">
         @csrf
         @method('DELETE')
         <input type="text" id="delete-id" value="" hidden>
         <input type="text" id="delete-type" value="" hidden>
-        <input type="text" id="delete-periode" value="{{ Request::get('periode') }}" hidden>
         <x-fas-circle-exclamation class="mb-4 mt-8 h-10 w-10 text-red-600" />
-        <h3 class="mb-6 text-lg text-gray-500">Apakah anda yakin untuk menghapus dana ini?</h3>
+        <h3 class="mb-6 text-lg text-gray-500">Apakah anda yakin untuk arus kas bulanan ini?</h3>
         <button type="button" data-type="button-delete"
           class="mr-2 inline-flex items-center rounded-lg bg-red-600 px-3 py-2.5 text-center text-sm font-medium text-white hover:bg-red-800 focus:ring-4 focus:ring-red-300">
           Ya, Saya Yakin
@@ -289,15 +286,14 @@
           const id = event.target.getAttribute("data-id");
           const type = event.target.getAttribute("data-type");
           document.querySelector("#delete-id").value = id;
-          document.querySelector("#delete-type").value = type;
+          document.querySelector("#delete-type").value = kebabToSnakeCase(type);
         }
         if (event.target.getAttribute('data-type') == "button-delete") {
           const id = document.querySelector("#delete-id").value;
           const type = document.querySelector("#delete-type").value;
-          const periode = document.querySelector("#delete-periode").value;
-          document.querySelector("#form-delete").method = "POST";
+
           document.querySelector("#form-delete").action =
-            `/dashboard/finance/${type}/${id}${periode !== '' ? `?periode=${periode}`: ''}`;
+            `/management/fund/monthly/${type}/${id}`;
           document.querySelector("#form-delete").submit();
         }
       })

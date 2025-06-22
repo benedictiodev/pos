@@ -272,4 +272,26 @@ class FundController extends Controller
             return redirect()->route('management.fund.monthly.edit_cash-in', $query_data)->with('failed', "Gagal memperbarui data pemasukkan dana");
         }
     }
+
+    public function delete_cash_in(string $id)
+    {
+        $cashIn = ManagementCashIn::where("id", $id)->first();
+        if ($cashIn) {
+            $delete = $cashIn->delete();
+
+            $query =  ['periode' => request()->query('periode')];
+
+            if (!$query['periode']) {
+                $query['periode'] = Carbon::now()->format('Y-m');
+            }
+
+            if ($delete) {
+                return redirect()->route("management.fund.monthly", $query)->with('success', "Berhasil menghapus data pemasukkan dana");
+            } else {
+                return redirect()->route('management.fund.monthly', $query)->with('failed', "Gagal menghapus data pemasukkan dana");
+            }
+        } else {
+            return abort(404);
+        }
+    }
 }
