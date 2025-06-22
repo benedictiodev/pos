@@ -80,6 +80,25 @@
               @enderror
             </div>
 
+            <div class="mb-4">
+              <div class="flex items-center mb-2">
+                <input id="subscription_checkbox" aria-describedby="subscription-checkbox-desc" type="checkbox"
+                  name="is_subscribed" value="1"
+                  class="focus:ring-3 h-4 w-4 rounded-md border-gray-300 bg-gray-50 focus:ring-blue-300">
+                <label for="subscription_checkbox"
+                  class="ml-2 block text-sm font-medium text-gray-900">Berlangganan</label>
+              </div>
+            </div>
+
+            <div id="subscription_duration_container" class="mb-6 hidden">
+              <label for="subscription_duration" class="block text-sm font-medium text-gray-900 mb-2">
+                Lama Berlangganan (dalam bulan)
+              </label>
+              <input type="number" id="subscription_duration" name="subscription_duration" min="2" max="30"
+                class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                value="{{ old('subscription_duration') }}" placeholder="Hanya tulis dalam angka lama bulan">
+            </div>
+
             <div>
               <label for="datetime" class="mb-2 block text-sm font-medium text-gray-900">Waktu</label>
               <input type="datetime-local" name="datetime" id="datetime"
@@ -101,3 +120,30 @@
     </div>
   </div>
 @endsection
+
+@push('script')
+  <script>
+    $(document).ready(function() {
+
+      // Add event listener for when the checkbox state changes
+      const subscriptionCheckbox = document.getElementById('subscription_checkbox');
+      subscriptionCheckbox.checked = false;
+      subscriptionCheckbox.addEventListener('change', toggleSubscriptionDuration);
+    });
+
+    const toggleSubscriptionDuration = () => {
+      const subscriptionCheckbox = document.getElementById('subscription_checkbox');
+      const subscriptionDurationContainer = document.getElementById('subscription_duration_container');
+      const subscriptionDurationInput = document.getElementById('subscription_duration');
+
+      if (subscriptionCheckbox.checked) {
+        subscriptionDurationContainer.classList.remove('hidden'); // Show the container
+        subscriptionDurationInput.required = true; // Make the input required
+      } else {
+        subscriptionDurationContainer.classList.add('hidden'); // Hide the container
+        subscriptionDurationInput.required = false; // Remove required attribute
+        subscriptionDurationInput.value = ''; // Clear the input's value when hidden
+      }
+    };
+  </script>
+@endpush

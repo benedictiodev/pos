@@ -180,12 +180,16 @@ class FundController extends Controller
 
             $validate['fund'] = (int) str_replace('.', '', $validate['fund']);
 
-            $store = ManagementCashIn::create([
+            ManagementCashIn::create([
                 'fund' => $validate['fund'],
                 'remarks' => $request['remarks'] ?? null,
                 'datetime' => $validate['datetime'],
                 'type_fund_id' => $validate['type'],
             ]);
+
+            if ($request->is_subscribed) {
+                $this->handleBulkCashInSubscription($request);
+            }
 
             $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m')];
 
@@ -203,6 +207,53 @@ class FundController extends Controller
             Log::info($error);
             DB::rollBack();
             return redirect()->route('management.fund.monthly', $query_data)->with('failed', "Gagal menambahkan data pemasukkan dana");
+        }
+    }
+
+    private function handleBulkCashInSubscription(Request $request)
+    {
+
+        $duration = (int) $request->input('subscription_duration', 0);
+        $startDateString = $request->input('datetime');
+
+        // Duration should be greater than one
+        if ($duration <= 1) {
+            return;
+        }
+
+        // Check date parsing
+        try {
+            $currentDate = Carbon::parse($startDateString);
+        } catch (\Exception $e) {
+            Log::error('Invalid datetime format for subscription start: ' . $startDateString, ['error' => $e->getMessage()]);
+            return;
+        }
+
+        // Prepare array
+        $recordsToInsert = [];
+
+        for ($i = 1; $i < $duration; $i++) {
+            $recordDate = $currentDate->copy()->addMonths($i);
+
+            $fund = (int) str_replace('.', '', $request->input('fund'));
+
+            $recordsToInsert[] = [
+                'fund' => $fund,
+                'remarks' => $request->input('remarks') ?? null,
+                'datetime' => $recordDate->format('Y-m-d\TH:i'),
+                'type_fund_id' => $request->input('type'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Insert bulk
+        if (!empty($recordsToInsert)) {
+            try {
+                ManagementCashIn::insert($recordsToInsert);
+            } catch (\Exception $e) {
+                Log::error('Failed to insert subscription records: ' . $e->getMessage(), ['data' => $recordsToInsert]);
+            }
         }
     }
 
