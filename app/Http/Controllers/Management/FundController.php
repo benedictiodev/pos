@@ -16,7 +16,8 @@ use Throwable;
 
 class FundController extends Controller
 {
-    public function master_fund(Request $request) {
+    public function master_fund(Request $request)
+    {
         $data = ManagementFund::get();
         $total_fund = 0;
         foreach ($data as $item) {
@@ -31,14 +32,16 @@ class FundController extends Controller
         ]);
     }
 
-    public function create_allowance_fund() {
+    public function create_allowance_fund()
+    {
         $funds = ManagementFund::get();
         return view('management.fund.master_fund.create', [
             'funds' => $funds,
         ]);
     }
 
-    public function store_allowance_fund(Request $request) {
+    public function store_allowance_fund(Request $request)
+    {
         try {
             DB::beginTransaction();
             $validate = $request->validate([
@@ -82,7 +85,8 @@ class FundController extends Controller
         }
     }
 
-    public function monthly(Request $request) {
+    public function monthly(Request $request)
+    {
         $periode = Carbon::now()->format('Y-m');
         if ($request->periode) {
             $periode = $request->periode;
@@ -90,7 +94,7 @@ class FundController extends Controller
 
         $fund = ManagementFund::get();
         $result_fund = array();
-        foreach($fund AS $item) {
+        foreach ($fund as $item) {
             array_push($result_fund, (object) array(
                 'id' => $item->id,
                 'name' => $item->name,
@@ -109,10 +113,10 @@ class FundController extends Controller
             ->orderBy('datetime')->get();
 
         $total_cash_in = 0;
-        foreach($cash_in AS $item) {
+        foreach ($cash_in as $item) {
             $total_cash_in += (int)$item->fund;
 
-            foreach($result_fund as $key => $value) {
+            foreach ($result_fund as $key => $value) {
                 if ($value->id == $item->type_fund_id) {
                     $result_fund[$key]->cash_in += (int)$item->fund;
                     break;
@@ -121,10 +125,10 @@ class FundController extends Controller
         }
 
         $total_cash_out = 0;
-        foreach($cash_out AS $item) {
+        foreach ($cash_out as $item) {
             $total_cash_out += (int)$item->fund;
 
-            foreach($result_fund as $key => $value) {
+            foreach ($result_fund as $key => $value) {
                 if ($value->id == $item->type_fund_id) {
                     $result_fund[$key]->cash_out += (int)$item->fund;
                     break;
@@ -148,14 +152,15 @@ class FundController extends Controller
         );
 
         return view('management.fund.monthly.index', [
-            'data' => $paginatedData, 
-            'total_cash_in' => $total_cash_in, 
+            'data' => $paginatedData,
+            'total_cash_in' => $total_cash_in,
             'total_cash_out' => $total_cash_out,
             'result_fund' => $result_fund,
         ]);
     }
 
-    public function create_cash_in() {
+    public function create_cash_in()
+    {
         $funds = ManagementFund::get();
         return view('management.fund.monthly.create_cash_in', ['funds' => $funds]);
     }
@@ -175,12 +180,16 @@ class FundController extends Controller
 
             $validate['fund'] = (int) str_replace('.', '', $validate['fund']);
 
-            $store = ManagementCashIn::create([
+            ManagementCashIn::create([
                 'fund' => $validate['fund'],
                 'remarks' => $request['remarks'] ?? null,
                 'datetime' => $validate['datetime'],
                 'type_fund_id' => $validate['type'],
             ]);
+
+            if ($request->is_subscribed) {
+                $this->handleBulkCashInSubscription($request);
+            }
 
             $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m')];
 
@@ -201,7 +210,55 @@ class FundController extends Controller
         }
     }
 
-    public function edit_cash_in($id) {
+    private function handleBulkCashInSubscription(Request $request)
+    {
+
+        $duration = (int) $request->input('subscription_duration', 0);
+        $startDateString = $request->input('datetime');
+
+        // Duration should be greater than one
+        if ($duration <= 1) {
+            return;
+        }
+
+        // Check date parsing
+        try {
+            $currentDate = Carbon::parse($startDateString);
+        } catch (\Exception $e) {
+            Log::error('Invalid datetime format for subscription start: ' . $startDateString, ['error' => $e->getMessage()]);
+            return;
+        }
+
+        // Prepare array
+        $recordsToInsert = [];
+
+        for ($i = 1; $i < $duration; $i++) {
+            $recordDate = $currentDate->copy()->addMonths($i);
+
+            $fund = (int) str_replace('.', '', $request->input('fund'));
+
+            $recordsToInsert[] = [
+                'fund' => $fund,
+                'remarks' => $request->input('remarks') ?? null,
+                'datetime' => $recordDate->format('Y-m-d\TH:i'),
+                'type_fund_id' => $request->input('type'),
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        }
+
+        // Insert bulk
+        if (!empty($recordsToInsert)) {
+            try {
+                ManagementCashIn::insert($recordsToInsert);
+            } catch (\Exception $e) {
+                Log::error('Failed to insert subscription records: ' . $e->getMessage(), ['data' => $recordsToInsert]);
+            }
+        }
+    }
+
+    public function edit_cash_in($id)
+    {
         $funds = ManagementFund::get();
         $data = ManagementCashIn::where('id', $id)->first();
         return view('management.fund.monthly.edit_cash_in', ['funds' => $funds, 'data' => $data]);
@@ -233,7 +290,7 @@ class FundController extends Controller
                     'type_fund_id' => $validate['type'],
                 ]);
 
-                $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m-d')];
+                $query_data = ['periode' => Carbon::parse($validate['datetime'])->format('Y-m')];
 
                 $closing_cyle = ManagementClosingCycle::where("periode", Carbon::parse($validate['datetime'])->format('Y-m'))
                     ->first();
@@ -264,6 +321,28 @@ class FundController extends Controller
         } catch (Throwable $error) {
             DB::rollBack();
             return redirect()->route('management.fund.monthly.edit_cash-in', $query_data)->with('failed', "Gagal memperbarui data pemasukkan dana");
+        }
+    }
+
+    public function delete_cash_in(string $id)
+    {
+        $cashIn = ManagementCashIn::where("id", $id)->first();
+        if ($cashIn) {
+            $delete = $cashIn->delete();
+
+            $query =  ['periode' => request()->query('periode')];
+
+            if (!$query['periode']) {
+                $query['periode'] = Carbon::now()->format('Y-m');
+            }
+
+            if ($delete) {
+                return redirect()->route("management.fund.monthly", $query)->with('success', "Berhasil menghapus data pemasukkan dana");
+            } else {
+                return redirect()->route('management.fund.monthly', $query)->with('failed', "Gagal menghapus data pemasukkan dana");
+            }
+        } else {
+            return abort(404);
         }
     }
 }

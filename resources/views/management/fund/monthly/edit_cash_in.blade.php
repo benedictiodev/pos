@@ -46,10 +46,10 @@
           <div class="space-y-6">
             <div>
               <label for="fund" class="mb-2 block text-sm font-medium text-gray-900">Nominal Pemasukan</label>
-              <input type="text" name="fund" id="fund"
-                onkeyup="keyup_rupiah(this)"
+              <input type="text" name="fund" id="fund" onkeyup="keyup_rupiah(this)"
                 class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                placeholder="Nominal" required value="{{ str_replace('Rp ', '', format_rupiah(old('nominal', $data->fund))) }}">
+                placeholder="Nominal" required
+                value="{{ str_replace('Rp ', '', format_rupiah(old('nominal', $data->fund))) }}">
             </div>
 
             <div>
@@ -73,14 +73,12 @@
             <div>
               <label for="remarks" class="mb-2 block text-sm font-medium text-gray-900">Keterangan</label>
               <input type="text" name="remarks" id="remarks"
-                onkeyup="keyup_rupiah(this)"
                 class="block w-full rounded-lg border border-gray-300 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
                 placeholder="Keterangan" required value="{{ $data->remarks }}">
               @error('remarks')
                 <p class="mt-2 text-sm text-red-600"><span class="font-medium">{{ $message }}</p>
               @enderror
             </div>
-
 
             <div>
               <label for="datetime" class="mb-2 block text-sm font-medium text-gray-900">Waktu</label>
