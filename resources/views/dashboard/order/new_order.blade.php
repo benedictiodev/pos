@@ -232,7 +232,7 @@
     <!-- modal order -->
     <div id="modal-order" tabindex="-1" aria-hidden="true"
       class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-      <div class="relative p-4 w-full max-w-2xl max-h-full">
+      <div class="relative p-4 w-full max-w-3xl max-h-full">
         <!-- Modal content -->
         <div class="relative bg-white rounded-lg shadow">
           <!-- Modal header -->
@@ -298,70 +298,93 @@
               </div>
               <div id="payment_form" class="border pl-4 pr-2 py-4 rounded-lg relative" hidden>
                 <div class="absolute top-[-11px] left-0 right-0 flex justify-center">
-                  <div class="bg-white px-4 text-sm font-semibold">Formulir pembayaran</div>
+                  <div class="bg-white px-4 text-sm font-semibold">Formulir Pembayaran</div>
                 </div>
-                <div class="mb-3">
-                  <label for="confirm_order-payment_method" class="mb-2 block text-sm font-medium text-gray-900">
-                    Tipe Pembayaran
-                  </label>
-                  <select id="confirm_order-payment_method" name="confirm_order-payment_method"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500">
-                    <option disabled value="">Pilih Tipe Pembayaran</option>
-                    @foreach ($list_fund as $item_fund)
-                      <option value="{{ $item_fund->type }}">{{ $item_fund->type }}</option>
-                    @endforeach
-                  </select>
-                </div>
-                <div class="mb-3">
-                  <label for="confirm_order-total_price_item" class="mb-2 block text-sm font-medium text-gray-900">
-                    Total Harga  
-                  </label>
-                  <input type="text" min="0" name="confirm_order-total_price_item"
-                    id="confirm_order-total_price_item"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Total Harga" readonly>
-                </div>
-                <div class="mb-3 flex justify-between">
-                  <div class="w-1/3 mr-2">
-                    <label for="confirm_order-discount" class="mb-2 block text-sm font-medium text-gray-900">
-                      Diskon (%)  
-                    </label>
-                    <input type="text" min="0" name="confirm_order-discount"
-                      id="confirm_order-discount"
-                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                      placeholder="Diskon" onkeyup="change_discount()" value="0">
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="col-span-1">
+                    <div class="mb-3">
+                      <label for="confirm_order-total_price_item" class="mb-2 block text-sm font-medium text-gray-900">
+                        Total Harga  
+                      </label>
+                      <input type="text" min="0" name="confirm_order-total_price_item"
+                        id="confirm_order-total_price_item"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                        placeholder="Total Harga" readonly>
+                    </div>
+                    <div class="mb-3 flex justify-between">
+                      <div class="w-1/3 mr-2">
+                        <label for="confirm_order-discount" class="mb-2 block text-sm font-medium text-gray-900">
+                          Diskon (%)  
+                        </label>
+                        <input type="text" min="0" name="confirm_order-discount"
+                          id="confirm_order-discount"
+                          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                          placeholder="Diskon" onkeyup="change_discount()" value="0">
+                      </div>
+                      <div class="w-2/3 ml-2">
+                        <label for="confirm_order-total_discount" class="mb-2 block text-sm font-medium text-gray-900">
+                          Total Diskon
+                        </label>
+                        <input type="text" min="0" name="confirm_order-total_discount"
+                          id="confirm_order-total_discount"
+                          class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                          placeholder="Total Diskon" readonly>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="confirm_order-total_payment" class="mb-2 block text-sm font-medium text-gray-900">
+                        Total Harga Yang Harus Dibayar  
+                      </label>
+                      <input type="text" min="0" name="confirm_order-total_payment"
+                        id="confirm_order-total_payment"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                        placeholder="Total Harga Yang Harus Dibayar" readonly>
+                    </div>
+                    <div class="mb-3">
+                      <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900">Total Yang Sudah Dibayar</label>
+                      <input type="text" min="0" name="confirm_order-change" id="confirm_order-total_customer_payment"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                        placeholder="Total Yang Sudah Dibayar" readonly>
+                    </div>
+                    <div class="mb-3">
+                      <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900">Kembalian</label>
+                      <input type="text" min="0" name="confirm_order-change" id="confirm_order-change"
+                        class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                        placeholder="Kembalian" readonly>
+                    </div>
                   </div>
-                  <div class="w-2/3 ml-2">
-                    <label for="confirm_order-total_discount" class="mb-2 block text-sm font-medium text-gray-900">
-                      Total Diskon
-                    </label>
-                    <input type="text" min="0" name="confirm_order-total_discount"
-                      id="confirm_order-total_discount"
-                      class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                      placeholder="Total Diskon" readonly>
+                  <div class="col-span-1 mt-6">
+                    <div class="" id="container-form-payment">
+                      <div class="mb-3 border pl-4 pr-2 py-4 rounded-lg relative" id="form-payment-0">
+                        <div class="absolute top-[-11px] left-0 right-0 flex justify-center">
+                          <div class="bg-white px-4 text-sm font-semibold">Pembayaran Pelanggan</div>
+                        </div>
+                        <div class="mb-3">
+                          <label for="confirm_order-payment_method" class="mb-2 block text-sm font-medium text-gray-900">
+                            Tipe Pembayaran
+                          </label>
+                          <select name="confirm_order-payment_method[]"
+                            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500">
+                            <option disabled value="">Pilih Tipe Pembayaran</option>
+                            @foreach ($list_fund as $item_fund)
+                              <option value="{{ $item_fund->type }}">{{ $item_fund->type }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                        <div class="">
+                          <label for="confirm_order-payment"
+                            class="mb-2 block text-sm font-medium text-gray-900">Pembayaran</label>
+                          <input type="text" min="0" name="confirm_order-payment[]" id="confirm_order-payment"
+                            class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+                            placeholder="Pembayaran" onkeyup="count_change_payment()">
+                        </div>
+                      </div>
+                    </div>
+                    <button onclick="add_another_payment()" type="button"
+                      class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+                      Tambah Pembayaran
+                    </button>
                   </div>
-                </div>
-                <div class="mb-3">
-                  <label for="confirm_order-total_payment" class="mb-2 block text-sm font-medium text-gray-900">
-                    Total Harga Yang Harus Dibayar  
-                  </label>
-                  <input type="text" min="0" name="confirm_order-total_payment"
-                    id="confirm_order-total_payment"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Total Harga Yang Harus Dibayar" readonly>
-                </div>
-                <div class="mb-3">
-                  <label for="confirm_order-payment"
-                    class="mb-2 block text-sm font-medium text-gray-900">Pembayaran</label>
-                  <input type="text" min="0" name="confirm_order-payment" id="confirm_order-payment"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Pembayaran" onkeyup="count_change_payment()">
-                </div>
-                <div class="">
-                  <label for="confirm_order-change" class="mb-2 block text-sm font-medium text-gray-900">Kembalian</label>
-                  <input type="text" min="0" name="confirm_order-change" id="confirm_order-change"
-                    class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
-                    placeholder="Kembalian" readonly>
                 </div>
               </div>
             </form>
@@ -466,6 +489,7 @@
       $('#confirm_order-total_discount').val(0);
       $('#confirm_order-payment').val(0);
       $('#confirm_order-change').val(0);
+      $('#confirm_order-total_customer_payment').val(0);
       $('#order-total-price').html(format_rupiah(total_price_order));
     }
 
@@ -507,6 +531,37 @@
       $('#order-product_name').val(name);
       $('#order-qty').val(1);
       $('#order-remarks').val("");
+    }
+
+    let index_payment = 0
+    const add_another_payment = () => {
+      console.log('awd')
+      $('#container-form-payment').append(`
+        <div class="mb-3 border pl-4 pr-2 py-4 rounded-lg relative" id="form-payment-0">
+          <div class="absolute top-[-11px] left-0 right-0 flex justify-center">
+            <div class="bg-white px-4 text-sm font-semibold">Pembayaran Pelanggan</div>
+          </div>
+          <div class="mb-3">
+            <label for="confirm_order-payment_method" class="mb-2 block text-sm font-medium text-gray-900">
+              Tipe Pembayaran
+            </label>
+            <select id="confirm_order-payment_method" name="confirm_order-payment_method"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500">
+              <option disabled value="">Pilih Tipe Pembayaran</option>
+              @foreach ($list_fund as $item_fund)
+                <option value="{{ $item_fund->type }}">{{ $item_fund->type }}</option>
+              @endforeach
+            </select>
+          </div>
+          <div class="">
+            <label for="confirm_order-payment"
+              class="mb-2 block text-sm font-medium text-gray-900">Pembayaran</label>
+            <input type="text" min="0" name="confirm_order-payment" id="confirm_order-payment"
+              class="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-600 focus:ring-primary-600"
+              placeholder="Pembayaran" onkeyup="count_change_payment()">
+          </div>
+        </div>
+      `);
     }
 
     const set_order_to_cart = () => {
@@ -574,6 +629,7 @@
       $('#confirm_order-discount').val(update_to_format_rupiah(discount));
       $('#confirm_order-total_payment').val(update_to_format_rupiah(total_payment));
       $('#confirm_order-change').val(update_to_format_rupiah(payment > 0 ? payment - total_payment : 0));
+      $('#confirm_order-total_customer_payment').val(update_to_format_rupiah(payment));
     }
 
     const count_change_payment = () => {
@@ -581,6 +637,7 @@
       let payment = parseInt(($('#confirm_order-payment').val()).replaceAll('.', ''));
       $('#confirm_order-change').val(update_to_format_rupiah(Number(payment) - Number(total_payment)));
       $('#confirm_order-payment').val(update_to_format_rupiah(payment));
+      $('#confirm_order-total_customer_payment').val(update_to_format_rupiah(payment));
     };
 
     const submit_order = () => {
